@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="/lib/jquery-3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/lib/bootstrap-4.6.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-table-1.20.2/bootstrap-table.min.css" />
+    <script src="/lib/bootstrap-table-1.20.2/bootstrap-table.js"></script>
+    <script src="/lib/bootstrap-table-1.20.2/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/lib/layer/layer.js"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+    <script src="/js/zlWebApi.js" asp-append-version="true"></script>
+    <script src="/module/lsfollow/lswsyxg_base.js"></script>
+    <script src="/module/lsfollow/lswsyxg.js"></script>
+    <link href="/module/lsfollow/LsFollow.css" rel="stylesheet" />
+    <script src="/module/LsFollow/LsFollow.js"></script>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <label class="form-inline">
+                    <span style="width: 80px;text-align: right;">认&emsp;&emsp;证：</span>
+                    <input id="token_input" type="text" class="form-control form-control-sm col"  autocomplete="off" />
+                    <button class="btn btn-cancel btn-sm  " id="token_input_btn" style="float: right; background-color: #ced1e2;">确定</button>
+                    月份<input id="fl_mon_num" type="text" class="form-control form-control-sm col" value="09" autocomplete="off" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn" id="fun_test_btn" style="float: left;background-color: #ced1e2;">
+                    测试一些功能的测试按钮
+                </button>
+                <button class="btn" id="GetFollowList" style="float: left;background-color: #ced1e2;">获取所有的随访单</button>
+                <button class="btn" id="addfollowbill" style="float: left;background-color: #ced1e2;">添加随访单</button>
+                <button class="btn" id="addfollowbillbytelephone">添加电话随访单</button>
+            </div>
+            <div class="col-8">
+                <label>添加随访单入参</label>
+                <textarea class="form-control col" id="addfollowbill_in" autocomplete="off" wrap="off"></textarea>
+            </div>
+            <div class="col-4">
+                <label>添加随访单出参</label>
+                <textarea class="form-control col" id="addfollowbill_out" autocomplete="off" wrap="off"></textarea>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <button class="btn" id="delfollowbill" style="float: left;background-color: #ced1e2;">删除随访单</button>
+                <button class="btn" id="get_formsList" style="float: left;background-color: #ced1e2;">获取病人列表</button>
+                <button class="btn" id="get_wformsList" style="float: left;background-color: #ced1e2;">已经填写的清单</button>
+            </div>
+            <div class="col-8">
+                <label>入参</label>
+                <textarea class="form-control col" id="com_par_in" autocomplete="off" wrap="off"></textarea>
+            </div>
+            <div class="col-4">
+                <label>出参</label>
+                <textarea class="form-control col" id="com_par_out" autocomplete="off" wrap="off"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <label>选择图片</label>
+            <div>
+                <input type="file" class="form-control brandPic" id="brandPic"  multiple />
+                <img class="head-img" />
+            </div>
+            <button data-v-2396c8a3="" type="button" class="ant-btn" ant-click-animating-without-extra-node="false">
+            <i data-v-2396c8a3="" aria-label="图标: upload" class="anticon anticon-upload">
+                <svg viewBox="64 64 896 896" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class="">
+                <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 0 0-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path></svg></i>
+                <span id="pic_type" data-type="0">上传家庭医生签约文件</span>
+            </button>
+            <label style="padding-left: 15px;" id="tableTitle">人员信息</label>
+            <div class="col-12">
+                <table class="table" id="tab_api_list">
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

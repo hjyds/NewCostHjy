@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>会诊申请单</title>
+    <link rel="shortcut icon" href="/InHospital/imags/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/InHospital/lib/bootstrap-4.6.1/css/bootstrap.min.css">
+
+    <!--表格相关-->
+
+    <link rel="stylesheet" href="/InHospital/bizmodule/bizcomponent/componentstyle.css" />
+    <link rel="stylesheet" href="/InHospital/lib/zlDate/css/zldate.css" />
+    <link rel="stylesheet" href="/InHospital/lib/stretch/zlStretch.css" />
+    <link rel="stylesheet" href="/InHospital/bizmodule/bizcomponent/componentstyle.css" />
+
+    <!-- 不能defer，因为pagehelper中会用到 -->
+    <script src="/InHospital/lib/jquery-3.6.0/jquery.min.js"></script>
+    <script src="/InHospital/lib/bootstrap-4.6.1/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Bootstrap Bundle (includes Popper) 下拉列表需要使用Popper -->
+    <!--表格相关-->
+    <link rel="stylesheet" href="/InHospital/lib/bootstrap-table-1.20.2/bootstrap-table.min.css" />
+    <script src="/InHospital/lib/bootstrap-table-1.20.2/bootstrap-table.js" defer></script>
+    <script src="/InHospital/lib/bootstrap-table-1.20.2/locale/bootstrap-table-zh-CN.min.js" defer></script>
+
+    <link rel="stylesheet" href="/InHospital/lib/bootstrap-select-1.13.18/css/bootstrap-select.min.css" />
+    <script src="/InHospital/lib/bootstrap-select-1.13.18/js/bootstrap-select.min.js" defer></script>
+    <script src="/InHospital/lib/bootstrap-select-1.13.18/js/i18n/defaults-zh_CN.js" defer></script>
+
+    <script src="/InHospital/lib/jquery.splitter-0.28.5/jquery.splitter.js" defer></script>
+    <link href="/InHospital/lib/jquery.splitter-0.28.5/jquery.splitter.css" rel="stylesheet" />
+
+    <link href="/InHospital/lib/bootstrap-table-1.20.2/extensions/group-by-v2/bootstrap-table-group-by.min.css" rel="stylesheet" />
+    <script src="/InHospital/lib/bootstrap-table-1.20.2/extensions/group-by-v2/bootstrap-table-group-by.min.js" defer></script>
+
+    <script src="/InHospital/lib/iframe-resizer-4.3.3/iframeResizer.min.js" defer></script>
+    <!-- iframeResizer放在iframe的父页面，同时在子页面引入iframeResizer.contentWindow.min.js -->
+    <!--layer弹出层插件-->
+    <script src="/InHospital/lib/layer/layer.js" defer></script>
+
+    <!--字体图标-->
+    <link href="/InHospital/lib/fontawesome-free-6.1.1-web/css/all.css" rel="stylesheet" />
+    <link href="/InHospital/lib/fontawesome-free-6.1.1-web/css/v4-shims.css" rel="stylesheet" />
+
+    <script src="/InHospital/lib/stretch/zlStretch.js" asp-append-version="true" defer></script>
+    <script src="/InHospital/lib/zlDate/js/zldate.js" defer></script>
+
+    <script src="/InHospital/bizmodule/base/pagecommon.js"></script>
+    <script src="/InHospital/bizmodule/pagehelper.js"></script>
+    <script src="/InHospital/bizmodule/bizcomponent/componentbasefunc.js"></script>
+
+    <!--日期时间选择插件-->
+    <link href="/InHospital/lib/flatpickr-4.6.13/flatpickr.min.css" rel="stylesheet" />
+    <script src="/InHospital/lib/flatpickr-4.6.13/flatpickr.js"></script>
+    <script src="/InHospital/lib/flatpickr-4.6.13/zh.js"></script>
+
+    <!--拖拽-->
+    <script src="/InHospital/bizmodule/design/layout/js/jquery-ui-1.12.js" defer></script>
+
+    <!--加密-->
+    <script src="/InHospital/lib/sm-crypto/sm3.js" defer></script>
+    <script src="/InHospital/lib/sm-crypto/sm4.js" defer></script>
+    <script src="/InHospital/lib/sm-crypto/smEncrypt.js" defer></script>
+
+    <!--美康合理用药-->
+    <script src="/InHospital/Common/zlMKPass.js" asp-append-version="true"></script>
+    <!--杭州逸曜合理用药-->
+    <script src="/InHospital/Common/zlYYPass.js" asp-append-version="true"></script>
+    <!--知识库相关-->
+    <script src="/InHospital/cdss/cdss.js" asp-append-version="true"></script>
+
+    <!--右键菜单-->
+    <link href="/InHospital/lib/rightkeymenu/page_style.css" rel="stylesheet" />
+    <script src="/InHospital/lib/rightkeymenu/jquery.contextmenu.r2.js" defer></script>
+    <!--推拽表格-->
+    <link href="/InHospital/lib/dragtable/dragtable.css" rel="stylesheet" />
+    <script src="/InHospital/lib/dragtable/jquery.dragtable.js" defer></script>
+    <script src="/InHospital/lib/dragtable/bootstrap-table-reorder-columns.min.js" defer></script>
+    <!--树形-->
+    <link href="/InHospital/lib/zTree_3.5.47/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" asp-append-version="true" />
+    <script src="/InHospital/lib/zTree_3.5.47/js/jquery.ztree.all.min.js" asp-append-version="true" defer></script>
+    <!--MD5-->
+    <script src="/InHospital/lib/MD5/MD5.js" asp-append-version="true" defer></script>
+    <!--新手指引-->
+    <link href="/InHospital/lib/intro-5.1.0/introjs.min.css" rel="stylesheet">
+    <script src="/InHospital/lib/intro-5.1.0/intro.min.js"></script>
+    <!--二维码-->
+    <script src="/InHospital/lib/jquery-qrcode/qrcode.js"></script>
+ 
+
+    <style>
+        .container-fluid {
+            height: calc(100vh - 4px);
+            padding: 0px;
+            overflow: hidden;
+        }
+
+        .stretch_navBBar {
+            right: 0;
+            z-index: 1002;
+        }
+
+        .stretch_navBBar_position {
+            position: fixed;
+        }
+
+        .stretch_navBBar .row {
+            margin: 0px;
+        }
+
+
+        .stretch_taskPanel {
+        }
+
+        .floatColumn {
+            padding: 0px;
+        }
+
+        .row-border {
+            border: 1px solid silver;
+        }
+
+        .mainPage {
+            height: 100vh;
+            overflow: auto;
+            padding: 0px;
+        }
+
+        .row {
+            margin: 0px;
+        }
+
+        .hsplitter {
+            height: 2px !important;
+            margin-left: 3px;
+            background-color: #333333 !important;
+        }
+
+        .vsplitter {
+            width: 2px;
+            background-color: #333333 !important;
+            margin: auto;
+            height: calc(100vh - 51px)
+        }
+
+        .nav-link {
+            color: #333333 !important;
+        }
+
+            .nav-link.active {
+                color: #0081a7 !important;
+                background-color: #f0edf8 !important;
+            }
+
+        #lower_right_corner {
+            position: fixed;
+            z-index: 10000;
+            cursor: pointer;
+            background-color: white;
+            width: 25px;
+            height: 34px;
+            right: 0px;
+            bottom: 6px;
+            border-radius: 15px 0 0 15px;
+            box-shadow: 0 0 12px #999999;
+            opacity: 1;
+        }
+
+        #send_flag {
+            font-size: 1.3rem;
+            color: #2c7373;
+            position: relative;
+            top: 1px;
+            left: 10px;
+        }
+
+        /*移除文档流 不再影响其他文档对象*/
+        .programme {
+            position: absolute !important;
+            width: 0px;
+        }
+        .resizeY{
+            z-index: 9999;
+            position: absolute;
+            float: left;
+            width: 5px;
+            height: calc(100vh);
+            cursor: e-resize;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>会诊申请单</h1>
+        <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+            <div class="view">
+                <div class="bizInHospital designerBorder" type="eleRationalMedTips" data-designid="did_ba6e290111fbc873c62c0cf66938eef8">
+                </div>
+            </div>
+        </div>
+
+        <div data-title="快捷面板" data-position="right" class="stretch_navBBar stretch_noSelect stretch_navBBar_r programme">
+            <div class="stretch_taskPanel stretch_taskPanel_r stretch_jamb">
+                <div class="resizeY"></div>
+                <div class="view">
+                    <div class="row clearfix">
+                        <div class="column col-12 floatColumn floatColumnR baseContainer">
+                            <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content;">
+                                <div class="view">
+                                    <div class="bizInHospital" type="eleAdviceScheme">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <a class="stretch_Title stretch_Title_r stretch_titleDisplay stretch_textButton stretch_jamb">成套方案</a>
+        </div>
+
+        <div class="row">
+            <div class="col-12 topPanel pl-0">
+                <div id="eleControl_0" class="bizInHospital" type="eleToolBars">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row ml-0">
+            <div class="col-3 px-0">
+                <div class="row px-1">
+                    <div class="col-12">
+                        <div id="eleControl_1" class="bizInHospital" type="eleDeptFilter" bizgroup="子页">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="height: calc(100vh - 100px);">
+                    <div class="col-12 px-0">
+                        <div id="eleControl_2" class="bizInHospital componentContainer" type="eleTabPage">
+                            <div class="eleTabPage">
+                                <ul class="nav nav-tabs" role="tablist" id="tabs-303908">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab_preIn" href="#panel-101010" data-toggle="tab" role="tab">待入住</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab_inDept" href="#panel-495144" data-toggle="tab" role="tab">在科</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link" id="tab_turnOutDept" href="#panel-501125" data-toggle="tab" role="tab">转出</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab_consult" href="#panel-223979" data-toggle="tab">会诊</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab_leave" href="#panel-786041" data-toggle="tab">出院</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane" role="tabpanel" id="panel-101010">
+                                        <div class="column">
+                                            <div class="bizInHospital designerBorder" type="elePatientListPreIn">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active" role="tabpanel" id="panel-495144">
+                                        <div class="column">
+                                            <div class="bizInHospital designerBorder" type="elePatientList">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="panel-501125">
+                                        <div class="column">
+                                            <div class="bizInHospital designerBorder" type="elePatientListTurnOut">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="panel-223979">
+                                        <div class="column">
+                                            <div class="bizInHospital designerBorder" type="elePatientListConsult">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="panel-786041">
+                                        <div class="column">
+                                            <div class="bizInHospital designerBorder" type="elePatientListLeave">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-1 px-0 col">
+                <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; opacity: 1;">
+                    <div class="view">
+                        <div class="bizInHospital" type="eleSplitLineV" data-designid="did_57e65c9197b0ff979ed28ec0f4c3ed9f">
+                            <!-- <hr class="vsplitter" contenteditable="true" />-->
+                            <div class="vsplitter" contenteditable="true"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 px-0">
+                <div class="bizInHospital componentContainer" type="elePatientInfor"></div>
+                <div class="bizInHospital componentContainer" type="eleTabPage">
+                    <div class="eleTabPage">
+                        <ul class="nav nav-tabs" role="tablist" id="tabs-682013">
+                            <li class="nav-item">
+                                <a class="nav-link advice active" id="tab1" href="#panel-660029" data-toggle="tab" role="tab" style="font-size: large;">医嘱</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" id="tab2" href="#panel-280641" data-toggle="tab" role="tab" style="font-size: large;">路径</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#panel-450858" data-toggle="tab" style="font-size: large;">病历</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#panel-604274" data-toggle="tab" style="font-size: large;">护理</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#panel-408760" data-toggle="tab" style="font-size: large;">病案</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link heath" href="#panel-408761" data-toggle="tab" style="font-size: large;">康复</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link vte" href="#panel-408762" data-toggle="tab" style="font-size: large;">VTE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link cost" href="#panel-408763" data-toggle="tab" style="font-size: large;">费用</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active splitter_horizontal" role="tabpanel" id="panel-660029" style="height: calc(100vh - 100px); overflow: hidden;">
+                                <div class="bizInHospital" type="eleAdviceList" style="overflow: hidden;">
+                                </div>
+
+                                <div class="bizInHospital componentContainer" type="eleTabPage">
+                                    <div class="eleTabPage" id="tabs-103185">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="nav-item active">
+                                                <a class="nav-link active" href="#panel-568260" data-toggle="tab" role="tab">医嘱下达</a>
+                                            </li>
+                                            <li role="presentation" class="nav-item">
+                                                <a class="nav-link" href="#panel-568261" data-toggle="tab" role="tab">发送清单</a>
+                                            </li>
+                                            <li role="presentation" class="nav-item">
+                                                <a class="nav-link" href="#panel-898002" data-toggle="tab" role="tab">计价信息</a>
+                                            </li>
+                                            <li role="presentation" class="nav-item hide" id="insulinSchemeTab">
+                                                <a class="nav-link" href="#panel-899002" data-toggle="tab" role="tab">胰岛素方案</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" role="tabpanel" id="panel-568260">
+                                                <div class="column">
+                                                    <div class="box ui-draggable" style="display: block;">
+                                                        <div class="view">
+                                                            <div class="bizInHospital componentContainer" type="eleAdviceCardNew">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="panel-568261">
+                                                <div class="column">
+                                                    <div class="box ui-draggable" style="display: block;">
+                                                        <div class="view">
+                                                            <div class="bizInHospital" type="eleAdviceSendedList">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="panel-898002">
+                                                <div class="column">
+                                                    <div class="box ui-draggable" style="display: block;">
+                                                        <div class="view">
+                                                            <div class="bizInHospital" type="eleAdvicePriceList">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="panel-899002">
+                                                <div class="column">
+                                                    <div class="box ui-draggable" style="display: block;">
+                                                        <div class="view">
+                                                            <div class="bizInHospital" type="eleInsulinScheme">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" role="tabpanel" id="panel-280641">
+                                <div class="bizInHospital" type="eleCISPathTable">
+                                </div>
+                            </div>
+                            <!-- 病历 -->
+                            <div class="tab-pane" id="panel-450858">
+                                <div class="col">
+                                    <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+                                        <div class="view">
+                                            <div class="bizInHospital" type="elePatientThirdPage" data-designid="did_8ae353aa6ba91b7db76a818c8d104614">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 护理 -->
+                            <div class="tab-pane" id="panel-604274">
+                                <div class="col">
+                                    <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+                                        <div class="view">
+                                            <div class="bizInHospital " type="elePatientThirdPage" data-designid="did_45784153d462620533abc0830be4c339">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 电子病案 -->
+                            <div class="tab-pane" id="panel-408760">
+                                <div class="col">
+                                    <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+                                        <div class="view">
+                                            <div class="bizInHospital " type="elePatientThirdPage" data-designid="did_64a4673ce91c36ed3a320430c3c22d39">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 康护 -->
+                            <div class="tab-pane" id="panel-408761">
+                                <div class="col">
+                                    <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+                                        <div class="view">
+                                            <div class="bizInHospital" type="elePatientThirdPage" data-designid="did_8ae353aa6ba91b7db76a818c8d104615">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- VTE -->
+                            <div class="tab-pane" id="panel-408762">
+                                <div class="col">
+                                    <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+                                        <div class="view">
+                                            <div class="bizInHospital" type="elePatientThirdPage" data-designid="did_8ae353aa6ba91b7db76a818c8d104616">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 费用 -->
+                            <div class="tab-pane" id="panel-408763">
+                                <div class="col">
+                                    <div class="box ui-draggable" style="position: relative; left: 0px; top: 0px; width: 100%; height: fit-content; z-index: 1000;">
+                                        <div class="view">
+                                            <div class="bizInHospital" type="elePatientThirdPage" data-designid="did_8ae353aa6ba91b7db76a818c8d104617">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="hide" id="location"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "测试页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Newtonsoft.Json
+
+<script>
+    
+
+</script>
+
+<div class="sys_tag">健康教育处方测试网页</div>
+<div onclick="DBlKK()">入参信息：</div>
+<div id="parin_name"></div>
+<div class="row">
+    <div class="col">
+        <div id="parin" style="word-wrap: break-word;" ></div>
+    </div> 
+    <div class="row" >
+        <div class="col">
+            <button class="btn" id="btn" style="color: yellowgreen;background: #25757d;" title="将锚点列表中的锚点配置进行统一检查">向VB发消息</button>
+            <span id="chang_pat" ></span>
+            <textarea id="demo"></textarea>
+        </div>
+    </div>
+</div>
+
+<script>
+    var _mvcData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.BaseData));
+    setTimeout(function () {
+        $("#parin_name").html("首次加载");
+        $("#parin").html(JSON.stringify(_mvcData));
+    }, 100);   
+</script>
+
+

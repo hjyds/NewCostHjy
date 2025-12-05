@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "测试页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Newtonsoft.Json
+
+<link rel="stylesheet" href="~/module/patientvte/tech.css" />
+
+<div class="sys_tag" style="display: none;">
+    测试医技站主页界面
+</div>
+<div style="display: none;"> 入参信息：</div>
+<div id="parin" style="display: none;"></div>
+<div>
+    <input type="text" placeholder="IP+PORT" id="svr_info" value="" autocomplete="off" />
+    <input type="text" placeholder="帐号" id="user" value="" autocomplete="off" />
+    <input type="text" placeholder="密码" id="pwd" value="" autocomplete="off" />
+    <input type="text" placeholder="Token" id="token" value="" autocomplete="off" /> 
+    <input type="text" placeholder="Type" id="type" value="" autocomplete="off" />
+    <input type="text" placeholder="Pid" id="pid" value="" autocomplete="off" />
+    <input type="text" placeholder="Pvid" id="pvid" value="" autocomplete="off" />
+    <input type="text" placeholder="Prid" id="prid" value="" autocomplete="off" />
+    <input type="text" placeholder="Sitesn" id="sitesn" value="" autocomplete="off" />
+</div> 
+
+<div id="inputarea">
+
+</div>
+<div class="eleAdviceThirdPage">
+    <iframe class="hjy_iframe">
+    </iframe>
+</div>
+
+<script>
+    var _mvcData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.BaseData));
+    //alert(JSON.stringify(_mvcData));
+    setTimeout(function () {
+        $("#parin").html(JSON.stringify(_mvcData));
+    },100);
+</script>
+
+<script src="~/module/patientvte/tech.js" asp-append-version="true"></script>
+
+

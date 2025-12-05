@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "测试页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Newtonsoft.Json
+
+
+<div class="sys_tag">ReviewResultZLPASS，中联合理用药测试网页</div>
+<div>入参信息：</div>
+<div id="parin"></div>
+
+<div>
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="li_hjy" href="/Home/CONTINUE_TO_USE">继续使用</a>
+        </li>
+        <li class="nav-item">
+            <a class="li_hjy" href="/Home/BACK_TO_MODIFY">返回修改</a>
+        </li>
+        <li class="nav-item">
+            <a class="li_hjy" href="/Home/CONFIRM">确定</a>
+        </li>
+        <li class="nav-item">
+            <a class="li_hjy" href="/Home/CLOSE">关闭</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    var _mvcData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.BaseData));
+    //alert(JSON.stringify(_mvcData));
+    setTimeout(function () {
+        $("#parin").html(JSON.stringify(_mvcData));
+    },100);
+</script>
+
+

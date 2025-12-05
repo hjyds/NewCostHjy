@@ -1,0 +1,150 @@
+﻿----按患者编号查询返回值，手机=15023147898,身份证=510229196512276651,编号=5002010071
+https://cqapi.cfkfz.com:28009/admin/user/formsList?modelAndIdCard=5002010071
+https://cqapi.cfkfz.com:28009/admin/user/formsList?modelAndIdCard=510229196512276651
+https://cqapi.cfkfz.com:28009/admin/user/formsList?modelAndIdCard=15023147898
+{
+    "errno": 0,
+    "data": {
+        "total": 1,
+        "pages": 1,
+        "limit": 1,
+        "page": 1,
+        "list": [
+            {
+                "accomplishStatus": 3,
+                "complication": "6,8",
+                "followCount": 29,
+                "gender": "男",
+                "addTime": "2021-03-16 10:40",
+                "siteName": "重庆市永川区来苏镇尘肺病康复站",
+                "userCode": "5002010071",
+                "diagnosisResult": "矽肺一期",
+                "doctorName": "何先佳",
+                "xStages": 1,
+                "evaluateCount": 26,
+                "otherDisease": "",
+                "complicationString": "慢性阻塞性肺疾病,支气管及肺部感染",
+                "rehabilitationLastTime": "2023-10-18 15:25:05",
+                "id": 74862,
+                "relationeShip": null,
+                "mobile": "15023147898",
+                "updateTime": "2023-10-18 15:25",
+                "avatar": "",
+                "userId": 74862,
+                "realname": "向德友",
+                "relativePhone": null,
+                "rehabilitationNum": 30,
+                "idCardNum": "510229196512276651",
+                "tenantId": 1,
+                "siteId": 201,
+                "diseaseOriginal": "",
+                "age": 59
+            }
+        ]
+    },
+    "errmsg": "成功"
+}
+
+-----https://cqapi.cfkfz.com:28009/admin/follow/add     post  新增一份电话随访记录
+入参：
+{
+    "hasAppetite": 2,
+    "mobility": "4的说明文本",
+    "siteName": "重庆市永川区来苏镇尘肺病康复站",
+    "userCode": "5002010071",
+    "storageList": [],
+    "doctorName": [
+        "龙注伊"
+    ],
+    "smokingString": "7的说明文本",
+    "hasMobility": 2,
+    "id": 296558,
+    "hasSleeping": 2,
+    "hasSelfEvaluation": 2,
+    "address": "",
+    "hasOccupation": 1,
+    "followType": 1,
+    "diagnoseResult": "矽肺一期",
+    "mobile": "15023147898",
+    "hasRehabilitation": 1,
+    "hasHospitalized": 1,
+    "updateTime": "2025-02-26 09:33:32",
+    "suggest": "11的说明文本",
+    "homeRehabilitationString": "13的说明文本",
+    "userId": 74862,
+    "hasSmoking": 1,
+    "demand": "10的说明文本",
+    "hasHomeRehabilitation": 1,
+    "realname": "向德友",
+    "hasWeight": 2,
+    "followTime": "2025年02月24日",
+    "rehabilitationNum": 30,
+    "hospitalizedString": "5的说明文本",
+    "hasSatisfaction": 2,
+    "createTime": "2025-04-01 06:12:14",
+    "hasPsychology": 1,
+    "tenantId": 1,
+    "idCardNum": "510229196512276651",
+    "psychologyString": "12的说明文本",
+    "rehabilitationString": "9的说明文本",
+    "hasVaccinate": 1,
+    "vaccinateString": "6的说明文本",
+    "occupationString": "8的说明文本",
+    "index": 1,
+    "weight": "",
+    "appetite": "",
+    "siteId": 201
+}
+--出参：
+{
+    "errno": 0,
+    "data": {
+        "id": 314830,
+        "userId": 74862,
+        "rehabilitationNum": 30,
+        "doctorName": [
+            "龙注伊"
+        ],
+        "hasWeight": 2,
+        "hasAppetite": "2",
+        "hasSleeping": 2,
+        "mobility": "4的说明文本",
+        "hasHospitalized": 1,
+        "hospitalizedString": "5的说明文本",
+        "hasVaccinate": 1,
+        "vaccinateString": "6的说明文本",
+        "hasSmoking": 1,
+        "smokingString": "7的说明文本",
+        "hasOccupation": 1,
+        "occupationString": "8的说明文本",
+        "demand": "10的说明文本",
+        "suggest": "11的说明文本",
+        "createTime": "2025-04-01 06:12:14",
+        "updateTime": "2025-04-20 06:29:03",
+        "siteId": 201,
+        "deleted": null,
+        "hasRehabilitation": 1,
+        "rehabilitationString": "9的说明文本",
+        "hasSelfEvaluation": 2,
+        "hasSatisfaction": 2,
+        "hasPsychology": 1,
+        "psychologyString": "12的说明文本",
+        "hasHomeRehabilitation": 1,
+        "homeRehabilitationString": "13的说明文本",
+        "tenantId": 1,
+        "storageList": [],
+        "followType": 1,
+        "hasMobility": 2,
+        "address": ""
+    },
+    "errmsg": "成功"
+}
+
+
+---删除  
+//https://cqapi.cfkfz.com:28009/admin/follow/update
+POST 入参
+{
+    "id": 314840,
+    "deleted": 1
+}

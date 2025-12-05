@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>来苏卫生院相关</p>
+
+<p>test网页</p>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+@*bootstrap 4开始table及select依赖js*@
+<script src="~/lib/assets/js/popper_2.0.0.js"></script>
+
+@*bootstrap框架*@
+<script src="~/lib/Bootstrap_4.1.1/dist/js/bootstrap.js"></script>
+<link href="~/lib/Bootstrap_4.1.1/dist/css/bootstrap.css" rel="stylesheet" />
+
+@*bootstrap框架*@
+<script src="~/lib/Bootstrap_4.1.1/dist/js/bootstrap.js"></script>
+<link href="~/lib/Bootstrap_4.1.1/dist/css/bootstrap.css" rel="stylesheet" />
+
+@*bootstrap表格插件*@
+<script src="~/lib/bootstrap-table-1.15.3/bootstrap-table.js"></script>
+<script src="~/lib/bootstrap-table-1.15.3/bootstrap-table-zh-CN.min.js"></script>
+<link href="~/lib/bootstrap-table-1.15.3/bootstrap-table.min.css" rel="stylesheet" />
+
+<!--表格相关-->
+<link rel="stylesheet" href="~/lib/bootstrap-table-1.20.2/bootstrap-table.min.css" />
+<link rel="stylesheet" href="~/lib/bootstrap-select-1.13.18/css/bootstrap-select.min.css" />
+<script src="~/lib/bootstrap-table-1.20.2/bootstrap-table.js"></script>
+<script src="~/lib/bootstrap-table-1.20.2/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="~/lib/bootstrap-select-1.13.18/js/bootstrap-select.js"></script>
+<script src="~/lib/bootstrap-select-1.13.18/js/i18n/defaults-zh_CN.js"></script>
+
+<script src="~/js/site.js" asp-append-version="true"></script> 
+<script src="~/js/zlWebApi.js" asp-append-version="true"></script>
+<script src="~/module/lsfollow/lswsyxg_base.js"></script>
+<script src="~/module/lsfollow/lswsyxg.js"></script> 
+<link href="~/module/lsfollow/LsFollow.css" rel="stylesheet" />
+
+<textarea type="text" name="" id="demo" value=""></textarea>
+<button type="button" id="btn">发送</button>
+<div id="res">来苏卫生院相关</div>
+
+
+<div class="row">
+    <div class="col-6">
+        <label class="form-inline">
+            <span style="width: 80px;text-align: right;">认&emsp;&emsp;证：</span>
+            <input id="token_input" type="text" class="form-control form-control-sm col" autocomplete="off" />
+            <button class="btn btn-cancel btn-sm  " id="token_input_btn" style="float: right;">确定</button>
+        </label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <button class="btn" id="fun_test_btn" style="float: left; 
+                                                background-color: #ced1e2;">
+            测试一些功能的测试按钮
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table" id="tab_api_list">
+        </table>
+    </div>
+</div>
+
+<script src="~/module/lsfollow/LsFollow.js"></script> 
