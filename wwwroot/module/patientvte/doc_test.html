@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张永康(HYTESTXXX) -住院医生工作站 - 医嘱信息(医院：中联医院信息系统（测试）)</title>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+
+    <!--@*bootstrap 4开始table及select依赖js*@-->
+    <script src="/lib/assets/js/popper_2.0.0.js"></script>
+
+    <!--@*bootstrap框架*@-->
+    <script src="/lib/Bootstrap_4.1.1/dist/js/bootstrap.js"></script>
+    <link href="/lib/Bootstrap_4.1.1/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <!--@*bootstrap框架*@-->
+    <script src="/lib/Bootstrap_4.1.1/dist/js/bootstrap.js"></script>
+    <link href="/lib/Bootstrap_4.1.1/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <!--@*bootstrap表格插件*@-->
+    <script src="/lib/bootstrap-table-1.15.3/bootstrap-table.js"></script>
+    <script src="/lib/bootstrap-table-1.15.3/bootstrap-table-zh-CN.min.js"></script>
+    <link href="/lib/bootstrap-table-1.15.3/bootstrap-table.min.css" rel="stylesheet" />
+
+    <!--表格相关-->
+    <link rel="stylesheet" href="/lib/bootstrap-table-1.20.2/bootstrap-table.min.css" />
+    <link rel="stylesheet" href="/lib/bootstrap-select-1.13.18/css/bootstrap-select.min.css" />
+    <script src="/lib/bootstrap-table-1.20.2/bootstrap-table.js"></script>
+    <script src="/lib/bootstrap-table-1.20.2/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/lib/bootstrap-select-1.13.18/js/bootstrap-select.js"></script>
+    <script src="/lib/bootstrap-select-1.13.18/js/i18n/defaults-zh_CN.js"></script>
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/site.js" asp-append-version="true"></script>
+    <script src="/js/zlWebApi.js" asp-append-version="true"></script>
+  
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "SimSun", Arial, sans-serif;
+            font-size: 12px;
+            background: #f0f0f0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Title bar with window controls */
+        .title-bar {
+            background: linear-gradient(to bottom, #fff, #e8e8e8);
+            border-bottom: 1px solid #adadad;
+            padding: 4px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .title-bar .title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 12px;
+            }
+
+            .title-bar .window-controls {
+                display: flex;
+                gap: 8px;
+            }
+
+                .title-bar .window-controls button {
+                    width: 24px;
+                    height: 24px;
+                    border: 1px solid #adadad;
+                    background: linear-gradient(to bottom, #fff, #e8e8e8);
+                    cursor: pointer;
+                    font-size: 14px;
+                    padding: 0;
+                }
+
+        .menu-bar {
+            background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+            border-bottom: 1px solid #ccc;
+            padding: 4px 8px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            padding: 3px 8px;
+        }
+
+            .menu-item:hover {
+                background: #d0d0d0;
+            }
+
+        .toolbar {
+            background: linear-gradient(to bottom, #f5f5f5, #e5e5e5);
+            border-bottom: 1px solid #ccc;
+            padding: 6px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+            .toolbar button {
+                padding: 4px 12px;
+                border: 1px solid #adadad;
+                background: linear-gradient(to bottom, #fff, #e8e8e8);
+                cursor: pointer;
+                font-size: 11px;
+                border-radius: 2px;
+            }
+
+                .toolbar button:hover {
+                    background: linear-gradient(to bottom, #fff, #d0d0d0);
+                }
+
+        /* Three-column main layout */
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Changed left-sidebar and middle-section to stack vertically */
+        .left-container {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #ccc;
+        }
+
+        /* Left sidebar with patient list */
+        .left-sidebar {
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .sidebar-header {
+            background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+            padding: 6px 8px;
+            border-bottom: 1px solid #ccc;
+            font-weight: bold;
+        }
+
+        .sidebar-controls {
+            padding: 6px 8px;
+            background: #f8f8f8;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+            .sidebar-controls select {
+                padding: 3px;
+                border: 1px solid #999;
+                font-size: 11px;
+            }
+
+        .sidebar-actions {
+            padding: 6px 8px;
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid #ccc;
+            background: #f0f0f0;
+        }
+
+            .sidebar-actions button {
+                padding: 4px 10px;
+                border: 1px solid #adadad;
+                background: linear-gradient(to bottom, #fff, #e8e8e8);
+                cursor: pointer;
+                font-size: 11px;
+                border-radius: 2px;
+            }
+
+        .patient-list {
+            flex: 1;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            margin: 4px;
+        }
+
+            .patient-list table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11px;
+            }
+
+            .patient-list thead {
+                background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+                position: sticky;
+                top: 0;
+            }
+
+            .patient-list th {
+                padding: 4px;
+                border: 1px solid #ccc;
+                font-weight: bold;
+                text-align: left;
+                font-size: 11px;
+            }
+
+            .patient-list td {
+                padding: 3px 4px;
+                border: 1px solid #e0e0e0;
+            }
+
+            .patient-list tbody tr:hover {
+                background: #e8f4ff;
+            }
+
+            .patient-list tbody tr.selected {
+                background: #4a90e2;
+                color: white;
+            }
+
+            .patient-list input[type="checkbox"] {
+                margin-right: 4px;
+            }
+
+        /* Middle section for notifications */
+        .middle-section {
+            background: #f0f0f0;
+            border-top: 2px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            height: 200px;
+        }
+
+        .middle-header {
+            background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+            padding: 6px 8px;
+            border-bottom: 1px solid #ccc;
+            font-weight: bold;
+        }
+
+        .notification-tabs {
+            background: #f0f0f0;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .notification-tab {
+            padding: 4px 12px;
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+            .notification-tab.active {
+                background: white;
+                border-bottom: 1px solid white;
+            }
+
+        .notification-content {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            background: white;
+            margin: 4px;
+            border: 1px solid #ccc;
+        }
+
+        /* Right section for medical orders */
+        .right-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .patient-info {
+            background: #e8f0f8;
+            padding: 6px 8px;
+            border: 1px solid #b0c4de;
+            margin: 4px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            font-size: 11px;
+        }
+
+            .patient-info label {
+                font-weight: bold;
+                margin-right: 4px;
+            }
+
+            .patient-info .highlight {
+                color: #0066cc;
+                font-weight: bold;
+            }
+
+        .tabs {
+            background: #f0f0f0;
+            padding: 4px;
+            margin: 0 4px;
+            border-bottom: 2px solid #4a90e2;
+            display: flex;
+            gap: 4px;
+        }
+
+        .tab {
+            padding: 6px 16px;
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            cursor: pointer;
+            border-radius: 3px 3px 0 0;
+            font-size: 11px;
+        }
+
+            .tab.active {
+                background: white;
+                border-bottom: 2px solid white;
+                position: relative;
+                bottom: -2px;
+            }
+
+        .sub-tabs {
+            background: #f8f8f8;
+            padding: 4px 8px;
+            margin: 0 4px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+        }
+
+        .sub-tab {
+            padding: 4px 12px;
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+            .sub-tab.active {
+                background: white;
+            }
+
+        .filter-bar {
+            background: #f8f8f8;
+            padding: 6px 8px;
+            margin: 0 4px;
+            border: 1px solid #ddd;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-size: 11px;
+        }
+
+            .filter-bar select, .filter-bar input {
+                padding: 3px;
+                border: 1px solid #999;
+                font-size: 11px;
+            }
+
+            .filter-bar label {
+                cursor: pointer;
+            }
+
+        .data-grid {
+            margin: 4px;
+            background: white;
+            border: 1px solid #ccc;
+            overflow: auto;
+            flex: 1;
+        }
+
+            .data-grid table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11px;
+            }
+
+            .data-grid thead {
+                background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+                position: sticky;
+                top: 0;
+            }
+
+            .data-grid th {
+                padding: 6px;
+                border: 1px solid #ccc;
+                font-weight: bold;
+                text-align: left;
+                font-size: 11px;
+            }
+
+            .data-grid td {
+                padding: 4px 6px;
+                border: 1px solid #e0e0e0;
+            }
+
+            .data-grid tbody tr:hover {
+                background: #e8f4ff;
+            }
+
+            .data-grid tbody tr.selected {
+                background: #4a90e2;
+                color: white;
+            }
+
+            .data-grid tbody tr.long-order {
+                color: #0000ff;
+            }
+
+        .bottom-panel {
+            margin: 4px;
+            background: white;
+            border: 1px solid #ccc;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-tabs {
+            background: #f0f0f0;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .bottom-tab {
+            padding: 4px 12px;
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+            .bottom-tab.active {
+                background: white;
+                border-bottom: 1px solid white;
+            }
+
+        .bottom-content {
+            padding: 8px;
+            flex: 1;
+            overflow: auto;
+        }
+
+            .bottom-content table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11px;
+            }
+
+            .bottom-content th, .bottom-content td {
+                padding: 4px 6px;
+                border: 1px solid #e0e0e0;
+                text-align: left;
+            }
+
+            .bottom-content thead {
+                background: #f0f0f0;
+            }
+
+        .status-bar {
+            background: #f0f0f0;
+            border-top: 1px solid #ccc;
+            padding: 4px 8px;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-icon {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+  <!-- Added title bar -->
+  <div class="title-bar">
+    <div class="title">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect fill='%234a90e2' width='16' height='16'/%3E%3C/svg%3E" alt="icon">
+      <span>张永康(HYTESTXXX) -住院医生工作站 - 医嘱信息(医院：中联医院信息系统（测试）)</span>
+    </div>
+    <div class="window-controls">
+      <button>−</button>
+      <button>□</button>
+      <button>✕</button>
+    </div>
+  </div>
+  
+  <div class="menu-bar">
+    <div class="menu-item">文件(F)</div>
+    <div class="menu-item">医编(A)</div>
+    <div class="menu-item">报表(B)</div>
+    <div class="menu-item">查看(V)</div>
+    <div class="menu-item">工具(T)</div>
+    <div class="menu-item">帮助(H)</div>
+  </div>
+  
+  <div class="toolbar">
+      <button>🆕 新开</button>
+      <button>📋 检查申请</button>
+      <button>💼 作废</button>
+      <button>🛑 停止</button>
+      <button>📤 发送</button>
+      <button>↩️ 回退</button>
+      <button>✅ 执行签记</button>
+      <button>📑 摘抄</button>
+      <button>📄 首页</button>
+      <button>🔍 病案查询</button>
+      <button>☑️ 浏览器A10</button>
+      <button id="open_zlhis">⚙️ 打开导航台</button>
+      <button id="wind_hwd">⚙️ 获取句柄</button>
+      <button id="left_area_show">⚙️ 左侧区域显示</button>
+  </div>
+  
+  <!-- Three-column layout -->
+  <div class="main-content">
+    <!-- Wrapped left-sidebar and middle-section in left-container -->
+    <div class="left-container">
+      <!-- Left Sidebar: Patient List -->
+      <div class="left-sidebar">
+        <div class="sidebar-header">住院病人列表</div>
+        <div class="sidebar-controls">
+          <div>
+            <label>科室(K)</label>
+            <select>
+              <option>[020101一内科]</option>
+            </select>
+          </div>
+          <div>
+            <label>查找(F3)</label>
+            <select>
+              <option>住院号</option>
+            </select>
+          </div>
+        </div>
+        <div class="sidebar-actions">
+          <button>待入住</button>
+          <button id="lst_inpati">在院</button>
+          <button>出院</button>
+          <button>转出</button>
+          <button>会诊</button>
+        </div>
+        <div class="patient-list">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 30px;"></th>
+                <th style="width:45px;">姓名</th>
+                <th>住院号</th>
+                <th>床号</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>病况</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>薛月华</td>
+                <td>22070001 1</td>
+                <td>男</td>
+                <td>47岁</td>
+                <td>普过</td>
+              </tr>
+              <tr class="selected">
+                <td><input type="checkbox" checked></td>
+                <td>邵俊男</td>
+                <td>21060002 1</td>
+                <td>男</td>
+                <td>73岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>冯君芝</td>
+                <td>22070002 2</td>
+                <td>女</td>
+                <td>30岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>福南路</td>
+                <td>22060001 2</td>
+                <td>男</td>
+                <td>52岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>丁东宝</td>
+                <td>22060002 3</td>
+                <td>女</td>
+                <td>57岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>袁旭辉</td>
+                <td>22060007 4</td>
+                <td>女</td>
+                <td>26岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>林冠琼</td>
+                <td>22070010 5</td>
+                <td>女</td>
+                <td>26岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>白博雅</td>
+                <td>22060009 6</td>
+                <td>男</td>
+                <td>47岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>白绍昭</td>
+                <td>22060010 7</td>
+                <td>女</td>
+                <td>26岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>陈翰至</td>
+                <td>22060013 8</td>
+                <td>男</td>
+                <td>26岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>蔡清舒</td>
+                <td>22060012 9</td>
+                <td>男</td>
+                <td>34岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>丁鸿朗</td>
+                <td>22060014 10</td>
+                <td>女</td>
+                <td>11...</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>杜秀云</td>
+                <td>22060015 11</td>
+                <td>女</td>
+                <td>26岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>夏佳文</td>
+                <td>22060016 12</td>
+                <td>女</td>
+                <td>26岁</td>
+                <td>普过</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>蔡成济</td>
+                <td>22060011 13</td>
+                <td>男</td>
+                <td>37岁</td>
+                <td>普过</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Middle Section: Notifications -->
+      <div class="middle-section">
+        <div class="middle-header">消息提醒</div>
+        <div class="notification-tabs">
+          <div class="notification-tab active">住费</div>
+          <div class="notification-tab">床号</div>
+          <div class="notification-tab">状态</div>
+        </div>
+        <div class="notification-content">
+          没有提醒内容...
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Section: Medical Orders -->
+    <div class="right-section">
+      <div class="patient-info">
+        <div><label>姓名:</label><span class="highlight">丁东宝</span></div>
+        <div><label>住院号:</label>22060002</div>
+        <div><label>护理:</label>巧过护理</div>
+        <div><label>床位:</label>3</div>
+        <div><label>次类:</label>第 1 次就诊・内</div>
+        <div><label>过敏药物:</label><span style="color: red;">无记录</span></div>
+        <div><label>类型:</label>普通病人</div>
+        <div><label>付款:</label>商业医疗保险</div>
+        <div><label>图标:</label></div>
+        <div><label>病况:</label>按文本部: 0, 未结费用: 414985.96, 部结费部: -414985.96, 担保额: 0, 占占比: 89.8%</div>
+        <div><label>院区:</label>一般</div>
+        <div><label>输放数:</label>今天0ml</div>
+        <div colspan="2"><label>入院:</label>2022-06-09 09:58</div>
+      </div>
+      
+      <div class="tabs">
+        <div class="tab active">住院一览</div>
+        <div class="tab">临床诊疗</div>
+        <div class="tab">医嘱信息</div>
+        <div class="tab">病历信息</div>
+        <div class="tab">护理信息</div>
+        <div class="tab">护理病历</div>
+        <div class="tab">疾病报告</div>
+      </div>
+      
+      <div class="sub-tabs">
+        <div class="sub-tab active">长期临嘱</div>
+        <div class="sub-tab">长嘱</div>
+        <div class="sub-tab">临嘱</div>
+        <div class="sub-tab">报告</div>
+      </div>
+      
+      <div class="filter-bar">
+        <label>时间</label>
+        <select>
+          <option>所有</option>
+        </select>
+        <label><input type="radio" name="filter" checked> 在用医嘱</label>
+        <label><input type="radio" name="filter"> 所有医嘱</label>
+        <label><input type="checkbox" checked> 显示医生</label>
+        <label><input type="checkbox" checked> 需要授权</label>
+        <label><input type="checkbox" checked> 不需要授权</label>
+        <label>医嘱过滤:</label>
+        <input type="text" style="width: 150px;">
+      </div>
+      
+      <div class="data-grid">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 50px;">类型</th>
+              <th style="width: 120px;">生效时间</th>
+              <th>内容</th>
+              <th>用法</th>
+              <th>医生确托</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>临嘱</td>
+              <td>03-15 18:24</td>
+              <td>25%葡萄糖(硫宫) 20mL*5支, 共2支, 每次20mL</td>
+              <td>静脉输入, 每天二次</td>
+              <td>111</td>
+            </tr>
+            <tr>
+              <td>临嘱</td>
+              <td>04-21 13:52</td>
+              <td>asdf asdf</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>临嘱</td>
+              <td>05-06 18:00</td>
+              <td>小按击</td>
+              <td>一次性</td>
+              <td></td>
+            </tr>
+            <tr class="selected">
+              <td>临嘱</td>
+              <td>11-05 19:15</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.625g*28</td>
+              <td>皮下注射, 每天二次</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>临嘱</td>
+              <td>11-05 19:20</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次135g, 1.5g</td>
+              <td>皮下注射, 每天二次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-05 19:22</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次135g, 1.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-05 19:23</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次135g, 1.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-06 09:28</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次135g, 1.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-06 19:29</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次135g, 1.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-06 09:31</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次135g, 1.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-07 09:25</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次71.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+            <tr class="long-order">
+              <td>长嘱</td>
+              <td>11-07 09:26</td>
+              <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂) 0.75g*10支/盒, 每次71.5g</td>
+              <td>静脉输入, 每天三次</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="bottom-panel">
+        <div class="bottom-tabs">
+          <div class="bottom-tab active">医嘱计价内容</div>
+          <div class="bottom-tab">医嘱发送记录</div>
+        </div>
+        <div class="bottom-content">
+          <table>
+            <thead>
+              <tr>
+                <th>计价医嘱</th>
+                <th>类别</th>
+                <th>国家医保代码</th>
+                <th>国家医保名称</th>
+                <th>省级医保代码</th>
+                <th>省级医保名称</th>
+                <th>收费项目</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>药品医嘱--倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂)</td>
+                <td>西药</td>
+                <td></td>
+                <td></td>
+                <td>11906011</td>
+                <td></td>
+                <td>倍美力(结合雌激素)(苏州辽达圣丽)(苏州辽达圣药厂)</td>
+              </tr>
+              <tr>
+                <td>医药提供费--皮下注射</td>
+                <td>治疗</td>
+                <td></td>
+                <td></td>
+                <td>12040005</td>
+                <td></td>
+                <td>皮下注射</td>
+              </tr>
+              <tr>
+                <td colspan="7" style="text-align: right;"><strong>合计</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="status-bar">
+    <div><span class="status-icon">🔴</span> 试用版本 | 共 37 个病人，张永康的住院: 20人，本科住院: 16人，本日预出院: 1人</div>
+    <div>病人颜色</div>
+  </div>
+  
+  <script>
+      // 表格行选择
+      document.querySelectorAll('.data-grid tbody tr').forEach(row => {
+          row.addEventListener('click', function () {
+              document.querySelectorAll('.data-grid tbody tr').forEach(r => r.classList.remove('selected'));
+              this.classList.add('selected');
+          });
+      });
+       
+      // 表格行选择
+      document.querySelectorAll('.patient-list tbody tr').forEach(row => {
+          row.addEventListener('click', function () {
+              document.querySelectorAll('.patient-list tbody tr').forEach(r => r.classList.remove('selected'));
+              this.classList.add('selected');
+
+              //切换病人
+
+              patientRowClick(this);
+
+          });
+      });
+
+      //let data = zlGet(`/api/BaseApi/PDFPrintDocument?para=` + JSON.stringify(item));
+      function patientRowClick(domRow) {
+          //切换病人
+          const pid = $(domRow).attr("data-pid")
+          const pvid = $(domRow).attr("data-pvid")
+          const hwd = zlval($("#wind_hwd").attr("data-hwd"));
+          if (hwd > 0) {
+              let data = zlGet(`/api/Calculate/SelectPat?hwd=${hwd}&pid=${pid}&pvid=${pvid}`);
+          }
+      }
+
+      document.getElementById('lst_inpati').addEventListener('click', function () {
+          let deptid = 0;
+          let data = zlGet(`/api/Calculate/GetPatList?deptid=${deptid}`);
+          let lstPat = data.Data;
+          const html = lstPat.map(item => `
+                  <tr data-pid=${item.病人ID}  data-pvid=${item.主页ID} >
+                      <td><input type="checkbox"></td>
+                      <td>${item.姓名}</td>
+                      <td>${item.住院号}</td>
+                      <td>${item.床号}</td>
+                      <td>${item.性别}</td>
+                      <td>${item.年龄}</td>
+                    </tr>
+                `).join('');
+          $(".patient-list tbody").html(html)
+
+          // 表格事件绑定
+          document.querySelectorAll('.patient-list tbody tr').forEach(row => {
+              row.addEventListener('click', function () {
+                  document.querySelectorAll('.patient-list tbody tr').forEach(r => r.classList.remove('selected'));
+                  this.classList.add('selected');
+                  patientRowClick(this);               
+              });
+          });
+      });
+
+      document.getElementById('open_zlhis').addEventListener('click', function () {
+          let data = zlGet(`/api/Calculate/OpenZlhis`);
+      });
+
+      document.getElementById('left_area_show').addEventListener('click', function () {
+          let data = zlGet(`/api/Calculate/SendAreaShow?hwd=` + $("#wind_hwd").attr("data-hwd"));
+      });
+
+      document.getElementById('wind_hwd').addEventListener('click', function () {
+          //获取句柄
+          let data = zlGet(`/api/Calculate/GetWindhwd`);     
+          $("#wind_hwd").attr("data-hwd", data.Data)
+      });
+
+  </script>
+</body>
+</html>

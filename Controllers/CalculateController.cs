@@ -1,14 +1,121 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewCostHjy.Models; 
+using NewCostHjy.BLL;
+using NewCostHjy.DAL;
+using NewCostHjy.Models;
+using System;
 using System.Collections.Generic; 
 
 namespace NewCostHjy.Controllers {
+
     /// <summary>
     /// 通用的三方测试服务方法控制器其中返回值都是原样返回不经过ActionFilter处理，不用会去包装CODE SUCCESS 等结点
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CalculateController : BaseController {
+
+        /// <summary>
+        /// 获医生站句柄
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetWindhwd")]
+        public IActionResult GetWindhwd()
+        {
+            MsgSdToVBFrm msgSdToVBFrm = new MsgSdToVBFrm();
+            IntPtr hWnd = msgSdToVBFrm.GetWindowHandle("-住院医生工作站");
+            long outval = hWnd.ToInt64();
+            return Json(outval);
+        }
+        /// <summary>
+        /// 左侧列表显示或者隐藏
+        /// </summary>
+        /// <param name="hwd"></param>
+        /// <returns></returns>
+        [HttpGet("SendAreaShow")]
+        public IActionResult SendAreaShow(long hwd)
+        {
+            MsgSdToVBFrm msgSdToVBFrm = new MsgSdToVBFrm();
+            IntPtr hWnd = msgSdToVBFrm.GetWindowHandle("-住院医生工作站");
+            SysMessageRecord parIn = new SysMessageRecord();
+            parIn.PersonId = 281;
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            parIn.WindowHandle = hWnd.ToInt64();
+            parIn.MessageCode = "S002";
+            zlhisInterfaceDAL.AddSysMessageRecord(parIn); 
+            msgSdToVBFrm.SendCustomMessageByPtr(hWnd);
+            return Json(1);
+        }
+
+        [HttpGet("OpenZlhis")]
+
+        public IActionResult OpenZlhis()
+        {
+            MsgSdToVBFrm msgSdToVBFrm = new MsgSdToVBFrm();
+            msgSdToVBFrm.OpenZlhis();
+            return Json(1);
+        }
+
+        /// <summary>
+        /// 切换病人
+        /// </summary>
+        /// <param name="hwd">句柄</param>
+        /// <param name="pid">病人id</param>
+        /// <param name="pvid">主页id</param>
+        /// <returns></returns>
+        [HttpGet("SelectPat")]
+
+        public IActionResult SelectPat(long hwd, long pid, long pvid)
+        {
+            MsgSdToVBFrm msgSdToVBFrm = new MsgSdToVBFrm();
+            IntPtr hWnd = msgSdToVBFrm.GetWindowHandle("-住院医生工作站");
+            SysMessageRecord parIn = new SysMessageRecord();
+            parIn.PersonId = 281;
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            parIn.WindowHandle = hWnd.ToInt64();
+            parIn.MessageCode = "S001";
+            parIn.PatientId = pid;
+            parIn.VisitId = pvid;
+            zlhisInterfaceDAL.AddSysMessageRecord(parIn); 
+            msgSdToVBFrm.SendCustomMessageByPtr(hWnd);
+            return Json(1);
+        }
+
+        /// <summary>
+        /// 根据科室获取病人列表
+        /// </summary>
+        /// <param name="deptid"></param>
+        /// <returns></returns>
+        [HttpGet("GetPatList")]
+        public IActionResult GetPatList(long deptid)
+        {
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            var outData = zlhisInterfaceDAL.GetPatListByDeptId(deptid);
+            return Json(outData);
+        }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="parIn"></param>
+        /// <returns></returns>
+        [HttpPost("SendCustomMessage")]
+        public IActionResult SendCustomMessage([FromBody] SysMessageRecord parIn)
+        {          
+            MsgSdToVBFrm msgSdToVBFrm = new MsgSdToVBFrm();
+            IntPtr hWnd = msgSdToVBFrm.GetWindowHandle("-住院医生工作站");
+            if (parIn.PersonId > 0)
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                parIn.WindowHandle = hWnd.ToInt64();
+                zlhisInterfaceDAL.AddSysMessageRecord(parIn);
+            }
+            if(hWnd == IntPtr.Zero)
+            {
+                return Json(0);
+            }
+            msgSdToVBFrm.SendCustomMessageByPtr(hWnd);
+            return Json(1);
+        }
 
         /// <summary>
         /// DIP相关

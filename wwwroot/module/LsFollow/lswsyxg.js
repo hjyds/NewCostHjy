@@ -502,7 +502,7 @@ function PicUpdata(name_in, url_in) {
     let picName = objPic.name.split(".")[0];
     let arrTxt = picName.split("_");
     let strName = arrTxt[1];
-    let strTime =  "2024-" + arrTxt[2] + "-" + arrTxt[3];
+    let strTime =  "2025-" + arrTxt[2] + "-" + arrTxt[3];//这个年份经常需要修改
     patLst.forEach(function (item) {
         if (item.realname == strName) {
             objPat = item;

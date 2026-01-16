@@ -2023,5 +2023,52 @@ namespace NewCostHjy.Models {
         public string Cancel { get; set; }
     }
 
+    public class SysMessageRecord
+    {
+        /// <summary>
+        /// 主键
+        /// </summary>
+        public long Id { get; set; }
+        /// <summary>
+        /// 人员ID
+        /// </summary>
+        public long? PersonId { get; set; }
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string Username { get; set; }
+        /// <summary>
+        /// 窗体句柄
+        /// </summary>
+        public long? WindowHandle { get; set; }
 
+        /// <summary>
+        /// 消息编码
+        ///--              S001--切换病人
+        ///--              S002--关闭列表
+        ///--              S003--打开列表
+        /// </summary>
+        public string MessageCode { get; set; }
+
+        /// <summary>
+        /// 消息内容
+        /// </summary>
+        public string MessageContent { get; set; }
+        /// <summary>
+        /// 病人ID
+        /// </summary>
+        public long? PatientId { get; set; }
+        /// <summary>
+        /// 就诊ID
+        /// </summary>
+        public long? VisitId { get; set; }
+        /// <summary>
+        /// 机器名称
+        /// </summary>
+        public string MachineName { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
+    }
 }

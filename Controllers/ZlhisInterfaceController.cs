@@ -520,7 +520,9 @@ namespace NewCostHjy.Controllers {
         public IActionResult ExecuteGeneralCheckNew([FromBody] MircInPatientInfo parIn)
         {
             #region 把入参记录下来 测试日志
-            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL(); 
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            string strTestval = "";
+            strTestval = zlhisInterfaceDAL.GetPatiVisitRecordsDALAsync("");
             string id = Guid.NewGuid().ToString();
             string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
             zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "ExecuteGeneralCheckNew", "ExecuteGeneralCheckNew", "ExecuteGeneralCheckNew");

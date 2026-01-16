@@ -171,6 +171,31 @@ namespace NewCostHjy.DAL
         }
 
         /// <summary>
+        /// 写入一条系统交互消息记录
+        /// </summary>
+        /// <param name="messageRecord"></param>
+        /// <returns></returns>
+        public int AddSysMessageRecord(SysMessageRecord messageRecord)
+        {
+            string sql = @"INSERT INTO 系统交互消息记录 
+                           (id, 人员ID, 用户名, 窗体句柄, 消息编码, 消息内容, 病人ID, 就诊ID, 机器名, 创建时间) 
+                           VALUES 
+                           (系统交互消息记录_ID.nextval, 
+                    :personId, :username, :windowHandle, :messageCode, :messageContent, :patientId, :visitId, :machineName, sysdate)";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] pars = {
+                new OracleParameter(":personId", OracleDbType.Int64, messageRecord.PersonId, ParameterDirection.Input),
+                new OracleParameter(":username", OracleDbType.Varchar2, messageRecord.Username, ParameterDirection.Input),
+                new OracleParameter(":windowHandle", OracleDbType.Int64, messageRecord.WindowHandle, ParameterDirection.Input),
+                new OracleParameter(":messageCode", OracleDbType.Varchar2, messageRecord.MessageCode, ParameterDirection.Input),
+                new OracleParameter(":messageContent", OracleDbType.Varchar2, messageRecord.MessageContent, ParameterDirection.Input),
+                new OracleParameter(":patientId", OracleDbType.Int64, messageRecord.PatientId, ParameterDirection.Input),
+                new OracleParameter(":visitId", OracleDbType.Int64, messageRecord.VisitId, ParameterDirection.Input),
+                new OracleParameter(":machineName", OracleDbType.Varchar2, messageRecord.MachineName, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+        /// <summary>
         /// 获取收费单号
         /// </summary>
         /// <param name="input"></param>
@@ -634,7 +659,7 @@ accomplishStatus
 
             OracleParameter[] pars = new[]
             {
-                 new OracleParameter(":id", OracleDbType.Int32, entity.id, ParameterDirection.Input),
+                new OracleParameter(":id", OracleDbType.Int32, entity.id, ParameterDirection.Input),
                 new OracleParameter(":summary", entity.summary ?? (object)DBNull.Value),
                 new OracleParameter(":pic_name", entity.pic_name ?? (object)DBNull.Value),
                 new OracleParameter(":pic_uid", entity.pic_uid ?? (object)DBNull.Value),
@@ -762,7 +787,10 @@ accomplishStatus
             //select a.create_time,a.ip,a.process_id,a.Log_Info,a.log_info_ex
             //from zlloginfo a where a.call_name = 'HJYTESTPRO'
             //and a.process_id > 0 order by a.create_time,a.ip,a.process_id
-
+            if (loginfo.Length > 4000)
+            {
+                loginfo = loginfo.Substring(0, 4000);
+            }
             OracleDataAccess oda = new OracleDataAccess();
             string temppar = "";
             OracleParameter[] oracleParameters = {
@@ -790,6 +818,50 @@ accomplishStatus
             } catch
             {
 
+            }
+        }
+        /// <summary>
+        /// 在院病人列表
+        /// </summary>
+        /// <param name="deptid"></param>
+        /// <returns></returns>
+        public DataTable GetPatListByDeptId(long deptid)
+        {
+            string sql = @"Select Distinct Decode(B.状态,1,0,3,3,Decode(B.住院医师,'张永康',1,2)) as 排序,Decode(Nvl(B.病案状态,0),0,999,B.病案状态) as 排序2,Null as 组ID, Decode(B.状态,1,'待入住病人',3,'预出院病人',Decode(B.住院医师,'张永康','张永康'||'的在院病人','在院病人')) as 类型, B.病人ID,B.主页ID,B.留观号,B.住院号,B.姓名,decode(sign(trunc(sysdate)-trunc(DECODE(b.入科时间,NULL,b.入院日期,b.入科时间))),0,1,0) 新入院,B.性别,B.年龄,NULL as 科室,D.名称 as 病区,B.住院医师, LPAD(B.出院病床,10,' ') as 床号,B.费别,Decode(B.入科时间,NULL,B.入院日期,B.入科时间) As 入院日期,B.出院日期,B.病人类型,B.状态,B.险类,B.病案状态, -Null as 医嘱ID,-Null as 发送号,-Null as 执行状态,-Null as 执行科室ID,Null as 会诊内容,Nvl(b.路径状态,-1) 路径状态,trunc(sysdate)-trunc(Decode(B.入科时间,NULL,B.入院日期,B.入科时间)) as 住院天数,nvl(q.序号,0) As 新生儿序号,b.单病种,b.出院科室ID,b.当前病区ID,b.婴儿科室ID,B.婴儿病区ID,first_value(Decode(Sign(h.诊断类型-10),-1,h.诊断描述,''))  Over(partition By h.病人id,H.主页ID Order By sign(h.诊断类型-10),decode(h.记录来源
+                            ,4,0,5,0,h.记录来源) desc,Decode(h.诊断类型,1,1,2,2,3,3,0) DESC,h.诊断次序,h.录入次序) As 西医诊断,null as 中医诊断 From 病案主页 B,部门表 D,病人新生儿记录 Q,在院病人 R,病人诊断记录 H Where B.主页ID=R.主页id And B.当前病区ID=D.ID(+) And b.病人id=q.病人ID(+) And b.主页ID=q.主页ID(+) And H.病人id(+)=b.病人id And h.主页id(+)=b.主页id And (q.序号=1 Or q.序号 is Null) And (R.科室ID=36 Or b.婴儿科室ID=36) And B.病人ID=R.病人ID And B.出院科室ID=R.科室ID  And B.封存时间 is NULL And B.状态<>1 Order by 排序,排序2,床号,主页ID Desc
+                        ";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] parameters = {
+                new OracleParameter(":deptid",OracleDbType.Int64,deptid,ParameterDirection.Input)
+            };
+            DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
+            return data;
+        }
+
+        /// <summary>
+        /// 通过病人ID，提取病人历史就诊记录，Xmltype 入出参的示例
+        /// </summary>
+        /// <param name="xmlin">xmli字符串入参</param>
+        /// <returns></returns>
+        public string GetPatiVisitRecordsDALAsync(string xmlin)
+        {
+            //本行必须写在函数内部，用一次写一次，防止sql注入
+            OracleDataAccess oracleDataAccess = new OracleDataAccess(); //(SiteConfig.DataConnectList, "ZLHIS");
+            string pname = "Zl_Third_Getpativisits_Test";
+            OracleParameter[] oracleParameter =
+            {
+                //调用函数（非存储过程，第一个参数必须用来接收返回值（ParameterDirection.ReturnValue））
+                new OracleParameter(":Xml_In", OracleDbType.XmlType, xmlin, ParameterDirection.Input),
+                new OracleParameter(":Xml_Out", OracleDbType.XmlType, ParameterDirection.Output)
+    };
+            Dictionary<string, object> result = null;
+            try
+            {
+                result = oracleDataAccess.ExecuteProcdure(pname, oracleParameter);
+                return result[":Xml_Out"] as string;
+            } catch (Exception e)
+            {
+                throw e;
             }
         }
     }
