@@ -24,7 +24,8 @@ namespace NewCostHjy.Controllers.WebPage {
             string username = "",
             string userId = "",
             string deptId = "",
-            string deptName = "")
+            string deptName = "",
+            string audkey = "")
         {
 
             dynamic objTmp = new {
@@ -33,7 +34,8 @@ namespace NewCostHjy.Controllers.WebPage {
                 username,
                 userId,
                 deptId,
-                deptName
+                deptName,
+                audkey
             };
 
             ViewBag.BaseData = objTmp;

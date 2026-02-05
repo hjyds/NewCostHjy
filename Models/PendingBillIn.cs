@@ -1831,6 +1831,138 @@ namespace NewCostHjy.Models {
         public string order_content { get; set; }
     }
 
+    /// <summary>
+    /// 医保管控，关于费用基础服务入参模型
+    /// </summary>
+    public class MircBaseFeeChkInPar
+    {
+        /// <summary>
+        /// 系统编号
+        /// </summary>
+        public string OriginSystem { get; set; }
+
+        /// <summary>
+        /// 系统名称
+        /// </summary>
+        public string OriginSystemName { get; set; }
+
+        public List<MircBaseFeeChk_Patient> PatientList { get; set; }
+
+        /// <summary>
+        /// 操作员对象
+        /// </summary>
+        public OperateInfo OperateInfo { get; set; }
+    }
+
+    public class MircBaseFeeChk_Patient
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatOriginCode { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatOriginId { get; set; }
+        /// <summary>
+        /// 夏佳文
+        /// </summary>
+        public string PatName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatSexCode { get; set; }
+        /// <summary>
+        /// 女
+        /// </summary>
+        public string PatSex { get; set; }
+        /// <summary>
+        /// 26岁
+        /// </summary>
+        public string PatAge { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatBed { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatBirthday { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string InsureCategoryCode { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BillingSceneCode { get; set; }
+
+        public List<MircBaseFeeChk_Patient_BillDetail> BillDetails { get; set; }
+    }
+
+    public class MircBaseFeeChk_Patient_BillDetail
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string UniqueId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ChargesId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BillingDeptId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BillingPersonId { get; set; }
+        /// <summary>
+        /// 张永康
+        /// </summary>
+        public string BillingPerson { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BillingTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ExecDeptId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string InfantSerialNumber { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string OrderId { get; set; }
+        /// <summary>
+        /// 单价
+        /// </summary>
+        public decimal? Price { get; set; }
+        /// <summary>
+        /// 次
+        /// </summary>
+        public string Unit { get; set; }
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public decimal? Quantity { get; set; }
+        /// <summary>
+        /// 应收金额
+        /// </summary>
+        public decimal? Receivable { get; set; }
+        /// <summary>
+        /// 实收金额
+        /// </summary>
+        public decimal? Received { get; set; }
+    }
 
     /// <summary>
     /// 入参

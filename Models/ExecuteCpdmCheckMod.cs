@@ -504,6 +504,21 @@ namespace NewCostHjy.Models {
         /// 
         /// </summary>
         public List<string> PromptOptions { get; set; }
+
+        /// <summary>
+        /// 险类
+        /// </summary>
+        public string InsureCategoryCode { get; set; }
+
+        /// <summary>
+        /// 收费项目目录名称
+        /// </summary>
+        public string ChargesName { get; set; }
+
+        /// <summary>
+        /// 床号
+        /// </summary>
+        public string PatBed { get; set; }
     }
 
 

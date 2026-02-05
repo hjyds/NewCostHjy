@@ -334,15 +334,54 @@ namespace NewCostHjy.Controllers {
             ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();       
             string id = Guid.NewGuid().ToString();
             string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
-            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "SvrInsureProcess", "SvrInsureProcess", "SvrInsureProcess");
+            RootJCPT parInModel = new RootJCPT();
+            parInModel = Newtonsoft.Json.JsonConvert.DeserializeObject<RootJCPT>(strInfo);
+
+            MIRC_S3139_Data mIRC_S3139_Data = new MIRC_S3139_Data();
+            dynamic dataTmp = parInModel.input.data;
+            string strInfoTmp = Newtonsoft.Json.JsonConvert.SerializeObject(dataTmp);
+            if (parInModel.input.head.tarno == "AIS001")
+            {
+                mIRC_S3139_Data = Newtonsoft.Json.JsonConvert.DeserializeObject<MIRC_S3139_Data>(strInfoTmp);
+            }
+
+            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "SvrInsureProcess", "SvrInsureProcess", parInModel.input.head.bizno);
             #endregion
              
             string strResult = @"[{""vola_id"":""VOLA20240115001"",""rule_id"":""RULE001"",""rule_name"":""重复开药检测规则"",""vola_content"":""同一患者在短时间内重复开具相同药品"",""pid"":""P20240115001"",""pat_visit_no"":""V20240115001"",""vola_amt"":356.5,""vola_amt_stas"":""正常"",""sev_deg"":""明确违规"",""vola_evid"":""患者于2024-01-10和2024-01-12重复开具相同药品阿托伐他汀"",""vola_bhvr_type"":""行为类"",""task_id"":""TASK20240115001"",""is_feedback"":""1"",""vola_detail_info"":[{""vola_item_id"":""ITEM001"",""patn_id"":""P20240115001"",""pat_visit_no"":""V20240115001"",""order_id"":""ORD001"",""vola_item_type"":""违规项"",""vola_amt"":178.25,""transaction_type"":""药品费用""},{""vola_item_id"":""ITEM002"",""patn_id"":""P20240115001"",""pat_visit_no"":""V20240115001"",""order_id"":""ORD002"",""vola_item_type"":""涉及项"",""vola_amt"":178.25,""transaction_type"":""药品费用""}]},{""vola_id"":""VOLA20240115002"",""rule_id"":""RULE002"",""rule_name"":""超量检查检测规则"",""vola_content"":""单次就诊检查项目超过规定数量"",""pid"":""P20240115002"",""pat_visit_no"":""V20240115002"",""vola_amt"":420,""vola_amt_stas"":""正常"",""sev_deg"":""高度可疑"",""vola_evid"":""单次就诊CT检查超过3次，违反医保规定"",""vola_bhvr_type"":""项目类"",""task_id"":""TASK20240115002"",""is_feedback"":""0"",""vola_detail_info"":[{""vola_item_id"":""ITEM003"",""patn_id"":""P20240115002"",""pat_visit_no"":""V20240115002"",""order_id"":""ORD003"",""vola_item_type"":""违规项"",""vola_amt"":280,""transaction_type"":""检查费用""},{""vola_item_id"":""ITEM004"",""patn_id"":""P20240115002"",""pat_visit_no"":""V20240115002"",""order_id"":""ORD004"",""vola_item_type"":""违规项"",""vola_amt"":140,""transaction_type"":""检查费用""}]}]";
-            dynamic jlist = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(strResult);
+            //dynamic jlist = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(strResult);
+            List<MIRC_OUTPUT_Item> mIRC_OUTPUT_Items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MIRC_OUTPUT_Item>>(strResult);
+            foreach (var item in mIRC_OUTPUT_Items)
+            {
+                item.is_feedback = 1;//此结点值是否存在 =1 限制了界面录入框的可见性和必填性，1-可见且必填，0-不可见且非必填
+            }
+
+            for(int i = 0; i < 5; i++)
+            {
+                MIRC_OUTPUT_Item oneItem = new MIRC_OUTPUT_Item();
+                oneItem.vola_id = "1";
+                oneItem.rule_name = "HJY_Test_rule_name_" + i;
+                oneItem.vola_content = "HJY_Test_vola_content_" + i;
+                oneItem.vola_evid = "HJY_Test_vola_evid_" + i;
+                oneItem.vola_bhvr_type = "HJY_Test_vola_bhvr_type_" + i;
+                oneItem.vola_amt_stas= "HJY_Test_vola_amt_stas_" + i;
+                oneItem.sev_deg = "HJY_Test_sev_deg_" + i;
+                oneItem.vola_amt=0.25 * i;
+                oneItem.is_feedback = 1;
+
+                if (i == 0)
+                {
+                    oneItem.sev_deg = "轻度可疑";
+                }
+
+                mIRC_OUTPUT_Items.Add(oneItem);
+
+            }
+
             RootJCPT rootJCPT = new RootJCPT();
             rootJCPT.input = new InputJCPT();
             rootJCPT.input.ack_info = new Ack_info() { exe_status = "A" };            
-            rootJCPT.input.result = jlist; 
+            rootJCPT.input.result = mIRC_OUTPUT_Items; 
             return Json(rootJCPT);
         }
 

@@ -848,6 +848,7 @@ accomplishStatus
             //本行必须写在函数内部，用一次写一次，防止sql注入
             OracleDataAccess oracleDataAccess = new OracleDataAccess(); //(SiteConfig.DataConnectList, "ZLHIS");
             string pname = "Zl_Third_Getpativisits_Test";
+            //pname = "Zl_Third_Getpativisits";
             OracleParameter[] oracleParameter =
             {
                 //调用函数（非存储过程，第一个参数必须用来接收返回值（ParameterDirection.ReturnValue））

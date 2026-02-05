@@ -121,6 +121,20 @@ namespace NewCostHjy {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            // 重定向中间件 - 放在 UseRouting() 之前
+            //把现有的地址重定向为一个新的地址
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.StartsWithSegments("/GeneralBusinessUI/Prompt"))
+                {
+                    var query = context.Request.QueryString;
+                    context.Response.Redirect($"/PatientVte/Index{query}");
+                    return;
+                }
+                await next();
+            });
+
+
             app.UseRouting();
 
             app.UseAuthorization();

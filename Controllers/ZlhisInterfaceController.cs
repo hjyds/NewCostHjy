@@ -522,7 +522,7 @@ namespace NewCostHjy.Controllers {
             #region 把入参记录下来 测试日志
             ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
             string strTestval = "";
-            strTestval = zlhisInterfaceDAL.GetPatiVisitRecordsDALAsync("");
+            //strTestval = zlhisInterfaceDAL.GetPatiVisitRecordsDALAsync("<IN><BRID>336</BRID></IN>");
             string id = Guid.NewGuid().ToString();
             string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
             zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "ExecuteGeneralCheckNew", "ExecuteGeneralCheckNew", "ExecuteGeneralCheckNew");
