@@ -2071,4 +2071,90 @@ namespace NewCostHjy.Models {
         /// </summary>
         public DateTime? CreateTime { get; set; }
     }
+
+    /// <summary>
+    /// 导航台日志信息模型
+    /// </summary>
+    public class ZLHISLogInfoModel
+    {
+        /// <summary>
+        /// 日志级别
+        /// </summary>
+        public string LogLevel { get; set; }
+
+        /// <summary>
+        /// 服务器
+        /// </summary>
+        public string Server { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 会话ID
+        /// </summary>
+        public int SessionId { get; set; }
+
+        /// <summary>
+        /// IP地址
+        /// </summary>
+        public string Ip { get; set; }
+
+        /// <summary>
+        /// 工作站
+        /// </summary>
+        public string Station { get; set; }
+
+        /// <summary>
+        /// 进程ID
+        /// </summary>
+        public int ProcessId { get; set; }
+
+        /// <summary>
+        /// 进程名称
+        /// </summary>
+        public string ProcessName { get; set; }
+
+        /// <summary>
+        /// 分类名称
+        /// </summary>
+        public string CategoryName { get; set; }
+
+        /// <summary>
+        /// 组件名称
+        /// </summary>
+        public string ComponentName { get; set; }
+
+        /// <summary>
+        /// 模块名称
+        /// </summary>
+        public string ModuleName { get; set; }
+
+        /// <summary>
+        /// 函数名称
+        /// </summary>
+        public string FunctionName { get; set; }
+
+        /// <summary>
+        /// 调用名称
+        /// </summary>
+        public string CallName { get; set; }
+
+        /// <summary>
+        /// 阶段
+        /// </summary>
+        public string Stage { get; set; }
+
+        /// <summary>
+        /// 日志信息
+        /// </summary>
+        public string LogInfo { get; set; }
+
+        /// <summary>
+        /// 日志扩展信息
+        /// </summary>
+        public string LogInfoEx { get; set; }
+    }
 }

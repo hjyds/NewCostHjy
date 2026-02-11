@@ -401,7 +401,7 @@ namespace NewCostHjy.DAL
                         6.77 As Eisai_Item_Sales_Price, 6.77 Eisai_Item_Cost_Price, a.Id Eisai_Item_Id, a.名称 As Eisai_Item_Name,
                    a.规格 As Eisai_Item_Spec, a.产地 As Eisai_Item_Dprentp_Name
             From 收费项目目录 A,材料特性 b
-            Where a.id=b.材料id and nvl(b.备货卫材流程,0)=0 and a.类别 = '4' And a.产地 Is Not Null And a.规格 Is Not Null And Rownum < 20
+            Where a.id=b.材料id and nvl(b.备货卫材流程,0)=0 and a.类别 = '4' And a.产地 Is Not Null And a.规格 Is Not Null And Rownum < 7
             order by a.id ";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] parameters = {
@@ -783,7 +783,6 @@ accomplishStatus
         /// <returns></returns>
         public void ZLhisLogInsert(int sernum, string key, string loginfo, string loginfo_ex, int numPar, string funName, string Module_Name, string Function_Name)
         {
-
             //select a.create_time,a.ip,a.process_id,a.Log_Info,a.log_info_ex
             //from zlloginfo a where a.call_name = 'HJYTESTPRO'
             //and a.process_id > 0 order by a.create_time,a.ip,a.process_id
@@ -820,6 +819,43 @@ accomplishStatus
 
             }
         }
+        public void ZLhisLogInsert(ZLHISLogInfoModel logInfoModel)
+        {
+            //ORACLE 字段长度超过了 4000 就查询就显示不出来，虽然字段长度可以超过4000
+            string loginfo = logInfoModel.LogInfo;
+
+            if (loginfo.Length > 4000)
+                loginfo = loginfo.Substring(0, 4000);
+
+            OracleDataAccess oda = new OracleDataAccess();
+            OracleParameter[] oracleParameters = {
+                 new OracleParameter("Log_Level_In",OracleDbType.Varchar2,logInfoModel.LogLevel,ParameterDirection.Input)
+                ,new OracleParameter("Server_In",OracleDbType.Varchar2,logInfoModel.Server,ParameterDirection.Input)
+                ,new OracleParameter("User_Name_In",OracleDbType.Varchar2,logInfoModel.UserName,ParameterDirection.Input)
+                ,new OracleParameter("Session_Id_In",OracleDbType.Int32,logInfoModel.SessionId,ParameterDirection.Input)
+                ,new OracleParameter("Ip_In",OracleDbType.Varchar2,logInfoModel.Ip,ParameterDirection.Input)
+                ,new OracleParameter("Station_In",OracleDbType.Varchar2,logInfoModel.Station,ParameterDirection.Input)
+                ,new OracleParameter("Process_Id_In",OracleDbType.Int32,logInfoModel.ProcessId,ParameterDirection.Input)
+                ,new OracleParameter("Process_Name_In",OracleDbType.Varchar2,logInfoModel.ProcessName,ParameterDirection.Input)
+                ,new OracleParameter("Category_Name_In",OracleDbType.Varchar2,logInfoModel.CategoryName,ParameterDirection.Input)
+                ,new OracleParameter("Component_Name_In",OracleDbType.Varchar2,logInfoModel.ComponentName,ParameterDirection.Input)
+                ,new OracleParameter("Module_Name_In",OracleDbType.Varchar2,logInfoModel.ModuleName,ParameterDirection.Input)
+                ,new OracleParameter("Function_Name_In",OracleDbType.Varchar2,logInfoModel.FunctionName,ParameterDirection.Input)
+                ,new OracleParameter("Call_Name_In",OracleDbType.Varchar2,logInfoModel.CallName,ParameterDirection.Input)
+                ,new OracleParameter("Stage_In",OracleDbType.Varchar2,logInfoModel.Stage,ParameterDirection.Input)
+                ,new OracleParameter("Log_Info_In",OracleDbType.Varchar2,loginfo,ParameterDirection.Input)
+                ,new OracleParameter("Log_Info_Ex_In",OracleDbType.Clob,logInfoModel.LogInfoEx,ParameterDirection.Input)
+            };
+            //忽略错误信息
+            try
+            {
+                oda.ExecuteProcdure("ZLTOOLS.Zlloginfo_Insert", true, oracleParameters);
+            } catch
+            {
+
+            }
+        }
+
         /// <summary>
         /// 在院病人列表
         /// </summary>

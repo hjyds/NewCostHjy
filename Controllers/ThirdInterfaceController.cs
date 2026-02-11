@@ -77,16 +77,22 @@ namespace NewCostHjy.Controllers {
         [HttpPost("StddService_Sync")]
         public IActionResult StddService_Sync([FromBody] dynamic paraIn)
         {
+            ZLHISLogInfoModel logInfoMdl = new ZLHISLogInfoModel();
+            logInfoMdl.FunctionName = "StddService_Sync";
+            logInfoMdl.ModuleName = "SPD";
+
             #region 把入参记录下来 测试日志
             string id = Guid.NewGuid().ToString();
             string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(paraIn);
-            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
-            zlhisInterfaceDAL.ZLhisLogInsert(1, id, strInfo, strInfo, 1, "StddService_Sync", "StddService_Sync", "StddService_Sync");
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();            
             #endregion
-
+            logInfoMdl.LogInfoEx = strInfo;
+            
             SPDCallPar parIn = Newtonsoft.Json.JsonConvert.DeserializeObject<SPDCallPar>(strInfo);
-
+            bool bln查询已知库存 = false;
+            string strRqList = "";
             string strBizno = "";
+            string iptCode = "";
             if (parIn != null)
             {
                 if (parIn.input != null)
@@ -94,14 +100,58 @@ namespace NewCostHjy.Controllers {
                     if (parIn.input.head != null)
                     {
                         strBizno = parIn.input.head.bizno;
+
+                        List<Req_infoItem> listrqs = parIn.input.req_info;
+
+                        if (listrqs!=null && listrqs.Count > 0)
+                        {
+                            if (string.IsNullOrWhiteSpace(listrqs[0].eisai_barcode))
+                            {
+                                bln查询已知库存 = true;
+                                strRqList = Newtonsoft.Json.JsonConvert.SerializeObject(listrqs);
+                            } else
+                            {
+                                iptCode = listrqs[0].eisai_barcode;
+                            }
+                        }
                     }
                 }
             }
+            logInfoMdl.CallName = strBizno;
+
+            zlhisInterfaceDAL.ZLhisLogInsert(1, id, strInfo, strInfo, 1, "StddService_Sync", "StddService_Sync", strBizno);
+
+
+            if (paraIn["input"]["req_info"] != null)
+            {
+                logInfoMdl.LogInfo = Newtonsoft.Json.JsonConvert.SerializeObject(paraIn["input"]["req_info"]);
+            } else if (paraIn["input"]["fee_info"] != null)
+            {
+                logInfoMdl.LogInfo = Newtonsoft.Json.JsonConvert.SerializeObject(paraIn["input"]["fee_info"]);
+            }
+            logInfoMdl.Server = "StddService_Sync";
+            zlhisInterfaceDAL.ZLhisLogInsert(logInfoMdl);
 
             //List<Req_infoItem> lstPar = parIn.input.req_info;
             ZlhisInterfaceBLL zlhisInterfaceBLL = new ZlhisInterfaceBLL();
-            List<Eisai_item_listItem> eisai_Item_ListItems = zlhisInterfaceBLL.SPDItems();
-            if (1 == 0)
+            List<Eisai_item_listItem> eisai_Item_ListItems = null;
+            if (bln查询已知库存)
+            {
+                eisai_Item_ListItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Eisai_item_listItem>>(strRqList);
+                foreach (var item in eisai_Item_ListItems)
+                {
+                    item.eisai_item_store_qunt = "9999";
+                    item.eisai_item_cost_price = "222";
+                    item.eisai_item_sales_price = "222";
+
+                }
+            } else
+            {
+                eisai_Item_ListItems = zlhisInterfaceBLL.SPDItems();
+            }
+
+
+            if (iptCode.Length >= 20)
             {
                 Eisai_item_listItem eisai_Item_ListItem = eisai_Item_ListItems[0];
                 eisai_Item_ListItems = new List<Eisai_item_listItem>();
