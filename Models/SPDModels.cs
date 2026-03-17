@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NewCostHjy.Models {
+namespace NewCostHjy.Models
+{
 
     /// <summary>
     /// 集成平对接SPD相关的模型
     /// </summary>
-    public class SPDModels {
+    public class SPDModels
+    {
     }
 
-    public class Ack_info {
+    public class Ack_info
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -20,7 +23,8 @@ namespace NewCostHjy.Models {
         public string err_msg { get; set; }
     }
 
-    public class Eisai_item_listItem {
+    public class Eisai_item_listItem
+    {
         /// <summary>
         /// 材料id
         /// </summary>
@@ -59,18 +63,19 @@ namespace NewCostHjy.Models {
         public string eisai_barcode { get; set; }
     }
 
-    public class InputJCPT {
+    public class InputJCPT
+    {
         /// <summary>
         /// 
         /// </summary>
-        public Head head { get; set; }
-
-        public dynamic data { get; set; }
+        public Head head { get; set; }        
 
         /// <summary>
         /// 
         /// </summary>
         public Ack_info ack_info { get; set; }
+
+        public dynamic data { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -83,24 +88,35 @@ namespace NewCostHjy.Models {
         public dynamic result { get; set; }
     }
 
-    public class SpdRollCheckPar {
+    public class AppAttachmentDataOut
+    {
+        public string element_name { get; set; } //": "要素名称",
+        public string element_value { get; set; } //": "要素值"
+    }
+
+
+
+    public class SpdRollCheckPar
+    {
         /// <summary>
         /// 
         /// </summary>
-        public string check_stat { get; set; } 
+        public string check_stat { get; set; }
     }
 
     /// <summary>
     /// 标准服务平台接口
     /// </summary>
-    public class RootJCPT {
+    public class RootJCPT
+    {
         /// <summary>
         /// 
         /// </summary>
         public InputJCPT input { get; set; }
     }
-     
-    public class Req_infoItem {
+
+    public class Req_infoItem
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -115,7 +131,8 @@ namespace NewCostHjy.Models {
         public string eisai_item_store_id { get; set; }
     }
 
-    public class InputSPD {
+    public class InputSPD
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -128,7 +145,8 @@ namespace NewCostHjy.Models {
         public LabInputPar para { get; set; }
     }
 
-    public class LabInputPar {
+    public class LabInputPar
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -162,14 +180,16 @@ namespace NewCostHjy.Models {
     /// <summary>
     /// 一般标准服务的入参通过模型
     /// </summary>
-    public class SPDCallPar {
+    public class SPDCallPar
+    {
         /// <summary>
         /// 
         /// </summary>
         public InputSPD input { get; set; }
     }
 
-    public class fee_info_6120 {
+    public class fee_info_6120
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -212,7 +232,8 @@ namespace NewCostHjy.Models {
         public int? exe_dept_id { get; set; }
     }
 
-    public class fee_info_6121 {
+    public class fee_info_6121
+    {
         /// <summary>
         /// 
         /// </summary>
@@ -607,6 +628,4 @@ namespace NewCostHjy.Models {
         /// </summary>
         public List<Vola_detail_infoItem> vola_detail_info { get; set; }
     }
-
-
 }

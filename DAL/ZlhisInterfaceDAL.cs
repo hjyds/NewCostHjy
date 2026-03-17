@@ -1,4 +1,5 @@
-﻿using NewCostHjy.Models;
+﻿using MongoDB.Driver.Core.Configuration;
+using NewCostHjy.Models;
 using OnePaperModel;
 using Oracle.ManagedDataAccess.Client; 
 using System;
@@ -447,7 +448,6 @@ where a.收费细目id=b.id and a.数量>0 and nvl(a.费用id,0)>0 order by a.�
             DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
             return data;
         }
-
 
         /// <summary>
         /// 插入Follow_list表中的数据

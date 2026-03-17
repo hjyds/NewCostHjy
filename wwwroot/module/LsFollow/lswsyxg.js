@@ -227,9 +227,14 @@ function DocFunText() {
         });
     })
      
-    const startDate = '2025-11-03T00:00:00';
-    const endDate = '2025-11-24T23:59:59';
+    //const startDate = '2025-11-03T00:00:00';
+    //const endDate = '2025-11-24T23:59:59';
 
+    // 获取输入值
+    let startDate = document.getElementById('startDate').value.trim();
+    let endDate = document.getElementById('endDate').value.trim();
+    startDate = startDate + 'T00:00:00';
+    endDate = endDate + 'T23:59:59';
      
     let lstPost = [];
 

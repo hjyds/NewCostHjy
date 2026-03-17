@@ -48,6 +48,31 @@
                 }
             } 
         });
+
+
+        // 表单提交事件处理
+        document.getElementById('dateRangeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 获取输入值
+            const startDate = document.getElementById('startDate').value.trim();
+            const endDate = document.getElementById('endDate').value.trim();
+
+            
+            debugger
+            DocFunText();
+        });
+
+        // 设置默认日期为今天
+        const today = new Date();
+        const formattedToday = today.toISOString().split('T')[0];
+        document.getElementById('startDate').value = formattedToday;
+
+        // 设置结束日期默认为开始日期之后的一天
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const formattedTomorrow = tomorrow.toISOString().split('T')[0];
+        document.getElementById('endDate').value = formattedTomorrow;
     });
 
     /**

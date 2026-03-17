@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewCostHjy.BLL;
 using NewCostHjy.DAL;
 using NewCostHjy.Models;
 using OnePaperModel;
@@ -373,6 +374,27 @@ namespace NewCostHjy.Controllers {
         }
 
         /// <summary>
+        /// insert into 三方服务配置目录(系统标识, 服务名称, 是否启用) values ('数据处理平台', '获取单据申请附项', 0);
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("GetAppAttachment")]
+        public IActionResult GetAppAttachment([FromBody] dynamic parIn)
+        {
+            List<AppAttachmentDataOut> appAttachmentDatas = new List<AppAttachmentDataOut>();
+            AppAttachmentDataOut oneData = new AppAttachmentDataOut();
+            oneData.element_name = "现病史";
+            oneData.element_value = "患者于2024年1月10日出现发热、咳嗽等症状，体温最高达39.5℃，伴有乏力和头痛。经诊断为流感，已服用抗病毒药物治疗。";
+            appAttachmentDatas.Add(oneData);
+
+            RootJCPT rootJCPT = new RootJCPT();
+            rootJCPT.input = new InputJCPT();
+            rootJCPT.input.head = new Head();
+            rootJCPT.input.ack_info = new Ack_info() { exe_status = "A" };
+            rootJCPT.input.data = appAttachmentDatas;
+            return Json(rootJCPT);
+        }
+
+        /// <summary>
         /// 医嘱保事前事中通用测试服务
         /// </summary>
         /// <param name="par"></param>
@@ -383,21 +405,26 @@ namespace NewCostHjy.Controllers {
             #region 把入参记录下来 测试日志
             ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();       
             string id = Guid.NewGuid().ToString();
-            string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
-            RootJCPT parInModel = new RootJCPT();
-            parInModel = Newtonsoft.Json.JsonConvert.DeserializeObject<RootJCPT>(strInfo);
-
-            MIRC_S3139_Data mIRC_S3139_Data = new MIRC_S3139_Data();
-            dynamic dataTmp = parInModel.input.data;
-            string strInfoTmp = Newtonsoft.Json.JsonConvert.SerializeObject(dataTmp);
-            if (parInModel.input.head.tarno == "AIS001")
+            try
             {
-                mIRC_S3139_Data = Newtonsoft.Json.JsonConvert.DeserializeObject<MIRC_S3139_Data>(strInfoTmp);
-            }
+                string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
+                RootJCPT parInModel = new RootJCPT();
+                parInModel = Newtonsoft.Json.JsonConvert.DeserializeObject<RootJCPT>(strInfo);
+                MIRC_S3139_Data mIRC_S3139_Data = new MIRC_S3139_Data();
+                dynamic dataTmp = parInModel.input.data;
+                string strInfoTmp = Newtonsoft.Json.JsonConvert.SerializeObject(dataTmp);
+                if (parInModel.input.head.tarno == "AIS001")
+                {
+                    mIRC_S3139_Data = Newtonsoft.Json.JsonConvert.DeserializeObject<MIRC_S3139_Data>(strInfoTmp);
+                }
+                zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "SvrInsureProcess", "SvrInsureProcess", parInModel.input.head.bizno);
+            } catch (Exception)
+            {
 
-            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "SvrInsureProcess", "SvrInsureProcess", parInModel.input.head.bizno);
+
+            }
             #endregion
-             
+
             string strResult = @"[{""vola_id"":""VOLA20240115001"",""rule_id"":""RULE001"",""rule_name"":""重复开药检测规则"",""vola_content"":""同一患者在短时间内重复开具相同药品"",""pid"":""P20240115001"",""pat_visit_no"":""V20240115001"",""vola_amt"":356.5,""vola_amt_stas"":""正常"",""sev_deg"":""明确违规"",""vola_evid"":""患者于2024-01-10和2024-01-12重复开具相同药品阿托伐他汀"",""vola_bhvr_type"":""行为类"",""task_id"":""TASK20240115001"",""is_feedback"":""1"",""vola_detail_info"":[{""vola_item_id"":""ITEM001"",""patn_id"":""P20240115001"",""pat_visit_no"":""V20240115001"",""order_id"":""ORD001"",""vola_item_type"":""违规项"",""vola_amt"":178.25,""transaction_type"":""药品费用""},{""vola_item_id"":""ITEM002"",""patn_id"":""P20240115001"",""pat_visit_no"":""V20240115001"",""order_id"":""ORD002"",""vola_item_type"":""涉及项"",""vola_amt"":178.25,""transaction_type"":""药品费用""}]},{""vola_id"":""VOLA20240115002"",""rule_id"":""RULE002"",""rule_name"":""超量检查检测规则"",""vola_content"":""单次就诊检查项目超过规定数量"",""pid"":""P20240115002"",""pat_visit_no"":""V20240115002"",""vola_amt"":420,""vola_amt_stas"":""正常"",""sev_deg"":""高度可疑"",""vola_evid"":""单次就诊CT检查超过3次，违反医保规定"",""vola_bhvr_type"":""项目类"",""task_id"":""TASK20240115002"",""is_feedback"":""0"",""vola_detail_info"":[{""vola_item_id"":""ITEM003"",""patn_id"":""P20240115002"",""pat_visit_no"":""V20240115002"",""order_id"":""ORD003"",""vola_item_type"":""违规项"",""vola_amt"":280,""transaction_type"":""检查费用""},{""vola_item_id"":""ITEM004"",""patn_id"":""P20240115002"",""pat_visit_no"":""V20240115002"",""order_id"":""ORD004"",""vola_item_type"":""违规项"",""vola_amt"":140,""transaction_type"":""检查费用""}]}]";
             //dynamic jlist = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(strResult);
             List<MIRC_OUTPUT_Item> mIRC_OUTPUT_Items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MIRC_OUTPUT_Item>>(strResult);
@@ -459,8 +486,91 @@ namespace NewCostHjy.Controllers {
             rootJCPT.input.result = jlist;
             return Json(rootJCPT);
         }
+
+        /// <summary>
+        /// 'WEB电子病历', '取消提交检查'   导航台住院医生站 取消提交检查时调用
+        /// </summary>
+        /// <param name="parIn">
+        /// 
+        /// {
+        ///"PAT_TYPE": 就诊类型,1-门诊；2-住院,
+        ///"PAT_ID": "患者ID",
+        ///"VISIT_ID": "就诊ID，门诊为挂号ID；住院为主页ID",
+        ///"BABY_SIGN": "婴儿标识，非婴儿传0",
+        ///"COMPLETE_SIGN": 病历完成标志，固定为 0,
+        ///"COMPLETE_SIGN_EDITOR_ID": "提交的操作员ID",
+        ///"COMPLETE_SIGN_EDITOR": "提交的操作员名称"
+        ///}
+        ///{
+        ///"PAT_TYPE": 2,
+        ///"PAT_ID": "143912",
+        ///"VISIT_ID": "1",
+        ///"BABY_SIGN": "0",
+        ///"COMPLETE_SIGN": 0,
+        ///"COMPLETE_SIGN_EDITOR_ID": "2959",
+        ///"COMPLETE_SIGN_EDITOR": "管理员"
+        ///}         
+        /// </param>
+        /// <returns>
+        /// {"status": 取消提交检查完成结果,  true 成功 false 失败,"result":  "取消提交检查完成结果说明"}
+        /// ->
+        /// {"status":true,"result":"操作成功"}
+        /// </returns>
+        [HttpPost("CheckSubmitCancelEMR")]
+        public IActionResult CheckSubmitCancelEMR([FromBody] dynamic parIn)
+        {
+
+            #region 把入参记录下来 测试日志
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            string id = Guid.NewGuid().ToString();
+            string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
+            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "CheckSubmitCancelEMR", "CheckSubmitCancelEMR", "CheckSubmitCancelEMR");
+            #endregion
+
+            RootJCPT rootJCPT = new RootJCPT();
+            rootJCPT.input = new InputJCPT();
+            rootJCPT.input.ack_info = new Ack_info() { exe_status = "A" };
+
+            dynamic dataTmp = new { status = true, result = "操作成功" };
+            dynamic dataTmpNo = new { status = false, result = "取消失败测试API操作成功" };
+            return Json(dataTmp);
+        }
+
+        /// <summary>
+        /// 'WEB病案首页管理系统', '取消提交检查' 导航台住院医生站 取消提交检查时调用
+        /// </summary>
+        /// <param name="parIn">{"PatientId": "病人id","EnconterId": "就诊id"}->{"PatientId":"190675","EnconterId":"1"} </param>
+        /// <returns>
+        /// {"result":"是否可以取消提交；0-不可以；1-可以","msg":"不可以取消提交的原因"}
+        /// ->
+        /// {"result":0,"msg":"该病人首页已进入后面的流程，不能直接取消提交"}
+        /// </returns>
+        [HttpPost("CheckSubmitCancelPage")]
+        public IActionResult CheckSubmitCancelPage([FromBody] dynamic parIn)
+        {
+
+            #region 把入参记录下来 测试日志
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            string id = Guid.NewGuid().ToString();
+            string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
+            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "CheckSubmitCancelPage", "CheckSubmitCancelPage", "CheckSubmitCancelPage");
+            #endregion
+            dynamic dataTmp = new { result = 1, msg = "成功" };
+            dynamic dataTmpNo = new { result = 0, msg = "该病人首页已进入后面的流程，不能直接取消提交" };
+            return Json(dataTmp);
+        }
+
+        /// <summary>
+        /// 门诊医嘱转住院医嘱
+        /// </summary>
+        /// <param name="parIn"></param>
+        /// <returns></returns>
+        [HttpPost("ConvertPatOrder")]
+        public IActionResult ConvertPatOrder([FromBody] dynamic parIn) {
+            ConvertPatOrderBLL convertPatOrderBLL = new ConvertPatOrderBLL();
+            convertPatOrderBLL.ConvertFun(parIn);
+            return Json(1);
+        }
+
     }
-
-
-
 }

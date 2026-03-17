@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\module\doc\" />
+    <Folder Include="wwwroot\module\doc\mb_doc_js\" />
   </ItemGroup>
 
 </Project>

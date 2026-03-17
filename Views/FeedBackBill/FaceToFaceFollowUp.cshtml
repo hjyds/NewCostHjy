@@ -53,11 +53,24 @@
     </div>
 </div>
 
+<div class="row">
+    <h1>日期范围选择(电话随访)</h1>
+    <form id="dateRangeForm">
+        <label for="startDate">开始日期:</label>
+        <input type="text" id="startDate" name="startDate" placeholder="YYYY-MM-DD" required>
+        <label for="endDate">结束日期:</label>
+        <input type="text" id="endDate" name="endDate" placeholder="YYYY-MM-DD" required>  
+        <input type="submit" value="确定">
+    </form>
+</div>
+
 <script>
     var _mvcData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.BaseData)); 
     setTimeout(function () {
         $("#parin").html(JSON.stringify(_mvcData));
     }, 100);
+
+   
 </script>
 
 
