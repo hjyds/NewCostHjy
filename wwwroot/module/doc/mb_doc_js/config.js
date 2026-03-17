@@ -5,10 +5,8 @@
         "jquery": "plugins/jquery/jquery-2.2.0.min",
         "hammer": "plugins/hammer/hammer.min",
         "jqueryhammer": "plugins/hammer/jquery.hammer",
-        "panzoom": "plugins/panzoom/jquery.panzoom",
+        "panzoom": "plugins/panzoom/panzoom.min",
         "echarts": "plugins/echarts/echarts.min",
-        //"cryptoJS":"plugins/cryptoJS/core-min",
-        //"cryptoJSaes":"plugins/cryptoJS/aes",
         "userlogin": "lib/userLogin",
         "patientSwitch": "lib/patientSwitch",
         "patientHomePage": "lib/patientHomePage",
@@ -34,9 +32,7 @@
     shim: {
         'hammer': ['jquery'],
         'jqueryhammer': ['jquery', 'hammer'],
-        'panzoom': ['jquery']
-        //'cryptoJS':['jquery'],
-        //'cryptoJSaes':['jquery','cryptoJS'],
+        'panzoom': ['jquery','hammer']
     },
 });
 

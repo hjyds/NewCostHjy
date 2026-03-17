@@ -341,8 +341,10 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
 	}
 	
 	  function userLoginRerder() {
+          let tempString=window.location.search.substring(1).split("=")[0];
 		    if(isiosOr != 3){
-			  		if(window.androidui){
+				 if(tempString ==""){
+					  		if(window.androidui){
 				var strUserJson = window.androidui.zlui_getuser();
 				var user = JSON.parse(strUserJson);
 				successLogin(user);
@@ -351,6 +353,8 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
 				window.webkit.messageHandlers.zlui_getuser.postMessage("");
 			} 
 			return;
+				 }
+			 
 		  }
         $("#loginBox .sorllhide").css("opacity", "0");
         $("#loginBox .allCont").css("margin-top", parseInt($(window).height() - $("#loginBox .allCont").height()) / 2 - 43);

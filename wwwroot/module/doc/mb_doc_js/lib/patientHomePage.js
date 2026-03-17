@@ -58,6 +58,23 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
             },100)
         });
     })
+
+
+
+ hammerinsertDiagno= $("#insertDiagno").hammer();
+    hammerinsertDiagno.on('tap', function (ev) {
+      $("#LoadedTip").show();
+        var zyID1 = $("#slzyID").attr("data-patiid"), zyPageID1 = $("#slzyID").attr("data-pageid"),userName1 = JSON.parse(localStorage.userInfo).Result.USER;
+        var gpUrl1=localStorage.configDiagUrl+'?patiId='+zyID1+'&visitId='+zyPageID1+'&userName='+encodeURI(userName1);
+        $("body").append('<div class="jygp-wrap1" id="jcgp-Box1" style="position: absolute;z-index:99999;top:50%;left:50%;margin-left:-600px;margin-top:-350px;border:1px solid #d1d1d1;"><div class="gpclose1"><span class="fs1" aria-hidden="true" data-icon=""></span></div><div class="jygp_dbBox1" style="overflow: hidden;width:1200px;height:700px;position: relative"><iframe src="'+gpUrl1+'"  type="text/html" width="100%" height="670"></iframe></div></div>');
+        gpClosehammer11=$("#jcgp-Box1 .gpclose1").hammer();
+        gpClosehammer11.on('tap', function(event) {
+            setTimeout(function(){
+                $("#jcgp-Box1").remove();
+                $("#LoadedTip").hide();
+            },100)
+        });
+    })
     //导航二级菜单 主页
     hammerMinTwo1 = $("#mainNavMinTwo1 > ul > li").hammer();
     hammerMinTwo1.on('tap', function (ev) {
@@ -108,6 +125,12 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                     utils.showHide(responseTxt.Result.ERROR.MSG);
                     return;
                 }
+				responseTxt.Result.DOSSIER={};
+                              if(responseTxt.Result.output){
+                               responseTxt.Result.DOSSIER=responseTxt.Result.output.DOSSIER;
+                          }
+               $("#LoadedTip").hide();
+				
 
                 $("#qhbrFather").hide();
                 // 隐藏医嘱编辑按钮
@@ -271,7 +294,11 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                 $("#resident").text(responseTxt.Result.DOSSIER.ZYQK.ZYYS);
                 // 责任护士
                 $("#nurse").text(responseTxt.Result.DOSSIER.ZYQK.ZRHS);
-                // 预交总额
+				//判断是否启用了新费用
+				if(responseTxt.Result.fee_able == "1"){
+					getNewFee(patiID, pageID,responseTxt.Result.fee_url,1);
+				}else{
+					   // 预交总额
                 $("#expectedPayAmount").text(responseTxt.Result.DOSSIER.FYQK.YJZE);
                 // 总金额
                 $("#aggregateAmount").text(responseTxt.Result.DOSSIER.FYQK.ZJE);
@@ -285,6 +312,9 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                 $("#balance").text(responseTxt.Result.DOSSIER.FYQK.FYYE);
                 // 担保金额
                 $("#guaranteeAmount").text(responseTxt.Result.DOSSIER.JBXX.DB);
+				}
+				
+             
                 $("#LoadedTip").hide();
 
                 $(".widget-body tbody tr").on("touchstart touchmove", function () {
@@ -308,6 +338,132 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
             complete: function (XMLHttpRequest, textStatus) {
                 utils.errorAjax(textStatus, getBingLiKaJB, [patiID, pageID]);
             }
+        });
+    }
+	function getDetailNewFee(patiID, pageID,url,jbList){
+		    $("#LoadedTip").show();
+		 $.ajax({
+            url: url + '/api/ZlhisInterface/GetChargeBillSummary',
+            async: true,
+            type: "post",
+            data: JSON.stringify({
+                        "PatId": patiID,
+						"patOrigin":"02",
+                        "patOriginId": pageID,
+						"CostStatus":2,
+						"GroupCondition":2
+            }),
+            timeout: utils.timeoutSec(),
+            dataType: "json",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //成功
+            success: function (responseTxt) {
+                $("#LoadedTip").hide();
+				 // 费用明细
+                $("#costDetail").empty("tr");
+				var countFee=0;
+				var FYBL=0;
+				  for (var i = 0; i < responseTxt.Data.length - 1; i++) {
+					  responseText.Data[i].jb=0;
+					  countFee += parseFloat(responseTxt.Data[i].Received);
+					   for (var j = 0; j < jbList.length; j++) {
+						   if(responseText.Data[i].IncomeCode == jbList[j].ID){
+							   responseText.Data[i].jb=jbList[j].级数;
+						   }
+					   }
+				  }
+                var mxXH = 0;
+                for (var mxID = 0; mxID < responseTxt.Data.length - 1; mxID++) {
+                    var FJ = responseTxt.Data[mxID].jb;
+                    var FYMC = responseTxt.Data[mxID].Income.trim();
+					var tempNum=parseFloat(responseTxt.Data[mxID].Received / countFee) * 100;
+				        FYBL =tempNum.toFixed(2);
+                    if (FJ == 1)
+                        $("#costDetail").append('<tr class="sfmx_One"><td style="width:50%"><span class="fs1" aria-hidden="true" data-icon=""></span> ' + FYMC + '</td><td style="width:30%" class="text-right">' + responseTxt.Data[mxID].Received + '</td></tr>');
+                    else if (FJ == 2)
+                        $("#costDetail").append('<tr class="sfmx_Two"><td style="width:50%; padding-left:20px;"><span class="fs1" aria-hidden="true" data-icon=""></span>' + FYMC + '</td><td style="width:30%" class="text-right">' + FYBL + '%' + '</td><td style="width:20%" class="text-right">' + responseTxt.Data[mxID].Received + '</td></tr>');
+                    else
+                        $("#costDetail").append('<tr><td style="width:50%; padding-left:36px;">' + FYMC + '</td><td style="width:30%" class="text-right">' + FYBL + '%' + '</td><td style="width:20%" class="text-right">' + responseTxt.Data[mxID].Received + '</td></tr>');
+                }
+				// 合计
+               $("#mxHJ").text(countFee);
+           	 
+            },
+        });
+	}
+	//新费用调用方法
+	    function getNewFee(patiID, pageID,url,type) {
+        $("#LoadedTip").show();
+		//'http://192.168.0.150:8140'
+        $.ajax({
+            url: url + '/api/ZlhisInterface/GetRemainMoney',
+            async: true,
+            type: "post",
+            data: JSON.stringify({
+                        "patId": patiID,
+						"patOrigin":"02",
+                        "patOriginId": pageID
+            }),
+            timeout: utils.timeoutSec(),
+            dataType: "json",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //成功
+            success: function (responseTxt) {
+                $("#LoadedTip").hide();
+				if(type == 1){
+					  // 预交总额
+                $("#expectedPayAmount").text(responseTxt.Data.prepay_money);
+                // 总金额
+                $("#aggregateAmount").text(responseTxt.Data.total_money);
+                // 预结费用
+                $("#expectedSettlement").text(responseTxt.Data.expected_money);
+                // 预交余额
+                $("#expectedPayBalance").text(responseTxt.Data.prepay);
+                // 未结费用
+                $("#outStanding").text(responseTxt.Data.nobalance_money);
+                // 费用余额---可用余额
+                $("#balance").text(responseTxt.Data.usable_money);
+                // 担保金额
+                $("#guaranteeAmount").text(responseTxt.Data.guaranteed);
+				}else{
+					let yjzeNew=responseTxt.Data.prepay_money;
+					    // 预交总额  改后为合计数
+                if (parseInt(yjzeNew) > 0) {
+                    $("#mxYJZE").text(yjzeNew);
+                } else {
+                    $("#mxYJZE").addClass("text-error").text(yjzeNew);
+                }
+                // 预交余额
+                if (parseInt(responseTxt.Data.prepay) > 0) {
+                    $("#mxYJYE").text(responseTxt.Data.prepay);
+                } else {
+                    $("#mxYJYE").addClass("text-error").text(responseTxt.Data.prepay);
+                }
+                // 预结费用
+                if (parseInt(responseTxt.Data.expected_money) > 0) {
+                    $("#mxYJFY").text(responseTxt.Data.expected_money);
+                } else {
+                    $("#mxYJFY").addClass("text-error").text(responseTxt.Data.expected_money);
+                }
+                // 费用余额
+                if (parseInt(responseTxt.Data.usable_money) > 0) {
+                    $("#mxFYYE").text(responseTxt.Data.usable_money);
+                } else {
+                    $("#mxFYYE").addClass("text-error").text(responseTxt.Data.usable_money);
+                }
+                // 担保余额
+                if (parseInt(responseTxt.Data.guaranteed) > 0) {
+                    $("#mxDBYE").text(responseTxt.Data.guaranteed);
+                } else {
+                    $("#mxDBYE").addClass("text-error").text(responseTxt.Data.guaranteed);
+                }
+				}
+           	 
+            },
         });
     }
     function getBingLiKaFY(patiID, pageID) {
@@ -335,7 +491,16 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
 
                 $("#huaDong > div").hide();
                 $("#huaDongFeiYong").show();
-                if (responseTxt.Result.DOSSIER.FYMX.ITEM instanceof Array) {
+				responseTxt.Result.DOSSIER={};
+				responseTxt.Result.DOSSIER=responseTxt.Result.output.DOSSIER;
+				//启用新费用
+				if(responseTxt.Result.fee_able == "1"){
+					//费用信息
+					getNewFee(patiID, pageID,responseTxt.Result.fee_url,2);
+					//费用明细
+					getDetailNewFee(patiID, pageID,responseTxt.Result.fee_url,responseTxt.Result.jb);
+				}else{
+					   if (responseTxt.Result.DOSSIER.FYMX.ITEM instanceof Array) {
                     var mxCDnew = responseTxt.Result.DOSSIER.FYMX.ITEM.length - 1;
                     var yjzeNew = responseTxt.Result.DOSSIER.FYMX.ITEM[mxCDnew].FYJE;
                 } else {
@@ -347,11 +512,6 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                 } else {
                     $("#mxYJZE").addClass("text-error").text(yjzeNew);
                 }
-                // if (parseInt(responseTxt.Result.DOSSIER.FYQK.YJZE) > 0) {
-                // 	$("#mxYJZE").text(responseTxt.Result.DOSSIER.FYQK.YJZE);
-                // } else {
-                // 	$("#mxYJZE").addClass("text-error").text(responseTxt.Result.DOSSIER.FYQK.YJZE);
-                // }
                 // 预交余额
                 if (parseInt(responseTxt.Result.DOSSIER.FYQK.YJYE) > 0) {
                     $("#mxYJYE").text(responseTxt.Result.DOSSIER.FYQK.YJYE);
@@ -376,8 +536,8 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                 } else {
                     $("#mxDBYE").addClass("text-error").text(responseTxt.Result.DOSSIER.JBXX.DB);
                 }
-
-                // 费用明细
+				
+				 // 费用明细
                 $("#costDetail").empty("tr");
                 var mxXH = 0;
                 for (var mxID = 0; mxID < responseTxt.Result.DOSSIER.FYMX.ITEM.length - 1; mxID++) {
@@ -390,6 +550,16 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                     else
                         $("#costDetail").append('<tr><td style="width:50%; padding-left:36px;">' + FYMC + '</td><td style="width:30%" class="text-right">' + responseTxt.Result.DOSSIER.FYMX.ITEM[mxID].FYBL + '%' + '</td><td style="width:20%" class="text-right">' + responseTxt.Result.DOSSIER.FYMX.ITEM[mxID].FYJE + '</td></tr>');
                 }
+				        // 合计
+                if (responseTxt.Result.DOSSIER.FYMX.ITEM instanceof Array) {
+                    var mxCD = responseTxt.Result.DOSSIER.FYMX.ITEM.length - 1;
+                    $("#mxHJ").text(responseTxt.Result.DOSSIER.FYMX.ITEM[mxCD].FYJE);
+                } else {
+                    $("#mxHJ").text(responseTxt.Result.DOSSIER.FYMX.ITEM.FYJE);
+                }
+				}
+
+               
 
                 $("#costDetail tr").on("touchstart touchmove", function () {
                     utils.CpStart($(this));
@@ -408,13 +578,7 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "layer"], function (jquery,
                     costTwo($(this))
                 });
 
-                // 合计
-                if (responseTxt.Result.DOSSIER.FYMX.ITEM instanceof Array) {
-                    var mxCD = responseTxt.Result.DOSSIER.FYMX.ITEM.length - 1;
-                    $("#mxHJ").text(responseTxt.Result.DOSSIER.FYMX.ITEM[mxCD].FYJE);
-                } else {
-                    $("#mxHJ").text(responseTxt.Result.DOSSIER.FYMX.ITEM.FYJE);
-                }
+        
 
                 $("#mxHJ").on("touchstart touchmove", function () {
                     utils.CpStart($(this));

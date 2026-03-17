@@ -38,6 +38,41 @@ define([
         var serviceChoose = utils.urlFunction();
         var enterData='';//是否是扫描有效数据
         var clickTotal = 0;
+       var isiosOr = "";
+    //判断设备
+    isiosOr = isIOS();
+  //判断设备
+    function isIOS() {
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+            return 1;
+        } else if (/(Android)/i.test(navigator.userAgent)) {
+            return 2;
+        } else {
+            return 3;
+        };
+    }
+//扫码病人结果
+        window.scan_result= function scan_result(input){ 
+
+// 将数字转换为字符串
+let strNum = input.toString();
+
+// 提取中间 6 位
+let middlePart = strNum.slice(2, 8);
+                       var elements = $("#qhbrRight1 .bingLiKaBox");
+              var matchedElement = null;
+
+    elements.each(function() {
+        if ($(this).data("patiid") == middlePart) {
+            matchedElement = $(this); // 保存匹配的元素
+            return false; // 终止循环
+        }
+    });
+        if(!matchedElement){utils.showHide('病人腕带信息未设置或当前界面列表无此病人信息。');return false;}
+      matchedElement.trigger("tap");
+    }
+  
+       
 
         // 病人切换功能 初始化
         function patSwitch(ksItem, userKsId, userName, isWD, isZY, isHZ, isSH,isBQ) {
@@ -52,9 +87,9 @@ define([
             isSH = isSH;
             // 追加容器
             $("#qhbr").remove();
-            var patSitchBox = '<div class="bingRenQieHuanBox" id="qhbr"><div id="qhbrLeft" class="qhbrLeft"></div><div id="qhbrRight" class="qhbrRight"><div id="qhbrRight1"></div></div>';
+            var patSitchBox = '<div class="bingRenQieHuanBox" id="qhbr"><img src="./img/code.png" class="codestyle" style="position: absolute;z-index: 9999;top: 20px;left: 85px;" id="scanBtn"><div id="qhbrLeft" class="qhbrLeft"></div><div id="qhbrRight" class="qhbrRight"><div id="qhbrRight1"></div></div>';
             $("body").append(patSitchBox);
-
+            if(isiosOr == 3){$("#scanBtn").hide()}else{$("#scanBtn").show()}
             // 控制容器高宽
             var qhbrDivWidth = $("#qhbr").width();
             var qhbrDivHeight = $("#qhbr").height();
@@ -80,6 +115,15 @@ define([
                     loadParCard(KSID, BQID, YS, YLZ, isZY, isWD, isHZ, isSH,isBQ);
                 }
             });
+
+
+  $("#scanBtn").on("click",function(event){
+               if(window.androidui){
+				window.androidui.zlui_camerascan();
+			}else if(window.webkit){
+				window.webkit.messageHandlers.zlui_camerascan.postMessage("");
+			}
+        })
 
             // 默认常用筛选
             isZY == 1 ? moRenCysx("在院病人") : '';
@@ -207,6 +251,11 @@ define([
 			}
 			
 		});
+
+
+
+
+
 
 		// 给科室注册点击事件 一级
 		$(".main_level").on("click",function(event){
@@ -481,7 +530,7 @@ define([
                                     if(typeof el.TYPE =='object'){
                                         el.TYPE = el.TYPE[0];
                                     }
-                                    if (el.TYPE === "1" && el.TITLE != '预交款') {
+                                    if (el.TYPE === "1" && el.TITLE != '预交款' && el.TITLE != '中联WEB病历') {
                                         //$("#mainNavMin > ul").append('<li data-url="' + el.URL + '" class="AssUrl"><img src="img/outlineW.png" class="fsls" style="width: 27px"/><p class="twoline">' + el.TITLE + '</p></li>')
                                         $("#url_box > ul").append('<li style="margin-bottom: 10px;float: left;" data-url="' + el.URL + '" class="AssUrltype"><img src="img/outlineW.png" class="fsls" style="width: 27px"/><p class="twoline">' + el.TITLE + '</p></li>')
                                     }
@@ -536,7 +585,7 @@ define([
                                     if(typeof el.TYPE =='object'){
                                         el.TYPE = el.TYPE[0];
                                     }
-                                    if (el.TYPE === "2" && el.TITLE != '预交款') {
+                                    if (el.TYPE === "2" && el.TITLE != '预交款' && el.TITLE != '中联WEB病历') {
                                         //$("#mainNavMin > ul").append('<li data-url="' + el.URL + '" class="AssUrl"><img src="img/outlineW.png" class="fsls" style="width: 27px"/><p class="twoline">' + el.TITLE + '</p></li>')
                                         $("#url_box > ul").append('<li style="margin-bottom: 10px;float: left;" data-url="' + el.URL + '" class="AssUrl"><img src="img/outlineW.png" class="fsls" style="width: 27px"/><p class="twoline">' + el.TITLE + '</p></li>')
                                     }
@@ -632,7 +681,7 @@ define([
                     if(typeof el.TYPE =='object'){
                         el.TYPE = el.TYPE[0];
                     }
-                    if (el.TYPE === "2" && el.TITLE != '预交款') {
+                    if (el.TYPE === "2" && el.TITLE != '预交款' && el.TITLE != '中联WEB病历') {
                         //$("#mainNavMin > ul").append('<li data-url="' + el.URL + '" class="AssUrl"><img src="img/outlineW.png" class="fsls" style="width: 27px"/><p class="twoline">' + el.TITLE + '</p></li>')
                         $("#url_box > ul").append('<li style="width:100%;float: left;" data-url="' + el.URL + '" class="AssUrl"><img src="img/outlineW.png" class="fsls" style="width: 27px"/><p class="twoline">' + el.TITLE + '</p></li>')
                     }
@@ -1421,6 +1470,18 @@ define([
 
         // 点击病历卡时  显示详细信息左边小块
         function brxxShort(thisBR) {
+          if(typeof thisBR =='number'){
+             var elements = $("#qhbrRight1 .bingLiKaBox");
+              var matchedElement = null;
+
+    elements.each(function() {
+        if ($(this).data("patiid") == thisBR) {
+            matchedElement = $(this); // 保存匹配的元素
+            return false; // 终止循环
+        }
+    });
+      thisBR=matchedElement;
+   }
             var zyID = thisBR.attr("data-patiID");
             var zyKSID = thisBR.attr("data-KSID");
             var pageid = thisBR.attr("data-pageID");
@@ -1703,10 +1764,6 @@ define([
         });
         $("#slZDXX").on("touchend", function () {
             $("#smallillness").hide();
-        });
-		
-		  $("#mainNavUserBox").on("touchstart", function () {// click
-            $("#voiceAndphoto").show();
         });
         // 病情小块显示全部病情
         function pateillness(thisdiv) {

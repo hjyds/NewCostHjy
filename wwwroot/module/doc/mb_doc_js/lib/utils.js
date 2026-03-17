@@ -190,6 +190,9 @@
 				         if(CONFIG[j].TITLE == '中联WEB病历'){
                        localStorage.configWEBUrl = CONFIG[j].JK["#cdata-section"];
                    }
+                  	         if(CONFIG[j].TITLE == '录入诊断'){
+                       localStorage.configDiagUrl = CONFIG[j].JK["#cdata-section"];
+                   }
                 // }
                 // $(CONFIG).each(function(index, el) {
                 var parameter = {};
@@ -1147,80 +1150,44 @@
             $("#LoadedTip").hide();
         }
     }
-
+    let panzoomInstance = null;
     // 放大缩小 初始化
     function CSHpanzoom(pdfBox) {  // pdfBox 要放大缩小的DOM的ID名字 如 "abc"
-        // start 添加的放大缩小 目前仅支持两个手指
-        // var pdfWrapper = document.getElementById(pdfBox);
-        // var len;
-        // pdfWrapper.addEventListener('touchstart', function(e){
-        //     if(e.touches.length >= 2){
-        //         var x = e.touches[0].pageX - e.touches[1].pageX;
-        //         var y = e.touches[0].pageY - e.touches[1].pageY;
-        //         len = parseInt(Math.sqrt(x*x + y*y));
-        //     }else{
-        //         return false;
-        //     }
-        // }, false)
+        var area = document.getElementById(pdfBox);
+       panzoomInstance = window.panzoom(area, {
+  minScale: 1,    // 最小缩放比例
+  maxScale: 5 ,    // 最大缩放比例
+ smoothScroll: true,  // 启用惯性滑动
+// 禁用 Panzoom 自带的触摸事件
+        beforeTouchStart: () => false 
+});
+  // 2. 初始化 Hammer.js 并配置手势
+    const hammer = new Hammer(area, {
+        // 必须允许旋转以启用捏合
+        recognizers: [
+            [Hammer.Pinch, { enable: true }],
+            [Hammer.Rotate, { enable: true }] // Pinch 需要 Rotate 支持
+        ]
+    });
 
-        // pdfWrapper.addEventListener('touchmove', function(e){
-        //     if(e.touches.length >= 2){
-        //         e.preventDefault(); //阻止滚动
-        //         var x = e.touches[0].pageX - e.touches[1].pageX;
-        //         var y = e.touches[0].pageY - e.touches[1].pageY;
-        //         var newLen = parseInt(Math.sqrt(x*x + y*y));
-        //         var scale = (newLen - len)/len;
-        //         len = newLen;
-        //         $('#' + pdfBox).children().width($('#' + pdfBox).children().width()*(1+scale))
-        //     }else{
-        //         return false;
-        //     }
-        // }, false)
-        // return false;	
-        // end 添加的放大缩小
-        var test = document.getElementById(pdfBox);
-        var hammerxml = new Hammer(test);
-
-        // 加的代码
-        test.addEventListener('touchstart', function (e) {
-            var fingersDown = e.touches.length;
-            if (fingersDown > 1) {
-                toggleHammerScrolling(true);
-            }
-        });
-        test.addEventListener('touchend', function (e) {
-            toggleHammerScrolling(false);
-        });
-        function toggleHammerScrolling(shouldScroll) {
-            hammerxml.get('pinch').set({
-                enable: shouldScroll
-            });
-        }
-        hammerxml.on('pinchin', inScale);
-        hammerxml.on('pinchout', outScale);
-
-        var $panzoom = $("#" + pdfBox).panzoom();
-        function inScale() {
-            //console.log("in");
-            $panzoom.panzoom('zoom', true, {   // true:缩小 false：放大
-                startTransform: 'scale(1.1)',
-                increment: 0.1,
-                minScale: 1
-                //contain:'invert'
-            });
-        }
-
-        function outScale() {
-            //console.log("out");
-            test.panzoom('zoom', false, {
-                startTransform: 'scale(1.1)',
-                increment: 0.1,
-                maxScale: 5
-                //contain:'invert'
-            });
-        }
+    // 3. 绑定捏合事件并阻止默认行为
+    hammer.on('pinchstart', (e) => e.preventDefault());
+    hammer.on('pinchmove', handlePinch);
+  
     }
-
+function handlePinch(e) {
+     // 计算基于手势中心的缩放
+    const center = {
+        x: e.center.x - panzoomInstance.getRect().left,
+        y: e.center.y - panzoomInstance.getRect().top
+    };
+    
+    // 直接应用缩放比例（e.scale 是相对变化值）
+    panzoomInstance.zoomTo(center.x, center.y, e.scale);
+    
+    // 阻止浏览器默认行为（如页面缩放）
+    e.preventDefault();
+}
     // 动画示意
     function CpStart(idName) {
         $(idName).css("background", "#dcedec");

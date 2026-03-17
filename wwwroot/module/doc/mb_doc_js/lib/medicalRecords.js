@@ -1,4 +1,4 @@
-﻿define(["jquery", "hammer","jqueryhammer","utils",'PDFJS'], function(jquery, hammer, jqueryhammer,utils,PDFJS) {
+﻿define(["jquery", "hammer","jqueryhammer","utils",'PDFJS', 'panzoom'], function(jquery, hammer, jqueryhammer,utils,PDFJS,panzoom) {
 
 	var serviceChoose = utils.urlFunction();
 
@@ -300,7 +300,7 @@
 							$("#inHis").append(inHisLi);
 							//同步增加对应PDF容器
 							if ($('#BingLiPDF-' + element.ID).length == 0) {             //防止重复创建
-								PDFdiv = "<div class='PDFdiv pdf' id='BingLiPDF-" + element.ID + "'></div>";
+								PDFdiv = "<div class='PDFdiv pdf'    style='touch-action: none;-webkit-user-select: none;overflow: hidden;width:100%;height:auto;' id='BingLiPDF-" + element.ID + "'></div>";
 								$("#PDFdivWrapBL").append(PDFdiv);
 							}
 						//病程记录列表----只加载一个
@@ -455,29 +455,16 @@
 				$("#bingLi-List").hide();			//目录
 				$("#mainNavMinTwo3 li").removeClass('XuanZhong')
 				thisData.addClass('XuanZhong');
+                               	$("#mainNavMinTwo3 li").removeClass('bookxz')
+				thisData.addClass('bookxz');
 				$("#"+pdfBox).show();     //当前pdf容器
 				$("#bingLi2").html(thisData.parent().prev().text().split("（")[0]+ " | ");
 				$("#bingLi3").html(thisData.children('span').text());
 					if(webMRID && webMRID != 'undefined'){	
 	                                $("#"+pdfBox).html('');
 									$("#"+pdfBox).append('<iframe id="previewpdf2" src="'+webMRURL+'" width="100%" height="100%" frameborder="0"></iframe>');
-									$("#LoadedTip").hide();					
-					 // $.ajax({
-							//url: localStorage.configWEBUrl +'/ThirdInterface/GetContentTextByEmrId?mrId='+webMRID,
-							//async: false,
-							//timeout: 5000,
-							//type: "get",
-							//dataType: "json",
-							//success: function (responseTxt) {
-                                // $("#LoadedTip").hide();
-								//  $("#"+pdfBox).html("");
-							 // $("#"+pdfBox).append("<div>"+responseTxt.content+"</div>");
-								
-							//},
-							//error: function () {
-								//errorAjax(urlFunction, []);
-							//}
-						 // });
+									$("#LoadedTip").hide();	
+                                     utils.CSHpanzoom(pdfBox);	
 					return false;
 				}
 				if(!$("#"+pdfBox).find('img').length>0){
