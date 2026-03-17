@@ -578,7 +578,6 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "dataLoad", "dateTime"], fu
             if ((lcljState == "null" || lcljState == 0 || lcljState == 3) || ((lcljState == 1 || lcljState == 2) && ljState == 0)) {
                 $("#yzButtonNew").removeClass('noEdit').show();
                 $("#yzButtonCopy").removeClass('noEdit').show();
-               $("#yzButtonPath").removeClass('noEdit').show();
             } else if ((lcljState == 1 || lcljState == 2) && ljState >= 1) {
                 $("#yzButtonNew").addClass('noEdit').show();
                 $("#yzButtonCopy").addClass('noEdit').show();
@@ -598,26 +597,6 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "dataLoad", "dateTime"], fu
         }
     });
 
-
-  hammerbuttonPathCancel = $("#buttonPathCancel").hammer();
-    hammerbuttonPathCancel.on('tap', function (ev) {
-        $("#yzxdPathBox").removeClass('animated').removeClass('bounceInRight').hide();
-        //新加
-        $("#yzxdPathBox").hide();
-$(".tmc").hide();  //透明底层
- $("#yzxdFather").hide();  //居中宽度透明底层
-    });
-
-      hammeryzButtonPath = $("#yzButtonPath").hammer();
-    hammeryzButtonPath.on("tap", function (ev) {
-         $("#searchText").val("");  // 向收索框中写入汉字
-            $("#sskeyboardbox").hide();               // 搜索键盘隐藏
-            $(".tmc").show();  //透明底层
-            $("#yzxdFather").show();  //居中宽度透明底层
-            utils.stopScroll("#yzxdFather", "#tableBodyScroll");
-            $("#yzxdPathBox").addClass('animated').addClass('bounceInRight').show(); //下达块
-            $("#buttonPathCancel").show(); //取消按钮
-})
     //医嘱新开
     hammeryzButtonNew = $("#yzButtonNew").hammer();
     hammeryzButtonNew.on("tap", function (ev) {

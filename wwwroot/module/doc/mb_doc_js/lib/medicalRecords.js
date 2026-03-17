@@ -1,4 +1,4 @@
-﻿define(["jquery", "hammer","jqueryhammer","utils",'PDFJS', 'panzoom'], function(jquery, hammer, jqueryhammer,utils,PDFJS,panzoom) {
+﻿define(["jquery", "hammer","jqueryhammer","utils",'PDFJS'], function(jquery, hammer, jqueryhammer,utils,PDFJS) {
 
 	var serviceChoose = utils.urlFunction();
 
@@ -30,66 +30,9 @@
 			var xmlUrl="";  //xml的url集合
 			var gaoDu=0; //iframe遮罩层高度
 			var bingChengLenth=0;//病程记录的个数
-			function BLWEBList() {
-								  var tempwebksId=JSON.parse(localStorage.currentPatient).KSID;
-								  var tempwebksList=JSON.parse(localStorage.userInfo).Result.KS.split(',');
-								  var tempwebksName="";
-								  tempwebksList.forEach(function(v,i) {
-									   if(v.indexOf(tempwebksId) != -1 ){
-										    tempwebksName=v.split(";")[1];
-									   }
-								  })
-                                $.ajax({
-							         url: localStorage.configWEBUrl +'/ThirdInterface/QueryPatVisitDocInfo',
-                                    type: "post",
-                                    data: JSON.stringify({
-                                         "PatId": $("#slzyID").attr("data-patiID"),//"患者ID"
-                                         "VisitId": $("#slzyID").attr("data-pageID"),//"就诊ID，住院为主页ID，门诊为挂号ID",
-                                         "VisitType": "2",//就诊类型，住院为 2 ，门诊为 1
-										"UserName": JSON.parse(localStorage.userInfo).Result.XM,
-										"UserId": JSON.parse(localStorage.userInfo).Result.UID,
-										"UserDeptId": tempwebksId,
-										"UserDeptName": tempwebksName
-                                    }),
-                                    timeout: utils.timeoutSec(),
-                                    dataType: "json",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    success: function (responseTxt) {
-									if(responseTxt.length > 0){
-									responseTxt.forEach(function(value,i) {
-                                           value.BCR="";
-										   value.BLMC=value.DOC_NAME;
-										   value.CJR ="";
-										   value.CJSJ=value.CREATE_TIME;
-										   value.ZL="2";
-										   value.YM=value.DOC_NAME;
-										   value.ID =i;
-										});
-										bingliLIst(responseTxt); 
-										 //setTimeout(function(){
-											
-										 //},800)
-									}else{
-										bingliLIst();
-									}	
-									},
-									
-								complete: function (XMLHttpRequest, textStatus) {
-									utils.errorAjax(textStatus,BLWEBList,[]);
-									//$("#LoadedTip").hide();
-								}
-								});
-                            }
-			if(localStorage.configWEBUrl){
-			BLWEBList();
-		}else{
 			//请求病历列表
 			bingliLIst();
-		}
-			
-			function bingliLIst(webArry){
+			function bingliLIst(){
 
 				$("#LoadedTip").show();
 				$.ajax({
@@ -123,20 +66,9 @@
 							$("#LoadedTip").hide();
 						}else{
 							var ZLEPRLIST = responseTxt.Result.ZLEPRLIST;
-                            if (ZLEPRLIST != null && ZLEPRLIST != "" || webArry) {
+                            if (ZLEPRLIST != null && ZLEPRLIST != "") {
 								var zl=1;   //1老接口  0新接口
-								//var EPR = ZLEPRLIST.EPR;
- if(webArry && ZLEPRLIST != "" && ZLEPRLIST != null){
-									var EPR = ZLEPRLIST.EPR.concat(webArry);
-								}
-								else{
-                                     if(!webArry){
-									   var EPR = ZLEPRLIST.EPR;
-									 }
-									 else{
-										 var EPR = webArry;
-										 }
-								}
+								var EPR = ZLEPRLIST.EPR;
 								if (EPR  instanceof Array){
 									if(EPR[0].ZL==undefined){
 										zl=0;
@@ -296,11 +228,11 @@
 						//住院病历
 						if (element.YM != "病程记录") {
 							// bingLiLength=bingLiLength+1;
-							var inHisLi = "<li class='inHisBL' webMRURL='"+element.PREVIEW_URL+"' webMRID='"+element.DOC_ID+"' id='inHisLi-" + element.ID + "'><span>" + element.BLMC + "</span><p>" + element.BCR + " " + CJSJTime + " </p></li>";
+							var inHisLi = "<li class='inHisBL' id='inHisLi-" + element.ID + "'><span>" + element.BLMC + "</span><p>" + element.BCR + " " + CJSJTime + " </p></li>";
 							$("#inHis").append(inHisLi);
 							//同步增加对应PDF容器
 							if ($('#BingLiPDF-' + element.ID).length == 0) {             //防止重复创建
-								PDFdiv = "<div class='PDFdiv pdf'    style='touch-action: none;-webkit-user-select: none;overflow: hidden;width:100%;height:auto;' id='BingLiPDF-" + element.ID + "'></div>";
+								PDFdiv = "<div class='PDFdiv pdf' id='BingLiPDF-" + element.ID + "'></div>";
 								$("#PDFdivWrapBL").append(PDFdiv);
 							}
 						//病程记录列表----只加载一个
@@ -446,8 +378,6 @@
 
 			//获取PDF内容
 			function pdfQieHuan(thisData,newOld){
-				var webMRID=thisData.attr("webMRID");
-					var webMRURL=thisData.attr("webMRURL");
 				var fileId=thisData.attr("id").split("-")[1];
 				var pdfBox = "BingLiPDF-"+fileId; //pdf 容器的id
 				$("#bingLiXML").hide();             // XML
@@ -455,18 +385,9 @@
 				$("#bingLi-List").hide();			//目录
 				$("#mainNavMinTwo3 li").removeClass('XuanZhong')
 				thisData.addClass('XuanZhong');
-                               	$("#mainNavMinTwo3 li").removeClass('bookxz')
-				thisData.addClass('bookxz');
 				$("#"+pdfBox).show();     //当前pdf容器
 				$("#bingLi2").html(thisData.parent().prev().text().split("（")[0]+ " | ");
 				$("#bingLi3").html(thisData.children('span').text());
-					if(webMRID && webMRID != 'undefined'){	
-	                                $("#"+pdfBox).html('');
-									$("#"+pdfBox).append('<iframe id="previewpdf2" src="'+webMRURL+'" width="100%" height="100%" frameborder="0"></iframe>');
-									$("#LoadedTip").hide();	
-                                     utils.CSHpanzoom(pdfBox);	
-					return false;
-				}
 				if(!$("#"+pdfBox).find('img').length>0){
 					$("#LoadedTip").show();
 					if(localStorage.PDFStatus == '1'){

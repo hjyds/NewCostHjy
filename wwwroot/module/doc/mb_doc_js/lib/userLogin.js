@@ -1,4 +1,4 @@
-define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function (jquery, hammer, jqueryhammer, utils, patientSwitch) {
+﻿define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function (jquery, hammer, jqueryhammer, utils, patientSwitch) {
     window.loged = false;
     window.enterFlagd = null;
     userNamePub = "";
@@ -37,7 +37,84 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
             console.log(e);
         }
     }
-  
+    function userLoginRerder() {
+        $("#loginBox .sorllhide").css("opacity", "0");
+        $("#loginBox .allCont").css("margin-top", parseInt($(window).height() - $("#loginBox .allCont").height()) / 2 - 43);
+        $("#loginBox .allCont").show();
+        //保存公共头像
+        var CommetNameStorage = localStorage.getItem("zlsofMdocs-COOMEIMG");
+        if (!CommetNameStorage) {
+            var xhrCOMMEIMG = new XMLHttpRequest(),
+                fileReader = new FileReader();
+            xhrCOMMEIMG.open("GET", "img/docimg.png", true);
+            xhrCOMMEIMG.responseType = "blob";
+            xhrCOMMEIMG.addEventListener("load", function () {
+                fileReader.onload = function (evt) {
+                    var result = evt.target.result;
+                    try {
+                        localStorage.setItem("zlsofMdocs-COOMEIMG", result); //保存公共头像
+                    } catch (e) {
+                        console.log("Storage failed: " + e);
+                    }
+                };
+                fileReader.readAsDataURL(xhrCOMMEIMG.response);
+            }, false);
+            xhrCOMMEIMG.send();
+        }
+
+        var getKeyAll, getvalue, chosecrrent, pipei;
+        if (localStorage.length > 0) {
+            for (var i = 0; i < localStorage.length; i++) { //先找到上次登录的选中
+                getKeyAll = localStorage.key(i);
+                //通过键名获取值  
+                getvalue = localStorage.getItem(getKeyAll);
+                if (getKeyAll.indexOf("zlsofMdocs-IMG-choose") != -1) {  //上一次登录的 用户名
+                    chosecrrent = getvalue;
+                    pipei = 0; //选中存在
+                }
+            }
+            for (var i = 0; i < localStorage.length; i++) {   //读取所有的图片和用户名
+                getKeyAll = localStorage.key(i);
+                //通过键名获取值  
+                getvalue = localStorage.getItem(getKeyAll);
+                //var n=0;
+                if (getKeyAll.indexOf("zlsofMdocsIMG-") != -1) {   //找上次登录的图片
+                    var getKey = getKeyAll.replace('zlsofMdocsIMG-', "");
+                    if (chosecrrent == getKey) {                //上次登录用户名
+                        pipei = 1;   //选中有默认图片
+                        $("#loginIMG > .widthCont").append('<img class="inerdiv thisImgchoose" data-name="' + getKey + '" src="' + getvalue + '"/>');
+                        $("#username").val(getKey);
+                    } else {
+                        $("#loginIMG > .widthCont").append('<img class="inerdiv" data-name="' + getKey + '"/ src="' + getvalue + '" style="opacity:0"/>');  //不是选中 隐藏
+                    }
+                }
+            }
+            if (pipei == 0) {  //上次登录用户名存在 并且无默认图片
+                var getCOOMEvalue = localStorage.getItem("zlsofMdocs-COOMEIMG");
+                $("#loginIMG > .widthCont").append('<img class="inerdiv thisImgchoose morenIMG" data-name="' + chosecrrent + '" src="' + getCOOMEvalue + '"/>');
+            }
+        }
+        $("#loginIMG > .widthCont").append('<img class="inerdiv" style="opacity:0"/>');
+        $("#loginIMG > .widthCont").css("width", $("#loginIMG").find('img').length * 80 + "px");
+
+        if ($("#loginIMG > .widthCont").find('img').length <= 2) {  //上次没有登录
+            $("#loginIMG").prev().hide();  //本地没有图片 选中消失
+        } else {
+            if ($("#loginIMG > .widthCont").find('.thisImgchoose').index() == -1) {
+                $("#loginIMG").scrollLeft(0);
+                $("#loginIMG").find('img').css("opacity", "0");
+                $("#loginIMG").find('img').eq(1).css("opacity", "1");
+                $("#username").val($("#loginIMG").find('img').eq(1).attr('data-name'));
+                $("#loginIMG > .widthCont").find('img').eq(1).addClass('choosethis');
+                $("#loginBox .sorllhide").css("opacity", "1");
+            } else {
+                var leftindex = $("#loginIMG > .widthCont").find('.thisImgchoose').index();
+                var thenum = parseInt(leftindex) - 1;
+                $("#loginIMG").scrollLeft(parseInt(thenum) * 80);
+            }
+
+        }
+    }
     //滑动控制
     var timeout = false;
     $("#loginIMG").scroll(function () {
@@ -116,18 +193,79 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
             }
         }
     });
-	function successLogin(info){
-		if(info.Data){
-			var data=info.Data;
-		}else{
-			var data=info;
-		}
-			  if (data.Result && typeof (data.Result) === "string") 
-			{
+    function saveLoginWay(userID) {
+        $.ajax({
+            url: serviceChoose + "/SaveLogin",
+            timeout: utils.timeoutSec(),
+            type: "post",
+            dataType: "json",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + JSON.parse(localStorage.userInfo).access_token
+            },
+            data: JSON.stringify({
+                "IN": {
+                       "UserName":userID
+                }
+            }),
+        }).always(function (responseTxt, status, xhr) {
+            console.log(responseTxt);
+        })
+    }
+    //登录 
+    //hammerloginButton = $("#loginButton").hammer();
+    //hammerloginButton.on('tap', function(ev) {
+    //$("#loginButton").on('touchstart',function(ev) {	
+    $("#loginButton").on('click', function (ev) {
+        // 登录判断
+        var userID = $("#username").val();
+        var passWord = $("#password").val();
+
+        // 用户名是否为空
+        if (userID == "") {
+            $("#LoadedTip").hide();
+            utils.showHide("用户名不能为空噢^_^");
+        }
+
+        // 密码是否为空
+        else if (passWord == "") {
+            $("#LoadedTip").hide();
+            utils.showHide("密码不能为空噢^_^");
+        }
+        // 都不为空
+        else {
+            //登陆成功 输入框失去焦点
+            $("#password").blur();
+            $("#username").blur();
+            //loginmessge();
+            //function loginmessge() {
+            $("#LoadedTip").show();
+            //console.log('登录开始：' + (new Date()).getTime())
+            $.ajax({
+                url: "../oauth/token",
+                timeout: utils.timeoutSec(),
+                type: "post",
+                data: {
+                    "grant_type": "password",
+                    "username": userID,
+                    "password": passWord,
+                    "in": JSON.stringify({
+                        "ID": "e39249848267c31fcd6e847a78c8b69f",
+                        "YID": "dda86674b7b077b68505d948a843d7d4",
+                        "BBH": "1.4.0.1",
+                        "SBXH": "iPad",
+                        "XTBBH": "iPhone OS 8.1.1"
+                    })
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ZG9jOmNweng='
+                },
+                success: function (data) {
+                    //console.log('登录结束：' + (new Date()).getTime());
+                    if (data.Result && typeof (data.Result) === "string") {
                         data.Result = JSON.parse(data.Result);
-            }
-	
-		  
+                    }
                     var privs = data.Result.PRIVS.trim();
                     if (privs.indexOf("1956;") !== -1 && privs.length > 5) {
                         window.loged = true;
@@ -149,8 +287,7 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
                             rhino = document.getElementById("audio1");
                         if (rhinoStorage) {
                             rhino.setAttribute("src", rhinoStorage);
-                        } 
-						else {
+                        } else {
                             var xhr = new XMLHttpRequest(),
                                 fileReader = new FileReader();
                             xhr.open("GET", "mp3/click.mp3", true);
@@ -233,8 +370,7 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
                         if (($("#loginIMG > .widthCont").find('.morenIMG').index() == $("#loginIMG > .widthCont").find('.choosethis').index())) {  //没有头像
                             var oneNowuserName = $("#username").val();
                             localStorage.setItem("zlsofMdocs-IMG-choose", oneNowuserName);  //存用户名
-                        } 
-						else {  //等后台返回
+                        } else {  //等后台返回
                             var NowuserName = $("#username").val();
                             var NameStorage = localStorage.getItem("zlsofMdocsIMG-" + NowuserName);
                             if (!NameStorage) {   //后台有图片返回
@@ -338,172 +474,6 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
                         $("#LoadedTip").hide();
                         utils.showHide("没有授权，不能使用本系统");
                     }
-	}
-	
-	  function userLoginRerder() {
-          let tempString=window.location.search.substring(1).split("=")[0];
-		    if(isiosOr != 3){
-				 if(tempString ==""){
-					  		if(window.androidui){
-				var strUserJson = window.androidui.zlui_getuser();
-				var user = JSON.parse(strUserJson);
-				successLogin(user);
-				
-			}else if(window.webkit){
-				window.webkit.messageHandlers.zlui_getuser.postMessage("");
-			} 
-			return;
-				 }
-			 
-		  }
-        $("#loginBox .sorllhide").css("opacity", "0");
-        $("#loginBox .allCont").css("margin-top", parseInt($(window).height() - $("#loginBox .allCont").height()) / 2 - 43);
-        $("#loginBox .allCont").show();
-        //保存公共头像
-        var CommetNameStorage = localStorage.getItem("zlsofMdocs-COOMEIMG");
-        if (!CommetNameStorage) {
-            var xhrCOMMEIMG = new XMLHttpRequest(),
-                fileReader = new FileReader();
-            xhrCOMMEIMG.open("GET", "img/docimg.png", true);
-            xhrCOMMEIMG.responseType = "blob";
-            xhrCOMMEIMG.addEventListener("load", function () {
-                fileReader.onload = function (evt) {
-                    var result = evt.target.result;
-                    try {
-                        localStorage.setItem("zlsofMdocs-COOMEIMG", result); //保存公共头像
-                    } catch (e) {
-                        console.log("Storage failed: " + e);
-                    }
-                };
-                fileReader.readAsDataURL(xhrCOMMEIMG.response);
-            }, false);
-            xhrCOMMEIMG.send();
-        }
-
-        var getKeyAll, getvalue, chosecrrent, pipei;
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) { //先找到上次登录的选中
-                getKeyAll = localStorage.key(i);
-                //通过键名获取值  
-                getvalue = localStorage.getItem(getKeyAll);
-                if (getKeyAll.indexOf("zlsofMdocs-IMG-choose") != -1) {  //上一次登录的 用户名
-                    chosecrrent = getvalue;
-                    pipei = 0; //选中存在
-                }
-            }
-            for (var i = 0; i < localStorage.length; i++) {   //读取所有的图片和用户名
-                getKeyAll = localStorage.key(i);
-                //通过键名获取值  
-                getvalue = localStorage.getItem(getKeyAll);
-                //var n=0;
-                if (getKeyAll.indexOf("zlsofMdocsIMG-") != -1) {   //找上次登录的图片
-                    var getKey = getKeyAll.replace('zlsofMdocsIMG-', "");
-                    if (chosecrrent == getKey) {                //上次登录用户名
-                        pipei = 1;   //选中有默认图片
-                        $("#loginIMG > .widthCont").append('<img class="inerdiv thisImgchoose" data-name="' + getKey + '" src="' + getvalue + '"/>');
-                        $("#username").val(getKey);
-                    } else {
-                        $("#loginIMG > .widthCont").append('<img class="inerdiv" data-name="' + getKey + '"/ src="' + getvalue + '" style="opacity:0"/>');  //不是选中 隐藏
-                    }
-                }
-            }
-            if (pipei == 0) {  //上次登录用户名存在 并且无默认图片
-                var getCOOMEvalue = localStorage.getItem("zlsofMdocs-COOMEIMG");
-                $("#loginIMG > .widthCont").append('<img class="inerdiv thisImgchoose morenIMG" data-name="' + chosecrrent + '" src="' + getCOOMEvalue + '"/>');
-            }
-        }
-        $("#loginIMG > .widthCont").append('<img class="inerdiv" style="opacity:0"/>');
-        $("#loginIMG > .widthCont").css("width", $("#loginIMG").find('img').length * 80 + "px");
-
-        if ($("#loginIMG > .widthCont").find('img').length <= 2) {  //上次没有登录
-            $("#loginIMG").prev().hide();  //本地没有图片 选中消失
-        } else {
-            if ($("#loginIMG > .widthCont").find('.thisImgchoose').index() == -1) {
-                $("#loginIMG").scrollLeft(0);
-                $("#loginIMG").find('img').css("opacity", "0");
-                $("#loginIMG").find('img').eq(1).css("opacity", "1");
-                $("#username").val($("#loginIMG").find('img').eq(1).attr('data-name'));
-                $("#loginIMG > .widthCont").find('img').eq(1).addClass('choosethis');
-                $("#loginBox .sorllhide").css("opacity", "1");
-            } else {
-                var leftindex = $("#loginIMG > .widthCont").find('.thisImgchoose').index();
-                var thenum = parseInt(leftindex) - 1;
-                $("#loginIMG").scrollLeft(parseInt(thenum) * 80);
-            }
-
-        }
-    }
-    function saveLoginWay(userID) {
-        $.ajax({
-            url: serviceChoose + "/SaveLogin",
-            timeout: utils.timeoutSec(),
-            type: "post",
-            dataType: "json",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + JSON.parse(localStorage.userInfo).access_token
-            },
-            data: JSON.stringify({
-                "IN": {
-                       "UserName":userID
-                }
-            }),
-        }).always(function (responseTxt, status, xhr) {
-            console.log(responseTxt);
-        })
-    }
-    //登录 
-    //hammerloginButton = $("#loginButton").hammer();
-    //hammerloginButton.on('tap', function(ev) {
-    //$("#loginButton").on('touchstart',function(ev) {	
-    $("#loginButton").on('click', function (ev) {
-        // 登录判断
-        var userID = $("#username").val();
-        var passWord = $("#password").val();
-
-        // 用户名是否为空
-        if (userID == "") {
-            $("#LoadedTip").hide();
-            utils.showHide("用户名不能为空噢^_^");
-        }
-
-        // 密码是否为空
-        else if (passWord == "") {
-            $("#LoadedTip").hide();
-            utils.showHide("密码不能为空噢^_^");
-        }
-        // 都不为空
-        else {
-            //登陆成功 输入框失去焦点
-            $("#password").blur();
-            $("#username").blur();
-            //loginmessge();
-            //function loginmessge() {
-            $("#LoadedTip").show();
-            //console.log('登录开始：' + (new Date()).getTime())
-            $.ajax({
-                url: "../oauth/token",
-                timeout: utils.timeoutSec(),
-                type: "post",
-                data: {
-                    "grant_type": "password",
-                    "username": userID,
-                    "password": passWord,
-                    "in": JSON.stringify({
-                        "ID": "e39249848267c31fcd6e847a78c8b69f",
-                        "YID": "dda86674b7b077b68505d948a843d7d4",
-                        "BBH": "1.4.0.1",
-                        "SBXH": "iPad",
-                        "XTBBH": "iPhone OS 8.1.1"
-                    })
-                },
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Basic ZG9jOmNweng='
-                },
-                success: function (data) {
-                    //console.log('登录结束：' + (new Date()).getTime());
-                   successLogin(data);
                 },
                 error: function (xmr) {
                     var data = xmr.responseJSON;
@@ -806,16 +776,18 @@ define(["jquery", "hammer", "jqueryhammer", "utils", "patientSwitch"], function 
                     if(res.Result.length > 0){
                         for(var i=0; i<res.Result.length; i++){
                              $('#zd_box').append('<li style="font-size: 16px;font-weight: bold;padding-bottom: 10px;padding-left:20px;margin-bottom: 10px;border-bottom: 1px solid #ddd;" data-zd="'+res.Result[i]['站点']+'">'+res.Result[i]['名称']+'</li>');
-                        }
+                   }
 
                         var zd=$("#zd_box li").hammer();
                         zd.on('tap', function(event) {
-                            if(location.href.indexOf('?') ==-1){
+                    if(location.href.indexOf('?') ==-1){
                                 location.href=location.href+"?zd="+$(this).attr("data-zd");
                                 $("#jcgp-Box").remove();
                             }
                         });
-                    }
+                    }else{
+                             $("#jcgp-Box").remove(); 
+                        }
                     var gpClosehammer1=$("#jcgp-Box .gpclose").hammer();
                     gpClosehammer1.on('tap', function(event) {
                         setTimeout(function(){

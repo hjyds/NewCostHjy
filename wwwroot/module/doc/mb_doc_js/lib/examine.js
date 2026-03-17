@@ -1,4 +1,4 @@
-﻿/*
+/*
 	检查报告 PDF
 	1、列表加载，默认加载第一个检查报告；
 	2、点击列表，加载对应检查报告。
@@ -446,8 +446,7 @@ define(["jquery", "hammer", "jqueryhammer", "utils","patientSwitch"], function (
                 } else {
                     var heightbox = $(window).height() - 30;
                 }
-               
-       if (gpUrl.indexOf("http://") != -1 || gpUrl.indexOf("https://") != -1 || gpUrl.indexOf("ftp://") != -1 || gpUrl.indexOf("ws://") != -1) {
+                if (gpUrl.indexOf("http://") != -1 || gpUrl.indexOf("https://") != -1 || gpUrl.indexOf("ftp://") != -1 || gpUrl.indexOf("ws://") != -1) {
                     $("body").append('<div class="jygp-wrap" id="jcgp-Box"><div class="gpclose"><span class="fs1" aria-hidden="true" data-icon=""></span></div><div class="jygp_dbBox"><iframe src="' + gpUrl + '" height="' + heightbox + 'px" width="' + wightbox + 'px" style="margin-top:5px;margin-left:5px;"></iframe></div></div>');
                 } else {
                     location.href = gpUrl;
@@ -458,8 +457,6 @@ define(["jquery", "hammer", "jqueryhammer", "utils","patientSwitch"], function (
                         $("#jcgp-Box").remove();
                     }, 100)
                 });
-
-               
             }
 
         }

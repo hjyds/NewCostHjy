@@ -28,9 +28,6 @@ define(["jquery", "hammer","jqueryhammer","utils","photo","video"], function(jqu
 			$("#huiLpages").hide();//护理记录
 			$("#mainNavMin .AssUrl").remove();   //三方系统
 			$("#mainNavMin .AssUrltype").remove(); 
-			if(window.androidui){
-				window.androidui.zlui_logoutwithoutdialog();
-			}
 		}
 		function cancelExitOut(){
 			$("#promptQDQX").hide();

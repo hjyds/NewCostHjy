@@ -1395,53 +1395,6 @@ define([
                             // 病历文书，报告
                             $("#zhenLiao>.tableBodyDiv>.zlylTable_body>tbody").append('<tr id="blwsTr"><td style="font-weight: bold; height:90px; vertical-align:middle;">病历文书</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
                             $("#zhenLiao>.tableBodyDiv>.zlylTable_body>tbody").append('<tr id="fjbgTr"><td style="font-weight: bold; height:90px; vertical-align:middle;">辅检报告</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
-							     //在住院一览中加入WEB病历的相关查询
-							if(localStorage.configWEBUrl){
-								BLWEBList();
-							}
-							 function BLWEBList() {
-								 		  var tempwebksId=JSON.parse(localStorage.currentPatient).KSID;
-								  var tempwebksList=JSON.parse(localStorage.userInfo).Result.KS.split(',');
-								  var tempwebksName="";
-								  tempwebksList.forEach(function(v,i) {
-									   if(v.indexOf(tempwebksId) != -1 ){
-										    tempwebksName=v.split(";")[1];
-									   }
-								  })
-                                $.ajax({
-                                    url: localStorage.configWEBUrl +'/ThirdInterface/QueryPatVisitDocInfo',
-                                    type: "post",
-                                    data: JSON.stringify({
-                                              "PatId": $("#slzyID").attr("data-patiID"),//"患者ID"
-                                         "VisitId": $("#slzyID").attr("data-pageID"),//"就诊ID，住院为主页ID，门诊为挂号ID",
-                                         "VisitType": "2",//就诊类型，住院为 2 ，门诊为 1
-										"UserName": JSON.parse(localStorage.userInfo).Result.XM,
-										"UserId": JSON.parse(localStorage.userInfo).Result.UID,
-										"UserDeptId": tempwebksId,
-										"UserDeptName": tempwebksName
-                                           
-                                    }),
-                                    timeout: utils.timeoutSec(),
-                                    dataType: "json",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    success: function (responseTxt) {
-										if(responseTxt.length > 0){
-												 responseTxt.forEach(function(value,i) {
-                                            var tdEq = findDay(value.CREATE_TIME.split(" ")[0]);
-											 $("#blwsTr").children("td").eq(tdEq).append('<p data-webMRID="' + value.DOC_ID + '"  data-webMRURL="'+value.PREVIEW_URL+'" data-zl="2" data-ym="' + value.DOC_NAME + '" data-yzid="' + value.DOC_ID + '">' + value.DOC_NAME + '</p>');
-											//$("#blwsTr").children("td").eq(tdEq).append('<a  style="display:block" data-webURL="' + value.PREVIEW_URL + '" href="'+value.PREVIEW_URL+'" target="_blank">' + value.DOC_NAME + '</a>');
-										});
-										}
-									
-									},
-										complete: function (XMLHttpRequest, textStatus) {
-									utils.errorAjax(textStatus,BLWEBList,[]);
-									//$("#LoadedTip").hide();
-								}
-								});
-                            }
                             // 追加病历 检查 列表
                             if (data.Result.OUTPUT.BL !== null) {
                                 var bl = data.Result.OUTPUT.BL.R;
@@ -1779,39 +1732,6 @@ define([
             var zl = thisP.attr("data-zl");
             var yzid = thisP.attr("data-yzid");
             var ym = thisP.attr("data-ym");
-			var webMRID =thisP.attr("data-webMRID");
-			var webMRURL =thisP.attr("data-webMRURL");
-			var pdfBox_nurse='pdf-'+thisP.attr("data-yzid");
-		    if(webMRID && webMRID != 'undefined'){
-				if ( $(".webBox").length  == '0' ) {
-					 $("#lclj_bgDiv").append('<div class="webBox" style="height:100%;overflow:auto;" id="' + pdfBox_nurse + '"></div>');
-				}else{
-					$('.webBox').remove();
-					 $("#lclj_bgDiv").append('<div class="webBox" style="height:100%;overflow:auto;" id="' + pdfBox_nurse + '"></div>');
-				}
-				
-	      //$.ajax({
-				//url: localStorage.configWEBUrl +'/ThirdInterface/GetContentTextByEmrId?mrId='+webMRID,
-				//async: false,
-				//timeout: 5000,
-				//type: "get",
-				//dataType: "json",
-				//success: function (responseTxt) {
-					 $("#"+pdfBox).html("");
-				    //$("#"+pdfBox_nurse).append("<div>"+responseTxt.content+"</div>");
-						$("#"+pdfBox_nurse).append('<iframe id="previewpdf3" src="'+webMRURL+'" width="100%" height="100%" frameborder="0"></iframe>');
-					  utils.CSHpanzoom(pdfBox_nurse);
-					  divHC(pdfBox_nurse);
-					 $("#LoadedTip").hide();
-				//},
-				//error: function () {
-					//errorAjax(urlFunction, []);
-				//}
-              //});
-				return false;
-				//$("#lclj_bgDiv").append('<div id="zlyl_webBox" class="zlyl_webBox"><div class="zzc"></div><iframe id="zlyl_web" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" src="' + weburl + '"></iframe></div>');
-			}
-			//处理WEB病历单独数据
             // 病程记录 老接口 返回XML
             if (zl !== null && ym == "病程记录") {
                 if ($("#lclj_bgDiv").find("#zlyl_xmlBox").length > 0) {
