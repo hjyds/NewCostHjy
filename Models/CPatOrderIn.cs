@@ -30,5 +30,10 @@
         /// 操作员姓名   
         /// </summary>
         public string operatorname { get; set; }
+
+        /// <summary>
+        /// 站点编号
+        /// </summary>
+        public string dept_site { get; set; }
     }
 }

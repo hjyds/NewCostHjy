@@ -1,4 +1,6 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using Dm;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Data;
 
@@ -34,6 +36,22 @@ namespace NewCostHjy.DAL
         }
 
         /// <summary>
+        /// 获取 病案主页.入院日期
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetPatBaseInfo(int pid, int pvid)
+        {
+            string sql = "select a.入院日期 from 病案主页 a where a.病人id=:pid and a.主页id=:pvid";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] pars = {
+                new OracleParameter(":pid", OracleDbType.Int64, pid, ParameterDirection.Input),
+                new OracleParameter(":pvid", OracleDbType.Int64, pvid, ParameterDirection.Input)
+            };
+            DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, pars);
+            return data;
+        }
+
+        /// <summary>
         /// 复制指定ID的病人医嘱记录到同一张表
         /// </summary>
         /// <param name="sourceId"></param>
@@ -41,7 +59,7 @@ namespace NewCostHjy.DAL
         /// <param name="serNum"></param>
         /// <param name="pageId"></param>
         /// <returns></returns>
-        public int CopyMedicalOrder(long sourceId, long newId, int serNum, int pageId)
+        public int CopyMedicalOrder(long sourceId, long newId, int serNum, int pageId, DateTime defTime)
         {
             string sql = @"
                 INSERT INTO 病人医嘱记录 (id,
@@ -56,17 +74,20 @@ namespace NewCostHjy.DAL
                     医嘱来源, 账单类型, 首日数次, 医保审批, 组合项目名称, 条码,
 停嘱医生,停嘱时间,校对护士,校对时间
                 ) 
-                SELECT :NewId,
+                SELECT :NewId as id,
                     相关id, :序号, 2 病人来源, 病人id, :主页id, 姓名, 性别, 年龄, 婴儿, 
                     医嘱状态, 医嘱期效, 诊疗类别, 诊疗项目id, 收费细目id, 天数, 单次用量, 
                     总给予量, 医嘱内容, 医生嘱托, 标本部位, 检查方法, 执行标记, 执行频次, 
                     频率次数, 频率间隔, 间隔单位, 执行时间方案, 计价特性, 执行科室id, 
-                    执行性质, 紧急标志, 可否分零, 开始执行时间, 执行终止时间, 病人科室id, 
-                    开嘱科室id, 开嘱医生, 开嘱时间, null 挂号单, 前提id, 摘要, 零费记帐, 手术时间, 
+                    执行性质, 紧急标志, 可否分零, 
+:defTime as 开始执行时间, 
+:defTime as 执行终止时间, 病人科室id, 
+                    开嘱科室id, 开嘱医生,  
+:defTime as 开嘱时间, null 挂号单, 前提id, 摘要, 零费记帐, 手术时间, 
                     用药目的, 用药理由, 审核状态, 申请序号, 超量说明, 首次用量, 配方id, 
                     手术情况, 组合项目id, 皮试结果, 处方序号, 会诊医嘱id, 皮试阳性说明, 
                     医嘱来源, 账单类型, 首日数次, 医保审批, 组合项目名称, 条码,
-停嘱医生,停嘱时间,停嘱医生,停嘱时间
+停嘱医生, :defTime as 停嘱时间,null as 校对护士,null as 校对时间
                 FROM 病人医嘱记录 
                 WHERE id = :SourceId";
 
@@ -75,7 +96,8 @@ namespace NewCostHjy.DAL
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
                 new OracleParameter(":NewId", OracleDbType.Int64, newId, ParameterDirection.Input),
                 new OracleParameter(":序号", OracleDbType.Int32, serNum, ParameterDirection.Input),
-                new OracleParameter(":主页id", OracleDbType.Int64, pageId, ParameterDirection.Input)
+                new OracleParameter(":主页id", OracleDbType.Int64, pageId, ParameterDirection.Input),
+                new OracleParameter(":defTime", OracleDbType.Date, defTime, ParameterDirection.Input)
 
             };
             return oracleData.ExecuteNonQuery(sql, true, pars);
@@ -87,13 +109,14 @@ namespace NewCostHjy.DAL
         /// <param name="sourceId"></param>
         /// <param name="newId"></param>
         /// <returns></returns>
-        public int InsertMedicalOrderStatus(long sourceId, long newId)
+        public int InsertMedicalOrderStatus(long sourceId, long newId, DateTime defTime)
         {
-            string sql = "Insert Into 病人医嘱状态 (医嘱id, 操作类型, 操作人员, 操作时间) select :NewId, 操作类型, 操作人员, 操作时间 from 病人医嘱状态 where 医嘱ID=:SourceId";
+            string sql = "Insert Into 病人医嘱状态 (医嘱id, 操作类型, 操作人员, 操作时间) select :NewId as 医嘱id, 操作类型, 操作人员, :defTime+操作类型/24/24 as 操作时间 from 病人医嘱状态 where 医嘱ID=:SourceId";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
-                new OracleParameter(":NewId", OracleDbType.Int64, newId, ParameterDirection.Input)
+                new OracleParameter(":NewId", OracleDbType.Int64, newId, ParameterDirection.Input),
+                new OracleParameter(":defTime", OracleDbType.Date, defTime, ParameterDirection.Input)
             };
             return oracleData.ExecuteNonQuery(sql, true, pars);
         }
@@ -106,7 +129,7 @@ namespace NewCostHjy.DAL
         /// <returns></returns>
         public int InsertOrderAddItem(long sourceId, long newId)
         {
-            string sql = "Insert Into 病人医嘱附件 (医嘱id, 项目, 必填, 排列, 要素id, 内容)  select :NewId, 项目, 必填, 排列, 要素id, 内容 from 病人医嘱附件 where 医嘱ID=:SourceId";
+            string sql = "Insert Into 病人医嘱附件 (医嘱id, 项目, 必填, 排列, 要素id, 内容)  select :NewId as 医嘱id, 项目, 必填, 排列, 要素id, 内容 from 病人医嘱附件 where 医嘱ID=:SourceId";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
@@ -125,7 +148,7 @@ namespace NewCostHjy.DAL
         {
             string sql = @"Insert Into 病人医嘱加收
                   (收费细目id, 费用性质, 分组名称, 医嘱id, 总量, 检查方法, 标本部位) 
-                    select 收费细目id, 费用性质, 分组名称, :NewId, 总量, 检查方法, 标本部位 from 病人医嘱加收 where 医嘱ID=:SourceId";
+                    select 收费细目id, 费用性质, 分组名称, :NewId as 医嘱id, 总量, 检查方法, 标本部位 from 病人医嘱加收 where 医嘱ID=:SourceId";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
@@ -144,7 +167,7 @@ namespace NewCostHjy.DAL
         {
             string sql = @"Insert Into 病人医嘱标记记录
                   (ID, 医嘱id, 医嘱标记id, 标记名称, 标记值, 是否结算, 是否固定, 是否必选)
-               select :id, :NewId, 医嘱标记id, 标记名称, 标记值, 是否结算, 是否固定, 是否必选 from 病人医嘱标记记录 where 医嘱ID=:SourceId";
+               select :id, :NewId as 医嘱id, 医嘱标记id, 标记名称, 标记值, 是否结算, 是否固定, 是否必选 from 病人医嘱标记记录 where 医嘱ID=:SourceId";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
@@ -177,24 +200,44 @@ namespace NewCostHjy.DAL
         }
 
         /// <summary>
+        /// 医嘱报告
+        /// </summary>
+        /// <param name="sourceId"></param>
+        /// <param name="newId"></param>
+        /// <returns></returns>
+        public int InsertOrderRpt(long sourceId, long newId)
+        {
+            string sql = @"Insert Into 病人医嘱报告
+                        (医嘱id, 病历id, 检查报告id,Risid,报告id)
+                        Select :NewId 医嘱id, 病历id, 检查报告id,Risid,报告id From 病人医嘱报告 Where 医嘱id = :SourceId";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] pars = {
+                new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
+                new OracleParameter(":NewId", OracleDbType.Int64, newId, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
         /// 医嘱发送记录
         /// </summary>
         /// <param name="sourceId"></param>
         /// <param name="newId"></param>
         /// <param name="sendnum"></param>
         /// <returns></returns>
-        public int InsertOrderSend(long sourceId, long newId, long sendnum, string billNo, long oldsendnum)
+        public int InsertOrderSend(long sourceId, long newId, long sendnum, string billNo, long oldsendnum,DateTime defTime)
         {
             string sql = @"Insert Into 病人医嘱发送
                 (医嘱id, 发送号, 记录性质, NO, 记录序号, 发送数次, 发送人, 发送时间, 执行状态, 执行部门id, 计费状态, 首次时间, 末次时间, 样本条码, 门诊记帐, 标本发送批号, 分组id)
-                select :NewId, :sendnum, 2 as 记录性质,:billNo as NO, 记录序号, 发送数次, 发送人, 发送时间, 执行状态, 执行部门id, 计费状态, 首次时间, 末次时间, 样本条码, 门诊记帐, 标本发送批号, 分组id from 病人医嘱发送 where 医嘱ID=:SourceId and 发送号=:oldsendnum";
+                select :NewId, :sendnum, 2 as 记录性质,:billNo as NO, 记录序号, 发送数次, 发送人, :defTime as 发送时间, 执行状态, 执行部门id, 计费状态, :defTime as 首次时间, :defTime as 末次时间, 样本条码, 门诊记帐, 标本发送批号, 分组id from 病人医嘱发送 where 医嘱ID=:SourceId and 发送号=:oldsendnum";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
                 new OracleParameter(":NewId", OracleDbType.Int64, newId, ParameterDirection.Input),
                 new OracleParameter(":sendnum", OracleDbType.Int64, sendnum, ParameterDirection.Input),
                 new OracleParameter(":oldsendnum", OracleDbType.Int64, oldsendnum, ParameterDirection.Input),
-                new OracleParameter(":billNo", OracleDbType.Varchar2, billNo, ParameterDirection.Input)
+                new OracleParameter(":billNo", OracleDbType.Varchar2, billNo, ParameterDirection.Input),
+                new OracleParameter(":defTime", OracleDbType.Date, defTime, ParameterDirection.Input)
             };
             return oracleData.ExecuteNonQuery(sql, true, pars);
         }
@@ -207,17 +250,18 @@ namespace NewCostHjy.DAL
         /// <param name="sendnum"></param>
         /// <param name="oldsendnum"></param>
         /// <returns></returns>
-        public int InsertOrderExecTime(long sourceId, long newId, long sendnum,long oldsendnum)
+        public int InsertOrderExecTime(long sourceId, long newId, long sendnum,long oldsendnum, DateTime defTime)
         {
             string sql = @"Insert Into 医嘱执行时间
                      (要求时间, 医嘱id, 发送号)
-              select 要求时间, :NewId as 医嘱id,:sendnum as 发送号 from 医嘱执行时间 where 医嘱ID=:SourceId and 发送号=:oldsendnum";
+              select :defTime as 要求时间, :NewId as 医嘱id,:sendnum as 发送号 from 医嘱执行时间 where 医嘱ID=:SourceId and 发送号=:oldsendnum";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
                 new OracleParameter(":NewId", OracleDbType.Int64, newId, ParameterDirection.Input),
                 new OracleParameter(":sendnum", OracleDbType.Int64, sendnum, ParameterDirection.Input),
-                new OracleParameter(":oldsendnum", OracleDbType.Int64, oldsendnum, ParameterDirection.Input)
+                new OracleParameter(":oldsendnum", OracleDbType.Int64, oldsendnum, ParameterDirection.Input),
+                new OracleParameter(":defTime", OracleDbType.Date, defTime, ParameterDirection.Input)
             };
             return oracleData.ExecuteNonQuery(sql, true, pars);
         }
@@ -225,8 +269,8 @@ namespace NewCostHjy.DAL
         public int InsertOrderExecPrice(long sourceId, long newId, long sendnum, long oldsendnum)
         {
             string sql = @"Insert Into 医嘱执行计价
-                (医嘱id, 发送号, 要求时间, 收费细目id, 数量, 费用性质, 执行状态, 执行部门id, 费用id, 标准单价, 上次时间)              
-                select :NewId as 医嘱id, :sendnum as 发送号, 要求时间, 收费细目id, 数量, 费用性质, 执行状态, 执行部门id, 费用id, 标准单价, 上次时间 from 医嘱执行计价 where 医嘱ID=:SourceId and 发送号=:oldsendnum";
+                (医嘱id, 发送号, 要求时间, 收费细目id, 数量, 费用性质, 执行状态, 执行部门id, 费用id, 标准单价)              
+                select :NewId as 医嘱id, :sendnum as 发送号, 要求时间, 收费细目id, 数量, 费用性质, 执行状态, 执行部门id, 费用id, 标准单价 from 医嘱执行计价 where 医嘱ID=:SourceId and 发送号=:oldsendnum";
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] pars = {
                 new OracleParameter(":SourceId", OracleDbType.Int64, sourceId, ParameterDirection.Input),
@@ -344,8 +388,7 @@ namespace NewCostHjy.DAL
         /// <returns></returns>
         public int InsertTransRecord(long newOrderId, long oldOrderId, int patientId, int homePageId, int operatorId, string operatorName, DateTime operatorTime)
         {
-            string sql = @"
-                    INSERT INTO 病人医嘱转录记录 (
+            string sql = @"INSERT INTO 病人医嘱转录记录 (
                         病人ID, 主页ID, 原医嘱ID, 新医嘱ID, 操作员ID, 操作员, 操作时间
                     ) 
                     VALUES (

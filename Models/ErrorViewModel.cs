@@ -2157,4 +2157,57 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string LogInfoEx { get; set; }
     }
+
+    /// <summary>
+    /// 三方调用目录配置页签的入参模型 页签刷新
+    /// </summary>
+    public class ThirdP2ParIn
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? pati_id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long? pati_pageid { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? baby_num { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string card_name { get; set; }
+        public string page_id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? userid { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string username { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string station { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ip { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string machine_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string user_code { get; set; }
+        /// <summary>
+        /// 张永康
+        /// </summary>
+        public string user_cname { get; set; }
+    }
+
 }

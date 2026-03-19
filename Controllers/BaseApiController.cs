@@ -3,6 +3,7 @@ using NewCostHjy.DAL;
 using NewCostHjy.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using testWeb.BLL;
@@ -99,29 +100,29 @@ namespace NewCostHjy.Controllers {
         {
 
             string strTmp = Newtonsoft.Json.JsonConvert.SerializeObject(par);
-
+            string id = Guid.NewGuid().ToString("N");
 
             JObject jObject = new JObject();
             jObject["page_url"] = "https://www.baidu.com";
             jObject["card_name"] = "医惠护理信息";
-            jObject["page_id"] = "1123123123uiqqq";
+            jObject["page_id"] = id;
 
             List<JObject> jArray = new List<JObject>();
             jArray.Add(jObject);
 
             JObject objTwo = new JObject();
             objTwo["page_url"] = "https://www.json.cn";
-            objTwo["card_name"] = "其它护理信息";
-            objTwo["page_id"] = "11kk3123uiqqq";
+            objTwo["card_name"] = "页卡测试HJY";
+            objTwo["page_id"] = Guid.NewGuid().ToString("N");
             jArray.Add(objTwo);
 
             for (int i = 0; i < 10; i++)
             {
-                jArray.Add(new JObject() 
+                jArray.Add(new JObject()
                 {
                     ["page_url"] = "https://www.baidu.com?" + i,
                     ["card_name"] = "其它护理信息" + i,
-                    ["page_id"] = "11kk3123uiqqq" + i
+                    ["page_id"] = Guid.NewGuid().ToString("N")
                 }
                 );
             }
@@ -145,11 +146,12 @@ namespace NewCostHjy.Controllers {
 
             string strTmp = Newtonsoft.Json.JsonConvert.SerializeObject(par);
 
-             
+            ThirdP2ParIn thirdP2ParIn = JsonConvert.DeserializeObject<ThirdP2ParIn>(strTmp);
+
             dynamic outInfody = new {
                 result = 1,
                 errmsg = "",
-                page_url = "https://www.baidu.com"
+                page_url = $"https://www.baidu.com?par={thirdP2ParIn.pati_id}_{thirdP2ParIn.pati_pageid}_{thirdP2ParIn.page_id}"
             };
 
             return Json(outInfody);

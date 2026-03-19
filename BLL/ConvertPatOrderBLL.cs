@@ -29,7 +29,6 @@ namespace NewCostHjy.BLL
             }
             //} catch (Exception ex)
             //{
-
             //    //throw;
             //}
         }
@@ -43,18 +42,20 @@ namespace NewCostHjy.BLL
             string ordertagid = "";
             long sendnum = 0; long oldsendnum = 0, appnum = 0; ;
             string billNo = "";
-            DataTable sendData, orderData;
+            DataTable sendData, orderData, dtPatInfo;
             Dictionary<long, long> SendNoMapping = new Dictionary<long, long>();
             Dictionary<long, long> MainOrderMapping = new Dictionary<long, long>();
             Dictionary<long, long> AppNumMapping = new Dictionary<long, long>();
 
             ConvertPatOrderDAL convertPatOrderDAL = new ConvertPatOrderDAL();
-
+            dtPatInfo = convertPatOrderDAL.GetPatBaseInfo(pid, pageId);
             orderData = convertPatOrderDAL.GetCvtOrderData(pid, parIn.regno);
             serNum = convertPatOrderDAL.GetMaxSerial(pid, pageId);
             DateTime curTime = convertPatOrderDAL.GetOraSysDate();
             int operatorId = parIn.operatorid;
             string operatorName = parIn.operatorname;
+
+            DateTime datStartTime = Convert.ToDateTime(dtPatInfo.Rows[0]["入院日期"]).AddMinutes(1);
 
             for (int i = 0; i < orderData.Rows.Count; i++)
             {
@@ -84,8 +85,8 @@ namespace NewCostHjy.BLL
 
                 ordertagid = Guid.NewGuid().ToString();
                 serNum = serNum + 1;
-                result = convertPatOrderDAL.CopyMedicalOrder(sourceId, newId, serNum, pageId);
-                result = convertPatOrderDAL.InsertMedicalOrderStatus(sourceId, newId);
+                result = convertPatOrderDAL.CopyMedicalOrder(sourceId, newId, serNum, pageId, datStartTime);
+                result = convertPatOrderDAL.InsertMedicalOrderStatus(sourceId, newId, datStartTime);
                 result = convertPatOrderDAL.InsertOrderAddItem(sourceId, newId);
                 result = convertPatOrderDAL.InsertOrderExtraFee(sourceId, newId);
                 result = convertPatOrderDAL.InsertOrderTagItem(sourceId, newId, ordertagid);
@@ -108,8 +109,8 @@ namespace NewCostHjy.BLL
                         billNo = convertPatOrderDAL.GetBillNo();
                         blnIsTurn = false;
                     }
-                    result = convertPatOrderDAL.InsertOrderSend(sourceId, newId, sendnum, billNo, oldsendnum);
-                    result = convertPatOrderDAL.InsertOrderExecTime(sourceId, newId, sendnum, oldsendnum);
+                    result = convertPatOrderDAL.InsertOrderSend(sourceId, newId, sendnum, billNo, oldsendnum, datStartTime);
+                    result = convertPatOrderDAL.InsertOrderExecTime(sourceId, newId, sendnum, oldsendnum, datStartTime);
                     result = convertPatOrderDAL.InsertOrderExecPrice(sourceId, newId, sendnum, oldsendnum);
 
                     if (blnIsTurn)
@@ -128,7 +129,7 @@ namespace NewCostHjy.BLL
                 {
                     result = convertPatOrderDAL.UpdOrderAppNum(item.Key, item.Value, pid, pageId);
                 }
-
+                result = convertPatOrderDAL.InsertOrderRpt(sourceId, newId);
                 result = convertPatOrderDAL.InsertTransRecord(newId, sourceId, pid, pageId, operatorId, operatorName, curTime);
             }
             //End
