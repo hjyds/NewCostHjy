@@ -1074,9 +1074,22 @@ namespace NewCostHjy.Models {
     }
 
     public class MedPageModPar { 
-        public int? PatientId { get; set; }
-        public int? EnconterId { get; set;}
-        public int? EncounterType { get; set; }
+        public string PatientId { get; set; }
+        public string EnconterId { get; set;}
+        public string EncounterType { get; set; }
+
+        /// <summary>
+        /// "操作类型:1-病案提交；2-病案取消提交；3-申请病案返修",
+        /// </summary>
+        public string OperateType { get; set; }
+
+
+        public string OperatorId { get; set; }
+
+        public string OperatorName { get; set; }
+
+        public string OperateNote { get; set; }
+
     }
     public class MedPageMod {
 

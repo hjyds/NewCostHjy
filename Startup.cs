@@ -128,7 +128,7 @@ namespace NewCostHjy {
                 if (context.Request.Path.StartsWithSegments("/GeneralBusinessUI/Prompt"))
                 {
                     var query = context.Request.QueryString;
-                    context.Response.Redirect($"/PatientVte/Index{query}");
+                    context.Response.Redirect($"/PatientVte/Prompt{query}");
                     return;
                 }
                 await next();

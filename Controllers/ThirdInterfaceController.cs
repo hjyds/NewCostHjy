@@ -570,7 +570,6 @@ namespace NewCostHjy.Controllers {
             ConvertPatOrderBLL convertPatOrderBLL = new ConvertPatOrderBLL();
             convertPatOrderBLL.ConvertFun(parIn);
             return Json(1);
-        }
-
+        }   
     }
 }

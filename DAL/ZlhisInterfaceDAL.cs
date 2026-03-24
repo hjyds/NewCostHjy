@@ -819,6 +819,42 @@ accomplishStatus
 
             }
         }
+
+
+        public void ZLHISPageSubmit(int patientId, int homePageId)
+        { 
+            OracleDataAccess oda = new OracleDataAccess();
+            OracleParameter[] oracleParameters = { 
+                    new OracleParameter("病人id_In",OracleDbType.Int32,patientId,ParameterDirection.Input),
+                    new OracleParameter("主页id_In",OracleDbType.Int32,homePageId,ParameterDirection.Input) 
+            };
+            //忽略错误信息
+            try
+            {
+                oda.ExecuteProcdure("Zl_病案提交记录_Insert", true, oracleParameters);
+            } catch
+            {
+
+            }
+        }
+
+        public void ZLHISPageSubmitCancel(int patientId, int homePageId)
+        {
+            OracleDataAccess oda = new OracleDataAccess();
+            OracleParameter[] oracleParameters = {
+                    new OracleParameter("病人id_In",OracleDbType.Int32,patientId,ParameterDirection.Input),
+                    new OracleParameter("主页id_In",OracleDbType.Int32,homePageId,ParameterDirection.Input)
+            };
+            //忽略错误信息
+            try
+            {
+                oda.ExecuteProcdure("Zl_病案提交记录_Delete", true, oracleParameters);
+            } catch
+            {
+
+            }
+        }
+
         public void ZLhisLogInsert(ZLHISLogInfoModel logInfoModel)
         {
             //ORACLE 字段长度超过了 4000 就查询就显示不出来，虽然字段长度可以超过4000

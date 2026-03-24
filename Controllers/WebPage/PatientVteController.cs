@@ -76,5 +76,14 @@ namespace NewCostHjy.Controllers.WebPage {
             ViewBag.BaseData = objTmp;
             return View();
         }
+
+        /// <summary>
+        /// 医保管控弹窗测试页面
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Prompt()
+        {
+            return View();
+        }
     }
 }

@@ -48,7 +48,15 @@ namespace NewCostHjy.App_Start {
                     }
                 } else {
 
-                    string apiName = context.HttpContext.Request.Path.Value.ToUpper();
+                    string apiName = context.HttpContext.Request.Path.Value;
+
+                    if (apiName.Contains("/MedOperatoin/") || apiName.Contains("/MrHomeManagement/"))
+                    {
+                        return;
+                    }
+
+                    apiName = apiName.ToUpper();
+
                     if (apiName == "/LOGIN/GETTOKENTOZLHIS"
                         || apiName == "/AIOINTERFACE/USERAUTH") {
                         //有些是小写的特殊处理

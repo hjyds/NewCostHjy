@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "测试页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Newtonsoft.Json
+
+<link rel="stylesheet" href="~/module/patientvte/prompt.css" />
+
+<div class="content" id="modalContent">医保管理弹出窗体测试页面</div>
+
+<script>
+    var _mvcData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.BaseData));
+    //alert(JSON.stringify(_mvcData));
+    setTimeout(function () {
+        $("#parin").html(JSON.stringify(_mvcData));
+
+
+        // 获取第一个 header 元素
+        const header = document.querySelector('header');
+        // 如果存在就删除
+        if (header) {
+            header.remove();
+        }
+
+        // 获取第一个 footer 元素
+        const footer = document.querySelector('footer');
+        // 如果存在就删除
+        if (footer) {
+            footer.remove();
+        }
+
+    },100);
+</script>
+
+<script src="~/module/patientvte/prompt.js" asp-append-version="true"></script>
+
+

@@ -453,3 +453,66 @@ function GetTimeAToB(a, b) {
         }
     }
 }
+
+//判断是否空或空字符串
+function IsNullOrEmpty(value) {
+    //0==""，false==""
+    if (value == null || value == undefined || value === "") return true;
+
+    return false;
+}
+
+var Const = {
+    PromptType:
+    {
+        "InsuranceRegulation": "1",
+        "BillEarlyWarning": "2"
+    },
+    PromptLevel: {
+        "Prohibit": "1",
+        "Remind": "2",
+        "Marks": "3"
+    },
+    ControlType: {
+        "Radio": "1",
+        "CheckBox": "2",
+        "Text": "3"
+    }
+}
+ 
+/**
+ * 跨域消息发送
+ * @param {any} module 模块
+ * @param {any} act 
+ * @param {any} par
+ */
+function SendMessage(act, actcode, par) {
+    var message = {
+        "Sys": "zlCostBase",
+        "Act": act,//事件名称
+        "ActCode": actcode,//事件编号
+        "Content": par //事件响应内容
+    }
+    let parentWin = window.opener || window.parent;
+    parentWin.postMessage(message, '*');
+}
+
+/**
+ * 跨域消息发送
+ * @param {any} module 模块
+ * @param {any} act 
+ * @param {any} par
+ */
+function SendMessageAIO(act, actcode, par) {
+    let command = {
+        MsgType: "aio",
+        Action: "postmessage",
+        Pars: {
+            Sys: "zlCostBase",
+            Act: act,//事件名称
+            ActCode: actcode,//事件编号
+            Content: par //事件响应内容
+        }
+    }
+    window.aioExtend(command);
+}
