@@ -12,13 +12,13 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
   v_Color        Varchar2(10);
   v_操作时间     Date;
   v_类型         Varchar2(100);
-  v_总页数       Number(5);
-  v_当前页       Number(5);
+  v_总页数       Number(30);
+  v_当前页       Number(30);
   v_医嘱id       Varchar(400);
-  v_当前医嘱id   Varchar(20);
+  v_当前医嘱id   Varchar(400);
   n_科室id       Number(18);
-  v_Sfqm         Varchar2(3);
-  v_Sfsh         Varchar2(3);
+  v_Sfqm         Varchar2(30);
+  v_Sfsh         Varchar2(30);
   v_执行方案     Varchar2(4000);
   v_执行频次     Varchar2(4000);
   v_默认方案     Varchar2(4000);
@@ -32,37 +32,37 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
   ;
   v_申请附项     Varchar2(4000);
   v_执行科室     Varchar2(4000);
-  v_药品执行性质 Varchar2(10);
+  v_药品执行性质 Varchar2(100);
   v_科室id       Number(18);
-  v_科室名称     Varchar2(30);
+  v_科室名称     Varchar2(100);
   v_诊疗类别     Varchar2(10);
-  v_医嘱期效     Number(1);
-  v_执行性质     Number(10);
+  v_医嘱期效     Number(10);
+  v_执行性质     Number(38);
   v_采集科室id   Number(18);
-  v_采集科室名称 Varchar2(30);
-  v_按规格下医嘱 Number(1);
-  v_执行科室名称 Varchar2(30);
-  v_名称         Varchar2(30);
-  v_处方职务     Varchar2(2);
-  v_抗生素       Varchar2(2);
+  v_采集科室名称 Varchar2(100);
+  v_按规格下医嘱 Number(38);
+  v_执行科室名称 Varchar2(100);
+  v_名称         Varchar2(300);
+  v_处方职务     Varchar2(200);
+  v_抗生素       Varchar2(200);
   v_Id           Number(18);
   v_药名id       Number(18);
   Strhead        Clob;
   Strdetail      Clob;
-  v_Temp         Clob; --临时XML 
-  x_Templet      Xmltype; --模板XML 
+  v_Temp         Clob; --临时XML
+  x_Templet      Xmltype; --模板XML
 
-  v_Patiid    病案主页.病人id%Type; --病人ID 
-  v_Pageid    病案主页.主页id%Type; --主页ID 
-  v_Baby      病人医嘱记录.婴儿%Type; --婴儿序号 
-  v_Xx        Varchar2(20); --（选项）长嘱：“在用/所有”；临嘱：“今日/所有 
-  v_Qx        Varchar2(10); --期效  全部/长嘱/临嘱 
-  v_站点      Varchar2(20);
-  v_Startpage Number(3); --起始页码，从0开始编号，默认为0 
-  v_Pagecount Number(3); --页数，默认为1 
-  v_Itemcount Number(3); --每页项目个数 
+  v_Patiid    病案主页.病人id%Type; --病人ID
+  v_Pageid    病案主页.主页id%Type; --主页ID
+  v_Baby      病人医嘱记录.婴儿%Type; --婴儿序号
+  v_Xx        Varchar2(20); --（选项）长嘱：“在用/所有”；临嘱：“今日/所有
+  v_Qx        Varchar2(10); --期效  全部/长嘱/临嘱
+  v_站点      Varchar2(200);
+  v_Startpage Number(30); --起始页码，从0开始编号，默认为0
+  v_Pagecount Number(30); --页数，默认为1
+  v_Itemcount Number(30); --每页项目个数
 
-  --长期有效医嘱 
+  --长期有效医嘱
   Cursor c_Advices_Cqyx Is
     Select Distinct a.Id, a.相关id, a.诊疗类别, a.序号, a.医嘱期效, a.医嘱状态, d.操作类型, d.执行分类, a.医嘱内容, a.皮试结果, a.开始执行时间 As 开始执行时间,
                     a.新开签名id, a.审核状态, a.上次执行时间, a.执行终止时间, a.执行时间方案, a.紧急标志, h.名称 As 执行科室, a.标本部位, a.检查方法,
@@ -80,11 +80,11 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           a.医嘱状态 In (1, 3, 5, 6, 7, 8, 9) And a.诊疗项目id = d.Id(+) And a.收费细目id = e.Id(+) And a.收费细目id = f.药品id(+) And
           Nvl(a.诊疗类别, 'TEST') Not In ('G') And a.相关id Is Null And g.操作类型(+) = '9' And a.执行科室id = h.Id(+) And
           Nvl(a.相关id, a.Id) = i.医嘱id(+)
-         --停止在之后时间的也要显示 
+         --停止在之后时间的也要显示
           And Nvl(a.执行终止时间, Sysdate) >= Sysdate
     Order By 开始执行时间 Desc;
 
-  --长期所有医嘱 
+  --长期所有医嘱
   Cursor c_Advices_Cqsy Is
     Select 页号, ID, 相关id, 诊疗类别, 序号, 医嘱期效, 医嘱状态, 操作类型, 执行分类, 医嘱内容, 皮试结果, 开始执行时间, 上次执行时间, 执行终止时间, 执行时间方案, 紧急标志, 执行科室, 标本部位,
            检查方法, 用法, 执行频次, 单量, 总量, 天数, 医生嘱托, 开嘱医生, 开嘱时间, 校对护士, 校对时间, 停嘱医生, 停嘱时间, 确认停止, 确认停止时间, 观片, 新开签名id, 审核状态, 医嘱时间
@@ -114,7 +114,7 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
     Where 页号 >= v_Startpage + 1 And 页号 <= v_Startpage + v_Pagecount
     Order By 开始执行时间 Desc;
 
-  --今日临嘱 
+  --今日临嘱
   Cursor c_Advices_Yxlz Is
     Select Distinct a.Id, a.相关id, a.诊疗类别, a.序号, a.医嘱期效, a.医嘱状态, d.操作类型, d.执行分类, a.医嘱内容, a.皮试结果, a.开始执行时间 As 开始执行时间,
                     a.新开签名id, a.审核状态, a.上次执行时间, a.执行终止时间, a.执行时间方案, a.紧急标志, h.名称 As 执行科室, a.标本部位, a.检查方法,
@@ -134,7 +134,7 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           Nvl(a.相关id, a.Id) = i.医嘱id(+) And a.开嘱时间 Between v_Begindate And v_Enddate
     Order By 开始执行时间 Desc;
 
-  --临嘱所有 
+  --临嘱所有
   Cursor c_Advices_Sylz Is
     Select 页号, ID, 相关id, 诊疗类别, 序号, 医嘱期效, 医嘱状态, 操作类型, 执行分类, 医嘱内容, 皮试结果, 开始执行时间, 上次执行时间, 执行终止时间, 执行时间方案, 紧急标志, 执行科室, 标本部位,
            检查方法, 用法, 执行频次, 单量, 总量, 天数, 医生嘱托, 开嘱医生, 开嘱时间, 校对护士, 校对时间, 停嘱医生, 停嘱时间, 确认停止, 确认停止时间, 观片, 新开签名id, 审核状态, 医嘱时间
@@ -164,8 +164,8 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
     Where 页号 >= v_Startpage + 1 And 页号 <= v_Startpage + v_Pagecount
     Order By 开始执行时间 Desc;
 
-  --医嘱明细  
-  --问题号146723  医嘱执行性质增加自取药和离院带药 
+  --医嘱明细
+  --问题号146723  医嘱执行性质增加自取药和离院带药
   Cursor c_Advices_Mx(v_Id 病人医嘱记录.Id%Type) Is
     Select Distinct a.Id, a.相关id, a.诊疗类别, a.序号, a.医嘱期效, a.医嘱状态, d.操作类型, d.试管编码, d.执行分类, d.Id As 诊疗项目id,
                     Decode(a.诊疗类别, '5', d.名称 || ' ' || e.规格, '6', d.名称 || ' ' || e.规格, a.医嘱内容) As 医嘱内容, a.皮试结果,
@@ -188,8 +188,8 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           a.执行科室id = h.Id(+) And g.操作类型(+) = '9' And Nvl(a.诊疗类别, 'TEST') Not In ('E', 'G')
     Order By a.序号;
 
-  --单条医嘱  
-  --问题号146723  医嘱执行性质增加自取药和离院带药 
+  --单条医嘱
+  --问题号146723  医嘱执行性质增加自取药和离院带药
   Cursor c_Advices_Dtyz Is
     Select Distinct a.Id, a.相关id, a.诊疗类别, a.序号, a.医嘱期效, a.医嘱状态, d.操作类型, d.执行分类,
                     Decode(a.诊疗类别, 'D', d.名称, a.医嘱内容) As 医嘱内容, a.皮试结果, a.开始执行时间 As 开始执行时间, a.新开签名id, a.审核状态, a.上次执行时间,
@@ -212,21 +212,21 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           a.相关id Is Null And g.操作类型(+) = '9' And a.执行科室id = h.Id(+) And Nvl(a.相关id, a.Id) = i.医嘱id(+)
     Order By 开始执行时间 Desc;
 
-  Cursor c_Cjff Is --采集方法 
+  Cursor c_Cjff Is --采集方法
     Select a.Id, a.名称, zlSpellCode(名称) As 简码
     From 诊疗项目目录 A
     Where a.类别 = 'E' And a.操作类型 = '6' And (a.撤档时间 = To_Date('3000-01-01', 'YYYY-MM-DD') Or a.撤档时间 Is Null) And
           (a.站点 = v_站点 Or a.站点 Is Null) And a.服务对象 In (2, 3)
     Order By a.编码;
 
-  Cursor c_Gytj Is --给药途径 
+  Cursor c_Gytj Is --给药途径
     Select a.Id, a.名称, a.执行分类, zlSpellCode(名称) As 简码
     From 诊疗项目目录 A
     Where a.类别 = 'E' And a.操作类型 = '2' And a.服务对象 In (2, 3) And
           (a.撤档时间 = To_Date('3000-01-01', 'YYYY-MM-DD') Or a.撤档时间 Is Null) And (a.站点 = Nvl(v_站点, 0) Or a.站点 Is Null)
     Order By a.编码;
 
-  Cursor c_Fyyf_Sfxm(v_收费细目id In 收费项目目录.Id%Type) Is --发药药房 
+  Cursor c_Fyyf_Sfxm(v_收费细目id In 收费项目目录.Id%Type) Is --发药药房
     Select Distinct c.Id, c.编码, c.名称
     From 收费执行科室 A, 部门性质说明 B, 部门表 C
     Where a.执行科室id + 0 = b.部门id And b.工作性质 In ('西药房', '成药房') And b.服务对象 In (2, 3) And b.部门id = c.Id And
@@ -234,7 +234,7 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           (a.开单科室id Is Null Or a.开单科室id = n_科室id) And (c.站点 = Nvl(v_站点, 0) Or c.站点 Is Null) And a.收费细目id = v_收费细目id
     Order By c.编码;
 
-  Cursor c_Fyyf_Zlxm(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --发药药房 
+  Cursor c_Fyyf_Zlxm(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --发药药房
     Select Distinct c.Id, c.编码, c.名称
     From 诊疗执行科室 A, 部门性质说明 B, 部门表 C
     Where a.执行科室id + 0 = b.部门id And b.工作性质 In ('西药房', '成药房') And b.服务对象 In (2, 3) And b.部门id = c.Id And
@@ -242,7 +242,7 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           (a.开单科室id Is Null Or a.开单科室id = n_科室id) And (c.站点 = Nvl(v_站点, 0) Or c.站点 Is Null) And a.诊疗项目id = v_诊疗项目id
     Order By c.编码;
 
-  Cursor c_Gyzx(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --给药执行 
+  Cursor c_Gyzx(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --给药执行
     Select Distinct 2 As 序号, a.Id, a.编码, a.简码, a.名称
     From 部门表 A, 诊疗执行科室 B, 部门性质说明 C
     Where a.Id = b.执行科室id And b.诊疗项目id = v_诊疗项目id And a.Id = c.部门id And c.服务对象 In (2, 3) And
@@ -264,17 +264,17 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
   (
     v_诊疗项目id In 诊疗项目目录.Id%Type,
     v_类型       In 诊疗项目部位.类型%Type
-  ) Is --检查部位 
+  ) Is --检查部位
     Select *
     From (Select Distinct a.类型, b.分组, b.编码, a.部位, b.方法 As 检查方法
            From 诊疗项目部位 A, 诊疗检查部位 B
            Where a.类型 = b.类型 And a.部位 = b.名称 And a.项目id = v_诊疗项目id And a.类型 = v_类型)
     Order By 分组, 编码;
 
-  Cursor c_Sqfx(v_Id In 病人医嘱记录.Id%Type) Is --申请附项 
+  Cursor c_Sqfx(v_Id In 病人医嘱记录.Id%Type) Is --申请附项
     Select 项目, 排列 As 序号, 内容, 要素id, 必填 From 病人医嘱附件 Where 医嘱id = v_Id Order By 排列;
 
-  Cursor c_Cjks(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --采集科室 
+  Cursor c_Cjks(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --采集科室
     Select Distinct 1 As 序号, c.Id, c.名称
     From 诊疗执行科室 A, 部门性质说明 B, 部门表 C
     Where a.执行科室id = b.部门id And a.诊疗项目id = v_诊疗项目id And b.服务对象 In (2, 3) And (a.病人来源 Is Null Or a.病人来源 = 2) And
@@ -291,12 +291,12 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
                  (c.撤档时间 = To_Date('3000-01-01', 'YYYY-MM-DD') Or c.撤档时间 Is Null))
     Order By 序号;
 
-  Cursor c_Zxfa(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --执行方案， 
+  Cursor c_Zxfa(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --执行方案，
     Select b.Id, b.名称 As 给药途径, c.名称 As 执行频次, a.成人剂量, a.小儿剂量, 疗程, a.医生嘱托 As 滴数
     From 诊疗用法用量 A, 诊疗项目目录 B, 诊疗频率项目 C
     Where a.用法id = b.Id And a.频次 = c.编码 And a.性质 >= 1 And a.项目id = v_诊疗项目id And (b.站点 = Nvl(v_站点, 0) Or b.站点 Is Null);
 
-  Cursor c_Zxpc Is --执行频次 
+  Cursor c_Zxpc Is --执行频次
     Select 编码, 名称, 简码, 英文名称, 频率次数, 频率间隔, 间隔单位, 适用范围
     From 诊疗频率项目
     Where 适用范围 In (1, -1, -5) And v_医嘱期效 = 1
@@ -310,7 +310,7 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
     Where 适用范围 = 1
     Order By 编码;
 
-  Cursor c_Ypzxpc Is --药品执行频次 
+  Cursor c_Ypzxpc Is --药品执行频次
     Select 编码, 名称, 简码, 英文名称, 频率次数, 频率间隔, 间隔单位, 适用范围
     From 诊疗频率项目
     Where 适用范围 In (-1, -5) And 1 = v_医嘱期效
@@ -324,7 +324,7 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
     Where 适用范围 = 1
     Order By 编码;
 
-  Cursor c_Zxks(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --执行科室 
+  Cursor c_Zxks(v_诊疗项目id In 诊疗项目目录.Id%Type) Is --执行科室
     Select Distinct 2 As 序号, a.Id, a.编码, a.简码, a.名称
     From 部门表 A, 诊疗执行科室 B, 部门性质说明 C
     Where a.Id = b.执行科室id And b.诊疗项目id = v_诊疗项目id And a.Id = c.部门id And c.服务对象 In (2, 3) And
@@ -338,14 +338,14 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
           (a.撤档时间 = To_Date('3000-01-01', 'YYYY-MM-DD') Or a.撤档时间 Is Null)
     Order By 序号, 编码;
 
-  Cursor c_Zxks_Hz Is --会诊执行科室 
+  Cursor c_Zxks_Hz Is --会诊执行科室
     Select Distinct a.Id, a.编码, a.名称, a.简码
     From 部门表 A, 部门性质说明 B
     Where (a.撤档时间 = To_Date('3000-01-01', 'YYYY-MM-DD') Or a.撤档时间 Is Null) And a.Id = b.部门id And
           Instr(',2,3,', ',' || b.服务对象 || ',') > 0 And b.工作性质 = '临床' And a.Id <> n_科室id
     Order By a.编码;
 
-  Cursor c_Zxks_Zk Is --转科执行科室 
+  Cursor c_Zxks_Zk Is --转科执行科室
     Select Distinct a.Id, a.编码, a.名称, a.简码
     From 部门表 A, 部门性质说明 B
     Where (a.撤档时间 = To_Date('3000-01-01', 'YYYY-MM-DD') Or a.撤档时间 Is Null) And a.Id = b.部门id And
@@ -354,11 +354,11 @@ Create Or Replace Procedure Zl_Dc_Advice_Newlists
            (Select 科室id From 病区科室对应 Where 科室id = a.Id))
     Order By a.编码;
 
-  Cursor c_Mrpcfa(v_频次 诊疗频率时间.执行频率%Type) Is --默认频次方案 
+  Cursor c_Mrpcfa(v_频次 诊疗频率时间.执行频率%Type) Is --默认频次方案
     Select * From 诊疗频率时间 Where 执行频率 = v_频次 Order By 方案序号;
 
 Begin
-  ----读取入参 
+  ----读取入参
   Select Trim(Extractvalue(Value(A), 'IN/PATIID')) Into v_Patiid From Table(Xmlsequence(Extract(Strxml, 'IN'))) A;
   Select Trim(Extractvalue(Value(A), 'IN/PAGEID')) Into v_Pageid From Table(Xmlsequence(Extract(Strxml, 'IN'))) A;
   Select Trim(Extractvalue(Value(A), 'IN/BABY')) Into v_Baby From Table(Xmlsequence(Extract(Strxml, 'IN'))) A;
@@ -377,15 +377,15 @@ Begin
   Into v_Itemcount
   From Table(Xmlsequence(Extract(Strxml, 'IN'))) A;
 
-  --定义XML 
+  --定义XML
   x_Templet := Xmltype('<OUTPUT><YZLIST></YZLIST><ZXPC></ZXPC><ZXKS></ZXKS><GYTJ></GYTJ><CJFF></CJFF></OUTPUT>');
 
-  --1、期效=0，v_Xx=在用，走现有长嘱在用分支 
-  --2、期效=1，v_Xx=今日，走现有临嘱今日分支 
-  --3、期效=0，v_Xx<>在用,根据v_Xx的值设定时间条件，修改游标查询时间范围，走长嘱非在用分支 
-  --4、期效=1，v_Xx<>今日,根据v_Xx的值设定时间条件，修改游标查询时间范围，走临嘱非今日分支 
-  --5、期效=1，v_Xx=在用，返回数据为空 
-  --6、除新增条件外，保持时间参数范围不变，以兼容之前版本 
+  --1、期效=0，v_Xx=在用，走现有长嘱在用分支
+  --2、期效=1，v_Xx=今日，走现有临嘱今日分支
+  --3、期效=0，v_Xx<>在用,根据v_Xx的值设定时间条件，修改游标查询时间范围，走长嘱非在用分支
+  --4、期效=1，v_Xx<>今日,根据v_Xx的值设定时间条件，修改游标查询时间范围，走临嘱非今日分支
+  --5、期效=1，v_Xx=在用，返回数据为空
+  --6、除新增条件外，保持时间参数范围不变，以兼容之前版本
 
   Case
     When v_Xx = '今日' Then
@@ -401,12 +401,12 @@ Begin
       v_Begindate := Sysdate + 1;
       v_Enddate   := Sysdate + 1 + 1 / 24 / 60 / 60;
     Else
-      --全部 
+      --全部
       Select 入院日期 Into v_Begindate From 病案主页 Where 病人id = v_Patiid And 主页id = v_Pageid;
       v_Enddate := Sysdate;
   End Case;
 
-  /*  v_Begindate := Trunc(Sysdate); 
+  /*  v_Begindate := Trunc(Sysdate);
   v_Enddate   := Sysdate;*/
 
   If v_医嘱id Is Not Null Then
@@ -426,7 +426,7 @@ Begin
       Select Appendchildxml(x_Templet, '/OUTPUT/ZXPC', Xmltype(v_执行频次)) Into x_Templet From Dual;
     End Loop;
   
-    --提取药品默认方案 
+    --提取药品默认方案
     v_默认方案 := '';
     For r_Zxpc In c_Ypzxpc Loop
       For r_Mrpcfa In c_Mrpcfa(r_Zxpc.编码) Loop
@@ -444,7 +444,7 @@ Begin
       v_Temp     := v_给药途径;
       Select Appendchildxml(x_Templet, '/OUTPUT/GYTJ', Xmltype(v_Temp)) Into x_Templet From Dual;
       v_给药执行 := '';
-      Select 执行科室 Into v_执行性质 From 诊疗项目目录 Where ID = r_Gytj.Id;
+      Select Nvl(执行科室, 0) Into v_执行性质 From 诊疗项目目录 Where ID = r_Gytj.Id;
       If v_执行性质 = 0 Then
         v_给药执行 := '<ITEM jsonArray=''true''><ID>0</ID><MC>' || '无执行叮嘱' || '</MC></ITEM>';
       Elsif v_执行性质 = 5 Then
@@ -482,7 +482,7 @@ Begin
       v_Temp     := '<ITEM jsonArray=''true''>' || v_采集方法 || '</ITEM>';
       Select Appendchildxml(x_Templet, '/OUTPUT/CJFF', Xmltype(v_Temp)) Into x_Templet From Dual;
       v_采集科室 := '';
-      Select 执行科室 Into v_执行性质 From 诊疗项目目录 Where ID = r_Cjff.Id;
+      Select Nvl(执行科室, 0) Into v_执行性质 From 诊疗项目目录 Where ID = r_Cjff.Id;
       If v_执行性质 = 0 Then
         v_采集科室 := '<ITEM jsonArray=''true''><ID>0</ID><MC>' || '无执行叮嘱' || '</MC></ITEM>';
       Elsif v_执行性质 = 1 Then
@@ -528,11 +528,11 @@ Begin
       v_执行科室名称 := '';
       v_当前医嘱id   := Substr(v_医嘱id, 1, Instr(v_医嘱id, ',') - 1);
       For r_Advices_Qb In c_Advices_Dtyz Loop
-        ----取医嘱颜色 
+        ----取医嘱颜色
         If r_Advices_Qb.医嘱状态 <> '1' And r_Advices_Qb.Id <> 0 Then
-          ----已通过校对(也包含后续的多个状态) 
+          ----已通过校对(也包含后续的多个状态)
           If Trunc(r_Advices_Qb.上次执行时间) >= Trunc(Sysdate) Then
-            ----当天已发送的(长嘱可能发送到将来) 
+            ----当天已发送的(长嘱可能发送到将来)
             v_Color := '10518528';
           Else
             v_Color := '12582912';
@@ -540,23 +540,23 @@ Begin
         End If;
       
         If r_Advices_Qb.医嘱状态 = '1' And r_Advices_Qb.Id <> 0 Then
-          ----新开医嘱 
+          ----新开医嘱
           v_Color := '0';
         End If;
       
         If r_Advices_Qb.医嘱状态 = '9' And r_Advices_Qb.Id <> 0 Then
-          ----已确认停止医嘱 
+          ----已确认停止医嘱
           v_Color := '8421504';
         End If;
       
         If r_Advices_Qb.医嘱状态 = '4' And r_Advices_Qb.Id <> 0 Then
-          ----已确认停止医嘱 
+          ----已确认停止医嘱
           v_Color := '8421504';
           /*          v_Color:='12632256';*/
         End If;
       
         If r_Advices_Qb.医嘱状态 = 8 Then
-          ----已停止医嘱 
+          ----已停止医嘱
           If Sysdate >= r_Advices_Qb.执行终止时间 Or r_Advices_Qb.医嘱期效 = 1 Then
             v_Color := '8421504';
           Else
@@ -579,13 +579,13 @@ Begin
           End If;
         End If;
       
-        --校对后术前术后医嘱红色显示 
+        --校对后术前术后医嘱红色显示
         If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '4' Or r_Advices_Qb.操作类型 = '14') And
            Instr(',-1,1,2,4,', r_Advices_Qb.医嘱状态) = 0 Then
           v_Color := '255';
         End If;
       
-        --发送后转科医嘱红色显示 
+        --发送后转科医嘱红色显示
         If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '3' Or r_Advices_Qb.操作类型 = '8') Then
           v_Color := '255';
         End If;
@@ -622,7 +622,7 @@ Begin
           v_诊疗类别 := 'C';
           Select 名称 Into v_采集类型 From 诊疗项目目录 Where ID = r_Advices_Qb.诊疗项目id;
         Else
-          --提取诊疗类别 
+          --提取诊疗类别
           Begin
             Select 诊疗类别 Into v_诊疗类别 From 病人医嘱记录 Where 相关id = r_Advices_Qb.Id And Rownum = 1;
           Exception
@@ -631,40 +631,40 @@ Begin
           End;
         End If;
       
-        --是否已经签名 
+        --是否已经签名
         If Nvl(r_Advices_Qb.新开签名id, 0) <> 0 Then
           v_Sfqm := '1';
         Else
           v_Sfqm := '-1';
         End If;
       
-        --是否已经审核 
+        --是否已经审核
         If Nvl(r_Advices_Qb.审核状态, 0) = 2 Then
           v_Sfsh := '2';
         Else
           v_Sfsh := '-1';
         End If;
       
-        --处理项目的执行科室 
+        --处理项目的执行科室
         v_执行科室 := '';
         v_Temp     := '';
         Case
-          When r_Advices_Qb.执行科室 = 0 Then
-            --0-无执行的叮嘱； 
+          When Nvl(r_Advices_Qb.执行科室, 0) = 0 Then
+            --0-无执行的叮嘱；
             v_执行科室 := '<ITEM jsonArray=''true''><ID>0</ID><MC>无执行叮嘱</MC><ZLXMID>' || r_Advices_Qb.诊疗项目id ||
                       '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
             v_Temp     := v_执行科室;
-          When r_Advices_Qb.执行科室 = 1 Then
-            --1-病人所在科室； 
+          When Nvl(r_Advices_Qb.执行科室, 0) = 1 Then
+            --1-病人所在科室；
             If r_Advices_Qb.操作类型 = '7' Then
-              --会诊 
+              --会诊
               For r_Zxks In c_Zxks_Hz Loop
                 v_执行科室 := '<ITEM jsonArray=''true''><ID>' || r_Zxks.Id || '</ID><MC>' || r_Zxks.名称 || '</MC><ZLXMID>' ||
                           r_Advices_Qb.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
                 Select Appendchildxml(x_Templet, '/OUTPUT/ZXKS', Xmltype(v_执行科室)) Into x_Templet From Dual;
               End Loop;
             Elsif r_Advices_Qb.操作类型 = '3' Then
-              --转科 
+              --转科
               For r_Zxks In c_Zxks_Zk Loop
                 v_执行科室 := '<ITEM jsonArray=''true''><ID>' || r_Zxks.Id || '</ID><MC>' || r_Zxks.名称 || '</MC><ZLXMID>' ||
                           r_Advices_Qb.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
@@ -679,8 +679,8 @@ Begin
                         r_Advices_Qb.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
               v_Temp     := v_执行科室;
             End If;
-          When r_Advices_Qb.执行科室 = 2 Then
-            --2-病人所在病区； 
+          When Nvl(r_Advices_Qb.执行科室, 0) = 2 Then
+            --2-病人所在病区；
             Select b.Id, b.名称
             Into v_Id, v_名称
             From 病案主页 A, 部门表 B
@@ -689,15 +689,15 @@ Begin
                           r_Advices_Qb.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
             v_执行科室名称 := v_名称;
             v_Temp         := v_执行科室;
-          When r_Advices_Qb.执行科室 = 3 Or r_Advices_Qb.执行科室 = 6 Then
-            --3-操作员所在科室;6-开单人所在科室 
+          When Nvl(r_Advices_Qb.执行科室, 0) = 3 Or r_Advices_Qb.执行科室 = 6 Then
+            --3-操作员所在科室;6-开单人所在科室
             Select b.Id, b.名称 Into v_Id, v_名称 From 部门表 B Where b.Id = n_科室id;
             v_执行科室 := '<ITEM jsonArray=''true''><ID>' || v_Id || '</ID><MC>' || v_名称 || '</MC><ZLXMID>' ||
                       r_Advices_Qb.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
           
             v_Temp := v_执行科室;
-          When r_Advices_Qb.执行科室 = 4 Then
-            --4-指定科室 
+          When Nvl(r_Advices_Qb.执行科室, 0) = 4 Then
+            --4-指定科室
             For r_Zxks In c_Zxks(r_Advices_Qb.诊疗项目id) Loop
               v_执行科室 := '<ITEM jsonArray=''true''><ID>' || r_Zxks.Id || '</ID><MC>' || r_Zxks.名称 || '</MC><ZLXMID>' ||
                         r_Advices_Qb.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Qb.Id || '</YZID></ITEM>';
@@ -706,10 +706,10 @@ Begin
             End Loop;
           
           Else
-            --5-院外执行; 
+            --5-院外执行;
             Null;
         End Case;
-        --添加执行科室节点 
+        --添加执行科室节点
         If v_Temp Is Not Null Then
           Select Appendchildxml(x_Templet, '/OUTPUT/ZXKS', Xmltype(v_Temp)) Into x_Templet From Dual;
         End If;
@@ -746,7 +746,7 @@ Begin
         If v_诊疗类别 = '5' Or v_诊疗类别 = '6' Then
         
           If v_按规格下医嘱 = 1 Or v_医嘱期效 = 1 Then
-            --发药药房 
+            --发药药房
             v_发药药房 := '';
             For r_Fyyf In c_Fyyf_Sfxm(r_Advices_Qb.收费细目id) Loop
               v_发药药房 := v_发药药房 || '<ITEM jsonArray=''true''><ID>' || r_Fyyf.Id || '</ID><MC>' || r_Fyyf.名称 ||
@@ -759,7 +759,7 @@ Begin
           Else
             If Nvl(v_药名id, 0) <> r_Advices_Qb.诊疗项目id Then
             
-              --发药药房 
+              --发药药房
               v_发药药房 := '';
               For r_Fyyf In c_Fyyf_Zlxm(r_Advices_Qb.诊疗项目id) Loop
                 v_发药药房 := v_发药药房 || '<ITEM jsonArray=''true''><ID>' || r_Fyyf.Id || '</ID><MC>' || r_Fyyf.名称 ||
@@ -773,21 +773,21 @@ Begin
             v_药名id := r_Advices_Qb.诊疗项目id;
           End If;
         
-          --执行方案 
-          /*          v_执行方案 := ''; 
-                    For r_Zxfa In c_Zxfa(r_Advices_Qb.诊疗项目id) Loop 
-                      v_执行方案 := v_执行方案||'<ITEM><ID>' || r_Zxfa.Id || '</ID><GYTJ>' || r_Zxfa.给药途径 || '</GYTJ><ZXPC>' || r_Zxfa.执行频次 || 
-                                '</ZXPC><CRJL>' || r_Zxfa.成人剂量 || '</CRJL>' || '<XEJL>' || r_Zxfa.小儿剂量 || '</XEJL><LC>' || 
-                                r_Zxfa.疗程 || '</LC><DS>'||r_ZXFA.滴数||'</DS></ITEM>'; 
-                    End Loop; 
-                    v_执行方案:='<ZXFA>'||v_执行方案||'</ZXFA>'; 
-                    Select Appendchildxml(x_Templet, '/OUTPUT/YZLIST/YZ[ID=' || r_Advices_Qb.Id || ']', Xmltype(v_执行方案)) Into x_Templet From Dual; 
+          --执行方案
+          /*          v_执行方案 := '';
+                    For r_Zxfa In c_Zxfa(r_Advices_Qb.诊疗项目id) Loop
+                      v_执行方案 := v_执行方案||'<ITEM><ID>' || r_Zxfa.Id || '</ID><GYTJ>' || r_Zxfa.给药途径 || '</GYTJ><ZXPC>' || r_Zxfa.执行频次 ||
+                                '</ZXPC><CRJL>' || r_Zxfa.成人剂量 || '</CRJL>' || '<XEJL>' || r_Zxfa.小儿剂量 || '</XEJL><LC>' ||
+                                r_Zxfa.疗程 || '</LC><DS>'||r_ZXFA.滴数||'</DS></ITEM>';
+                    End Loop;
+                    v_执行方案:='<ZXFA>'||v_执行方案||'</ZXFA>';
+                    Select Appendchildxml(x_Templet, '/OUTPUT/YZLIST/YZ[ID=' || r_Advices_Qb.Id || ']', Xmltype(v_执行方案)) Into x_Templet From Dual;
           */
         Elsif v_诊疗类别 = 'D' Then
         
-          --检查部位 
+          --检查部位
           v_检查部位 := '';
-          /*          v_Temp := '<JCBW>' || v_检查部位 || '</JCBW>'; 
+          /*          v_Temp := '<JCBW>' || v_检查部位 || '</JCBW>';
           Select Appendchildxml(x_Templet, '/OUTPUT', Xmltype(v_Temp)) Into x_Templet From Dual;*/
           For r_Jcbw In c_Jcbw(r_Advices_Qb.诊疗项目id, r_Advices_Qb.操作类型) Loop
             v_检查部位 := v_检查部位 || '<ITEM jsonArray=''true''><BW>' || r_Jcbw.部位 || '</BW><FF>' || r_Jcbw.检查方法 ||
@@ -797,7 +797,7 @@ Begin
           v_Temp := '<JCBW><ZLXMID>' || r_Advices_Qb.诊疗项目id || '</ZLXMID>' || v_检查部位 || '</JCBW>';
           Select Appendchildxml(x_Templet, '/OUTPUT', Xmltype(v_Temp)) Into x_Templet From Dual;
         
-          --20131009 袁朝：增加返回申请附项 
+          --20131009 袁朝：增加返回申请附项
           v_申请附项 := '';
           For r_Sqfx In c_Sqfx(r_Advices_Qb.Id) Loop
             v_申请附项 := v_申请附项 || '<ITEM jsonArray=''true''><XM>' || r_Sqfx.项目 || '</XM><XH>' || r_Sqfx.序号 || '</XH><NR>' ||
@@ -808,7 +808,7 @@ Begin
           Into x_Templet
           From Dual;
         Elsif v_诊疗类别 = 'C' Then
-          --20131009 袁朝：增加返回申请附项 
+          --20131009 袁朝：增加返回申请附项
           v_申请附项 := '';
           For r_Sqfx In c_Sqfx(r_Advices_Qb.Id) Loop
             v_申请附项 := v_申请附项 || '<ITEM jsonArray=''true''><XM>' || r_Sqfx.项目 || '</XM><XH>' || r_Sqfx.序号 || '</XH><NR>' ||
@@ -851,7 +851,7 @@ Begin
               v_药品执行性质 := '不取药';
             Elsif r_Advices_Mx.执行标记 = '0' And r_Advices_Mx.执行性质 = 5 Then
               v_药品执行性质 := '自备药';
-              --问题号146723  医嘱执行性质增加自取药和离院带药 
+              --问题号146723  医嘱执行性质增加自取药和离院带药
             Elsif r_Advices_Mx.执行标记 = '1' And r_Advices_Mx.执行性质 = 4 Then
               v_药品执行性质 := '自取药';
             Elsif r_Advices_Qb.执行标记 = '0' And r_Advices_Qb.执行性质 = 5 Then
@@ -866,20 +866,20 @@ Begin
         
           If r_Advices_Qb.诊疗项目id <> r_Advices_Mx.诊疗项目id Then
           
-            --处理项目的执行科室 
+            --处理项目的执行科室
             v_执行科室名称 := '';
             v_执行科室     := '';
             v_Temp         := '';
             Case
-              When r_Advices_Mx.执行科室 = 0 Then
-                --0-无执行的叮嘱； 
+              When Nvl(r_Advices_Mx.执行科室, 0) = 0 Then
+                --0-无执行的叮嘱；
                 v_执行科室 := '<ITEM jsonArray=''true''><ID>0</ID><MC>无执行叮嘱</MC><ZLXMID>' || r_Advices_Mx.诊疗项目id ||
                           '</ZLXMID><YZID>' || r_Advices_Mx.Id || '</YZID></ITEM>';
                 v_Temp     := v_执行科室;
-              When r_Advices_Mx.执行科室 = 1 Then
-                --1-病人所在科室； 
+              When Nvl(r_Advices_Mx.执行科室, 0) = 1 Then
+                --1-病人所在科室；
                 If r_Advices_Mx.操作类型 = '7' Then
-                  --会诊 
+                  --会诊
                   For r_Zxks In c_Zxks_Hz Loop
                     v_执行科室 := '<ITEM jsonArray=''true''><ID>' || r_Zxks.Id || '</ID><MC>' || r_Zxks.名称 ||
                               '</MC><ZLXMID>' || r_Advices_Mx.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Mx.Id ||
@@ -887,7 +887,7 @@ Begin
                     Select Appendchildxml(x_Templet, '/OUTPUT/ZXKS', Xmltype(v_执行科室)) Into x_Templet From Dual;
                   End Loop;
                 Elsif r_Advices_Mx.操作类型 = '3' Then
-                  --转科 
+                  --转科
                   For r_Zxks In c_Zxks_Zk Loop
                     v_执行科室 := '<ITEM jsonArray=''true''><ID>' || r_Zxks.Id || '</ID><MC>' || r_Zxks.名称 ||
                               '</MC><ZLXMID>' || r_Advices_Mx.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Mx.Id ||
@@ -903,8 +903,8 @@ Begin
                             r_Advices_Mx.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Mx.Id || '</YZID></ITEM>';
                   v_Temp     := v_执行科室;
                 End If;
-              When r_Advices_Mx.执行科室 = 2 Then
-                --2-病人所在病区； 
+              When Nvl(r_Advices_Mx.执行科室, 0) = 2 Then
+                --2-病人所在病区；
                 Select b.Id, b.名称
                 Into v_Id, v_名称
                 From 病案主页 A, 部门表 B
@@ -913,15 +913,15 @@ Begin
                               r_Advices_Mx.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Mx.Id || '</YZID></ITEM>';
                 v_执行科室名称 := v_名称;
                 v_Temp         := v_执行科室;
-              When r_Advices_Mx.执行科室 = 3 Or r_Advices_Mx.执行科室 = 6 Then
-                --3-操作员所在科室;6-开单人所在科室 
+              When Nvl(r_Advices_Mx.执行科室, 0) = 3 Or Nvl(r_Advices_Mx.执行科室, 0) = 6 Then
+                --3-操作员所在科室;6-开单人所在科室
                 Select b.Id, b.名称 Into v_Id, v_名称 From 部门表 B Where b.Id = n_科室id;
                 v_执行科室 := '<ITEM jsonArray=''true''><ID>' || v_Id || '</ID><MC>' || v_名称 || '</MC><ZLXMID>' ||
                           r_Advices_Mx.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Mx.Id || '</YZID></ITEM>';
               
                 v_Temp := v_执行科室;
               When r_Advices_Mx.执行科室 = 4 Then
-                --4-指定科室 
+                --4-指定科室
                 For r_Zxks In c_Zxks(r_Advices_Mx.诊疗项目id) Loop
                   v_执行科室 := '<ITEM jsonArray=''true''><ID>' || r_Zxks.Id || '</ID><MC>' || r_Zxks.名称 || '</MC><ZLXMID>' ||
                             r_Advices_Mx.诊疗项目id || '</ZLXMID><YZID>' || r_Advices_Mx.Id || '</YZID></ITEM>';
@@ -929,10 +929,10 @@ Begin
                   Select Appendchildxml(x_Templet, '/OUTPUT/ZXKS', Xmltype(v_执行科室)) Into x_Templet From Dual;
                 End Loop;
               Else
-                --5-院外执行; 
+                --5-院外执行;
                 Null;
             End Case;
-            --添加执行科室节点 
+            --添加执行科室节点
             If v_Temp Is Not Null Then
               Select Appendchildxml(x_Templet, '/OUTPUT/ZXKS', Xmltype(v_Temp)) Into x_Templet From Dual;
             End If;
@@ -942,7 +942,7 @@ Begin
             v_执行科室名称 := r_Advices_Mx.执行科室名称;
           End If;
         
-          --获取药品特性 
+          --获取药品特性
           If r_Advices_Mx.诊疗类别 = '5' Or r_Advices_Mx.诊疗类别 = '6' Then
             Select Substr(处方职务, 1, 1), 抗生素
             Into v_处方职务, v_抗生素
@@ -972,7 +972,7 @@ Begin
         
           If r_Advices_Mx.诊疗类别 = '5' Or r_Advices_Mx.诊疗类别 = '6' Then
             If v_按规格下医嘱 = 1 Or v_医嘱期效 = 1 Then
-              --发药药房 
+              --发药药房
               v_发药药房 := '';
               For r_Fyyf In c_Fyyf_Sfxm(r_Advices_Mx.收费细目id) Loop
                 v_发药药房 := v_发药药房 || '<ITEM jsonArray=''true''><ID>' || r_Fyyf.Id || '</ID><MC>' || r_Fyyf.名称 ||
@@ -986,7 +986,7 @@ Begin
             Else
               If Nvl(v_药名id, 0) <> r_Advices_Mx.诊疗项目id Then
               
-                --发药药房 
+                --发药药房
                 v_发药药房 := '';
                 For r_Fyyf In c_Fyyf_Zlxm(r_Advices_Mx.诊疗项目id) Loop
                   v_发药药房 := v_发药药房 || '<ITEM jsonArray=''true''><ID>' || r_Fyyf.Id || '</ID><MC>' || r_Fyyf.名称 ||
@@ -1001,7 +1001,7 @@ Begin
               v_药名id := r_Advices_Mx.诊疗项目id;
             End If;
           
-            --执行方案 
+            --执行方案
             v_执行方案 := '';
             For r_Zxfa In c_Zxfa(r_Advices_Mx.诊疗项目id) Loop
               v_执行方案 := v_执行方案 || '<ITEM jsonArray=''true''><ID>' || r_Zxfa.Id || '</ID><GYTJ>' || r_Zxfa.给药途径 ||
@@ -1033,11 +1033,11 @@ Begin
         v_Temp   := Strhead;
         Select Appendchildxml(x_Templet, '/OUTPUT/YZLIST', Xmltype(v_Temp)) Into x_Templet From Dual;
         For r_Advices_Qb In c_Advices_Cqyx Loop
-          ----取医嘱颜色 
+          ----取医嘱颜色
           If r_Advices_Qb.医嘱状态 <> '1' And r_Advices_Qb.Id <> 0 Then
-            ----已通过校对(也包含后续的多个状态) 
+            ----已通过校对(也包含后续的多个状态)
             If Trunc(r_Advices_Qb.上次执行时间) >= Trunc(Sysdate) Then
-              ----当天已发送的(长嘱可能发送到将来) 
+              ----当天已发送的(长嘱可能发送到将来)
               v_Color := '10518528';
             Else
               v_Color := '12582912';
@@ -1045,22 +1045,22 @@ Begin
           End If;
         
           If r_Advices_Qb.医嘱状态 = '1' And r_Advices_Qb.Id <> 0 Then
-            ----新开医嘱 
+            ----新开医嘱
             v_Color := '0';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '9' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '4' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = 8 Then
-            ----已停止医嘱 
+            ----已停止医嘱
             If Sysdate >= r_Advices_Qb.执行终止时间 Or r_Advices_Qb.医嘱期效 = 1 Then
               v_Color := '8421504';
             Else
@@ -1083,13 +1083,13 @@ Begin
             End If;
           End If;
         
-          --校对后术前术后医嘱红色显示 
+          --校对后术前术后医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '4' Or r_Advices_Qb.操作类型 = '14') And
              Instr(',-1,1,2,4,', r_Advices_Qb.医嘱状态) = 0 Then
             v_Color := '255';
           End If;
         
-          --发送后转科医嘱红色显示 
+          --发送后转科医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '3' Or r_Advices_Qb.操作类型 = '8') Then
             v_Color := '255';
           End If;
@@ -1122,14 +1122,14 @@ Begin
             v_类型 := '其他';
           End If;
         
-          --是否已经签名 
+          --是否已经签名
           If Nvl(r_Advices_Qb.新开签名id, 0) <> 0 Then
             v_Sfqm := '1';
           Else
             v_Sfqm := '-1';
           End If;
         
-          --是否已经审核 
+          --是否已经审核
           If Nvl(r_Advices_Qb.审核状态, 0) = 2 Then
             v_Sfsh := '2';
           Else
@@ -1198,7 +1198,7 @@ Begin
           End Loop;
         End Loop;
       Else
-        --长嘱所有页数 
+        --长嘱所有页数
         Select Max(Ceil(Rownum / v_Itemcount))
         Into v_总页数
         From (Select Distinct a.Id, a.相关id, a.诊疗类别, a.序号, a.医嘱期效, a.医嘱状态, d.操作类型, d.执行分类, a.医嘱内容, a.皮试结果,
@@ -1228,11 +1228,11 @@ Begin
         v_Temp   := Strhead;
         Select Appendchildxml(x_Templet, '/OUTPUT/YZLIST', Xmltype(v_Temp)) Into x_Templet From Dual;
         For r_Advices_Qb In c_Advices_Cqsy Loop
-          ----取医嘱颜色 
+          ----取医嘱颜色
           If r_Advices_Qb.医嘱状态 <> '1' And r_Advices_Qb.Id <> 0 Then
-            ----已通过校对(也包含后续的多个状态) 
+            ----已通过校对(也包含后续的多个状态)
             If Trunc(r_Advices_Qb.上次执行时间) >= Trunc(Sysdate) Then
-              ----当天已发送的(长嘱可能发送到将来) 
+              ----当天已发送的(长嘱可能发送到将来)
               v_Color := '10518528';
             Else
               v_Color := '12582912';
@@ -1240,22 +1240,22 @@ Begin
           End If;
         
           If r_Advices_Qb.医嘱状态 = '1' And r_Advices_Qb.Id <> 0 Then
-            ----新开医嘱 
+            ----新开医嘱
             v_Color := '0';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '9' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '4' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = 8 Then
-            ----已停止医嘱 
+            ----已停止医嘱
             If Sysdate >= r_Advices_Qb.执行终止时间 Or r_Advices_Qb.医嘱期效 = 1 Then
               v_Color := '8421504';
             Else
@@ -1278,13 +1278,13 @@ Begin
             End If;
           End If;
         
-          --校对后术前术后医嘱红色显示 
+          --校对后术前术后医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '4' Or r_Advices_Qb.操作类型 = '14') And
              Instr(',-1,1,2,4,', r_Advices_Qb.医嘱状态) = 0 Then
             v_Color := '255';
           End If;
         
-          --发送后转科医嘱红色显示 
+          --发送后转科医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '3' Or r_Advices_Qb.操作类型 = '8') Then
             v_Color := '255';
           End If;
@@ -1317,14 +1317,14 @@ Begin
             v_类型 := '其他';
           End If;
         
-          --是否已经签名 
+          --是否已经签名
           If Nvl(r_Advices_Qb.新开签名id, 0) <> 0 Then
             v_Sfqm := '1';
           Else
             v_Sfqm := '-1';
           End If;
         
-          --是否已经审核 
+          --是否已经审核
           If Nvl(r_Advices_Qb.审核状态, 0) = 2 Then
             v_Sfsh := '2';
           Else
@@ -1404,11 +1404,11 @@ Begin
         v_Temp   := Strhead;
         Select Appendchildxml(x_Templet, '/OUTPUT/YZLIST', Xmltype(v_Temp)) Into x_Templet From Dual;
         For r_Advices_Qb In c_Advices_Yxlz Loop
-          ----取医嘱颜色 
+          ----取医嘱颜色
           If r_Advices_Qb.医嘱状态 <> '1' And r_Advices_Qb.Id <> 0 Then
-            ----已通过校对(也包含后续的多个状态) 
+            ----已通过校对(也包含后续的多个状态)
             If Trunc(r_Advices_Qb.上次执行时间) >= Trunc(Sysdate) Then
-              ----当天已发送的(长嘱可能发送到将来) 
+              ----当天已发送的(长嘱可能发送到将来)
               v_Color := '10518528';
             Else
               v_Color := '12582912';
@@ -1416,22 +1416,22 @@ Begin
           End If;
         
           If r_Advices_Qb.医嘱状态 = '1' And r_Advices_Qb.Id <> 0 Then
-            ----新开医嘱 
+            ----新开医嘱
             v_Color := '0';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '9' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '4' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = 8 Then
-            ----已停止医嘱 
+            ----已停止医嘱
             If Sysdate >= r_Advices_Qb.执行终止时间 Or r_Advices_Qb.医嘱期效 = 1 Then
               v_Color := '8421504';
             Else
@@ -1454,13 +1454,13 @@ Begin
             End If;
           End If;
         
-          --校对后术前术后医嘱红色显示 
+          --校对后术前术后医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '4' Or r_Advices_Qb.操作类型 = '14') And
              Instr(',-1,1,2,4,', r_Advices_Qb.医嘱状态) = 0 Then
             v_Color := '255';
           End If;
         
-          --发送后转科医嘱红色显示 
+          --发送后转科医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '3' Or r_Advices_Qb.操作类型 = '8') Then
             v_Color := '255';
           End If;
@@ -1493,14 +1493,14 @@ Begin
             v_类型 := '其他';
           End If;
         
-          --是否已经签名 
+          --是否已经签名
           If Nvl(r_Advices_Qb.新开签名id, 0) <> 0 Then
             v_Sfqm := '1';
           Else
             v_Sfqm := '-1';
           End If;
         
-          --是否已经审核 
+          --是否已经审核
           If Nvl(r_Advices_Qb.审核状态, 0) = 2 Then
             v_Sfsh := '2';
           Else
@@ -1599,11 +1599,11 @@ Begin
         v_Temp   := Strhead;
         Select Appendchildxml(x_Templet, '/OUTPUT/YZLIST', Xmltype(v_Temp)) Into x_Templet From Dual;
         For r_Advices_Qb In c_Advices_Sylz Loop
-          ----取医嘱颜色 
+          ----取医嘱颜色
           If r_Advices_Qb.医嘱状态 <> '1' And r_Advices_Qb.Id <> 0 Then
-            ----已通过校对(也包含后续的多个状态) 
+            ----已通过校对(也包含后续的多个状态)
             If Trunc(r_Advices_Qb.上次执行时间) >= Trunc(Sysdate) Then
-              ----当天已发送的(长嘱可能发送到将来) 
+              ----当天已发送的(长嘱可能发送到将来)
               v_Color := '10518528';
             Else
               v_Color := '12582912';
@@ -1611,22 +1611,22 @@ Begin
           End If;
         
           If r_Advices_Qb.医嘱状态 = '1' And r_Advices_Qb.Id <> 0 Then
-            ----新开医嘱 
+            ----新开医嘱
             v_Color := '0';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '9' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = '4' And r_Advices_Qb.Id <> 0 Then
-            ----已确认停止医嘱 
+            ----已确认停止医嘱
             v_Color := '8421504';
           End If;
         
           If r_Advices_Qb.医嘱状态 = 8 Then
-            ----已停止医嘱 
+            ----已停止医嘱
             If Sysdate >= r_Advices_Qb.执行终止时间 Or r_Advices_Qb.医嘱期效 = 1 Then
               v_Color := '8421504';
             Else
@@ -1649,13 +1649,13 @@ Begin
             End If;
           End If;
         
-          --校对后术前术后医嘱红色显示 
+          --校对后术前术后医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '4' Or r_Advices_Qb.操作类型 = '14') And
              Instr(',-1,1,2,4,', r_Advices_Qb.医嘱状态) = 0 Then
             v_Color := '255';
           End If;
         
-          --发送后转科医嘱红色显示 
+          --发送后转科医嘱红色显示
           If r_Advices_Qb.诊疗类别 = 'Z' And (r_Advices_Qb.操作类型 = '3' Or r_Advices_Qb.操作类型 = '8') Then
             v_Color := '255';
           End If;
@@ -1688,14 +1688,14 @@ Begin
             v_类型 := '其他';
           End If;
         
-          --是否已经签名 
+          --是否已经签名
           If Nvl(r_Advices_Qb.新开签名id, 0) <> 0 Then
             v_Sfqm := '1';
           Else
             v_Sfqm := '-1';
           End If;
         
-          --是否已经审核 
+          --是否已经审核
           If Nvl(r_Advices_Qb.审核状态, 0) = 2 Then
             v_Sfsh := '2';
           Else
@@ -1772,9 +1772,9 @@ Begin
   v_Temp    := Strdetail;
   Select Appendchildxml(x_Templet, '/OUTPUT', Xmltype(v_Temp)) Into x_Templet From Dual;
   Out_Xml := x_Templet;
-  /* 
-  delete test_xml; 
-  insert into test_xml(strxml,xmldata,input) values(Strxml,x_Templet,'医嘱1'||v_医嘱id); 
+
+  /*delete test_xml;
+  insert into test_xml(strxml,xmldata,input) values(Strxml,x_Templet,'医嘱1'||v_医嘱id);
   commit;*/
 Exception
   When Others Then
