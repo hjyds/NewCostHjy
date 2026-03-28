@@ -10,7 +10,8 @@ using System.Linq;
 using ZLSoft.Base.Tracing;
 using static NewCostHjy.Common.Const;
 
-namespace testWeb.BLL {
+namespace NewCostHjy.BLL
+{
     /// <summary>
     /// ZLHIS
     /// </summary>
@@ -66,15 +67,15 @@ namespace testWeb.BLL {
             using (var trace = new ZLTrace("GetNextIdOrNo", "ZlhisInterfaceBLL")) {
                 string input = "";
                 Dictionary<string, object> T = null;
-                if (Const.HisNoOrIdType.Register == hisNoOrIdType) {
+                if (HisNoOrIdType.Register == hisNoOrIdType) {
                     //12-挂号
                     input = "{\"input\":{\"item_num\":12,\"quantity\":" + quantity + "}}";
                     T = zlhisInterfaceDAL.GetFeeNo(input);
-                } else if (Const.HisNoOrIdType.FeeNo == hisNoOrIdType) {
+                } else if (HisNoOrIdType.FeeNo == hisNoOrIdType) {
                     //14-记帐单据号
                     input = "{\"input\":{\"item_num\":14,\"quantity\":" + quantity + "}}";
                     T = zlhisInterfaceDAL.GetFeeNo(input);
-                } else if (Const.HisNoOrIdType.FeeId == hisNoOrIdType) {
+                } else if (HisNoOrIdType.FeeId == hisNoOrIdType) {
                     //费用ID
                     input = "{\"input\":{\"table_name\":\"病人费用记录\",\"quantity\":" + quantity + "}}";
                     T = zlhisInterfaceDAL.GetFeeId(input);
@@ -118,8 +119,8 @@ namespace testWeb.BLL {
         public List<Eisai_item_listItem> SPDItems()
         {
             DataTable dtTmp = zlhisInterfaceDAL.SPDItems();
-            string strTemp = Newtonsoft.Json.JsonConvert.SerializeObject(dtTmp);
-            List<Eisai_item_listItem> lstPar = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Eisai_item_listItem>>(strTemp);
+            string strTemp = JsonConvert.SerializeObject(dtTmp);
+            List<Eisai_item_listItem> lstPar = JsonConvert.DeserializeObject<List<Eisai_item_listItem>>(strTemp);
             return lstPar;
         }
 
@@ -309,8 +310,8 @@ namespace testWeb.BLL {
 
                     arrTmp = strTmp.Split(":");
                     if (arrTmp.Length != 2) return false;
-                    if ((int.TryParse(arrTmp[0], out int _) && int.Parse(arrTmp[0]) >= 24) || arrTmp[0] == "" || arrTmp[0].Length > 2) return false;
-                    if ((int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60) || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
+                    if (int.TryParse(arrTmp[0], out int _) && int.Parse(arrTmp[0]) >= 24 || arrTmp[0] == "" || arrTmp[0].Length > 2) return false;
+                    if (int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60 || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
                     if (intPreDay != 0 && intPreDay == intCurDay && strPreTime != ""
                         && string.Compare(DateTime.Parse(strTmp).ToString("HH:mm"), strPreTime) <= 0) return false;
 
@@ -335,8 +336,8 @@ namespace testWeb.BLL {
 
                         string[] arrTmp = strTmp.Split(":");
                         if (arrTmp.Length != 2) return false;
-                        if ((int.TryParse(arrTmp[0], out int _) && int.Parse(arrTmp[0]) >= 24) || arrTmp[0] == "" || arrTmp[0].Length > 2) return false;
-                        if ((int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60) || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
+                        if (int.TryParse(arrTmp[0], out int _) && int.Parse(arrTmp[0]) >= 24 || arrTmp[0] == "" || arrTmp[0].Length > 2) return false;
+                        if (int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60 || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
                         if (strPreTime != "" && string.Compare(DateTime.Parse(strTmp).ToString("HH:mm"), strPreTime) <= 0) return false;
                         strPreTime = DateTime.Parse(strTmp).ToString("HH:mm");
                     }
@@ -368,8 +369,8 @@ namespace testWeb.BLL {
 
                         arrTmp = strTmp.Split(":");
                         if (arrTmp.Length != 2) return false;
-                        if ((int.TryParse(arrTmp[0], out int _) && int.Parse(arrTmp[0]) >= 24) || arrTmp[0] == "" || arrTmp[0].Length > 2) return false;
-                        if ((int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60) || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
+                        if (int.TryParse(arrTmp[0], out int _) && int.Parse(arrTmp[0]) >= 24 || arrTmp[0] == "" || arrTmp[0].Length > 2) return false;
+                        if (int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60 || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
                         if (intPreDay != 0 && intPreDay == intCurDay && strPreTime != ""
                             && string.Compare(DateTime.Parse(strTmp).ToString("HH:mm"), strPreTime) <= 0) return false;
 
@@ -389,8 +390,8 @@ namespace testWeb.BLL {
 
                     string[] arrTmp = strTmp.Split(":");
                     if (arrTmp.Length != 2) return false;
-                    if ((int.TryParse(arrTmp[0], out int _) && (int.Parse(arrTmp[0]) < 1 || int.Parse(arrTmp[0]) > int频率间隔)) || arrTmp[0] == "") return false;
-                    if ((int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60) || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
+                    if (int.TryParse(arrTmp[0], out int _) && (int.Parse(arrTmp[0]) < 1 || int.Parse(arrTmp[0]) > int频率间隔) || arrTmp[0] == "") return false;
+                    if (int.TryParse(arrTmp[1], out int _) && int.Parse(arrTmp[1]) >= 60 || arrTmp[1] == "" || arrTmp[1].Length > 2) return false;
                     if (strPreTime != "" && string.Compare(DateTime.Parse(strTmp).ToString("HH:mm"), strPreTime) <= 0) return false;
                     strPreTime = DateTime.Parse(strTmp).ToString("HH:mm");
                 }
@@ -543,14 +544,14 @@ namespace testWeb.BLL {
         public List<FollowUpd> GetErrUpFollowList() {
             DataTable data = zlhisInterfaceDAL.GetErrUpFollowList();
             //List<FollowUpd> lstT = Const.ConvertDataTableToIList<FollowUpd>(data).ToList();
-            List<FollowUpdStr> lst = Const.ConvertDataTableToIList<FollowUpdStr>(data).ToList();
+            List<FollowUpdStr> lst = ConvertDataTableToIList<FollowUpdStr>(data).ToList();
             if (lst.Count == 0)
             {
                 lst.Add(new FollowUpdStr() { });
             }
-            string strTmp = Newtonsoft.Json.JsonConvert.SerializeObject(lst);
+            string strTmp = JsonConvert.SerializeObject(lst);
 
-            List<FollowUpd> outlist = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FollowUpd>>(strTmp);
+            List<FollowUpd> outlist = JsonConvert.DeserializeObject<List<FollowUpd>>(strTmp);
 
             return outlist;
         }
@@ -596,11 +597,11 @@ namespace testWeb.BLL {
             };
             string url = input.vteSystem;           
             url += "/ZlVteInterface/GetVteItemExeUrl";
-            string dataJson = Newtonsoft.Json.JsonConvert.SerializeObject(urlPar);
+            string dataJson = JsonConvert.SerializeObject(urlPar);
             string result = "";
             try
             {
-                result = NewCostHjy.Common.HttpRequest.RequestDataSync(url, dataJson, AuthType.None);
+                result = HttpRequest.RequestDataSync(url, dataJson, AuthType.None);
             } catch (Exception ex)
             {
                 return new { Result = 0, Msg = ex.Message };
@@ -639,11 +640,11 @@ namespace testWeb.BLL {
             string url = input.vteSystem;
           
             url += "/ZlVteInterface/RvkExePatientVteItem";
-            string dataJson = Newtonsoft.Json.JsonConvert.SerializeObject(dataIn);
+            string dataJson = JsonConvert.SerializeObject(dataIn);
             string result = "";
             try
             {
-                result = NewCostHjy.Common.HttpRequest.RequestDataSync(url, dataJson, AuthType.None);
+                result = HttpRequest.RequestDataSync(url, dataJson, AuthType.None);
             } catch (Exception ex)
             {
                 return new { Result = 0, Msg = ex.Message };

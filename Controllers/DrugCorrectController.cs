@@ -23,8 +23,8 @@ namespace NewCostHjy.Controllers {
             string id = Guid.NewGuid().ToString();
             string strInfo = "";
             ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+
             #endregion
-            string xmlString = "";
             try
             {
                 // 1. 启用请求体缓冲（关键步骤）
