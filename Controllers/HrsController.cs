@@ -8,7 +8,7 @@ using System.IO;
 namespace NewCostHjy.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class HrsController : BaseController {
+    public class HrsController : ControllerBase {
 
         private static readonly Dictionary<string, List<SaveResDetailData>> _resourceDetails = new Dictionary<string, List<SaveResDetailData>>();
         private static readonly Dictionary<string, SaveFileData> _fileStorage = new Dictionary<string, SaveFileData>();
@@ -21,11 +21,11 @@ namespace NewCostHjy.Controllers {
                 
                 var data = new SaveResDetailData {
                     save_sign = 0,
-                    source = request.ContainsKey("save_content") ? "资源录入" : "未知来源",
+                    source = request.ContainsKey("save_content") ? "????" : "????",
                     resource_view_id = Guid.NewGuid().ToString(),
                     resource_type_id = Guid.NewGuid().ToString(),
                     creator_id = Guid.NewGuid().ToString(),
-                    creator_name = "系统用户",
+                    creator_name = "????",
                     resource_detail_id = Guid.NewGuid().ToString(),
                     prop_files = new List<PropFile>()
                 };
@@ -37,10 +37,10 @@ namespace NewCostHjy.Controllers {
                     Code = 200
                 };
 
-                return Json(response);
+                return new JsonResult(response);
             }
             catch (Exception ex) {
-                return Json(new SaveResDetailResponse {
+                return new JsonResult(new SaveResDetailResponse {
                     Success = false,
                     Msg = ex.Message,
                     Data = null,
@@ -55,9 +55,9 @@ namespace NewCostHjy.Controllers {
                 var file = Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
                 
                 if (file == null) {
-                    return Json(new SaveFileResponse {
+                    return new JsonResult(new SaveFileResponse {
                         Success = false,
-                        Msg = "未找到上传文件",
+                        Msg = "???????",
                         Data = null,
                         Code = 400
                     });
@@ -88,10 +88,10 @@ namespace NewCostHjy.Controllers {
                     Code = 200
                 };
 
-                return Json(response);
+                return new JsonResult(response);
             }
             catch (Exception ex) {
-                return Json(new SaveFileResponse {
+                return new JsonResult(new SaveFileResponse {
                     Success = false,
                     Msg = ex.Message,
                     Data = null,
@@ -107,11 +107,11 @@ namespace NewCostHjy.Controllers {
                 
                 var data = new SaveResDetailData {
                     save_sign = 0,
-                    source = "资源录入",
+                    source = "????",
                     resource_view_id = Guid.NewGuid().ToString(),
                     resource_type_id = Guid.NewGuid().ToString(),
                     creator_id = Guid.NewGuid().ToString(),
-                    creator_name = "产品部HRS测试TOKEN",
+                    creator_name = "???HRS??TOKEN",
                     resource_detail_id = Guid.NewGuid().ToString(),
                     prop_files = new List<PropFile>()
                 };
@@ -123,10 +123,10 @@ namespace NewCostHjy.Controllers {
                     Code = 200
                 };
 
-                return Json(response);
+                return new JsonResult(response);
             }
             catch (Exception ex) {
-                return Json(new SaveResDetailResponse {
+                return new JsonResult(new SaveResDetailResponse {
                     Success = false,
                     Msg = ex.Message,
                     Data = null,
@@ -141,9 +141,9 @@ namespace NewCostHjy.Controllers {
                 var file = Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
                 
                 if (file == null) {
-                    return Json(new SaveFileResponse {
+                    return new JsonResult(new SaveFileResponse {
                         Success = false,
-                        Msg = "未找到上传文件",
+                        Msg = "???????",
                         Data = null,
                         Code = 400
                     });
@@ -174,10 +174,10 @@ namespace NewCostHjy.Controllers {
                     Code = 200
                 };
 
-                return Json(response);
+                return new JsonResult(response);
             }
             catch (Exception ex) {
-                return Json(new SaveFileResponse {
+                return new JsonResult(new SaveFileResponse {
                     Success = false,
                     Msg = ex.Message,
                     Data = null,
@@ -189,7 +189,7 @@ namespace NewCostHjy.Controllers {
         [HttpGet("GetFile/{fileId}")]
         public IActionResult GetFile(string fileId) {
             if (_fileStorage.TryGetValue(fileId, out var fileData)) {
-                return Json(new SaveFileResponse {
+                return new JsonResult(new SaveFileResponse {
                     Success = true,
                     Msg = "",
                     Data = fileData,
@@ -197,9 +197,9 @@ namespace NewCostHjy.Controllers {
                 });
             }
 
-            return Json(new SaveFileResponse {
+            return new JsonResult(new SaveFileResponse {
                 Success = false,
-                Msg = "文件不存在",
+                Msg = "?????",
                 Data = null,
                 Code = 404
             });
@@ -207,7 +207,7 @@ namespace NewCostHjy.Controllers {
 
         [HttpGet("GetResourceDetail/{resourceId}")]
         public IActionResult GetResourceDetail(string resourceId) {
-            return Json(new {
+            return new JsonResult(new {
                 Success = true,
                 Msg = "",
                 Data = new {
@@ -221,7 +221,7 @@ namespace NewCostHjy.Controllers {
 
         [HttpGet("ListFiles")]
         public IActionResult ListFiles() {
-            return Json(new {
+            return new JsonResult(new {
                 Success = true,
                 Msg = "",
                 Data = _fileStorage.Values,
@@ -236,7 +236,7 @@ namespace NewCostHjy.Controllers {
                 var request = JsonConvert.DeserializeObject<GetHrsTokenRequest>(strTmp);
                 
                 if (request == null || request.inargs == null) {
-                    return Json(new GetHrsTokenResponse {
+                    return new JsonResult(new GetHrsTokenResponse {
                         Success = false,
                         Data = null
                     });
@@ -251,10 +251,10 @@ namespace NewCostHjy.Controllers {
                     }
                 };
 
-                return Json(response);
+                return new JsonResult(response);
             }
-            catch (Exception ex) {
-                return Json(new GetHrsTokenResponse {
+            catch (Exception) {
+                return new JsonResult(new GetHrsTokenResponse {
                     Success = false,
                     Data = null
                 });
@@ -268,7 +268,7 @@ namespace NewCostHjy.Controllers {
             };
 
             var payload = new {
-                Name = "测试用户HRS测试TOKEN",
+                Name = "????HRS??TOKEN",
                 UserName = "zltoken",
                 IP = "",
                 sso_uid = Guid.NewGuid().ToString(),

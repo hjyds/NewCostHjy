@@ -11,7 +11,7 @@ namespace NewCostHjy.Controllers {
     /// </summary>
     [Route("res/HCS")]
     [ApiController]
-    public class HCSController : BaseController {
+    public class HCSController : ControllerBase {
 
         /// <summary>
         /// HCS Execute服务
@@ -26,7 +26,7 @@ namespace NewCostHjy.Controllers {
                 var request = JsonConvert.DeserializeObject<GetHrsTokenRequest>(strTmp);
                 
                 if (request == null || request.inargs == null) {
-                    return Json(new GetHrsTokenResponse {
+                    return new JsonResult(new GetHrsTokenResponse {
                         Success = false,
                         Data = null
                     });
@@ -41,10 +41,10 @@ namespace NewCostHjy.Controllers {
                     }
                 };
 
-                return Json(response);
+                return new JsonResult(response);
             }
             catch (Exception) {
-                return Json(new GetHrsTokenResponse {
+                return new JsonResult(new GetHrsTokenResponse {
                     Success = false,
                     Data = null
                 });
