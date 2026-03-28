@@ -228,5 +228,80 @@ namespace NewCostHjy.Controllers {
                 Code = 200
             });
         }
+
+        [HttpPost("CallGetHrsToken")]
+        public IActionResult CallGetHrsToken([FromBody] dynamic par) {
+            try {
+                string strTmp = JsonConvert.SerializeObject(par);
+                var request = JsonConvert.DeserializeObject<GetHrsTokenRequest>(strTmp);
+                
+                if (request == null || request.inargs == null) {
+                    return Json(new GetHrsTokenResponse {
+                        Success = false,
+                        Data = null
+                    });
+                }
+
+                var token = GenerateToken(request.inargs.user);
+
+                var response = new GetHrsTokenResponse {
+                    Success = true,
+                    Data = new TokenData {
+                        token = token
+                    }
+                };
+
+                return Json(response);
+            }
+            catch (Exception ex) {
+                return Json(new GetHrsTokenResponse {
+                    Success = false,
+                    Data = null
+                });
+            }
+        }
+
+        private string GenerateToken(string user) {
+            var header = new {
+                alg = "HS256",
+                typ = "JWT"
+            };
+
+            var payload = new {
+                Name = "测试用户HRS测试TOKEN",
+                UserName = "zltoken",
+                IP = "",
+                sso_uid = Guid.NewGuid().ToString(),
+                BSCode = "",
+                AccountID = Guid.NewGuid().ToString(),
+                AuthID = "1",
+                SC = "",
+                CAST = "",
+                exp = DateTimeOffset.UtcNow.AddHours(24).ToUnixTimeSeconds(),
+                iss = "zlsoft",
+                aud = "sso"
+            };
+
+            var headerBase64 = Base64UrlEncode(JsonConvert.SerializeObject(header));
+            var payloadBase64 = Base64UrlEncode(JsonConvert.SerializeObject(payload));
+            var signature = ComputeSignature(headerBase64 + "." + payloadBase64, "your-secret-key");
+
+            return $"{headerBase64}.{payloadBase64}.{signature}";
+        }
+
+        private string Base64UrlEncode(string input) {
+            var bytes = System.Text.Encoding.UTF8.GetBytes(input);
+            return Convert.ToBase64String(bytes)
+                .Replace('+', '-')
+                .Replace('/', '_')
+                .TrimEnd('=');
+        }
+
+        private string ComputeSignature(string input, string key) {
+            using (var hmac = new System.Security.Cryptography.HMACSHA256(System.Text.Encoding.UTF8.GetBytes(key))) {
+                var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(input));
+                return Base64UrlEncode(Convert.ToBase64String(hash));
+            }
+        }
     }
 }

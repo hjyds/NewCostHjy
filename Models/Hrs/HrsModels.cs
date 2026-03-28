@@ -88,4 +88,25 @@ namespace NewCostHjy.Models.Hrs {
         public string file_type { get; set; }
         public byte[] file_data { get; set; }
     }
+
+    public class GetHrsTokenRequest {
+        public string circleid { get; set; }
+        public string 内部服务 { get; set; }
+        public string hcsid { get; set; }
+        public InArgs inargs { get; set; }
+    }
+
+    public class InArgs {
+        public string user { get; set; }
+        public string pwd { get; set; }
+    }
+
+    public class GetHrsTokenResponse {
+        public bool Success { get; set; }
+        public TokenData Data { get; set; }
+    }
+
+    public class TokenData {
+        public string token { get; set; }
+    }
 }
