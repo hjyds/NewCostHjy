@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ï»¿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +8,7 @@ using NewCostHjy.App_Start;
 using NewCostHjy.BLL;
 using NewCostHjy.Common;
 using NewCostHjy.Models;
-using Newtonsoft.Json.Serialization; 
+using Newtonsoft.Json.Serialization;
 
 namespace NewCostHjy {
     public class Startup {
@@ -26,7 +26,7 @@ namespace NewCostHjy {
             bool blnDPFTest = false;
             string strTmp = Configuration.GetSection("PDFUsed").Value;
             if(strTmp=="1") blnDPFTest = true;
-            #region PDFÊä³öÏà¹Ø
+            #region PDFç›¸å…³é…ç½®
             if (blnDPFTest)
             {
                 services.AddControllers();
@@ -42,9 +42,9 @@ namespace NewCostHjy {
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc(
                     "v1", new OpenApiInfo {
-                        Title = "hjyÎÄµµ",
+                        Title = "hjyæ–‡æ¡£",
                         Version = "v1",
-                        Description = "hjyËµÃ÷",
+                        Description = "hjyè¯´æ˜Ž",
                         //Contact = new OpenApiContact {
                         //    Name = "zyk",
                         //    Email = "zyk@zlsoft.cn",
@@ -52,24 +52,24 @@ namespace NewCostHjy {
                         //}
                     });
 
-                //// Îª Swagger JSON and UIÉèÖÃxmlÎÄµµ×¢ÊÍÂ·¾¶
+                //// ä¸º Swagger JSON and UIè®¾ç½®xmlæ–‡æ¡£æ³¨é‡Šè·¯å¾„
                 //var basePath =
-                //    Path.GetDirectoryName(typeof(Program).Assembly.Location); //»ñÈ¡Ó¦ÓÃ³ÌÐòËùÔÚÄ¿Â¼£¨¾ø¶Ô£¬²»ÊÜ¹¤×÷Ä¿Â¼Ó°Ïì£¬½¨Òé²ÉÓÃ´Ë·½·¨»ñÈ¡Â·¾¶£©
+                //    Path.GetDirectoryName(typeof(Program).Assembly.Location); //èŽ·å–åº”ç”¨ç¨‹åºæ‰€åœ¨ç›®å½•ï¼ˆç»å¯¹ï¼Œä¸å—å·¥ä½œç›®å½•å½±å“ï¼Œå»ºè®®é‡‡ç”¨æ­¤æ–¹æ³•èŽ·å–è·¯å¾„ï¼‰
                 //var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 //var xmlPath = Path.Combine(basePath, xmlFile);
-                //c.IncludeXmlComments(xmlPath, true); //Ä¬ÈÏµÄµÚ¶þ¸ö²ÎÊýÊÇfalse£¬Õâ¸öÊÇcontrollerµÄ×¢ÊÍ
+                //c.IncludeXmlComments(xmlPath, true); //é»˜è®¤çš„ç¬¬äºŒä¸ªå‚æ•°æ˜¯falseï¼ŒæŽ§åˆ¶controllerçš„æ³¨é‡Š
             });
 
              
 
             services.AddControllersWithViews().AddNewtonsoftJson(options => {
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                //°´ÕÕÀà¶¨Òå´óÐ¡Ð´Êä³öjson
+                //è®¾ç½®çº¦å®šé¦–å­—æ¯å°å†™çš„json
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                //ºöÂÔÑ­»·ÒýÓÃ
+                //è®¾ç½®å¾ªçŽ¯å¼•ç”¨
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-            //ÈÕÖ¾¼°¼à¿Ø
+            //æ—¥å¿—è¿‡æ»¤å™¨
             services.AddMvc(options => {
                 options.Filters.Add(new ActionFilter());
             }).AddNewtonsoftJson(
@@ -77,10 +77,10 @@ namespace NewCostHjy {
                     option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 });             
 
-            //1ÔÊÐíÒ»¸ö»ò¶à¸öÀ´Ô´¿ÉÒÔ¿çÓò
+            //1ã€åˆ›å»ºä¸€ä¸ªè·¨åŸŸèµ„æºçš„è®¸å¯
             services.AddCors(options => {
                 options.AddPolicy("CustomCorsPolicy", policy => {
-                    // Éè¶¨ÔÊÐí¿çÓòµÄÀ´Ô´£¬ÓÐ¶à¸ö¿ÉÒÔÓÃ','¸ô¿ª
+                    // è®¾ç½®å…è®¸è·¨åŸŸçš„æºï¼Œå¤šä¸ªæºç”¨é€—å·éš”å¼€
                     policy.WithOrigins()
                     .AllowAnyHeader()
                     .AllowAnyMethod()
@@ -96,12 +96,12 @@ namespace NewCostHjy {
 
             SiteConfigMain.TestConnStr = Configuration.GetSection("ZLHISCONN").Value;
 
-            System.Console.WriteLine("Í¨ÓÃWEBÏµÍ³·þÎñ½Ó¿Ú²âÊÔ×®Ä£¿é£¡");
+            System.Console.WriteLine("é€šç”¨WEBç³»ç»ŸæœåŠ¡æŽ¥å£æµ‹è¯•æ¡©æ¨¡å—ï¼");
 
             //new ZlhisInterfaceBLL().TestFunc();
             //string strTemp = new NewCostHjy.Common.FunTestCom().DecryptString("UBVagpW", "zlsoft.third.ftp");
           
-            //¿çÓò
+            //è·¨åŸŸ
             app.UseCors("CustomCorsPolicy");
 
             #region Swagger
@@ -121,14 +121,26 @@ namespace NewCostHjy {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // ÖØ¶¨ÏòÖÐ¼ä¼þ - ·ÅÔÚ UseRouting() Ö®Ç°
-            //°ÑÏÖÓÐµÄµØÖ·ÖØ¶¨ÏòÎªÒ»¸öÐÂµÄµØÖ·
+            // é‡å®šå‘ä¸­é—´ä»¶ - åœ¨ UseRouting() ä¹‹å‰
+            //å°†è¯·æ±‚çš„åœ°å€é‡å®šå‘åˆ°ä¸€ä¸ªæ–°çš„åœ°å€
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path.StartsWithSegments("/GeneralBusinessUI/Prompt"))
                 {
                     var query = context.Request.QueryString;
                     context.Response.Redirect($"/PatientVte/Prompt{query}");
+                    return;
+                }
+                if (context.Request.Path.StartsWithSegments("/unit/pageViewById"))
+                {
+                    var query = context.Request.QueryString;
+                    context.Response.Redirect($"/HrsPage/PageViewById{query}");
+                    return;
+                }
+                if (context.Request.Path.StartsWithSegments("/unit/clinicalStaffQuery"))
+                {
+                    var query = context.Request.QueryString;
+                    context.Response.Redirect($"/HrsPage/ClinicalStaffQuery{query}");
                     return;
                 }
                 await next();
@@ -147,5 +159,3 @@ namespace NewCostHjy {
         }
     }
 }
-
- 

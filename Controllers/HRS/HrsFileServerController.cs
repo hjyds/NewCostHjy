@@ -60,22 +60,10 @@ namespace NewCostHjy.Controllers {
 
                 _fileStorage[fileId] = data;
 
-                var response = new SaveFileResponse {
-                    Success = true,
-                    Msg = "",
-                    Data = data,
-                    Code = 200
-                };
-
-                return Json(response);
+                return Json(data);
             }
             catch (Exception ex) {
-                return Json(new SaveFileResponse {
-                    Success = false,
-                    Msg = ex.Message,
-                    Data = null,
-                    Code = 500
-                });
+                return Json(null);
             }
         }
 

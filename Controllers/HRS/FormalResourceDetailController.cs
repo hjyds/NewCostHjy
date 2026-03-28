@@ -31,22 +31,10 @@ namespace NewCostHjy.Controllers {
 
                 _resourceDetails[resourceDetailId] = data;
 
-                var response = new SaveResDetailResponse {
-                    Success = true,
-                    Msg = "",
-                    Data = data,
-                    Code = 200
-                };
-
-                return Json(response);
+                return Json(data);
             }
             catch (Exception ex) {
-                return Json(new SaveResDetailResponse {
-                    Success = false,
-                    Msg = ex.Message,
-                    Data = null,
-                    Code = 500
-                });
+                return Json(null);
             }
         }
 

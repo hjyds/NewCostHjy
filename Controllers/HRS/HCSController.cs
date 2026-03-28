@@ -34,20 +34,14 @@ namespace NewCostHjy.Controllers {
 
                 var token = GenerateToken(request.inargs.user);
 
-                var response = new GetHrsTokenResponse {
-                    Success = true,
-                    Data = new TokenData {
-                        token = token
-                    }
+                var data = new TokenData {
+                    token = token
                 };
 
-                return new JsonResult(response);
+                return new JsonResult(data);
             }
             catch (Exception) {
-                return new JsonResult(new GetHrsTokenResponse {
-                    Success = false,
-                    Data = null
-                });
+                return new JsonResult(null);
             }
         }
 

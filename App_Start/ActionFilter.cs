@@ -7,7 +7,7 @@ namespace NewCostHjy.App_Start {
         private readonly string sessionKey = "_thisWebApiOnActionMonitorLog_";
          
         /// <summary>
-        /// apiÖ´ĞĞÍê±Ï
+        /// apiæ‰§è¡Œå
         /// </summary>
         /// <param name="actionContext"></param>
         public override void OnActionExecuted(ActionExecutedContext actionContext) {
@@ -16,7 +16,7 @@ namespace NewCostHjy.App_Start {
         }
 
         /// <summary>
-        /// Êı¾İ·µ»ØÇ°£¬Í³Ò»·µ»Ø¸ñÊ½
+        /// æ•°æ®è¿”å›å‰ç»Ÿä¸€è¿”å›æ ¼å¼
         /// </summary>
         /// <param name="context"></param>
         public override void OnResultExecuting(ResultExecutingContext context) {
@@ -30,9 +30,9 @@ namespace NewCostHjy.App_Start {
             //    using (var reader = new StreamReader(context.HttpContext.Request.Body))
             //    {
             //        var body = reader.ReadToEndAsync();
-            //        // Äã¿ÉÒÔ½«½âÎöºóµÄÎÄ±¾´æ´¢ÔÚHttpContextµÄÄ³¸öÎ»ÖÃ£¬ÀıÈçItems¼¯ºÏÖĞ
+            //        // å°†è¯»å–çš„å†…å®¹ä¿å­˜åˆ°HttpContextçš„æŸä¸ªä½ç½®ï¼Œæ¯”å¦‚Itemsä¸­
             //        context.HttpContext.Items["RequestBody"] = body;
-            //        // Èç¹ûÄã´òËãÔÚºóĞøÖĞ¼ä¼ş»ò¿ØÖÆÆ÷ÖĞÔÙ´Î¶ÁÈ¡ÇëÇóÌå£¬ÄãĞèÒªÖØÖÃÇëÇóÌåÁ÷µÄÎ»ÖÃ
+            //        // å¦‚æœåœ¨åç»­çš„ä¸­é—´ä»¶æˆ–è¿‡æ»¤å™¨ä¸­éœ€è¦å†æ¬¡è¯»å–è¯·æ±‚ä½“ï¼Œéœ€è¦è®¾ç½®è¯·æ±‚ä½“çš„ä½ç½®
             //        //context.HttpContext.Request.Body.Position = 0;
             //    }
             //}
@@ -40,11 +40,11 @@ namespace NewCostHjy.App_Start {
             if (context.Result is JsonResult) {
                 var objectResult = context.Result as JsonResult;
                 if (objectResult.Value == null) {
-                    context.Result = new ObjectResult(new { Code = 404, Msg = "ÎŞĞ§·µ»ØÖµ", Success = false });
+                    context.Result = new ObjectResult(new { Code = 404, Msg = "æ— æ•ˆè¿”å›å€¼", Success = false });
                 } else if (objectResult.StatusCode == 401) {
                     dynamic retValue = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(objectResult.Value));
                     if (retValue.Success != null && retValue.Msg != null) {
-                        context.Result = new ObjectResult(new { Code = 401, Success = false, Msg = "·ÃÎÊÇëÇóÒªÇóÉí·İÑéÖ¤£¡" + retValue.Msg, Data = retValue });
+                        context.Result = new ObjectResult(new { Code = 401, Success = false, Msg = "è®¿é—®éœ€è¦èº«ä»½éªŒè¯" + retValue.Msg, Data = retValue });
                     }
                 } else {
 
@@ -59,7 +59,7 @@ namespace NewCostHjy.App_Start {
 
                     if (apiName == "/LOGIN/GETTOKENTOZLHIS"
                         || apiName == "/AIOINTERFACE/USERAUTH") {
-                        //ÓĞĞ©ÊÇĞ¡Ğ´µÄÌØÊâ´¦Àí
+                        //è¿™äº›å°å†™çš„è¿”å›æ ¼å¼
                         context.Result = new ObjectResult(new { code = 200, success = true, msg = "", data = objectResult.Value });
                         return;
                     } else if (apiName == "/MRHOMEMANAGEMENT/GETPAGERECODEINFO"
@@ -80,7 +80,7 @@ namespace NewCostHjy.App_Start {
                         || apiName.IndexOf("/API/INTERFACEPROCESS/") > -1
 
                         ) {
-                        //ÓĞĞ©½Ó¿ÚÔ­Ñù·´»Ø
+                        //è¿™äº›æ¥å£åŸæ ¼å¼è¿”å›
                         return;
                     } else {
                         context.Result = new ObjectResult(new { Code = 200, Success = true, Msg = "", Data = objectResult.Value });
@@ -91,7 +91,7 @@ namespace NewCostHjy.App_Start {
                 context.Result = new ObjectResult(new { Code = 200, Success = true, Msg = "", Data = objectResult.Value });
 
             } else if (context.Result is EmptyResult) {
-                context.Result = new ObjectResult(new { Code = 404, Msg = "Î´ÕÒµ½×ÊÔ´", Success = false });
+                context.Result = new ObjectResult(new { Code = 404, Msg = "æœªæ‰¾åˆ°èµ„æº", Success = false });
             } else if (context.Result is ContentResult) {
                 return;
             }

@@ -18,7 +18,6 @@ namespace NewCostHjy.Controllers.WebPage {
         /// <param name="HospitalName">医院名称</param>
         /// <param name="token">认证Token</param>
         /// <returns></returns>
-        [Route("unit/pageViewById")]
         public IActionResult PageViewById(string pageid, string Operator, string DeptName, string HospitalName, string token) {
             // 解析token获取用户信息
             var userInfo = ParseToken(token);
@@ -40,7 +39,6 @@ namespace NewCostHjy.Controllers.WebPage {
         /// 临床人员问题查询页面
         /// </summary>
         /// <returns></returns>
-        [Route("unit/clinicalStaffQuery")]
         public IActionResult ClinicalStaffQuery() {
             ViewBag.Title = "临床人员问题查询";
             ViewBag.ProductName = "导航台标准版";
@@ -148,34 +146,13 @@ namespace NewCostHjy.Controllers.WebPage {
                     Status = "待信息科处理",
                     CreateTime = "2026-03-27 15:34:40",
                     Creator = "管理员"
-                },
-                new IssueItem {
-                    Id = "20260327152334",
-                    Content = "",
-                    Status = "待信息科处理",
-                    CreateTime = "2026-03-27 15:23:34",
-                    Creator = "管理员"
-                },
-                new IssueItem {
-                    Id = "20260327152320",
-                    Content = "",
-                    Status = "待信息科处理",
-                    CreateTime = "2026-03-27 15:23:20",
-                    Creator = "管理员"
-                },
-                new IssueItem {
-                    Id = "20260327145615",
-                    Content = "999966666",
-                    Status = "待信息科处理",
-                    CreateTime = "2026-03-27 14:56:15",
-                    Creator = "管理员"
                 }
             };
         }
     }
     
     /// <summary>
-    /// 问题项模型
+    /// 问题列表项
     /// </summary>
     public class IssueItem {
         public string Id { get; set; }
