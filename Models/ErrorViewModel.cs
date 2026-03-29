@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 
 namespace NewCostHjy.Models {
@@ -25,7 +25,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string TempId { get; set; }
         /// <summary>
-        /// ³ÂĞËÂ¡
+        /// é™ˆå…´éš†
         /// </summary>
         public string @Operator { get; set; }
         /// <summary>
@@ -33,11 +33,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int OperId { get; set; }
         /// <summary>
-        /// Ö÷ÈÎÒ©Ê¦
+        /// ä¸»ä»»è¯å¸ˆ
         /// </summary>
         public string OperPosition { get; set; }
         /// <summary>
-        /// 17Ëê
+        /// 17å²
         /// </summary>
         public string age { get; set; }
         /// <summary>
@@ -65,7 +65,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int ModifyType { get; set; }
         /// <summary>
-        /// ²ú¿ÆÃÅÕï
+        /// äº§ç§‘é—¨è¯Š
         /// </summary>
         public string DeptName { get; set; }
         /// <summary>
@@ -88,7 +88,7 @@ namespace NewCostHjy.Models {
     /// </summary>
     public class EduRuleItem {
         /// <summary>
-        /// Õï¶Ï
+        /// è¯Šæ–­
         /// </summary>
         public string RuleType { get; set; }
         /// <summary>
@@ -96,12 +96,12 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string RuleId { get; set; }
         /// <summary>
-        /// (L02.103)¾±²¿Ó¸
+        /// (L02.103)é¢ˆéƒ¨ç—ˆ
         /// </summary>
         public string RuleName { get; set; }
     }
     /// <summary>
-    /// GetHealthEducationRuleTempList  APIÈë²Î
+    /// GetHealthEducationRuleTempList  APIå…¥å‚
     /// </summary>
     public class EduRuleTempListPar {
         /// <summary>
@@ -121,11 +121,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int DeptId { get; set; }
         /// <summary>
-        /// ÃÅÕïÄÚ¿Æ
+        /// é—¨è¯Šå†…ç§‘
         /// </summary>
         public string DeptName { get; set; }
         /// <summary>
-        /// ÕÅÓÀ¿µ
+        /// å¼ æ°¸åº·
         /// </summary>
         public string @Operator { get; set; }
         /// <summary>
@@ -133,11 +133,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int OperId { get; set; }
         /// <summary>
-        /// Ö÷ÈÎÒ½Ê¦
+        /// ä¸»ä»»åŒ»å¸ˆ
         /// </summary>
         public string OperPosition { get; set; }
         /// <summary>
-        /// 26Ëê
+        /// 26å²
         /// </summary>
         public string Age { get; set; }
         /// <summary>
@@ -172,7 +172,7 @@ namespace NewCostHjy.Models {
 
 
     /// <summary>
-    /// GetHealthEducationCsformRecordList  AIP µÄÈë²ÎÄ£ĞÍ
+    /// GetHealthEducationCsformRecordList  AIP çš„å…¥å‚æ¨¡å‹
     /// </summary>
     public class EduWtedPar {
         /// <summary>
@@ -196,7 +196,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int DeptId { get; set; }
         /// <summary>
-        /// ÃÅÕïÄÚ¿Æ
+        /// é—¨è¯Šå†…ç§‘
         /// </summary>
         public string DeptName { get; set; }
         /// <summary>
@@ -216,7 +216,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string DocStatus { get; set; }
         /// <summary>
-        /// ÕÅÓÀ¿µ
+        /// å¼ æ°¸åº·
         /// </summary>
         public string @Operator { get; set; }
         /// <summary>
@@ -224,7 +224,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int OperId { get; set; }
         /// <summary>
-        /// Ö÷ÈÎÒ½Ê¦
+        /// ä¸»ä»»åŒ»å¸ˆ
         /// </summary>
         public string OperPosition { get; set; }
         /// <summary>
@@ -243,7 +243,7 @@ namespace NewCostHjy.Models {
 
 
     /// <summary>
-    /// ½¡¿µ½ÌÓı´¦·½-P1-Êä³ö²ÎÊı¶ÔÏó
+    /// å¥åº·æ•™è‚²å¤„æ–¹-P1-è¾“å‡ºå‚æ•°å¯¹è±¡
     /// </summary>
     [Serializable]
     public class HEduOutA {
@@ -256,15 +256,15 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string SupTempId { get; set; }
         /// <summary>
-        /// ½¡¿µ½ÌÓı´¦·½-P1
+        /// å¥åº·æ•™è‚²å¤„æ–¹-P1
         /// </summary>
         public string TempName { get; set; }
         /// <summary>
-        /// http://192.168.32.135:8120/meddoc/edit?PId=160471&EncId=1957020&EncType=1&DeptId=148&TempId=ada76853-54e4-abe1-5b48-ed6b11346f23&Operator=³ÂĞËÂ¡&OperId=1274276&OperPosition=Ö÷ÈÎÒ©Ê¦&age=17Ëê&computerIp=127.0.0.1&sourceType=3&userName=777777&password=&babyNum=0&ModifyType=1&DeptName=²ú¿ÆÃÅÕï&docType=1&localUrl=http://192.168.32.135:8120
+        /// http://192.168.32.135:8120/meddoc/edit?PId=160471&EncId=1957020&EncType=1&DeptId=148&TempId=ada76853-54e4-abe1-5b48-ed6b11346f23&Operator=é™ˆå…´éš†&OperId=1274276&OperPosition=ä¸»ä»»è¯å¸ˆ&age=17å²&computerIp=127.0.0.1&sourceType=3&userName=777777&password=&babyNum=0&ModifyType=1&DeptName=äº§ç§‘é—¨è¯Š&docType=1&localUrl=http://192.168.32.135:8120
         /// </summary>
         public string AddUrl { get; set; }
         /// <summary>
-        /// ÖªÇéÍ¬ÒâÊé
+        /// çŸ¥æƒ…åŒæ„ä¹¦
         /// </summary>
         public string TempType { get; set; }
         /// <summary>
@@ -290,20 +290,20 @@ namespace NewCostHjy.Models {
     }
 
     /// <summary>
-    /// ½¡¿µ½ÌÓı´¦·½-P2-Êä³ö²ÎÊı¶ÔÏó
+    /// å¥åº·æ•™è‚²å¤„æ–¹-P2-è¾“å‡ºå‚æ•°å¯¹è±¡
     /// </summary>
     [Serializable]
     public class HEduOutB {
         /// <summary>
-        /// ÍõÅÓ²âÊÔÊÇ·ñ½¡¿µ½ÌÓı´¦·½_¸´ÖÆ
+        /// ç‹åºæµ‹è¯•æ˜¯å¦å¥åº·æ•™è‚²å¤„æ–¹_å¤åˆ¶
         /// </summary>
         public string MedDocName { get; set; }
         /// <summary>
-        /// ÖªÇéÍ¬ÒâÊé
+        /// çŸ¥æƒ…åŒæ„ä¹¦
         /// </summary>
         public string MedDocType { get; set; }
         /// <summary>
-        /// ³ÂĞËÂ¡
+        /// é™ˆå…´éš†
         /// </summary>
         public string Creator { get; set; }
         /// <summary>
@@ -311,11 +311,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string CreateTime { get; set; }
         /// <summary>
-        /// ÒÑ×÷·Ï
+        /// å·²ä½œåºŸ
         /// </summary>
         public string DocStatus { get; set; }
         /// <summary>
-        /// ³ÂĞËÂ¡
+        /// é™ˆå…´éš†
         /// </summary>
         public string LastModifier { get; set; }
         /// <summary>
@@ -323,7 +323,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string LastModifyTime { get; set; }
         /// <summary>
-        /// ²ú¿ÆÃÅÕï
+        /// äº§ç§‘é—¨è¯Š
         /// </summary>
         public string DeptName { get; set; }
         /// <summary>
@@ -375,11 +375,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string TempTypeId { get; set; }
         /// <summary>
-        /// http://192.168.32.135:8120/MedDoc/index?PId=160471&EncType=1&EncId=1957020&MedDocId=6b90f1c0-c834-4640-bf32-7a1eab0d8cdb&Operator=³ÂĞËÂ¡&OperId=1274276&UserName=CXL&OperDeptId=148&DeptName=²ú¿ÆÃÅÕï&ModifyType=0&IsPrint=1&docType=1&localUrl=http://192.168.32.135:8120
+        /// http://192.168.32.135:8120/MedDoc/index?PId=160471&EncType=1&EncId=1957020&MedDocId=6b90f1c0-c834-4640-bf32-7a1eab0d8cdb&Operator=é™ˆå…´éš†&OperId=1274276&UserName=CXL&OperDeptId=148&DeptName=äº§ç§‘é—¨è¯Š&ModifyType=0&IsPrint=1&docType=1&localUrl=http://192.168.32.135:8120
         /// </summary>
         public string PreviewUrl { get; set; }
         /// <summary>
-        /// http://192.168.32.135:8120/MedDoc/edit?PId=160471&EncId=1957020&babyNum=0&EncType=1&DeptId=148&DeptName=²ú¿ÆÃÅÕï&MedDocId=6b90f1c0-c834-4640-bf32-7a1eab0d8cdb&Operator=³ÂĞËÂ¡&OperPosition=Ö÷ÈÎÒ©Ê¦&ModifyType=2&isSign=1&TempId=51ad61cf-2467-f96e-08ab-bd5174bf7a40&OperId=1274276&UserName=CXL&PatIsSign=0&docType=1&operation=1&localUrl=http://192.168.32.135:8120
+        /// http://192.168.32.135:8120/MedDoc/edit?PId=160471&EncId=1957020&babyNum=0&EncType=1&DeptId=148&DeptName=äº§ç§‘é—¨è¯Š&MedDocId=6b90f1c0-c834-4640-bf32-7a1eab0d8cdb&Operator=é™ˆå…´éš†&OperPosition=ä¸»ä»»è¯å¸ˆ&ModifyType=2&isSign=1&TempId=51ad61cf-2467-f96e-08ab-bd5174bf7a40&OperId=1274276&UserName=CXL&PatIsSign=0&docType=1&operation=1&localUrl=http://192.168.32.135:8120
         /// </summary>
         public string EditUrl { get; set; }
         /// <summary>
@@ -517,7 +517,7 @@ namespace NewCostHjy.Models {
     }
 
     /// <summary>
-    /// Í¨ÓÃAPI·şÎñ²ÎÊı¶ÔÏó
+    /// é€šç”¨APIæœåŠ¡å‚æ•°å¯¹è±¡
     /// </summary>
     [Serializable]
     public class PostApiPar {
@@ -526,26 +526,26 @@ namespace NewCostHjy.Models {
         public string TimeOut { get; set; }
 
         /// <summary>
-        /// ÇëÇóÀàĞÍ£¬ÀıÈç£ºGet,Post,=1±íÊ¾Get,ÆäËü±íÊ¾Post
+        /// è¯·æ±‚ç±»å‹ï¼Œä¾‹å¦‚ï¼šGet,Post,=1è¡¨ç¤ºGet,å…¶å®ƒè¡¨ç¤ºPost
         /// </summary>
         public string Type { get; set; }
     }
 
     /// <summary>
-    /// ËİÔ´ÂëÒ©Æ··¢Ò©Ã÷Ï¸¶ÔÏó
+    /// æº¯æºç è¯å“å‘è¯æ˜ç»†å¯¹è±¡
     /// </summary>
     [Serializable]
     public class TraceDrugItem {
-        public decimal ËİÔ´Âë·ÖÁãÏµÊı { get; set; }
-        public string ¼ÆËãµ¥Î» { get; set; }
-        public string ËİÔ´Âë°ü×° { get; set; }
-        public string ×¡Ôº°ü×° { get; set; }
-        public string ×¡Ôºµ¥Î» { get; set; }
-        public string ÃÅÕï°ü×° { get; set; }
-        public string ÃÅÕïµ¥Î» { get; set; }
-        public string Ò©¿â°ü×° { get; set; }
-        public string Ò©¿âµ¥Î» { get; set; }
-        public string ËİÔ´Âë°ü×°µ¥Î» { get; set; }
+        public decimal æº¯æºç åˆ†é›¶ç³»æ•° { get; set; }
+        public string è®¡ç®—å•ä½ { get; set; }
+        public string æº¯æºç åŒ…è£… { get; set; }
+        public string ä½é™¢åŒ…è£… { get; set; }
+        public string ä½é™¢å•ä½ { get; set; }
+        public string é—¨è¯ŠåŒ…è£… { get; set; }
+        public string é—¨è¯Šå•ä½ { get; set; }
+        public string è¯åº“åŒ…è£… { get; set; }
+        public string è¯åº“å•ä½ { get; set; }
+        public string æº¯æºç åŒ…è£…å•ä½ { get; set; }
     }
 
     public class ErrorViewModel {
@@ -555,47 +555,47 @@ namespace NewCostHjy.Models {
     }
 
     /// <summary>
-    /// ¼ìÑéÏîÄ¿ÊÊÓÃµÄ±ê±¾ºÍ²É¼¯·½Ê½
+    /// æ£€éªŒé¡¹ç›®é€‚ç”¨çš„æ ‡æœ¬å’Œé‡‡é›†æ–¹å¼
     /// </summary>
     public class SpecTestLisColl {
         /// <summary>
-        /// ±ê±¾id
+        /// æ ‡æœ¬id
         /// </summary>
         public string specimendefinition_id { get; set; }
         /// <summary>
-        /// ±ê±¾hisid
+        /// æ ‡æœ¬hisid
         /// </summary>
         public string specimendefinition_His_id { get; set; }
         /// <summary>
-        /// ±ê±¾Ãû³Æ£¬±ÇÑÊ²¿·ÖÃÚÎï
+        /// æ ‡æœ¬åç§°ï¼Œé¼»å’½éƒ¨åˆ†æ³Œç‰©
         /// </summary>
         public string specimendefinition_name { get; set; }
         /// <summary>
-        /// ±ê±¾±àÂë
+        /// æ ‡æœ¬ç¼–ç 
         /// </summary>
         public string specimendefinition_code { get; set; }
         /// <summary>
-        /// ±ê±¾his±àÂë
+        /// æ ‡æœ¬hisç¼–ç 
         /// </summary>
         public string specimendefinition_His_code { get; set; }
         /// <summary>
-        /// ²É¼¯·½Ê½±àÂë
+        /// é‡‡é›†æ–¹å¼ç¼–ç 
         /// </summary>
         public string collect_method_code { get; set; }
         /// <summary>
-        /// ²É¼¯·½Ê½HISÕïÁÆÏîÄ¿±àÂë
+        /// é‡‡é›†æ–¹å¼HISè¯Šç–—é¡¹ç›®ç¼–ç 
         /// </summary>
         public string collect_method_His_code { get; set; }
         /// <summary>
-        /// ²É¼¯·½Ê½Ãû³Æ£¬ÃâÒß´«È¾
+        /// é‡‡é›†æ–¹å¼åç§°ï¼Œå…ç–«ä¼ æŸ“
         /// </summary>
         public string collection_method_name { get; set; }
         /// <summary>
-        /// ²É¼¯·½Ê½hisÕïÁÆÏîÄ¿id
+        /// é‡‡é›†æ–¹å¼hisè¯Šç–—é¡¹ç›®id
         /// </summary>
         public string collection_method_His_id { get; set; }
         /// <summary>
-        /// ·şÎñ¶ÔÏó£¬1-ÃÅÕï£¬2-×¡Ôº£¬3-ÃÅÕï×¡Ôº
+        /// æœåŠ¡å¯¹è±¡ï¼Œ1-é—¨è¯Šï¼Œ2-ä½é™¢ï¼Œ3-é—¨è¯Šä½é™¢
         /// </summary>
         public string serviceobject { get; set; }
     }
@@ -603,31 +603,31 @@ namespace NewCostHjy.Models {
 
 
     /// <summary>
-    /// µ¼º½Ì¨SQLLOGÈÕÖ¾¼ÇÂ¼Ä£ĞÍ
+    /// å¯¼èˆªå°SQLLOGæ—¥å¿—è®°å½•æ¨¡å‹
     /// </summary>
     public class SQLLOGMOD {
         /// <summary>
-        /// ÈÕÖ¾¼ÇÂ¼µÄ±êÌâ
+        /// æ—¥å¿—è®°å½•çš„æ ‡é¢˜
         /// </summary>
-        public string ±êÌâĞÅÏ¢ { get; set; }
+        public string æ ‡é¢˜ä¿¡æ¯ { get; set; }
 
         /// <summary>
-        /// ²éÑ¯Óï¾ä
+        /// æŸ¥è¯¢è¯­å¥
         /// </summary>
-        public string ²éÑ¯Óï¾ä { get; set; }
+        public string æŸ¥è¯¢è¯­å¥ { get; set; }
 
         /// <summary>
-        /// ºÄÊ±Ê±¼ä
+        /// è€—æ—¶æ—¶é—´
         /// </summary>
-        public string ºÄÊ±ĞÅÏ¢ { get; set; }
+        public string è€—æ—¶ä¿¡æ¯ { get; set; }
 
         /// <summary>
-        /// ºÄÃë
+        /// è€—ç§’
         /// </summary>
-        public decimal? ºÄÊ±ÊıÖµ { get; set; }
+        public decimal? è€—æ—¶æ•°å€¼ { get; set; }
 
         /// <summary>
-        /// Ä£¿éÃû³Æ
+        /// æ¨¡å—åç§°
         /// </summary>
         public string Module_Name { get; set; }
 
@@ -641,15 +641,15 @@ namespace NewCostHjy.Models {
         public string state { get; set; }
 
         /// <summary>
-        /// °´Êı¾İÔ´µÄ·µ»Ø¿ØÖÆ£º0-ºöÂÔ£¬1-½ûÖ¹£¬2-ÌáÊ¾
+        /// æŒ‰æ•°æ®æºçš„è¿”å›æ§åˆ¶ï¼š0-å¿½ç•¥ï¼Œ1-ç¦æ­¢ï¼Œ2-æç¤º
         /// </summary>
         public string tip_mode { get; set; }
         /// <summary>
-        /// ½ûÖ¹ĞÅÏ¢
+        /// ç¦æ­¢ä¿¡æ¯
         /// </summary>
         public string message_ban { get; set; }
         /// <summary>
-        /// ÌáÊ¾ĞÅÏ¢
+        /// æç¤ºä¿¡æ¯
         /// </summary>
         public string message_tips { get; set; }
     }
@@ -660,7 +660,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int code { get; set; }
         /// <summary>
-        /// ³É¹¦
+        /// æˆåŠŸ
         /// </summary>
         public string message { get; set; }
         /// <summary>
@@ -722,7 +722,7 @@ namespace NewCostHjy.Models {
     }
 
     /// <summary>
-    /// ÁÙÉúÃâÍ¬²½¼ì²éÉêÇëÊ±µÄ³ö²Î
+    /// ä¸´ç”Ÿå…åŒæ­¥æ£€æŸ¥ç”³è¯·æ—¶çš„å‡ºå‚
     /// </summary>
     public class WebLisAppDataOut {
         /// <summary>
@@ -792,7 +792,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string ClearingFee { get; set; }
         /// <summary>
-        /// Î´»ñÈ¡µ½DIP·Ö×é°æ±¾£¡
+        /// æœªè·å–åˆ°DIPåˆ†ç»„ç‰ˆæœ¬ï¼
         /// </summary>
         public string Describe { get; set; }
         /// <summary>
@@ -845,7 +845,7 @@ namespace NewCostHjy.Models {
 
 
     /// <summary>
-    /// ÁÙÉúÃâÍ¬²½¼ì²éÉêÇëÊ±µÄÈë²Î
+    /// ä¸´ç”Ÿå…åŒæ­¥æ£€æŸ¥ç”³è¯·æ—¶çš„å…¥å‚
     /// </summary>
     public class WebLisAppData {
         /// <summary>
@@ -865,48 +865,48 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string OperId { get; set; }
         /// <summary>
-        /// ¹ÜÀíÔ±
+        /// ç®¡ç†å‘˜
         /// </summary>
         public string OperName { get; set; }
     }
 
 
     /// <summary>
-    /// Ò©Æ·±¾Î»Âë¸øÒ©Í¾¾¶Ğ£ÑéÄ£ĞÍ
+    /// è¯å“æœ¬ä½ç ç»™è¯é€”å¾„æ ¡éªŒæ¨¡å‹
     /// </summary>
     public class DrugUseWChk {
         /// <summary>
-        /// ±êÊ¶ºÅ
+        /// æ ‡è¯†å·
         /// </summary>
         public string DRUGSERNUM { get; set; }
         /// <summary>
-        /// ±¾Î»Âë
+        /// æœ¬ä½ç 
         /// </summary>
         public string DRUGBASECODE { get; set; }
         /// <summary>
-        /// ¿Ú·ş£¬¸øÒ©Í¾¾¶Ãû³Æ
+        /// å£æœï¼Œç»™è¯é€”å¾„åç§°
         /// </summary>
         public string DRUGROUTENAME { get; set; }
         /// <summary>
-        /// ¿Ú·ş£¬¸øÒ©Í¾¾¶´óÀàÃû³Æ
+        /// å£æœï¼Œç»™è¯é€”å¾„å¤§ç±»åç§°
         /// </summary>
         public string DRUGROUTECLASSNAME { get; set; }
         /// <summary>
-        /// Ò©Æ·id
+        /// è¯å“id
         /// </summary>
         public string DRUGID { get; set; }
         /// <summary>
-        /// °¢ÄªÎ÷ÁÖ½ºÄÒ£¬ÊÕ·ÑÏîÄ¿Ä¿Â¼Ãû³Æ
+        /// é˜¿è«è¥¿æ—èƒ¶å›Šï¼Œæ”¶è´¹é¡¹ç›®ç›®å½•åç§°
         /// </summary>
         public string DRUGNAME { get; set; }
 
         /// <summary>
-        /// ÌáÊ¾±êÊ¶
+        /// æç¤ºæ ‡è¯†
         /// </summary>
         public int? PROMPTMARK { get; set; }
 
         /// <summary>
-        /// ÌáÊ¾ÄÚÈİ
+        /// æç¤ºå†…å®¹
         /// </summary>
         public string PROMPTCONTENT { get; set; }
     }
@@ -925,11 +925,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int DeptId { get; set; }
         /// <summary>
-        /// ÄÚ¿Æ
+        /// å†…ç§‘
         /// </summary>
         public string DeptName { get; set; }
         /// <summary>
-        /// ÕÅÓÀ¿µ
+        /// å¼ æ°¸åº·
         /// </summary>
         public string OprtrName { get; set; }
         /// <summary>
@@ -941,7 +941,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int SourceItemId { get; set; }
         /// <summary>
-        /// Ö÷ÈÎÒ½Ê¦
+        /// ä¸»ä»»åŒ»å¸ˆ
         /// </summary>
         public string OperPosition { get; set; }
         /// <summary>
@@ -976,19 +976,19 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int pati_visit_id { get; set; }
         /// <summary>
-        /// ÕÔË³Àû
+        /// èµµé¡ºåˆ©
         /// </summary>
         public string pati_name { get; set; }
         /// <summary>
-        /// ÄĞ
+        /// ç”·
         /// </summary>
         public string pati_sex { get; set; }
         /// <summary>
-        /// 36Ëê
+        /// 36å²
         /// </summary>
         public string pati_age { get; set; }
         /// <summary>
-        /// ²»±ã·ÖÀàµÄÆäËû´ÓÒµÈËÔ±
+        /// ä¸ä¾¿åˆ†ç±»çš„å…¶ä»–ä»ä¸šäººå‘˜
         /// </summary>
         public string pati_job { get; set; }
         /// <summary>
@@ -1012,7 +1012,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string pati_no { get; set; }
         /// <summary>
-        /// Àî³¬
+        /// æè¶…
         /// </summary>
         public string doctor { get; set; }
         /// <summary>
@@ -1020,11 +1020,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int dept_id { get; set; }
         /// <summary>
-        /// ĞÄÄÚÒ»¿Æ
+        /// å¿ƒå†…ä¸€ç§‘
         /// </summary>
         public string dept_name { get; set; }
         /// <summary>
-        /// Àî³¬
+        /// æè¶…
         /// </summary>
         public string creator { get; set; }
         /// <summary>
@@ -1032,7 +1032,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string create_time { get; set; }
         /// <summary>
-        /// Àî³¬
+        /// æè¶…
         /// </summary>
         public string mofidy_operator { get; set; }
         /// <summary>
@@ -1044,7 +1044,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int disease_id { get; set; }
         /// <summary>
-        /// »ôÂÒ
+        /// éœä¹±
         /// </summary>
         public string disease_name { get; set; }
         /// <summary>
@@ -1052,7 +1052,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int disease_type { get; set; }
         /// <summary>
-        /// ÖĞ»ªÈËÃñ¹²ºÍ¹ú´«È¾²¡±¨¸æ¿¨
+        /// ä¸­åäººæ°‘å…±å’Œå›½ä¼ æŸ“ç—…æŠ¥å‘Šå¡
         /// </summary>
         public string template_name { get; set; }
         /// <summary>
@@ -1060,7 +1060,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public int disease_category_id { get; set; }
         /// <summary>
-        /// ´«È¾²¡
+        /// ä¼ æŸ“ç—…
         /// </summary>
         public string disease_category_name { get; set; }
         /// <summary>
@@ -1079,7 +1079,7 @@ namespace NewCostHjy.Models {
         public string EncounterType { get; set; }
 
         /// <summary>
-        /// "²Ù×÷ÀàĞÍ:1-²¡°¸Ìá½»£»2-²¡°¸È¡ÏûÌá½»£»3-ÉêÇë²¡°¸·µĞŞ",
+        /// "æ“ä½œç±»å‹:1-ç—…æ¡ˆæäº¤ï¼›2-ç—…æ¡ˆå–æ¶ˆæäº¤ï¼›3-ç”³è¯·ç—…æ¡ˆè¿”ä¿®",
         /// </summary>
         public string OperateType { get; set; }
 
@@ -1211,11 +1211,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string VisitId { get; set; }
         /// <summary>
-        /// VTE¸ßÎ£·çÏÕ
+        /// VTEé«˜å±é£é™©
         /// </summary>
         public string VteStateName { get; set; }
         /// <summary>
-        /// ¸ß
+        /// é«˜
         /// </summary>
         public string VteStateShortName { get; set; }
         /// <summary>
@@ -1227,11 +1227,11 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string VteStateColor { get; set; }
         /// <summary>
-        /// ¸ß³öÑª·çÏÕ
+        /// é«˜å‡ºè¡€é£é™©
         /// </summary>
         public string BleedStateName { get; set; }
         /// <summary>
-        /// ¸ß
+        /// é«˜
         /// </summary>
         public string BleedStateShortName { get; set; }
         /// <summary>
@@ -1254,7 +1254,7 @@ namespace NewCostHjy.Models {
 
     public class VteDepartment {
         /// <summary>
-        /// ºôÎüÄÚ¿Æ
+        /// å‘¼å¸å†…ç§‘
         /// </summary>
         public string DepartmentName { get; set; }
         /// <summary>
@@ -1277,110 +1277,110 @@ namespace NewCostHjy.Models {
 
     public class RehabPatPar {
         /// <summary>
-        /// ²¡ÈË¿ÆÊÒid
+        /// ç—…äººç§‘å®¤id
         /// </summary>
         public int PatientDepartmentId { get; set; }
         /// <summary>
-        /// ²¡ÈËid
+        /// ç—…äººid
         /// </summary>
         public int PatientId { get; set; }
         /// <summary>
-        /// ¾ÍÕïid
+        /// å°±è¯Šid
         /// </summary>
         public int VisitId { get; set; }
         /// <summary>
-        /// »úÆ÷Ãû
+        /// æœºå™¨å
         /// </summary>
         public string DevName { get; set; }
         /// <summary>
-        /// Õ¾µã±àºÅ
+        /// ç«™ç‚¹ç¼–å·
         /// </summary>
         public string NodeNo { get; set; }
         /// <summary>
-        /// ½çÃæ¿ÆÊÒid,×óÉÏ½ÇÏÂÀ­ÁĞ±íµÄ²¿ÃÅid
+        /// ç•Œé¢ç§‘å®¤id,å·¦ä¸Šè§’ä¸‹æ‹‰åˆ—è¡¨çš„éƒ¨é—¨id
         /// </summary>
         public int DeptId { get; set; }
         /// <summary>
-        /// ½çÃæ¿ÆÊÒÏÔÊ¾·½Ê½, 0-°´¿ÆÊÒÏÔÊ¾£¬1-°´²¡ÇøÏÔÊ¾
+        /// ç•Œé¢ç§‘å®¤æ˜¾ç¤ºæ–¹å¼, 0-æŒ‰ç§‘å®¤æ˜¾ç¤ºï¼Œ1-æŒ‰ç—…åŒºæ˜¾ç¤º
         /// </summary>
         public int DeptView { get; set; }
         /// <summary>
-        /// ²¡ÈËÔÚÁĞ±íÀàĞÍ£¬0-´ıÈë×¡£»1-ÔÚÔº£»2-³öÔº£»3-×ª³ö£»4-»áÕï
+        /// ç—…äººåœ¨åˆ—è¡¨ç±»å‹ï¼Œ0-å¾…å…¥ä½ï¼›1-åœ¨é™¢ï¼›2-å‡ºé™¢ï¼›3-è½¬å‡ºï¼›4-ä¼šè¯Š
         /// </summary>
         public int PatListType { get; set; }
         /// <summary>
-        /// »áÕïÒ½Ööid
+        /// ä¼šè¯ŠåŒ»å˜±id
         /// </summary>
         public int MeetOrderId { get; set; }
         /// <summary>
-        /// ²Ù×÷Ô±id
+        /// æ“ä½œå‘˜id
         /// </summary>
         public int OperatorId { get; set; }
         /// <summary>
-        /// µ÷ÓÃ³¡¾°£¬1-ZLHIS×¡ÔºÒ½ÉúÕ¾µ÷ÓÃ
+        /// è°ƒç”¨åœºæ™¯ï¼Œ1-ZLHISä½é™¢åŒ»ç”Ÿç«™è°ƒç”¨
         /// </summary>
         public int CallType { get; set; }
     }
 
 
-    ////////////////ĞÂ¾²Åä¹æÔòÄ£ĞÍStart/////////////////////////
+    ////////////////æ–°é™é…è§„åˆ™æ¨¡å‹Start/////////////////////////
 
     public class Replace_Pharmacy_ListItem {
 
         /// <summary>
-        /// Ò©·¿ID
+        /// è¯æˆ¿ID
         /// </summary>
         public string Repalce_Pharamacy_Id { get; set; }
 
         /// <summary>
-        /// È±Ê¡Ò©·¿£¬È¡Öµ0/1
+        /// ç¼ºçœè¯æˆ¿ï¼Œå–å€¼0/1
         /// </summary>
         public string Default_Pharmay { get; set; }
 
         /// <summary>
-        /// ¿ÉÓÃÒ©·¿£¬È¡Öµ0/0
+        /// å¯ç”¨è¯æˆ¿ï¼Œå–å€¼0/0
         /// </summary>
         public string Available_Pharamy { get; set; }
     }
 
     /// <summary>
-    /// ¸øÒ©Í¾¾¶
+    /// ç»™è¯é€”å¾„
     /// </summary>
     public class Drug_Method_ListItem {
         /// <summary>
-        /// ¸øÒ©Í¾¾¶Ãû³Æ
+        /// ç»™è¯é€”å¾„åç§°
         /// </summary>
         public string Drug_Method_Name { get; set; }
 
         /// <summary>
-        /// ½ÓÊÕÊ±¼ä·½°¸|0-°´Ê±¼ä¶Î¿ØÖÆ£¬1-È«Ìì
+        /// æ¥æ”¶æ—¶é—´æ–¹æ¡ˆ|0-æŒ‰æ—¶é—´æ®µæ§åˆ¶ï¼Œ1-å…¨å¤©
         /// </summary>
         public int Recive_Sign { get; set; }
 
         /// <summary>
-        /// ºöÂÔÆäËüÌõ¼ş×Ö·û£¬¶ººÅ·Ö¸ô¡¾1,2,3/2,3,....¡¿£¬º¬Òå£º1-Ò½ÖöĞ§ÆÚ;2-Ò½ÖöÖ´ĞĞĞÔÖÊ;3-ÊÇ·ñ½ÓÊÕµ±ÈÕÖ´ĞĞÒ½Öö
+        /// å¿½ç•¥å…¶å®ƒæ¡ä»¶å­—ç¬¦ï¼Œé€—å·åˆ†éš”ã€1,2,3/2,3,....ã€‘ï¼Œå«ä¹‰ï¼š1-åŒ»å˜±æ•ˆæœŸ;2-åŒ»å˜±æ‰§è¡Œæ€§è´¨;3-æ˜¯å¦æ¥æ”¶å½“æ—¥æ‰§è¡ŒåŒ»å˜±
         /// </summary>
         public string Notconditionaffect { get; set; }
     }
 
     /// <summary>
-    /// Ò©Æ·ĞÅÏ¢
+    /// è¯å“ä¿¡æ¯
     /// </summary>
     public class Drug_Type_ListItem {
         /// <summary>
-        /// Ò©Æ·ÀàĞÍ£¬ÖĞÎÄÀ´Ô´ÓÚĞÂ¾²ÅäµÄ±í ZLPIVAS.DispensingProperties.DRUGTYPE
+        /// è¯å“ç±»å‹ï¼Œä¸­æ–‡æ¥æºäºæ–°é™é…çš„è¡¨ ZLPIVAS.DispensingProperties.DRUGTYPE
         /// </summary>
         public string Drug_Type_Name { get; set; }
 
         /// <summary>
-        /// ÊÇ·ñ°´Ö´ĞĞ·½°¸´¦Àí
+        /// æ˜¯å¦æŒ‰æ‰§è¡Œæ–¹æ¡ˆå¤„ç†
         /// </summary>
         public int Recive_Sign { get; set; }
 
         public string Drug_Ids { get; set; }
 
         /// <summary>
-        /// ºöÂÔÆäËüÌõ¼ş×Ö·û£¬¶ººÅ·Ö¸ô¡¾1,2,3/2,3,....¡¿£¬º¬Òå£º1-Ò½ÖöĞ§ÆÚ;2-Ò½ÖöÖ´ĞĞĞÔÖÊ;3-ÊÇ·ñ½ÓÊÕµ±ÈÕÖ´ĞĞÒ½Öö
+        /// å¿½ç•¥å…¶å®ƒæ¡ä»¶å­—ç¬¦ï¼Œé€—å·åˆ†éš”ã€1,2,3/2,3,....ã€‘ï¼Œå«ä¹‰ï¼š1-åŒ»å˜±æ•ˆæœŸ;2-åŒ»å˜±æ‰§è¡Œæ€§è´¨;3-æ˜¯å¦æ¥æ”¶å½“æ—¥æ‰§è¡ŒåŒ»å˜±
         /// </summary>
 
         public string Notconditionaffect { get; set; }
@@ -1390,62 +1390,62 @@ namespace NewCostHjy.Models {
     public class PivasNewRuleMod {
 
         /// <summary>
-        /// ²¡Çøid
+        /// ç—…åŒºid
         /// </summary>
         public string WardId { get; set; }
 
         /// <summary>
-        /// ¾²ÅäÖĞĞÄ²¿ÃÅid
+        /// é™é…ä¸­å¿ƒéƒ¨é—¨id
         /// </summary>
         public int Static_Center_Id { get; set; }
 
         /// <summary>
-        /// µ¥×éÒ©²»½ÓÊÕ£¬1-ÊÇ£»0-·ñ
+        /// å•ç»„è¯ä¸æ¥æ”¶ï¼Œ1-æ˜¯ï¼›0-å¦
         /// </summary>
         public int Single_Vial_Not_Static { get; set; }
 
         /// <summary>
-        /// ²¡ÇøÊÇ·ñÅäÒº 1-ÊÇ£»0-·ñ
+        /// ç—…åŒºæ˜¯å¦é…æ¶² 1-æ˜¯ï¼›0-å¦
         /// </summary>
         public int Static_Match_Sign { get; set; }
 
         /// <summary>
-        /// Ò½ÖöÆÚĞ§|0-½öÁÙÖö£»1-½ö³¤Öö£»2-³¤ÖöºÍÁÙÖö¶¼Òª
+        /// åŒ»å˜±æœŸæ•ˆ|0-ä»…ä¸´å˜±ï¼›1-ä»…é•¿å˜±ï¼›2-é•¿å˜±å’Œä¸´å˜±éƒ½è¦
         /// </summary>
         public int Effictive_Time { get; set; }
 
         /// <summary>
-        /// Ò½ÖöÒ©Æ·Ö´ĞĞĞÔÖÊ|1-×Ô±¸Ò©£»2-²»È¡Ò©£»3-ÀëÔº´øÒ©
+        /// åŒ»å˜±è¯å“æ‰§è¡Œæ€§è´¨|1-è‡ªå¤‡è¯ï¼›2-ä¸å–è¯ï¼›3-ç¦»é™¢å¸¦è¯
         /// </summary>
         public string Execute_Nature { get; set; }
 
         /// <summary>
-        /// ĞèÒªÖÃ»»Ò©·¿µÄÒ©Æ·id´®,²»½øÈë¾²ÅäÖĞĞÄµÄÒ©Æ·id´®
+        /// éœ€è¦ç½®æ¢è¯æˆ¿çš„è¯å“idä¸²,ä¸è¿›å…¥é™é…ä¸­å¿ƒçš„è¯å“idä¸²
         /// </summary>
         public string Change_Drug_ids { get; set; }
 
         /// <summary>
-        /// ¸øÒ©Í¾¾¶ÁĞ±í£¬ÓĞÖµÖ»½ÓÊÕÕâÖÖ¸øÒ©Í¾¾¶µÄÒ©Æ·
+        /// ç»™è¯é€”å¾„åˆ—è¡¨ï¼Œæœ‰å€¼åªæ¥æ”¶è¿™ç§ç»™è¯é€”å¾„çš„è¯å“
         /// </summary>
         public List<Drug_Method_ListItem> Drug_Method_List { get; set; }
 
         /// <summary>
-        /// Ò©Æ·ÁĞ±í
+        /// è¯å“åˆ—è¡¨
         /// </summary>
         public List<Drug_Type_ListItem> Drug_Type_List { get; set; }
 
         /// <summary>
-        /// ÊÇ·ñ½ÓÊÕµ±ÈÕÖ´ĞĞÒ½Öö£¬¹Ì¶¨È¡Öµ 0/1
+        /// æ˜¯å¦æ¥æ”¶å½“æ—¥æ‰§è¡ŒåŒ»å˜±ï¼Œå›ºå®šå–å€¼ 0/1
         /// </summary>
         public string Recive_Current_Day_Sign { get; set; }
 
         /// <summary>
-        /// Ğ¡Ê±²î
+        /// å°æ—¶å·®
         /// </summary>
         public string Hours_Difference { get; set; }
 
         /// <summary>
-        /// Ê±¼äÆğµã 23:59:59
+        /// æ—¶é—´èµ·ç‚¹ 23:59:59
         /// </summary>
         public string First_Day_Begin_Time { get; set; }
         /// <summary>
@@ -1480,16 +1480,16 @@ namespace NewCostHjy.Models {
         public string Other_Day_End_Time { get; set; }
 
         /// <summary>
-        /// ÖÃ»»Ò©·¿ÁĞ±í
+        /// ç½®æ¢è¯æˆ¿åˆ—è¡¨
         /// </summary>
         public List<Replace_Pharmacy_ListItem> Replace_Pharmacy_List { get; set; }
 
     }
-    ////////////////ĞÂ¾²Åä¹æÔòÄ£ĞÍEnd/////////////////////////
+    ////////////////æ–°é™é…è§„åˆ™æ¨¡å‹End/////////////////////////
 
 
     /// <summary>
-    /// ÖĞÁªºÏÀíÓÃÒ©Ïà¹ØÄ£ĞÍ
+    /// ä¸­è”åˆç†ç”¨è¯ç›¸å…³æ¨¡å‹
     /// </summary>
     [Serializable]
     public class RecipesItemZLPASS {
@@ -1506,7 +1506,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string PHARMACIST_ID { get; set; }
         /// <summary>
-        /// ÕıÔÚÉóºË
+        /// æ­£åœ¨å®¡æ ¸
         /// </summary>
         public string ORDERSTATUS { get; set; }
         /// <summary>
@@ -1520,7 +1520,7 @@ namespace NewCostHjy.Models {
     }
 
     /// <summary>
-    /// ÖĞÁªºÏÀíÓÃÒ©·µ»Ø½á¹ûÄ£ĞÍ
+    /// ä¸­è”åˆç†ç”¨è¯è¿”å›ç»“æœæ¨¡å‹
     /// </summary>
     [Serializable]
     public class GetRecipeResult_OutM {
@@ -1535,431 +1535,431 @@ namespace NewCostHjy.Models {
     }
 
     /// <summary>
-    /// Íâ¹Ò²å¼ş±£´æÄ£ĞÍÖĞµÄÃ÷Ï¸ĞĞÄ£ĞÍ
+    /// å¤–æŒ‚æ’ä»¶ä¿å­˜æ¨¡å‹ä¸­çš„æ˜ç»†è¡Œæ¨¡å‹
     /// </summary>
     public class IndsSavePlgItem {
         /// <summary>
-        /// Ò½Ööid
+        /// åŒ»å˜±id
         /// </summary>
         public int advice_id { get; set; }
         /// <summary>
-        /// Ïà¹Øid
+        /// ç›¸å…³id
         /// </summary>
         public int advice_related_id { get; set; }
         /// <summary>
-        /// ĞòºÅ
+        /// åºå·
         /// </summary>
         public int serial_num { get; set; }
         /// <summary>
-        /// Ò½Öö×´Ì¬
+        /// åŒ»å˜±çŠ¶æ€
         /// </summary>
         public int advice_statu { get; set; }
         /// <summary>
-        /// Ò½ÖöÆÚĞ§
+        /// åŒ»å˜±æœŸæ•ˆ
         /// </summary>
         public int effective_time { get; set; }
         /// <summary>
-        /// ÕïÁÆÀà±ğ
+        /// è¯Šç–—ç±»åˆ«
         /// </summary>
         public string clinic_type { get; set; }
         /// <summary>
-        /// ÕïÁÆÏîÄ¿id
+        /// è¯Šç–—é¡¹ç›®id
         /// </summary>
         public int advice_cisitem_id { get; set; }
         /// <summary>
-        /// ±ê±¾²¿Î»
+        /// æ ‡æœ¬éƒ¨ä½
         /// </summary>
         public string citem_spcm_parts { get; set; }
         /// <summary>
-        /// ¼ì²é·½·¨
+        /// æ£€æŸ¥æ–¹æ³•
         /// </summary>
         public string citem_exam_method { get; set; }
         /// <summary>
-        /// ÊÕ·ÑÏ¸Ä¿id
+        /// æ”¶è´¹ç»†ç›®id
         /// </summary>
         public int fee_item_id { get; set; }
         /// <summary>
-        /// ÌìÊı
+        /// å¤©æ•°
         /// </summary>
         public int? advice_day { get; set; }
         /// <summary>
-        /// µ¥Á¿
+        /// å•é‡
         /// </summary>
         public decimal? single { get; set; }
         /// <summary>
-        /// ×ÜÁ¿
+        /// æ€»é‡
         /// </summary>
         public decimal? total_qunt { get; set; }
         /// <summary>
-        /// Ò½ÖöÄÚÈİ
+        /// åŒ»å˜±å†…å®¹
         /// </summary>
         public string advice_note { get; set; }
         /// <summary>
-        /// Ò½ÉúÖöÍĞ±¸×¢
+        /// åŒ»ç”Ÿå˜±æ‰˜å¤‡æ³¨
         /// </summary>
         public string advice_doctor_note { get; set; }
         /// <summary>
-        /// Ò½ÖöÖ´ĞĞ¿ÆÊÒid
+        /// åŒ»å˜±æ‰§è¡Œç§‘å®¤id
         /// </summary>
         public int advice_exedept_id { get; set; }
         /// <summary>
-        /// ÆµÂÊ
+        /// é¢‘ç‡
         /// </summary>
         public string frequency_name { get; set; }
         /// <summary>
-        /// ÆµÂÊ´ÎÊı
+        /// é¢‘ç‡æ¬¡æ•°
         /// </summary>
         public int? frequency_times { get; set; }
         /// <summary>
-        /// ¼ä¸ô
+        /// é—´éš”
         /// </summary>
         public int? frequency_interval { get; set; }
         /// <summary>
-        /// µ¥Î»
+        /// å•ä½
         /// </summary>
         public string interval_unit { get; set; }
         /// <summary>
-        /// Ö´ĞĞÊ±¼ä·½°¸
+        /// æ‰§è¡Œæ—¶é—´æ–¹æ¡ˆ
         /// </summary>
         public string exetime_plan { get; set; }
         /// <summary>
-        /// ¼Æ¼ÛÌØĞÔ
+        /// è®¡ä»·ç‰¹æ€§
         /// </summary>
         public int? valuation_nature { get; set; }
         /// <summary>
-        /// Ö´ĞĞĞÔÖÊ
+        /// æ‰§è¡Œæ€§è´¨
         /// </summary>
         public int? advice_exe_pro_code { get; set; }
         /// <summary>
-        /// Ö´ĞĞ±ê¼Ç
+        /// æ‰§è¡Œæ ‡è®°
         /// </summary>
         public int advice_exe_sign { get; set; }
         /// <summary>
-        /// ¿É·ñ·ÖÁã
+        /// å¯å¦åˆ†é›¶
         /// </summary>
         public int? can_split { get; set; }
         /// <summary>
-        /// ½ô¼±±êÖ¾
+        /// ç´§æ€¥æ ‡å¿—
         /// </summary>
         public int emergency_tag { get; set; }
         /// <summary>
-        /// ¿ªÊ¼Ö´ĞĞÊ±¼ä
+        /// å¼€å§‹æ‰§è¡Œæ—¶é—´
         /// </summary>
         public DateTime? advice_begintime { get; set; }
         /// <summary>
-        /// Ö´ĞĞÖÕÖ¹Ê±¼ä
+        /// æ‰§è¡Œç»ˆæ­¢æ—¶é—´
         /// </summary>
         public DateTime? advice_endtime { get; set; }
         /// <summary>
-        /// ¿ªÖö¿ÆÊÒid
+        /// å¼€å˜±ç§‘å®¤id
         /// </summary>
         public int advice_dept_id { get; set; }
         /// <summary>
-        /// ¿ªÖöÒ½Éú
+        /// å¼€å˜±åŒ»ç”Ÿ
         /// </summary>
         public string advice_doctor { get; set; }
         /// <summary>
-        /// ¿ªÖöÊ±¼ä
+        /// å¼€å˜±æ—¶é—´
         /// </summary>
         public DateTime? advice_record_time { get; set; }
         /// <summary>
-        /// ÕªÒªĞÅÏ¢
+        /// æ‘˜è¦ä¿¡æ¯
         /// </summary>
         public string abstract_txt { get; set; }
         /// <summary>
-        /// ±à¼­±êÖ¾
+        /// ç¼–è¾‘æ ‡å¿—
         /// </summary>
         public int edit_flag { get; set; }
         /// <summary>
-        /// ÓÃÒ©Ä¿µÄ
+        /// ç”¨è¯ç›®çš„
         /// </summary>
         public int? advice_purpose { get; set; }
         /// <summary>
-        /// ÓÃÒ©ÀíÓÉ
+        /// ç”¨è¯ç†ç”±
         /// </summary>
         public string advice_reason { get; set; }
         /// <summary>
-        /// ¸½ÏîĞÅÏ¢
+        /// é™„é¡¹ä¿¡æ¯
         /// </summary>
         public string appendix { get; set; }
         /// <summary>
-        /// ÊÖÊõÇé¿ö
+        /// æ‰‹æœ¯æƒ…å†µ
         /// </summary>
         public int? surgical_situ { get; set; }
         /// <summary>
-        /// ÉêÇëĞòºÅ
+        /// ç”³è¯·åºå·
         /// </summary>
         public int? apply_num { get; set; }
         /// <summary>
-        /// ²å¼ş½Ó¿ÚĞÅÏ¢
+        /// æ’ä»¶æ¥å£ä¿¡æ¯
         /// </summary>
         public string plugin_ex { get; set; }
         /// <summary>
-        /// Õï¶ÏĞÅÏ¢
+        /// è¯Šæ–­ä¿¡æ¯
         /// </summary>
         public string diagnosis { get; set; }
         /// <summary>
-        /// ±£´æÀàĞÍ
+        /// ä¿å­˜ç±»å‹
         /// </summary>
         public int save_type { get; set; }
     }
     /// <summary>
-    /// WEB×¡ÔºÒ½ÉúÕ¾±£´æÒ½Öö²å¼şÍâ½Ó¿ÚµÄÈë²ÎÄ£ĞÍ
+    /// WEBä½é™¢åŒ»ç”Ÿç«™ä¿å­˜åŒ»å˜±æ’ä»¶å¤–æ¥å£çš„å…¥å‚æ¨¡å‹
     /// </summary>
     public class IndsSavePlg {
         /// <summary>
-        /// ÏµÍ³±êÊ¶
+        /// ç³»ç»Ÿæ ‡è¯†
         /// </summary>
         public string sys_tag { get; set; }
         /// <summary>
-        /// ²¡ÈËid
+        /// ç—…äººid
         /// </summary>
         public int pati_id { get; set; }
         /// <summary>
-        /// Ö÷Ò³id
+        /// ä¸»é¡µid
         /// </summary>
         public int pati_pageid { get; set; }
         /// <summary>
-        /// ĞÕÃû
+        /// å§“å
         /// </summary>
         public string pati_name { get; set; }
         /// <summary>
-        /// ĞÔ±ğ
+        /// æ€§åˆ«
         /// </summary>
         public string pati_sex { get; set; }
         /// <summary>
-        /// ÄêÁä
+        /// å¹´é¾„
         /// </summary>
         public string pati_age { get; set; }
         /// <summary>
-        /// ¿ÆÊÒid
+        /// ç§‘å®¤id
         /// </summary>
         public int pati_dept_id { get; set; }
         /// <summary>
-        /// Ç°Ìáid
+        /// å‰æid
         /// </summary>
         public string prerequisite_id { get; set; }
         /// <summary>
-        /// ²¡ÈËÀ´Ô´
+        /// ç—…äººæ¥æº
         /// </summary>
         public int pati_source { get; set; }
         /// <summary>
-        /// Ó¤¶ù
+        /// å©´å„¿
         /// </summary>
         public int baby_num { get; set; }
         /// <summary>
-        /// Ã÷Ï¸ÁĞ±í
+        /// æ˜ç»†åˆ—è¡¨
         /// </summary>
         public List<IndsSavePlgItem> data_list { get; set; }
     }
 
 
     /// <summary>
-    /// ÇëÇó¶ÓÁĞ
+    /// è¯·æ±‚é˜Ÿåˆ—
     /// </summary>
     public class RequestQueue {
         /// <summary>
-        /// »ñÈ¡ÁĞ±í²ÎÊı
+        /// è·å–åˆ—è¡¨å‚æ•°
         /// </summary>
         public ListPara ListPara { get; set; }
 
         /// <summary>
-        /// Êä³öEMR²ÎÊı
+        /// è¾“å‡ºEMRå‚æ•°
         /// </summary>
         public EMRPara EMRPara { get; set; }
 
         /// <summary>
-        /// Êä³öÖ¸¶¨ÎÄ¼ş²ÎÊı
+        /// è¾“å‡ºæŒ‡å®šæ–‡ä»¶å‚æ•°
         /// </summary>
         public DocumentPara DocumentPara { get; set; }
 
         /// <summary>
-        /// Êä³ö±¨±í²ÎÊı
+        /// è¾“å‡ºæŠ¥è¡¨å‚æ•°
         /// </summary>
         public ReportPara ReportPara { get; set; }
     }
 
     /// <summary>
-    /// »ñÈ¡ÁĞ±í²ÎÊı
+    /// è·å–åˆ—è¡¨å‚æ•°
     /// </summary>
     public class ListPara {
         /// <summary>
-        /// ²¡ÈËID
+        /// ç—…äººID
         /// </summary>
         public long LngPatiID { get; set; }
 
         /// <summary>
-        /// Ö÷Ò³ID|¾ÍÕïID£¨¹ÒºÅID£©
+        /// ä¸»é¡µID|å°±è¯ŠIDï¼ˆæŒ‚å·IDï¼‰
         /// </summary>
         public long LngVisitID { get; set; }
 
         /// <summary>
-        /// ¹ÒºÅµ¥
+        /// æŒ‚å·å•
         /// </summary>
         public string StrRegNO { get; set; }
 
         /// <summary>
-        /// True- R11-Ê×Ò³ĞÅÏ¢ºÏ²¢ÎªÒ»¸ö¡°²¡°¸Ê×Ò³¡±£¬²»ÔÙ·ÖÊ×Ò³ÕıÃæ£¬Ê×Ò³·´Ãæ¡£
+        /// True- R11-é¦–é¡µä¿¡æ¯åˆå¹¶ä¸ºä¸€ä¸ªâ€œç—…æ¡ˆé¦–é¡µâ€ï¼Œä¸å†åˆ†é¦–é¡µæ­£é¢ï¼Œé¦–é¡µåé¢ã€‚
         /// </summary>
         public bool BlnHomepageMerge { get; set; }
 
         /// <summary>
-        /// À©Õ¹²ÎÊı,°´¼üÖµ¶Ô·½Ê½´«Öµ,Ã¿¸ö¼üÖµ¶ÔÓÃÌØÊâ×Ö·û¡°&¡±·Ö¸ô¡£Ê¾Àı:"RecStatus=1&ReportType=1" RecStatus=1,·µ»ØXML¸ñÊ½1°üº¬<rec_status> ½Úµã£»ReportType=1,·µ»ØXML¸ñÊ½1°üº¬ÉÏ±¨ÀàĞÍ<report_type> ½Úµã
+        /// æ‰©å±•å‚æ•°,æŒ‰é”®å€¼å¯¹æ–¹å¼ä¼ å€¼,æ¯ä¸ªé”®å€¼å¯¹ç”¨ç‰¹æ®Šå­—ç¬¦â€œ&â€åˆ†éš”ã€‚ç¤ºä¾‹:"RecStatus=1&ReportType=1" RecStatus=1,è¿”å›XMLæ ¼å¼1åŒ…å«<rec_status> èŠ‚ç‚¹ï¼›ReportType=1,è¿”å›XMLæ ¼å¼1åŒ…å«ä¸ŠæŠ¥ç±»å‹<report_type> èŠ‚ç‚¹
         /// </summary>
         public string StrExtPara { get; set; } = "RecStatus=1";
     }
 
     /// <summary>
-    /// Êä³öEMR²ÎÊı
+    /// è¾“å‡ºEMRå‚æ•°
     /// </summary>
     public class EMRPara {
         /// <summary>
-        /// EMRÎÄ¼şÖ÷ÎÄµµID
+        /// EMRæ–‡ä»¶ä¸»æ–‡æ¡£ID
         /// </summary>
         public string StrDocId { get; set; }
 
         /// <summary>
-        /// ÎÄ¼şÂ·¾¶: "D:\TEST\Doc"
+        /// æ–‡ä»¶è·¯å¾„: "D:\TEST\Doc"
         /// </summary>
         public string StrFilePath { get; set; }
 
         /// <summary>
-        /// ÎÄ¼şÃû: "XXX.PDF"
+        /// æ–‡ä»¶å: "XXX.PDF"
         /// </summary>
         public string StrFileName { get; set; }
 
         /// <summary>
-        /// ´òÓ¡Èë²Î<root><do_canprint>1=ĞèÒªµ÷ÓÃCanPrint·½·¨£»·´Ö®£¬²»µ÷ÓÃ¡£</do_canprint><printed_update_status>1=ĞèÒª¸üĞÂ²¡ÀúµÄ´òÓ¡×´Ì¬µÈĞÅÏ¢£»·´Ö®£¬²»¸üĞÂ¡£</printed_update_status></root></param>
+        /// æ‰“å°å…¥å‚<root><do_canprint>1=éœ€è¦è°ƒç”¨CanPrintæ–¹æ³•ï¼›åä¹‹ï¼Œä¸è°ƒç”¨ã€‚</do_canprint><printed_update_status>1=éœ€è¦æ›´æ–°ç—…å†çš„æ‰“å°çŠ¶æ€ç­‰ä¿¡æ¯ï¼›åä¹‹ï¼Œä¸æ›´æ–°ã€‚</printed_update_status></root></param>
         /// </summary>
         public string StrExtPara { get; set; }
     }
 
     /// <summary>
-    /// Êä³öÖ¸¶¨ÎÄ¼ş²ÎÊı
+    /// è¾“å‡ºæŒ‡å®šæ–‡ä»¶å‚æ•°
     /// </summary>
     public class DocumentPara {
         /// <summary>
-        /// ²¡ÈËID
+        /// ç—…äººID
         /// </summary>
         public long LngPatiID { get; set; }
 
         /// <summary>
-        /// Ö÷Ò³ID|¾ÍÕïID£¨¹ÒºÅID£©
+        /// ä¸»é¡µID|å°±è¯ŠIDï¼ˆæŒ‚å·IDï¼‰
         /// </summary>
         public long LngVisitID { get; set; }
 
         /// <summary>
-        /// PDFÎÄ¼şÊä³öÂ·¾¶£¨²»´øÎÄ¼şÃû£©
+        /// PDFæ–‡ä»¶è¾“å‡ºè·¯å¾„ï¼ˆä¸å¸¦æ–‡ä»¶åï¼‰
         /// </summary>
         public string StrFilePath { get; set; }
 
         /// <summary>
-        /// Ö¸¶¨Êä³öµÄÎÄ¼şÇåµ¥,ÆäĞÎÊ½ÎªXMLÀàĞÍµÄ×Ö·û´®¡£¼ûXML¶¨Òå
+        /// æŒ‡å®šè¾“å‡ºçš„æ–‡ä»¶æ¸…å•,å…¶å½¢å¼ä¸ºXMLç±»å‹çš„å­—ç¬¦ä¸²ã€‚è§XMLå®šä¹‰
         /// </summary>
         public string StrXML { get; set; }
 
         /// <summary>
-        /// TRUE-½«Êä³öÎÄµµºÏ²¢ÎªÒ»¸öÎÄµµ(ºÏ²¢ÎÄ¼şÃû£ºĞÕÃû_²¡ÈËID_Ö÷Ò³ID_²¡°¸ºÏ²¢.PDF); False-²»ºÏ²¢ÎÄµµ£¬Ö±½ÓÍ¨¹ı±¨±í´òÓ¡ËùÓĞ¸ñÊ½µ½Ò»¸öÎÄ¼şÖĞ
+        /// TRUE-å°†è¾“å‡ºæ–‡æ¡£åˆå¹¶ä¸ºä¸€ä¸ªæ–‡æ¡£(åˆå¹¶æ–‡ä»¶åï¼šå§“å_ç—…äººID_ä¸»é¡µID_ç—…æ¡ˆåˆå¹¶.PDF); False-ä¸åˆå¹¶æ–‡æ¡£ï¼Œç›´æ¥é€šè¿‡æŠ¥è¡¨æ‰“å°æ‰€æœ‰æ ¼å¼åˆ°ä¸€ä¸ªæ–‡ä»¶ä¸­
         /// </summary>
         public bool BlnMerge { get; set; }
 
         /// <summary>
-        /// ¹ÒºÅµ¥
+        /// æŒ‚å·å•
         /// </summary>
         public string StrRegNO { get; set; }
 
         /// <summary>
-        /// ´òÓ¡±êÖ¾£»TrueĞèÒª¸üĞÂÀÏ°æ²¡ÀúµÄ´òÓ¡±êÖ¾£»False²»ĞèÒª
+        /// æ‰“å°æ ‡å¿—ï¼›Trueéœ€è¦æ›´æ–°è€ç‰ˆç—…å†çš„æ‰“å°æ ‡å¿—ï¼›Falseä¸éœ€è¦
         /// </summary>
         public bool BlnPrintTag { get; set; }
 
         /// <summary>
-        /// ´òÓ¡»úÃû³Æ£»´òÓ¡µÄÊ±ºò´«Èë¶ÔÓ¦µÄ´òÓ¡»úÃû³Æ¡£
+        /// æ‰“å°æœºåç§°ï¼›æ‰“å°çš„æ—¶å€™ä¼ å…¥å¯¹åº”çš„æ‰“å°æœºåç§°ã€‚
         /// </summary>
         public string StrPrinter { get; set; }
 
         /// <summary>
-        /// À©Õ¹²ÎÊı,°´¼üÖµ¶Ô·½Ê½´«Öµ,Ã¿¸ö¼üÖµ¶ÔÓÃÌØÊâ×Ö·û¡°&¡±·Ö¸ô¡£Ê¾Àı:"²ÎÊıÃû1=²ÎÊıÖµ&²ÎÊıÃû2=²ÎÊıÖµ&..." Èç£º"SilentMode=1" SilentMode=1 ¾²Ä¬´òÓ¡
+        /// æ‰©å±•å‚æ•°,æŒ‰é”®å€¼å¯¹æ–¹å¼ä¼ å€¼,æ¯ä¸ªé”®å€¼å¯¹ç”¨ç‰¹æ®Šå­—ç¬¦â€œ&â€åˆ†éš”ã€‚ç¤ºä¾‹:"å‚æ•°å1=å‚æ•°å€¼&å‚æ•°å2=å‚æ•°å€¼&..." å¦‚ï¼š"SilentMode=1" SilentMode=1 é™é»˜æ‰“å°
         /// </summary>
         public string StrExtPara { get; set; } = "SilentMode=1";
     }
 
     /// <summary>
-    /// Êä³ö±¨±í²ÎÊı
+    /// è¾“å‡ºæŠ¥è¡¨å‚æ•°
     /// </summary>
     public class ReportPara {
         /// <summary>
-        /// ±¨±íµÄËùÊôÏµÍ³ºÅ
+        /// æŠ¥è¡¨çš„æ‰€å±ç³»ç»Ÿå·
         /// </summary>
         public long lngSysNo { get; set; }
 
         /// <summary>
-        /// ±¨±íÃû³Æ»ò±¨±í±àºÅ
+        /// æŠ¥è¡¨åç§°æˆ–æŠ¥è¡¨ç¼–å·
         /// </summary>
         public string strReportName { get; set; }
 
         /// <summary>
-        /// À©Õ¹ĞÅÏ¢£¨xml¸ñÊ½×Ö´®£©
+        /// æ‰©å±•ä¿¡æ¯ï¼ˆxmlæ ¼å¼å­—ä¸²ï¼‰
         /// </summary>
         public string strInfo { get; set; }
     }
 
     /// <summary>
-    /// ÅäÖÃĞÅÏ¢
+    /// é…ç½®ä¿¡æ¯
     /// </summary>
     public class ConfigInfo {
         /// <summary>
-        /// ÓÃ»§Ãû
+        /// ç”¨æˆ·å
         /// </summary>
         public string UserName { get; set; }
 
         /// <summary>
-        /// ÃÜÂë
+        /// å¯†ç 
         /// </summary>
         public string PasWord { get; set; }
 
         /// <summary>
-        /// ·şÎñÃû»òÕß¿ÉÒÔÖ±½ÓÖ¸¶¨IP:Port/SID
+        /// æœåŠ¡åæˆ–è€…å¯ä»¥ç›´æ¥æŒ‡å®šIP:Port/SID
         /// </summary>
         public string Server { get; set; }
 
         /// <summary>
-        /// ÊÇ·ñ¼ÇÂ¼CISÈÕÖ¾
+        /// æ˜¯å¦è®°å½•CISæ—¥å¿—
         /// </summary>
         public bool IsRecordCISLog { get; set; } = false;
 
         /// <summary>
-        /// Êä³öÄ£Ê½
+        /// è¾“å‡ºæ¨¡å¼
         /// </summary>
         public int PrintMode { get; set; } = 5;
 
         /// <summary>
-        /// ´òÓ¡´ÎÊı
+        /// æ‰“å°æ¬¡æ•°
         /// </summary>
         public int PrintTimes { get; set; }
 
         /// <summary>
-        /// ´òÓ¡³¬Ê±Ê±¼ä
+        /// æ‰“å°è¶…æ—¶æ—¶é—´
         /// </summary>
         public double PrintTimeout { get; set; }
 
         /// <summary>
-        /// ÈÕÖ¾±£´æÌìÊı
+        /// æ—¥å¿—ä¿å­˜å¤©æ•°
         /// </summary>
         public int LogDays { get; set; } = 7;
 
         /// <summary>
-        /// ÈÕÖ¾±£´æÌìÊı
+        /// æ—¥å¿—ä¿å­˜å¤©æ•°
         /// </summary>
         public int PdfDays { get; set; } = 7;
 
         /// <summary>
-        /// ÌåÎÂµ¥PDFÎÄ¼şÃû³Æ
+        /// ä½“æ¸©å•PDFæ–‡ä»¶åç§°
         /// </summary>
         public string TemperatureChartPath { get; set; }
 
         /// <summary>
-        /// ´òÓ¡³ÌĞòÖØÆôÊ±¼ä
+        /// æ‰“å°ç¨‹åºé‡å¯æ—¶é—´
         /// </summary>
         public string RestartTime { get; set; }
     }
@@ -1975,7 +1975,7 @@ namespace NewCostHjy.Models {
         public string strRegNO { get; set; }
 
         /// <summary>
-        /// Êä³öÊ±µÄÎÄ¼ş±êÊ¶id
+        /// è¾“å‡ºæ—¶çš„æ–‡ä»¶æ ‡è¯†id
         /// </summary>
         public string id { get; set; }
     }
@@ -2031,7 +2031,7 @@ namespace NewCostHjy.Models {
         public string buttonType { get; set; }
 
         /// <summary>
-        /// ÊÇ·ñÊÇ³·Ïû£¬1-±íÊ¾Îª³·Ïû
+        /// æ˜¯å¦æ˜¯æ’¤æ¶ˆï¼Œ1-è¡¨ç¤ºä¸ºæ’¤æ¶ˆ
         /// </summary>
         public string Cancel { get; set; }
     }
@@ -2039,140 +2039,140 @@ namespace NewCostHjy.Models {
     public class SysMessageRecord
     {
         /// <summary>
-        /// Ö÷¼ü
+        /// ä¸»é”®
         /// </summary>
         public long Id { get; set; }
         /// <summary>
-        /// ÈËÔ±ID
+        /// äººå‘˜ID
         /// </summary>
         public long? PersonId { get; set; }
         /// <summary>
-        /// ÓÃ»§Ãû
+        /// ç”¨æˆ·å
         /// </summary>
         public string Username { get; set; }
         /// <summary>
-        /// ´°Ìå¾ä±ú
+        /// çª—ä½“å¥æŸ„
         /// </summary>
         public long? WindowHandle { get; set; }
 
         /// <summary>
-        /// ÏûÏ¢±àÂë
-        ///--              S001--ÇĞ»»²¡ÈË
-        ///--              S002--¹Ø±ÕÁĞ±í
-        ///--              S003--´ò¿ªÁĞ±í
+        /// æ¶ˆæ¯ç¼–ç 
+        ///--              S001--åˆ‡æ¢ç—…äºº
+        ///--              S002--å…³é—­åˆ—è¡¨
+        ///--              S003--æ‰“å¼€åˆ—è¡¨
         /// </summary>
         public string MessageCode { get; set; }
 
         /// <summary>
-        /// ÏûÏ¢ÄÚÈİ
+        /// æ¶ˆæ¯å†…å®¹
         /// </summary>
         public string MessageContent { get; set; }
         /// <summary>
-        /// ²¡ÈËID
+        /// ç—…äººID
         /// </summary>
         public long? PatientId { get; set; }
         /// <summary>
-        /// ¾ÍÕïID
+        /// å°±è¯ŠID
         /// </summary>
         public long? VisitId { get; set; }
         /// <summary>
-        /// »úÆ÷Ãû³Æ
+        /// æœºå™¨åç§°
         /// </summary>
         public string MachineName { get; set; }
         /// <summary>
-        /// ´´½¨Ê±¼ä
+        /// åˆ›å»ºæ—¶é—´
         /// </summary>
         public DateTime? CreateTime { get; set; }
     }
 
     /// <summary>
-    /// µ¼º½Ì¨ÈÕÖ¾ĞÅÏ¢Ä£ĞÍ
+    /// å¯¼èˆªå°æ—¥å¿—ä¿¡æ¯æ¨¡å‹
     /// </summary>
     public class ZLHISLogInfoModel
     {
         /// <summary>
-        /// ÈÕÖ¾¼¶±ğ
+        /// æ—¥å¿—çº§åˆ«
         /// </summary>
         public string LogLevel { get; set; }
 
         /// <summary>
-        /// ·şÎñÆ÷
+        /// æœåŠ¡å™¨
         /// </summary>
         public string Server { get; set; }
 
         /// <summary>
-        /// ÓÃ»§Ãû
+        /// ç”¨æˆ·å
         /// </summary>
         public string UserName { get; set; }
 
         /// <summary>
-        /// »á»°ID
+        /// ä¼šè¯ID
         /// </summary>
         public int SessionId { get; set; }
 
         /// <summary>
-        /// IPµØÖ·
+        /// IPåœ°å€
         /// </summary>
         public string Ip { get; set; }
 
         /// <summary>
-        /// ¹¤×÷Õ¾
+        /// å·¥ä½œç«™
         /// </summary>
         public string Station { get; set; }
 
         /// <summary>
-        /// ½ø³ÌID
+        /// è¿›ç¨‹ID
         /// </summary>
         public int ProcessId { get; set; }
 
         /// <summary>
-        /// ½ø³ÌÃû³Æ
+        /// è¿›ç¨‹åç§°
         /// </summary>
         public string ProcessName { get; set; }
 
         /// <summary>
-        /// ·ÖÀàÃû³Æ
+        /// åˆ†ç±»åç§°
         /// </summary>
         public string CategoryName { get; set; }
 
         /// <summary>
-        /// ×é¼şÃû³Æ
+        /// ç»„ä»¶åç§°
         /// </summary>
         public string ComponentName { get; set; }
 
         /// <summary>
-        /// Ä£¿éÃû³Æ
+        /// æ¨¡å—åç§°
         /// </summary>
         public string ModuleName { get; set; }
 
         /// <summary>
-        /// º¯ÊıÃû³Æ
+        /// å‡½æ•°åç§°
         /// </summary>
         public string FunctionName { get; set; }
 
         /// <summary>
-        /// µ÷ÓÃÃû³Æ
+        /// è°ƒç”¨åç§°
         /// </summary>
         public string CallName { get; set; }
 
         /// <summary>
-        /// ½×¶Î
+        /// é˜¶æ®µ
         /// </summary>
         public string Stage { get; set; }
 
         /// <summary>
-        /// ÈÕÖ¾ĞÅÏ¢
+        /// æ—¥å¿—ä¿¡æ¯
         /// </summary>
         public string LogInfo { get; set; }
 
         /// <summary>
-        /// ÈÕÖ¾À©Õ¹ĞÅÏ¢
+        /// æ—¥å¿—æ‰©å±•ä¿¡æ¯
         /// </summary>
         public string LogInfoEx { get; set; }
     }
 
     /// <summary>
-    /// Èı·½µ÷ÓÃÄ¿Â¼ÅäÖÃÒ³Ç©µÄÈë²ÎÄ£ĞÍ Ò³Ç©Ë¢ĞÂ
+    /// ä¸‰æ–¹è°ƒç”¨ç›®å½•é…ç½®é¡µç­¾çš„å…¥å‚æ¨¡å‹ é¡µç­¾åˆ·æ–°
     /// </summary>
     public class ThirdP2ParIn
     {
@@ -2218,7 +2218,7 @@ namespace NewCostHjy.Models {
         /// </summary>
         public string user_code { get; set; }
         /// <summary>
-        /// ÕÅÓÀ¿µ
+        /// å¼ æ°¸åº·
         /// </summary>
         public string user_cname { get; set; }
     }

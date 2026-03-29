@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Threading;
@@ -18,6 +18,10 @@ namespace NewCostHjy.Controllers
     /// </summary>
     [ApiController]
     public class CISController : ControllerBase {
+
+        private const int MILLISECONDS_TO_SECONDS = 1000;
+        private const string DEFAULT_SILENT_MODE = "SilentMode=1";
+        private const string DEFAULT_REC_STATUS = "RecStatus=1";
 
         private readonly ILogger _logger;
         private readonly ICISComponentService _cISComponentService;
@@ -76,7 +80,7 @@ namespace NewCostHjy.Controllers
                     long lngPatiID = long.Parse(strPatiID);
                     long lngVisitID = long.Parse(strVisitID);
                     bool blnHomepageMerge = !string.IsNullOrEmpty(JObjectHelper.GetKeyValue(inputJson, "blnHomepageMerge")) && Convert.ToBoolean(JObjectHelper.GetKeyValue(inputJson, "blnHomepageMerge"));
-                    string strExtPara = !string.IsNullOrEmpty(JObjectHelper.GetKeyValue(inputJson, "strExtPara")) ? JObjectHelper.GetKeyValue(inputJson, "strExtPara") : "RecStatus=1";
+                    string strExtPara = !string.IsNullOrEmpty(JObjectHelper.GetKeyValue(inputJson, "strExtPara")) ? JObjectHelper.GetKeyValue(inputJson, "strExtPara") : DEFAULT_REC_STATUS;
       
                     // 将入参写入队列
                     RequestQueue requestQueue = new RequestQueue();
@@ -93,7 +97,7 @@ namespace NewCostHjy.Controllers
                     string strKey = lngPatiID + "_" + lngVisitID + "_" + strRegNO;
 
                     DateTime nowDate = DateTime.Now;
-                    while (!_requestQueueService.IsListDicExist(strKey) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / 1000) Thread.Sleep(100);
+                    while (!_requestQueueService.IsListDicExist(strKey) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / MILLISECONDS_TO_SECONDS) Thread.Sleep(100);
 
                     outJson["code"] = 0;
                     JObject jresult = JObjectHelper.XmlToJObject(_requestQueueService.GetListDicValue(strKey));
@@ -172,7 +176,7 @@ namespace NewCostHjy.Controllers
                     _requestQueueService.AddRequestQueueToQueue(requestQueue);
 
                     DateTime nowDate = DateTime.Now;
-                    while (!System.IO.File.Exists(strFilePath + "\\" + strFileName) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / 1000) Thread.Sleep(100);
+                    while (!System.IO.File.Exists(strFilePath + "\\" + strFileName) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / MILLISECONDS_TO_SECONDS) Thread.Sleep(100);
 
                     // 检查文件是否存在并返回文件base64字符串
                     if (System.IO.File.Exists(strFilePath + "\\" + strFileName))
@@ -278,13 +282,13 @@ namespace NewCostHjy.Controllers
                         BlnMerge = blnMerge,
                         StrRegNO = strRegNO,
                         BlnPrintTag = blnPrintTag,
-                        StrExtPara = (string.IsNullOrEmpty(strExtPara) ? "SilentMode=1" : strExtPara)
+                        StrExtPara = (string.IsNullOrEmpty(strExtPara) ? DEFAULT_SILENT_MODE : strExtPara)
                     };
                     requestQueue.DocumentPara = documentPara;
                     _requestQueueService.AddRequestQueueToQueue(requestQueue);
 
                     DateTime nowDate = DateTime.Now;
-                    while (!System.IO.File.Exists(strFilePath + strFileName) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / 1000) Thread.Sleep(100);
+                    while (!System.IO.File.Exists(strFilePath + strFileName) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / MILLISECONDS_TO_SECONDS) Thread.Sleep(100);
 
                     // 检查文件是否存在并返回文件base64字符串
                     if (System.IO.File.Exists(strFilePath + strFileName))
@@ -399,7 +403,7 @@ namespace NewCostHjy.Controllers
                     _requestQueueService.AddRequestQueueToQueue(requestQueue);
 
                     DateTime nowDate = DateTime.Now;
-                    while (!System.IO.File.Exists(strFilePath + strFileName) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / 1000) Thread.Sleep(100);
+                    while (!System.IO.File.Exists(strFilePath + strFileName) && (DateTime.Now - nowDate).TotalSeconds < _configInfo.PrintTimeout / MILLISECONDS_TO_SECONDS) Thread.Sleep(100);
 
                     // 检查文件是否存在并返回文件base64字符串
                     if (System.IO.File.Exists(strFilePath + strFileName))

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,6 +16,14 @@ namespace NewCostHjy.Common
 {
     public class HttpRequest
     {
+        private const string HEADER_ZL_CLIENT_IP = "ZL-Client-IP";
+        private const string HEADER_AIO_CLIENT_IP = "AIO-Client-IP";
+        private const string HEADER_X_REAL_IP = "X-Real-IP";
+        private const string HEADER_X_FORWARDED_FOR = "X-Forwarded-For";
+        private const string AUTH_TYPE_BASIC = "Basic";
+        private const string AUTH_TYPE_BEARER = "Bearer";
+        private const string CONTENT_TYPE_JSON = "application/json";
+
         public static List<ActionInfo> ActionInfos { get; set; }
 
         private static readonly HttpClient _httpClient = new HttpClient(new HttpClientHandler
@@ -150,20 +158,20 @@ namespace NewCostHjy.Common
                 //X-Real-IP：原始请求客户端IP
                 //REMOTE-HOST：原始请求客户端主机名，失败返回客户端IP
                 //ZL-Client-IP：中联产品客户端发起服务调用时传递的原始请求客户端IP
-                requestIP = httpContext.Request.Headers["ZL-Client-IP"].FirstOrDefault();
+                requestIP = httpContext.Request.Headers[HEADER_ZL_CLIENT_IP].FirstOrDefault();
                 if (!string.IsNullOrEmpty(requestIP)) requestIP = requestIP.Split(",")[0];
 
                 if (string.IsNullOrEmpty(requestIP))
                 {
-                    requestIP = httpContext.Request.Headers["AIO-Client-IP"].FirstOrDefault();
+                    requestIP = httpContext.Request.Headers[HEADER_AIO_CLIENT_IP].FirstOrDefault();
                 }
                 if (string.IsNullOrEmpty(requestIP))
                 {
-                    requestIP = httpContext.Request.Headers["X-Real-IP"].FirstOrDefault();//StringValues
+                    requestIP = httpContext.Request.Headers[HEADER_X_REAL_IP].FirstOrDefault();//StringValues
                 }
                 if (string.IsNullOrEmpty(requestIP))
                 {
-                    requestIP = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+                    requestIP = httpContext.Request.Headers[HEADER_X_FORWARDED_FOR].FirstOrDefault();
                     if (!string.IsNullOrEmpty(requestIP)) requestIP = requestIP.Split(",")[0];
                 }
                 //常规获取方式
@@ -183,20 +191,20 @@ namespace NewCostHjy.Common
             var request = new HttpRequestMessage(method, url);
             if (!string.IsNullOrEmpty(body))
             {
-                request.Content = new StringContent(body, Encoding.UTF8, "application/json");
+                request.Content = new StringContent(body, Encoding.UTF8, CONTENT_TYPE_JSON);
             }
             if (transferIP)
             {
                 // 添加自定义头部
                 string requestIP = GetClientRealIP();
-                request.Headers.Add("ZL-Client-IP", requestIP);
+                request.Headers.Add(HEADER_ZL_CLIENT_IP, requestIP);
             }
             if (authType == AuthType.Basic)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", secret);
+                request.Headers.Authorization = new AuthenticationHeaderValue(AUTH_TYPE_BASIC, secret);
             } else if (authType == AuthType.Oauth)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
+                request.Headers.Authorization = new AuthenticationHeaderValue(AUTH_TYPE_BEARER, secret);
             }
             request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));

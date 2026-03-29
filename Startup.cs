@@ -25,11 +25,11 @@ namespace NewCostHjy {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
 
-            bool blnDPFTest = false;
+            bool blnPDFTest = false;
             string strTmp = Configuration.GetSection("PDFUsed").Value;
-            if(strTmp=="1") blnDPFTest = true;
+            if(strTmp=="1") blnPDFTest = true;
             #region PDF相关配置
-            if (blnDPFTest)
+            if (blnPDFTest)
             {
                 services.AddControllers();
                 services.Configure<ConfigInfo>(Configuration.GetSection("ConfigInfo"));
