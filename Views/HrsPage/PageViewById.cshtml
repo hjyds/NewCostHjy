@@ -103,53 +103,24 @@
             </div>
         </div>
     </div>
+
+    <!-- 底部按钮 -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary mr-3" onclick="sendMsgToVb('confirm')">
+                <i class="fas fa-check"></i> 确定
+            </button>
+            <button class="btn btn-secondary" onclick="sendMsgToVb('cancel')">
+                <i class="fas fa-times"></i> 取消
+            </button>
+        </div>
+    </div>
 </div>
 
+<input type="hidden" id="tokenValue" value="@ViewBag.Token" />
+
 @section Scripts {
-    <script>
-        $(document).ready(function() {
-            // 初始化表格
-            $('#issueTable').bootstrapTable({
-                pagination: true,
-                pageSize: 10,
-                pageList: [10, 25, 50, 100],
-                search: true,
-                showColumns: true,
-                showExport: true,
-                sortable: true
-            });
-        });
-
-        function refreshData() {
-            layer.msg('正在刷新数据...', { icon: 16, time: 1000 });
-            setTimeout(function() {
-                location.reload();
-            }, 1000);
-        }
-
-        function exportData() {
-            layer.msg('正在导出数据...', { icon: 16, time: 2000 });
-            // 导出逻辑
-            $('#issueTable').tableExport({
-                type: 'excel',
-                escape: false
-            });
-        }
-
-        function showTokenInfo() {
-            var token = '@ViewBag.Token';
-            if (token) {
-                layer.open({
-                    type: 1,
-                    title: 'Token信息',
-                    area: ['600px', '300px'],
-                    content: '<div style="padding: 20px;"><pre style="white-space: pre-wrap; word-wrap: break-word;">' + token + '</pre></div>'
-                });
-            } else {
-                layer.msg('Token信息为空', { icon: 2 });
-            }
-        }
-    </script>
+    <script src="~/module/hrspage/page.js"></script>
 }
 
 <style>

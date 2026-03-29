@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using NewCostHjy.BLL;
 using NewCostHjy.DAL;
 using NewCostHjy.Models;

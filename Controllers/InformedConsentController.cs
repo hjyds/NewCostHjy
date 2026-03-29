@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using NewCostHjy.Common;
 using NewCostHjy.Models;
 using Newtonsoft.Json;

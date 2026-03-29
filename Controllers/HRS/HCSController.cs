@@ -20,7 +20,7 @@ namespace NewCostHjy.Controllers {
         /// <param name="par">请求参数</param>
         /// <returns>Token响应</returns>
         [HttpPost("Execute")]
-        public IActionResult Execute([FromBody] dynamic par) {
+        public IActionResult Execute([FromBody] GetHrsTokenRequest par) {
             try {
                 string strTmp = JsonConvert.SerializeObject(par);
                 var request = JsonConvert.DeserializeObject<GetHrsTokenRequest>(strTmp);
