@@ -1,3 +1,18 @@
+导航台界面
+If 0 = 1 Then
+        MsgAppCriticalData Me
+    End If
+
+Private Sub mnuHelpTitle_Click()
+    'Shell "hh.exe  zl9start.chm", vbNormalFocus
+'    OpenPageMainFrm Me
+'    ShowOutAdviceEdit Me
+
+'    ShowInAdviceEdit Me
+    
+    ShowInsureNew Me
+End Sub
+
 Public Function GetPara(ByVal varPara As Variant, Optional ByVal lngSys As Long, Optional ByVal lngModual As Long, Optional ByVal strDefault As String, _
     Optional ByVal arrControl As Variant, Optional ByVal blnSetup As Boolean, Optional intType As Integer, Optional ByVal lngDeptID As Long, Optional ByRef blnNotExistsDeptDetail As Boolean) As String
 '功能：读取指定的参数值
