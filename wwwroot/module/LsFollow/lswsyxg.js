@@ -179,18 +179,7 @@ function DocFunText() {
     ////}
 
     //return
-    //出错了删掉的情况
-    if (0 === 1) {
-        let datas = zlGetLS(`https://cqapi.cfkfz.com:28009/admin/follow/list?page=4&limit=500&startTime=2025-02-01+00:00:00&endTime=2025-03-04+23:59:59&followType=`);
-        debugger
-        //zlPostLS('https://cqapi.cfkfz.com:28009/admin/follow/delete?id=118094', '118094');
-
-        datas.data.list.forEach(function (item) {
-            zlPostLS('https://cqapi.cfkfz.com:28009/admin/follow/delete?id=' + item.id, item.id);
-
-        });
-        return
-    }
+    //出错了删掉的情况 - 已封装到 f2f_fp.js 中的 deleteFollowRecordsByDateRange 函数
 
     //let objData = GetPatiIdInfoList();
     let docList = ["何先佳", "龙注伊", "毛西瑞"];
@@ -233,6 +222,21 @@ function DocFunText() {
     // 获取输入值
     let startDate = document.getElementById('startDate').value.trim();
     let endDate = document.getElementById('endDate').value.trim();
+
+    // 日期范围校验
+    if (!startDate || !endDate) {
+        layer.alert('请选择开始日期和结束日期', { icon: 2 });
+        return;
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (end <= start) {
+        layer.alert('结束日期必须大于开始日期', { icon: 2 });
+        return;
+    }
+
     startDate = startDate + 'T00:00:00';
     endDate = endDate + 'T23:59:59';
      

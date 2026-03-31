@@ -6,7 +6,7 @@
 
 @{
     ViewData["Title"] = "测试页";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_HjyLyt.cshtml";
 }
 
 @using Newtonsoft.Json
@@ -17,51 +17,283 @@
 <script src="/module/LsFollow/LsFollow.js"></script>
 <script src="/module/FeedBackBill/f2f_fp.js"></script>
 
+<style>
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-<div class="sys_tag">FaceToFaceFollowUp</div>
-<div>入参信息：</div>
-<div id="parin"></div>
+    .card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+        padding: 24px;
+    }
 
-<div class="row">
-    <div class="col-6">
-        <label class="form-inline">
-            <span style="width: 80px;text-align: right;">认&emsp;&emsp;证：</span>
-            <input id="token_input" type="text" class="form-control form-control-sm col"  autocomplete="off" />
-            <button class="btn btn-cancel btn-sm  " id="token_input_btn" style="float: right; background-color: #ced1e2;">确定</button>                
-        </label>
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #1890ff;
+    }
+
+    .sys_tag {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .info-section {
+        background: #f8f9fa;
+        padding: 16px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .form-group-inline {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .form-group-inline label {
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .date-range-container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .date-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .date-item label {
+        margin: 0;
+        font-weight: 500;
+        color: #555;
+    }
+
+    .date-item input[type="date"] {
+        padding: 8px 12px;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .date-item input[type="date"]:focus {
+        border-color: #1890ff;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary-custom {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-danger-custom {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-danger-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-secondary-custom {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-secondary-custom:hover {
+        background: #5a6268;
+    }
+
+    .upload-section {
+        border: 2px dashed #d9d9d9;
+        padding: 32px;
+        text-align: center;
+        border-radius: 8px;
+        background: #fafafa;
+        transition: all 0.3s;
+    }
+
+    .upload-section:hover {
+        border-color: #1890ff;
+        background: #f0f7ff;
+    }
+
+    .upload-icon {
+        font-size: 48px;
+        color: #1890ff;
+        margin-bottom: 16px;
+    }
+
+    .upload-label {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 12px;
+    }
+
+    .upload-hint {
+        color: #888;
+        font-size: 13px;
+    }
+
+    .table-section {
+        margin-top: 24px;
+    }
+
+    .table-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 16px;
+    }
+
+    .table-responsive {
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .table th {
+        background: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .table tr:hover {
+        background: #f8f9fa;
+    }
+</style>
+
+<div class="page-container">
+    <div class="sys_tag">FaceToFaceFollowUp</div>
+
+    <div class="card">
+        <h3 class="card-title">入参信息</h3>
+        <div class="info-section">
+            <div class="info-label">参数详情：</div>
+            <div id="parin"></div>
+        </div>
+
+        <div class="form-group-inline">
+            <label class="form-inline">
+                <span style="width: 80px;text-align: right;">认&emsp;&emsp;证：</span>
+                <input id="token_input" type="text" class="form-control form-control-sm" autocomplete="off" />
+            </label>
+            <button class="btn btn-secondary-custom btn-sm" id="token_input_btn" style="background-color: #ced1e2; color: #333;">确定</button>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <label>选择图片</label>
-    <div>
-        <input type="file" class="form-control brandPic" id="brandPic" multiple />
-        <img class="head-img" />
-    </div>
-    <button data-v-2396c8a3="" type="button" class="ant-btn" ant-click-animating-without-extra-node="false">
-        <i data-v-2396c8a3="" aria-label="图标: upload" class="anticon anticon-upload">
-            <svg viewBox="64 64 896 896" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class="">
-                <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 0 0-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
-            </svg>
-        </i>
-        <span id="pic_type" data-type="1">面对面随访</span>
-    </button>
-    <label style="padding-left: 15px;" id="tableTitle">人员信息</label>
-    <div class="col-12">
-        <table class="table" id="tab_api_list">
-        </table>
-    </div>
-</div>
+    <div class="card">
+        <h3 class="card-title">图片上传</h3>
+        <div class="upload-section">
+            <div class="upload-icon">📁</div>
+            <div class="upload-label">选择图片文件</div>
+            <input type="file" class="form-control-file brandPic" id="brandPic" multiple />
+            <div class="upload-hint">支持多选图片文件</div>
+        </div>
 
-<div class="row">
-    <h1>日期范围选择(电话随访)</h1>
-    <form id="dateRangeForm">
-        <label for="startDate">开始日期:</label>
-        <input type="text" id="startDate" name="startDate" placeholder="YYYY-MM-DD" required>
-        <label for="endDate">结束日期:</label>
-        <input type="text" id="endDate" name="endDate" placeholder="YYYY-MM-DD" required>  
-        <input type="submit" value="确定">
-    </form>
+        <div style="margin-top: 20px;">
+            <img class="head-img" style="max-width: 200px; display: none;" />
+        </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 12px; align-items: center;">
+            <button type="button" class="ant-btn" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 6px; background: white; cursor: pointer;">
+                <svg viewBox="64 64 896 896" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
+                    <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 0 0-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+                </svg>
+                <span id="pic_type" data-type="1">面对面随访</span>
+            </button>
+            <div id="tableTitle" style="font-weight: 500; color: #555;">人员信息</div>
+        </div>
+
+        <div class="table-section">
+            <div class="table-responsive">
+                <table class="table table-hover" id="tab_api_list">
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="card-title">日期范围选择（电话随访）</h3>
+        <div class="date-range-container">
+            <div class="date-item">
+                <label for="startDate">开始日期：</label>
+                <input type="date" id="startDate" name="startDate" required>
+            </div>
+            <div class="date-item">
+                <label for="endDate">结束日期：</label>
+                <input type="date" id="endDate" name="endDate" required>
+            </div>
+            <div class="btn-group">
+                <button type="button" id="submitDateRange" class="btn btn-primary-custom">确定</button>
+                <button type="button" id="deleteFollowRecordsBtn" class="btn btn-danger-custom">删除电话随访信息</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -70,7 +302,9 @@
         $("#parin").html(JSON.stringify(_mvcData));
     }, 100);
 
-   
+    $(function () {
+        $("#submitDateRange").on("click", function () {
+            $("#dateRangeForm").trigger("submit");
+        });
+    });
 </script>
-
-
