@@ -1,3 +1,4 @@
+using Elastic.Apm.Api;
 using Microsoft.AspNetCore.Mvc;
 using NewCostHjy.BLL;
 using NewCostHjy.DAL;
@@ -15,7 +16,8 @@ namespace NewCostHjy.Controllers {
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ThirdInterfaceController : BaseController {
+    public class ThirdInterfaceController : BaseController
+    {
         /// <summary>
         /// 临生免接口同步检查申请接口  /api/ThirdInterface/IntfcSaveRequestOthers
         /// </summary>
@@ -25,7 +27,8 @@ namespace NewCostHjy.Controllers {
         {
 
             List<WebLisAppDataOut> lst = new List<WebLisAppDataOut>();
-            WebLisAppDataOut one = new WebLisAppDataOut() {
+            WebLisAppDataOut one = new WebLisAppDataOut()
+            {
                 input = new Input() { head = new Head() }
             };
             one.input.head.sysno = "hjy";
@@ -52,10 +55,10 @@ namespace NewCostHjy.Controllers {
         /// <returns></returns>
         [HttpPost("LabBusinessData")]
         public IActionResult LabBusinessData([FromBody] SPDCallPar parIn)
-        { 
+        {
             RootJCPT rootJCPT = new RootJCPT();
             rootJCPT.input = new InputJCPT();
-            rootJCPT.input.exe_status= "AE";
+            rootJCPT.input.exe_status = "AE";
             return Json(rootJCPT);
         }
 
@@ -84,10 +87,10 @@ namespace NewCostHjy.Controllers {
             #region 把入参记录下来 测试日志
             string id = Guid.NewGuid().ToString();
             string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(paraIn);
-            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();            
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
             #endregion
             logInfoMdl.LogInfoEx = strInfo;
-            
+
             SPDCallPar parIn = Newtonsoft.Json.JsonConvert.DeserializeObject<SPDCallPar>(strInfo);
             bool bln查询已知库存 = false;
             string strRqList = "";
@@ -103,7 +106,7 @@ namespace NewCostHjy.Controllers {
 
                         List<Req_infoItem> listrqs = parIn.input.req_info;
 
-                        if (listrqs!=null && listrqs.Count > 0)
+                        if (listrqs != null && listrqs.Count > 0)
                         {
                             if (string.IsNullOrWhiteSpace(listrqs[0].eisai_barcode))
                             {
@@ -167,7 +170,7 @@ namespace NewCostHjy.Controllers {
             RootJCPT rootJCPT = new RootJCPT();
             rootJCPT.input = new InputJCPT();
             rootJCPT.input.ack_info = new Ack_info() { exe_status = "A" };
-            rootJCPT.input.eisai_item_list = outData; 
+            rootJCPT.input.eisai_item_list = outData;
             rootJCPT.input.check_result = new List<SpdRollCheckPar>();
             rootJCPT.input.check_result.Add(new SpdRollCheckPar() { check_stat = "1" });
             if ("S6119" == strBizno)
@@ -177,7 +180,7 @@ namespace NewCostHjy.Controllers {
             if (strBizno == "S6129")
             {
                 throw new Exception("测试异常");
-            }            
+            }
             return Json(rootJCPT);
         }
 
@@ -201,7 +204,7 @@ namespace NewCostHjy.Controllers {
         /// <returns></returns>
         [HttpPost("GetDiagPrescription")]
         public IActionResult GetDiagPrescription([FromBody] EPrescriptionInfo parIn)
-        { 
+        {
             string dataTmp = @"[{""ID"":226,""CODE"":""A18.206"",""NAME"":""淋巴结结核[胡俊勇测试]"",""SCODE"":""LBJJH"",""NOTE"":null},{""ID"":227,""CODE"":""A18.207"",""NAME"":""腮腺淋巴结结核"",""SCODE"":""SXLBJJH"",""NOTE"":null},{""ID"":228,""CODE"":""A18.208"",""NAME"":""锁骨上淋巴结结核"",""SCODE"":""SGSLBJJH"",""NOTE"":null},{""ID"":229,""CODE"":""A18.209"",""NAME"":""腋下淋巴结结核"",""SCODE"":""YXLBJJH"",""NOTE"":null},{""ID"":230,""CODE"":""A18.210"",""NAME"":""周围淋巴结结核"",""SCODE"":""ZWLBJJH"",""NOTE"":null},{""ID"":231,""CODE"":""A18.301+"",""NAME"":""肠结核"",""SCODE"":""CJH"",""NOTE"":null},{""ID"":232,""CODE"":""A18.302+"",""NAME"":""肠系膜结核"",""SCODE"":""CXMJH"",""NOTE"":null},{""ID"":233,""CODE"":""A18.303+"",""NAME"":""肠系膜淋巴结结核"",""SCODE"":""CXMLBJJH"",""NOTE"":null},{""ID"":234,""CODE"":""A18.304+"",""NAME"":""腹膜结核"",""SCODE"":""FMJH"",""NOTE"":null},{""ID"":235,""CODE"":""A18.305+"",""NAME"":""结核性肛瘘"",""SCODE"":""JHXGZ"",""NOTE"":null},{""ID"":236,""CODE"":""A18.306+"",""NAME"":""髂窝结核"",""SCODE"":""QWJH"",""NOTE"":""查不到此部位，髂窝放到腹腔""},{""ID"":237,""CODE"":""A18.307+"",""NAME"":""结核性腹膜炎"",""SCODE"":""JHXFMY"",""NOTE"":null},{""ID"":238,""CODE"":""A18.308"",""NAME"":""腹膜后淋巴结结核"",""SCODE"":""FMHLBJJH"",""NOTE"":null},{""ID"":239,""CODE"":""A18.309"",""NAME"":""腹腔结核"",""SCODE"":""FQJH"",""NOTE"":null},{""ID"":240,""CODE"":""A18.310"",""NAME"":""腹腔淋巴结结核"",""SCODE"":""FQLBJJH"",""NOTE"":null},{""ID"":241,""CODE"":""A18.311"",""NAME"":""肝门淋巴结结核"",""SCODE"":""GMLBJJH"",""NOTE"":null},{""ID"":242,""CODE"":""A18.312"",""NAME"":""结核性腹水"",""SCODE"":""JHXFS"",""NOTE"":null},{""ID"":243,""CODE"":""A18.401"",""NAME"":""播散性粟粒性狼疮"",""SCODE"":""BSXSLXLC"",""NOTE"":""狼疮原指由各种皮肤病引起的局限性皮肤破坏或变性。从前特指寻常狼疮，现在指红斑狼疮，如不加定语则无特定含义。播散性粟粒性狼疮通常发生于面部，一般认为是一种结核疹，像肉芽肿酒渣鼻的一种变型和不明病因的丘疹""},{""ID"":244,""CODE"":""A18.402"",""NAME"":""腹壁结核"",""SCODE"":""FBJH"",""NOTE"":null},{""ID"":245,""CODE"":""A18.403"",""NAME"":""腹部结核性窦道"",""SCODE"":""FBJHXZD"",""NOTE"":""应该看是发生于皮肤还是通往腹腔，其编码前者是A18．4，后者是A18．3+，K93．0*。这里按皮肤和皮下组织处理""},{""ID"":246,""CODE"":""A18.404"",""NAME"":""结核性结节性红斑"",""SCODE"":""JHXJJXHB"",""NOTE"":null},{""ID"":247,""CODE"":""A18.405"",""NAME"":""结核性皮肤脓肿"",""SCODE"":""JHXPFNZ"",""NOTE"":null},{""ID"":248,""CODE"":""A18.406"",""NAME"":""酒渣样结核疹"",""SCODE"":""JZYJHZ"",""NOTE"":null},{""ID"":249,""CODE"":""A18.407"",""NAME"":""皮肤和皮下组织结核"",""SCODE"":""PFHPXZZJH"",""NOTE"":null},{""ID"":250,""CODE"":""A18.408"",""NAME"":""皮肤结核"",""SCODE"":""PFJH"",""NOTE"":null},{""ID"":251,""CODE"":""A18.409"",""NAME"":""皮下组织结核性窦道"",""SCODE"":""PXZZJHXZD"",""NOTE"":null},{""ID"":252,""CODE"":""A18.410"",""NAME"":""臀部结核"",""SCODE"":""TBJH"",""NOTE"":""按皮肤和皮下组织编码""},{""ID"":253,""CODE"":""A18.411"",""NAME"":""寻常性狼疮"",""SCODE"":""XCXLC"",""NOTE"":null},{""ID"":254,""CODE"":""A18.501"",""NAME"":""眼结核"",""SCODE"":""YJH"",""NOTE"":null}]";
             List<EPrescriptionDiagItem> lstObj = new List<EPrescriptionDiagItem>();
             lstObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<EPrescriptionDiagItem>>(dataTmp);
@@ -269,7 +272,7 @@ namespace NewCostHjy.Controllers {
         /// <returns></returns>
         [HttpPost("InvalidPrescription")]
         public IActionResult InvalidPrescription([FromBody] EPrescriptionDelPar parIn)
-        { 
+        {
             dynamic tmpObj = new { Result = 1, ErrMsg = "" };
             return Json(tmpObj);
         }
@@ -309,7 +312,7 @@ namespace NewCostHjy.Controllers {
         /// <param name="pvid"></param>
         /// <returns></returns>
         [HttpGet("GetRecipeResult")]
-        public IActionResult GetRecipeResult(string pid,string pvid)
+        public IActionResult GetRecipeResult(string pid, string pvid)
         {
             string strTemp = @"{""recipes"":[{""ORDER_ID"":320907,""ORDER_GROUP_ID"":320908,""PHARMACIST_ID"":""CZ"",""ORDERSTATUS"":""正在审核"",""NO_PASS_REASON"":"""",""REMAININGTIME"":-29}],""url"":""""}";
             GetRecipeResult_OutM tmpObj = new GetRecipeResult_OutM();
@@ -402,7 +405,7 @@ namespace NewCostHjy.Controllers {
         public IActionResult SvrInsureProcess([FromBody] dynamic parIn)
         {
             #region 把入参记录下来 测试日志
-            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();       
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
             string id = Guid.NewGuid().ToString();
             try
             {
@@ -432,7 +435,7 @@ namespace NewCostHjy.Controllers {
                 item.is_feedback = 1;//此结点值是否存在 =1 限制了界面录入框的可见性和必填性，1-可见且必填，0-不可见且非必填
             }
 
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 MIRC_OUTPUT_Item oneItem = new MIRC_OUTPUT_Item();
                 oneItem.vola_id = "1";
@@ -440,9 +443,9 @@ namespace NewCostHjy.Controllers {
                 oneItem.vola_content = "HJY_Test_vola_content_" + i;
                 oneItem.vola_evid = "HJY_Test_vola_evid_" + i;
                 oneItem.vola_bhvr_type = "HJY_Test_vola_bhvr_type_" + i;
-                oneItem.vola_amt_stas= "HJY_Test_vola_amt_stas_" + i;
+                oneItem.vola_amt_stas = "HJY_Test_vola_amt_stas_" + i;
                 oneItem.sev_deg = "HJY_Test_sev_deg_" + i;
-                oneItem.vola_amt=0.25 * i;
+                oneItem.vola_amt = 0.25 * i;
                 oneItem.is_feedback = 1;
 
                 if (i == 0)
@@ -456,8 +459,8 @@ namespace NewCostHjy.Controllers {
 
             RootJCPT rootJCPT = new RootJCPT();
             rootJCPT.input = new InputJCPT();
-            rootJCPT.input.ack_info = new Ack_info() { exe_status = "A" };            
-            rootJCPT.input.result = mIRC_OUTPUT_Items; 
+            rootJCPT.input.ack_info = new Ack_info() { exe_status = "A" };
+            rootJCPT.input.result = mIRC_OUTPUT_Items;
             return Json(rootJCPT);
         }
 
@@ -470,7 +473,7 @@ namespace NewCostHjy.Controllers {
         public IActionResult SvrCISRuleAsk([FromBody] dynamic parIn)
         {
             #region 把入参记录下来 测试日志
-            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL(); 
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
             string id = Guid.NewGuid().ToString();
             string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
             zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "SvrCISRuleAsk", "SvrCISRuleAsk", "SvrCISRuleAsk");
@@ -565,10 +568,269 @@ namespace NewCostHjy.Controllers {
         /// <param name="parIn"></param>
         /// <returns></returns>
         [HttpPost("ConvertPatOrder")]
-        public IActionResult ConvertPatOrder([FromBody] dynamic parIn) {
+        public IActionResult ConvertPatOrder([FromBody] dynamic parIn)
+        {
             ConvertPatOrderBLL convertPatOrderBLL = new ConvertPatOrderBLL();
             convertPatOrderBLL.ConvertFun(parIn);
             return Json(1);
-        }   
+        }
+
+        /// <summary>
+        /// 获取33.6数据库中的生僻字信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetRarelyUsedCharacters")]
+
+        public IActionResult GetRarelyUsedCharacters()
+        {
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            dynamic dataTmp = zlhisInterfaceDAL.GetDataTable生僻字相关();
+            return Json(dataTmp);
+        }
+
+        /// <summary>
+        /// 新增生僻字对照目录记录
+        /// </summary>
+        /// <param name="data">生僻字对照目录数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("AddRarelyUsedCharactersDirectory")]
+        public IActionResult AddRarelyUsedCharactersDirectory([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Insert生僻字对照目录(data);
+                return Json(new { success = true, message = "新增成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "新增失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 更新生僻字对照目录记录
+        /// </summary>
+        /// <param name="data">生僻字对照目录数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("UpdateRarelyUsedCharactersDirectory")]
+        public IActionResult UpdateRarelyUsedCharactersDirectory([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Update生僻字对照目录(data);
+                return Json(new { success = true, message = "更新成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "更新失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 删除生僻字对照目录记录
+        /// </summary>
+        /// <param name="data">包含ID的删除数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("DeleteRarelyUsedCharactersDirectory")]
+        public IActionResult DeleteRarelyUsedCharactersDirectory([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Delete生僻字对照目录(data.ID.ToString());
+                return Json(new { success = true, message = "删除成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "删除失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 新增基础数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">基础数据生僻字对照数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("AddBasicDataRarelyUsedCharacters")]
+        public IActionResult AddBasicDataRarelyUsedCharacters([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Insert基础数据生僻字对照(data);
+                return Json(new { success = true, message = "新增成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "新增失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 更新基础数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">基础数据生僻字对照数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("UpdateBasicDataRarelyUsedCharacters")]
+        public IActionResult UpdateBasicDataRarelyUsedCharacters([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Update基础数据生僻字对照(data);
+                return Json(new { success = true, message = "更新成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "更新失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 删除基础数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">包含ID的删除数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("DeleteBasicDataRarelyUsedCharacters")]
+        public IActionResult DeleteBasicDataRarelyUsedCharacters([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Delete基础数据生僻字对照(data.ID.ToString());
+                return Json(new { success = true, message = "删除成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "删除失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 新增业务数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">业务数据生僻字对照数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("AddBusinessDataRarelyUsedCharacters")]
+        public IActionResult AddBusinessDataRarelyUsedCharacters([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Insert业务数据生僻字对照(data);
+                return Json(new { success = true, message = "新增成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "新增失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 更新业务数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">业务数据生僻字对照数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("UpdateBusinessDataRarelyUsedCharacters")]
+        public IActionResult UpdateBusinessDataRarelyUsedCharacters([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Update业务数据生僻字对照(data);
+                return Json(new { success = true, message = "更新成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "更新失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 删除业务数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">包含ID的删除数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("DeleteBusinessDataRarelyUsedCharacters")]
+        public IActionResult DeleteBusinessDataRarelyUsedCharacters([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                int result = zlhisInterfaceDAL.Delete业务数据生僻字对照(data.ID.ToString());
+                return Json(new { success = true, message = "删除成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "删除失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 通过查询数据表方式，直接插入到对应的生僻字表中
+        /// </summary>
+        /// <param name="data">包含目标表、查询SQL和字段映射的请求数据</param>
+        /// <returns>操作结果</returns>
+        [HttpPost("InsertDataByQuery")]
+        public IActionResult InsertDataByQuery([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                string targetTable = data.targetTable.ToString();
+                string querySql = data.querySql.ToString();
+                
+                // 解析字段映射
+                Dictionary<string, string> fieldMapping = new Dictionary<string, string>();
+                foreach (var item in data.fieldMapping)
+                {
+                    fieldMapping.Add(item.Name, item.Value.ToString());
+                }
+                
+                int result = zlhisInterfaceDAL.InsertDataByQuery(targetTable, querySql, fieldMapping);
+                return Json(new { success = true, message = "插入成功", data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "插入失败：" + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// 执行SQL查询并返回结果
+        /// </summary>
+        /// <param name="data">包含查询SQL的请求数据</param>
+        /// <returns>查询结果</returns>
+        [HttpPost("ExecuteQuery")]
+        public IActionResult ExecuteQuery([FromBody] dynamic data)
+        {
+            try
+            {
+                ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+                string querySql = data.querySql.ToString();
+                
+                DataTable result = zlhisInterfaceDAL.ExecuteQuery(querySql);
+                
+                // 将DataTable转换为JSON格式
+                var jsonResult = new List<Dictionary<string, object>>();
+                foreach (DataRow row in result.Rows)
+                {
+                    var dict = new Dictionary<string, object>();
+                    foreach (DataColumn col in result.Columns)
+                    {
+                        dict[col.ColumnName] = row[col] != DBNull.Value ? row[col] : null;
+                    }
+                    jsonResult.Add(dict);
+                }
+                
+                return Json(new { success = true, message = "查询成功", data = jsonResult });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "查询失败：" + ex.Message });
+            }
+        }
     }
 }

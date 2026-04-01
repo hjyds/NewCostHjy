@@ -225,6 +225,10 @@
     .table tr:hover {
         background: #f8f9fa;
     }
+
+    .token-input {
+        width: 350px !important;
+    }
 </style>
 
 <div class="page-container">
@@ -240,7 +244,7 @@
         <div class="form-group-inline">
             <label class="form-inline">
                 <span style="width: 80px;text-align: right;">认&emsp;&emsp;证：</span>
-                <input id="token_input" type="text" class="form-control form-control-sm" autocomplete="off" />
+                <input id="token_input" type="text" class="form-control token-input" autocomplete="off" />
             </label>
             <button class="btn btn-secondary-custom btn-sm" id="token_input_btn" style="background-color: #ced1e2; color: #333;">确定</button>
         </div>
@@ -271,8 +275,7 @@
 
         <div class="table-section">
             <div class="table-responsive">
-                <table class="table table-hover" id="tab_api_list">
-                </table>
+                <table id="tab_api_list" class="table table-hover"></table>
             </div>
         </div>
     </div>
@@ -290,7 +293,9 @@
             </div>
             <div class="btn-group">
                 <button type="button" id="submitDateRange" class="btn btn-primary-custom">确定</button>
-                <button type="button" id="deleteFollowRecordsBtn" class="btn btn-danger-custom">删除电话随访信息</button>
+                <button type="button" id="showDeleteRecordsBtn" class="btn btn-primary-custom">显示删除的随访记录</button>
+                <button type="button" id="deleteSelectedBtn" class="btn btn-danger-custom">删除选中记录</button>
+                <button type="button" id="deleteAllBtn" class="btn btn-danger-custom">删除全部记录</button>
             </div>
         </div>
     </div>

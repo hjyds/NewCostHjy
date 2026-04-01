@@ -926,7 +926,7 @@ accomplishStatus
                 //调用函数（非存储过程，第一个参数必须用来接收返回值（ParameterDirection.ReturnValue））
                 new OracleParameter(":Xml_In", OracleDbType.XmlType, xmlin, ParameterDirection.Input),
                 new OracleParameter(":Xml_Out", OracleDbType.XmlType, ParameterDirection.Output)
-    };
+            };
             Dictionary<string, object> result = null;
             try
             {
@@ -936,6 +936,325 @@ accomplishStatus
             {
                 throw e;
             }
+        }
+
+        /// <summary>
+        /// 生僻字相关的表，提供给外部接口调用，减少接口调用次数，提高性能
+        /// </summary>
+        /// <returns></returns>
+        public dynamic GetDataTable生僻字相关()
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"select * from 生僻字对照目录";
+            DataTable dt生僻字对照目录 = oracleData.ExecuteDataTable(sql, CommandType.Text, null);
+            sql = @"select * from 基础数据生僻字对照";
+            DataTable dt基础数据生僻字对照 = oracleData.ExecuteDataTable(sql, CommandType.Text, null);
+            sql = @"select * from 业务数据生僻字对照" ;
+            DataTable dt业务数据生僻字对照 = oracleData.ExecuteDataTable(sql, CommandType.Text, null);
+            dynamic outData = new { dt生僻字对照目录, dt基础数据生僻字对照, dt业务数据生僻字对照 }; 
+            return outData;
+        }
+
+        /// <summary>
+        /// 新增生僻字对照目录记录
+        /// </summary>
+        /// <param name="data">生僻字对照目录数据</param>
+        /// <returns>影响的行数</returns>
+        public int Insert生僻字对照目录(dynamic data)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"insert into 生僻字对照目录 (ID, 数据表, 字段名, 业务ID, 生僻字内容) 
+                          values (:ID, :数据表, :字段名, :业务ID, :生僻字内容)";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, data.ID, ParameterDirection.Input),
+                new OracleParameter(":数据表", OracleDbType.Varchar2, data.数据表, ParameterDirection.Input),
+                new OracleParameter(":字段名", OracleDbType.Varchar2, data.字段名, ParameterDirection.Input),
+                new OracleParameter(":业务ID", OracleDbType.Int64, data.业务ID, ParameterDirection.Input),
+                new OracleParameter(":生僻字内容", OracleDbType.Varchar2, data.生僻字内容, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 更新生僻字对照目录记录
+        /// </summary>
+        /// <param name="data">生僻字对照目录数据</param>
+        /// <returns>影响的行数</returns>
+        public int Update生僻字对照目录(dynamic data)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"update 生僻字对照目录 set 
+                          数据表 = :数据表, 
+                          字段名 = :字段名, 
+                          业务ID = :业务ID, 
+                          生僻字内容 = :生僻字内容 
+                          where ID = :ID";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, data.ID, ParameterDirection.Input),
+                new OracleParameter(":数据表", OracleDbType.Varchar2, data.数据表, ParameterDirection.Input),
+                new OracleParameter(":字段名", OracleDbType.Varchar2, data.字段名, ParameterDirection.Input),
+                new OracleParameter(":业务ID", OracleDbType.Int64, data.业务ID, ParameterDirection.Input),
+                new OracleParameter(":生僻字内容", OracleDbType.Varchar2, data.生僻字内容, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 删除生僻字对照目录记录
+        /// </summary>
+        /// <param name="id">记录ID</param>
+        /// <returns>影响的行数</returns>
+        public int Delete生僻字对照目录(string id)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"delete from 生僻字对照目录 where ID = :ID";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, id, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 新增基础数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">基础数据生僻字对照数据</param>
+        /// <returns>影响的行数</returns>
+        public int Insert基础数据生僻字对照(dynamic data)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"insert into 基础数据生僻字对照 (ID, 数据表, 关键字, 关键字值, 生僻字字段, 生僻字内容) 
+                          values (:ID, :数据表, :关键字, :关键字值, :生僻字字段, :生僻字内容)";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, data.ID, ParameterDirection.Input),
+                new OracleParameter(":数据表", OracleDbType.Varchar2, data.数据表, ParameterDirection.Input),
+                new OracleParameter(":关键字", OracleDbType.Varchar2, data.关键字, ParameterDirection.Input),
+                new OracleParameter(":关键字值", OracleDbType.Varchar2, data.关键字值, ParameterDirection.Input),
+                new OracleParameter(":生僻字字段", OracleDbType.Varchar2, data.生僻字字段, ParameterDirection.Input),
+                new OracleParameter(":生僻字内容", OracleDbType.Varchar2, data.生僻字内容, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 更新基础数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">基础数据生僻字对照数据</param>
+        /// <returns>影响的行数</returns>
+        public int Update基础数据生僻字对照(dynamic data)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"update 基础数据生僻字对照 set 
+                          数据表 = :数据表, 
+                          关键字 = :关键字, 
+                          关键字值 = :关键字值, 
+                          生僻字字段 = :生僻字字段, 
+                          生僻字内容 = :生僻字内容 
+                          where ID = :ID";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, data.ID, ParameterDirection.Input),
+                new OracleParameter(":数据表", OracleDbType.Varchar2, data.数据表, ParameterDirection.Input),
+                new OracleParameter(":关键字", OracleDbType.Varchar2, data.关键字, ParameterDirection.Input),
+                new OracleParameter(":关键字值", OracleDbType.Varchar2, data.关键字值, ParameterDirection.Input),
+                new OracleParameter(":生僻字字段", OracleDbType.Varchar2, data.生僻字字段, ParameterDirection.Input),
+                new OracleParameter(":生僻字内容", OracleDbType.Varchar2, data.生僻字内容, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 删除基础数据生僻字对照记录
+        /// </summary>
+        /// <param name="id">记录ID</param>
+        /// <returns>影响的行数</returns>
+        public int Delete基础数据生僻字对照(string id)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"delete from 基础数据生僻字对照 where ID = :ID";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, id, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 新增业务数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">业务数据生僻字对照数据</param>
+        /// <returns>影响的行数</returns>
+        public int Insert业务数据生僻字对照(dynamic data)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"insert into 业务数据生僻字对照 (ID, 数据表, 关键字, 关键字值, 生僻字字段, 生僻字内容) 
+                          values (:ID, :数据表, :关键字, :关键字值, :生僻字字段, :生僻字内容)";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, data.ID, ParameterDirection.Input),
+                new OracleParameter(":数据表", OracleDbType.Varchar2, data.数据表, ParameterDirection.Input),
+                new OracleParameter(":关键字", OracleDbType.Varchar2, data.关键字, ParameterDirection.Input),
+                new OracleParameter(":关键字值", OracleDbType.Varchar2, data.关键字值, ParameterDirection.Input),
+                new OracleParameter(":生僻字字段", OracleDbType.Varchar2, data.生僻字字段, ParameterDirection.Input),
+                new OracleParameter(":生僻字内容", OracleDbType.Varchar2, data.生僻字内容, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 更新业务数据生僻字对照记录
+        /// </summary>
+        /// <param name="data">业务数据生僻字对照数据</param>
+        /// <returns>影响的行数</returns>
+        public int Update业务数据生僻字对照(dynamic data)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"update 业务数据生僻字对照 set 
+                          数据表 = :数据表, 
+                          关键字 = :关键字, 
+                          关键字值 = :关键字值, 
+                          生僻字字段 = :生僻字字段, 
+                          生僻字内容 = :生僻字内容 
+                          where ID = :ID";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, data.ID, ParameterDirection.Input),
+                new OracleParameter(":数据表", OracleDbType.Varchar2, data.数据表, ParameterDirection.Input),
+                new OracleParameter(":关键字", OracleDbType.Varchar2, data.关键字, ParameterDirection.Input),
+                new OracleParameter(":关键字值", OracleDbType.Varchar2, data.关键字值, ParameterDirection.Input),
+                new OracleParameter(":生僻字字段", OracleDbType.Varchar2, data.生僻字字段, ParameterDirection.Input),
+                new OracleParameter(":生僻字内容", OracleDbType.Varchar2, data.生僻字内容, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 删除业务数据生僻字对照记录
+        /// </summary>
+        /// <param name="id">记录ID</param>
+        /// <returns>影响的行数</returns>
+        public int Delete业务数据生僻字对照(string id)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            string sql = @"delete from 业务数据生僻字对照 where ID = :ID";
+            OracleParameter[] pars = {
+                new OracleParameter(":ID", OracleDbType.Varchar2, id, ParameterDirection.Input)
+            };
+            return oracleData.ExecuteNonQuery(sql, true, pars);
+        }
+
+        /// <summary>
+        /// 执行SQL查询并返回结果
+        /// </summary>
+        /// <param name="querySql">查询SQL语句</param>
+        /// <returns>查询结果DataTable</returns>
+        public DataTable ExecuteQuery(string querySql)
+        {
+            string constr = HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            return oracleData.ExecuteDataTable(querySql, CommandType.Text, null);
+        }
+
+        /// <summary>
+        /// 通过查询数据表方式，直接插入到对应的生僻字表中
+        /// </summary>
+        /// <param name="targetTable">目标表名：生僻字对照目录、基础数据生僻字对照、业务数据生僻字对照</param>
+        /// <param name="querySql">查询SQL语句</param>
+        /// <param name="fieldMapping">字段映射，键为目标表字段名，值为查询结果字段名</param>
+        /// <returns>插入的记录数</returns>
+        public int InsertDataByQuery(string targetTable, string querySql, Dictionary<string, string> fieldMapping)
+        {
+            // 执行查询获取数据
+            DataTable queryResult = ExecuteQuery(querySql);
+            if (queryResult == null || queryResult.Rows.Count == 0)
+            {
+                return 0;
+            }
+            
+            int insertedCount = 0;
+            string constr = "";//HjyDataBaseConnStr.ZLHIS336;
+            OracleDataAccess oracleData = new OracleDataAccess(constr);
+            
+            // 根据目标表生成插入SQL
+            string insertSql = string.Empty;
+            switch (targetTable)
+            {
+                case "生僻字对照目录":
+                    insertSql = @"insert into 生僻字对照目录 (ID, 数据表, 字段名, 业务ID, 生僻字内容) 
+                                  values (:ID, :数据表, :字段名, :业务ID, :生僻字内容)";
+                    break;
+                case "基础数据生僻字对照":
+                    insertSql = @"insert into 基础数据生僻字对照 (ID, 数据表, 关键字, 关键字值, 生僻字字段, 生僻字内容) 
+                                  values (:ID, :数据表, :关键字, :关键字值, :生僻字字段, :生僻字内容)";
+                    break;
+                case "业务数据生僻字对照":
+                    insertSql = @"insert into 业务数据生僻字对照 (ID, 数据表, 关键字, 关键字值, 生僻字字段, 生僻字内容) 
+                                  values (:ID, :数据表, :关键字, :关键字值, :生僻字字段, :生僻字内容)";
+                    break;
+                default:
+                    throw new ArgumentException("不支持的目标表: " + targetTable);
+            }
+            
+            // 遍历查询结果，插入到目标表
+            foreach (DataRow row in queryResult.Rows)
+            {
+                try
+                {
+                    // 准备参数
+                    List<OracleParameter> parameters = new List<OracleParameter>();
+                    
+                    // 添加ID参数
+                    parameters.Add(new OracleParameter(":ID", OracleDbType.Varchar2, Guid.NewGuid().ToString(), ParameterDirection.Input));
+                    
+                    // 添加其他参数
+                    foreach (var mapping in fieldMapping)
+                    {
+                        string targetField = mapping.Key;
+                        string sourceField = mapping.Value;
+                        
+                        if (row.Table.Columns.Contains(sourceField))
+                        {
+                            object value = row[sourceField];
+                            if (value == DBNull.Value)
+                            {
+                                value = null;
+                            }
+                            
+                            // 根据字段名确定参数类型
+                            OracleDbType dbType = OracleDbType.NVarchar2;
+                            if (targetField == "业务ID")
+                            {
+                                dbType = OracleDbType.Int64;
+                                if (value != null && value.ToString() != "")
+                                {
+                                    value = long.Parse(value.ToString());
+                                }
+                            }
+                            
+                            parameters.Add(new OracleParameter(":" + targetField, dbType, value, ParameterDirection.Input));
+                        }
+                    }
+                    
+                    // 执行插入
+                    int result = oracleData.ExecuteNonQuery(insertSql, true, parameters.ToArray());
+                    if (result > 0)
+                    {
+                        insertedCount++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 记录错误但继续处理其他记录
+                    Console.WriteLine("插入记录失败: " + ex.Message);
+                }
+            }
+            
+            return insertedCount;
         }
     }
 }

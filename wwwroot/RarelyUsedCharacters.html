@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生僻字查询</title>
+    <link href="lib/bootstrap-4.6.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            padding: 24px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .result-section {
+            margin-top: 30px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .character-item {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .character-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .character {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .pinyin {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .meaning {
+            font-size: 12px;
+            color: #495057;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>生僻字查询</h1>
+        
+        <div class="card">
+            <h2 class="h4 mb-4">查询生僻字</h2>
+            <button id="queryBtn" class="btn btn-primary">获取生僻字列表</button>
+            <div class="loading" id="loading"></div>
+        </div>
+        
+        <div class="card result-section" id="resultSection" style="display: none;">
+            <h2 class="h4 mb-4">生僻字列表</h2>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script src="/lib/jquery-3.6.0/jquery.min.js"></script>
+    <script src="lib/bootstrap-4.6.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#queryBtn').click(function() {
+                $('#loading').show();
+                $('#resultSection').hide();
+                
+                // 调用 API 服务
+                $.ajax({
+                    url: '/api/ThirdInterface/GetRarelyUsedCharacters',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#loading').hide();
+                        
+                        if (response) {
+                            displayResult(response);
+                        } else {
+                            $('#resultContent').html('<div class="alert alert-warning">没有获取到生僻字数据</div>');
+                            $('#resultSection').show();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#loading').hide();
+                        $('#resultContent').html('<div class="alert alert-danger">请求失败：' + error + '</div>');
+                        $('#resultSection').show();
+                    }
+                });
+            });
+        });
+        
+        function displayResult(data) {
+            if (!data) {
+                $('#resultContent').html('<div class="alert alert-warning">没有获取到生僻字数据</div>');
+                $('#resultSection').show();
+                return;
+            }
+            
+            let html = '';
+            
+            // 生僻字对照目录
+            if (data['dt生僻字对照目录'] && data['dt生僻字对照目录'].length > 0) {
+                html += `
+                    <div class="mb-5">
+                        <h3 class="h5 mb-3">生僻字对照目录</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>数据表</th>
+                                        <th>字段名</th>
+                                        <th>业务ID</th>
+                                        <th>生僻字内容</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+                
+                data['dt生僻字对照目录'].forEach(function(item) {
+                    html += `
+                        <tr>
+                            <td>${item.数据表 || ''}</td>
+                            <td>${item.字段名 || ''}</td>
+                            <td>${item.业务ID || ''}</td>
+                            <td>${item.生僻字内容 || ''}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 基础数据生僻字对照
+            if (data['dt基础数据生僻字对照'] && data['dt基础数据生僻字对照'].length > 0) {
+                html += `
+                    <div class="mb-5">
+                        <h3 class="h5 mb-3">基础数据生僻字对照</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>数据表</th>
+                                        <th>关键字</th>
+                                        <th>关键字值</th>
+                                        <th>生僻字字段</th>
+                                        <th>生僻字内容</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+                
+                data['dt基础数据生僻字对照'].forEach(function(item) {
+                    html += `
+                        <tr>
+                            <td>${item.数据表 || ''}</td>
+                            <td>${item.关键字 || ''}</td>
+                            <td>${item.关键字值 || ''}</td>
+                            <td>${item.生僻字字段 || ''}</td>
+                            <td>${item.生僻字内容 || ''}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 业务数据生僻字对照
+            if (data['dt业务数据生僻字对照'] && data['dt业务数据生僻字对照'].length > 0) {
+                html += `
+                    <div class="mb-5">
+                        <h3 class="h5 mb-3">业务数据生僻字对照</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>数据表</th>
+                                        <th>关键字</th>
+                                        <th>关键字值</th>
+                                        <th>生僻字字段</th>
+                                        <th>生僻字内容</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+                
+                data['dt业务数据生僻字对照'].forEach(function(item) {
+                    html += `
+                        <tr>
+                            <td>${item.数据表 || ''}</td>
+                            <td>${item.关键字 || ''}</td>
+                            <td>${item.关键字值 || ''}</td>
+                            <td>${item.生僻字字段 || ''}</td>
+                            <td>${item.生僻字内容 || ''}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (html === '') {
+                html = '<div class="alert alert-info">生僻字列表为空</div>';
+            }
+            
+            $('#resultContent').html(html);
+            $('#resultSection').show();
+        }
+    </script>
+</body>
+</html>

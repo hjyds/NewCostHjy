@@ -154,7 +154,7 @@
             }
         });
 
-        InitTab();
+        //InitTab();
     });
 
     function LayerFrmForPhone() {
