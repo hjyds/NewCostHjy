@@ -1,0 +1,36 @@
+@model NewCostHjy.Models.ToDoItem
+
+@{ 
+    ViewData["Title"] = "添加待办事项";
+    Layout = "_Layout"; 
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsCompleted" class="control-label"></label>
+                    <input asp-for="IsCompleted" type="checkbox" class="form-check-input" />
+                    <span asp-validation-for="IsCompleted" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="保存" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

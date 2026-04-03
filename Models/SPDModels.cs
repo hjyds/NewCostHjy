@@ -61,6 +61,37 @@ namespace NewCostHjy.Models
         /// 条码
         /// </summary>
         public string eisai_barcode { get; set; }
+
+        /// <summary>
+        /// 批次信息
+        /// </summary>
+        List<SPDBatchSplit> eisai_batch_list { get; set; }
+
+    }
+
+    /// <summary>
+    /// 批次明细对象，返回的
+    /// </summary>
+    public class SPDBatchSplit {
+
+        /// <summary>
+        /// 批次
+        /// </summary>
+        public string eisai_batch { get; set; }
+
+        /// <summary>
+        /// 批次数量
+        /// </summary>
+        public decimal? eisai_item_store_qunt { get; set; }
+
+        /// <summary>
+        /// 成本价
+        /// </summary>
+        public decimal? eisai_item_cost_price { get; set; }
+        /// <summary>
+        /// 零售价
+        /// </summary>
+        public decimal? eisai_item_sales_price { get; set; }
     }
 
     public class InputJCPT
@@ -129,6 +160,16 @@ namespace NewCostHjy.Models
         /// 
         /// </summary>
         public string eisai_item_store_id { get; set; }
+
+        /// <summary>
+        /// 使用的数量，用于分批次
+        /// </summary>
+        public decimal? eisai_item_store_qunt { get; set; }
+
+        /// <summary>
+        /// 费用单据号，分批次的时候需要
+        /// </summary>
+        public string receipt_no { get; set; }
     }
 
     public class InputSPD

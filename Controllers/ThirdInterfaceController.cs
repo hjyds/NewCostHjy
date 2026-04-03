@@ -173,6 +173,7 @@ namespace NewCostHjy.Controllers {
             rootJCPT.input.eisai_item_list = outData;
             rootJCPT.input.check_result = new List<SpdRollCheckPar>();
             rootJCPT.input.check_result.Add(new SpdRollCheckPar() { check_stat = "1" });
+            //'   lngType 1-查询三方SPD库存(S6119)查单价等都是调这个编号，2-发送卫材记账(S6121),3-撤消帐单时的检查判断(S6120)，4-SPD卫材退费用(S6122)，5-新加一个分配批次(S6139)
             if ("S6119" == strBizno)
             {
                 List<Req_infoItem> req_info = parIn.input.req_info;

@@ -1,0 +1,120 @@
+@{ 
+    Layout = null;
+    long patientId = ViewBag.PatientId;
+    long enconterId = ViewBag.EnconterId;
+}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病案返修记录</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .patient-info {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        .btn-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>病案返修记录</h2>
+        </div>
+        
+        <div class="patient-info">
+            <h4>病人信息</h4>
+            <p>病人ID: @patientId</p>
+            <p>就诊ID: @enconterId</p>
+        </div>
+        
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">添加返修记录</button>
+            <button type="button" class="btn btn-success">导出记录</button>
+            <button type="button" class="btn btn-info">刷新</button>
+        </div>
+        
+        <div class="table-container">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>返修时间</th>
+                        <th>返修原因</th>
+                        <th>返修人</th>
+                        <th>处理状态</th>
+                        <th>处理时间</th>
+                        <th>处理人</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 这里将通过JavaScript动态加载数据 -->
+                    <tr>
+                        <td colspan="8" class="text-center">加载中...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 获取URL参数
+            var patientId = @patientId;
+            var enconterId = @enconterId;
+            
+            // 模拟加载数据
+            setTimeout(function() {
+                $('.table tbody').html('');
+                // 这里应该通过API获取实际数据
+                var mockData = [
+                    { id: 1, time: '2026-03-30 14:30:00', reason: '缺少检查报告', repairer: '张三', status: '已处理', processTime: '2026-03-30 15:20:00', processor: '李四' },
+                    { id: 2, time: '2026-03-28 09:15:00', reason: '诊断描述不清晰', repairer: '王五', status: '已处理', processTime: '2026-03-28 10:30:00', processor: '赵六' }
+                ];
+                
+                mockData.forEach(function(item, index) {
+                    var row = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + item.time + '</td>' +
+                        '<td>' + item.reason + '</td>' +
+                        '<td>' + item.repairer + '</td>' +
+                        '<td>' + item.status + '</td>' +
+                        '<td>' + item.processTime + '</td>' +
+                        '<td>' + item.processor + '</td>' +
+                        '<td><button class="btn btn-xs btn-info">查看详情</button></td>' +
+                        '</tr>';
+                    $('.table tbody').append(row);
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
