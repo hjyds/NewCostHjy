@@ -652,5 +652,78 @@ namespace NewCostHjy.BLL
             JObject jObResult = JsonConvert.DeserializeObject<JObject>(result);
             return new { Result = 1, VteData = jObResult["Data"] };
         }
+
+        /// <summary>
+        /// 将一个大于3的整数随机分成3个正整数
+        /// </summary>
+        public static int[] SplitToThreeRandomParts(int number)
+        {
+            if (number <= 3)
+                throw new ArgumentException("数字必须大于3");
+
+            Random rand = new Random();
+
+            // 第一步：先生成两个随机分割点（隔板法）
+            int cut1 = rand.Next(1, number - 1);  // 第1个分割点
+            int cut2 = rand.Next(cut1 + 1, number); // 第2个分割点（必须>cut1）
+
+            // 计算3个部分
+            int a = cut1;
+            int b = cut2 - cut1;
+            int c = number - cut2;
+
+            return new[] { a, b, c };
+        }
+
+        public static bool IsInteger(decimal value)
+        {
+            return value % 1 == 0;
+        }
+
+        /// <summary>
+        /// SPD项目批次拆分
+        /// </summary>
+        /// <param name="lstIn"></param>
+        /// <returns></returns>
+        public List<Eisai_item_listItem> SPDItemsBatchSplit(List<Req_infoItem> lstIn)
+        {
+            List<Eisai_item_listItem> outList = new List<Eisai_item_listItem>();
+            foreach (Req_infoItem itemLp in lstIn)
+            {
+                Eisai_item_listItem oneRow = new Eisai_item_listItem();
+                oneRow.eisai_item_id = itemLp.eisai_item_id;
+                oneRow.eisai_item_store_id = itemLp.eisai_item_store_id;
+                oneRow.receipt_no = itemLp.receipt_no;
+                oneRow.eisai_barcode = itemLp.eisai_barcode;
+                decimal qunt = (decimal)itemLp.eisai_item_store_qunt;
+                oneRow.eisai_item_store_qunt = qunt;
+                if (qunt > 6 && IsInteger(qunt))
+                {
+                    // 随机拆成3个正整数
+                    int[] parts = SplitToThreeRandomParts(Convert.ToInt32(qunt));
+                    List<SPDBatchSplit> btList = new List<SPDBatchSplit>();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        SPDBatchSplit bt = new SPDBatchSplit();
+                        bt.eisai_batch = (i + 14560).ToString();
+                        bt.eisai_item_store_qunt = parts[i];
+                        bt.eisai_item_cost_price = (decimal)(i + 66.77);
+                        bt.eisai_item_sales_price = (decimal)(i + 66.88);
+                        btList.Add(bt);
+                    }
+                    oneRow.eisai_batch_list = btList;
+                }else
+                {
+                    SPDBatchSplit bt = new SPDBatchSplit();
+                    bt.eisai_batch = "14560";
+                    bt.eisai_item_store_qunt = qunt;
+                    bt.eisai_item_cost_price = 33;
+                    bt.eisai_item_sales_price = 33;
+                    oneRow.eisai_batch_list = new List<SPDBatchSplit> { bt };
+                }
+                outList.Add(oneRow);
+            }
+            return outList;
+        }
     }
 }

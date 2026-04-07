@@ -56,16 +56,18 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 库存量
         /// </summary>
-        public string eisai_item_store_qunt { get; set; }
+        public decimal? eisai_item_store_qunt { get; set; }
         /// <summary>
         /// 条码
         /// </summary>
         public string eisai_barcode { get; set; }
 
+        public string receipt_no { get; set; }
+
         /// <summary>
         /// 批次信息
         /// </summary>
-        List<SPDBatchSplit> eisai_batch_list { get; set; }
+        public List<SPDBatchSplit> eisai_batch_list { get; set; }
 
     }
 

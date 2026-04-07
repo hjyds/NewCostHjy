@@ -143,7 +143,7 @@ namespace NewCostHjy.Controllers {
                 eisai_Item_ListItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Eisai_item_listItem>>(strRqList);
                 foreach (var item in eisai_Item_ListItems)
                 {
-                    item.eisai_item_store_qunt = "9999";
+                    item.eisai_item_store_qunt = 99999;
                     item.eisai_item_cost_price = "222";
                     item.eisai_item_sales_price = "222";
 
@@ -177,12 +177,16 @@ namespace NewCostHjy.Controllers {
             if ("S6119" == strBizno)
             {
                 List<Req_infoItem> req_info = parIn.input.req_info;
-            }
-            if (strBizno == "S6129")
+            } else if ("S6139" == strBizno)
             {
-                throw new Exception("测试异常");
+                //批次拆分                
+                rootJCPT.input.eisai_item_list = zlhisInterfaceBLL.SPDItemsBatchSplit(parIn.input.req_info);                 
             }
-            return Json(rootJCPT);
+                //if (strBizno == "S6129")
+                //{
+                //    throw new Exception("测试异常");
+                //}
+                return Json(rootJCPT);
         }
 
         //公司环境
