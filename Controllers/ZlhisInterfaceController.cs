@@ -322,6 +322,48 @@ namespace NewCostHjy.Controllers {
             return Json(result);
         }
 
+
+        /// <summary>
+        /// 获取医嘱帐单状态
+        /// </summary>
+        /// <param name="parIn"></param>
+        /// <returns></returns>
+        [HttpPost("GetOrderBillStatusNew")]
+        public IActionResult GetOrderBillStatusNew([FromBody] GetOrderBillStatusNewIn parIn)
+        {
+            zlhisInterfaceBLL.NewCostApiLog("GetOrderBillStatusNew", Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
+
+            List<GetOrderBillStatusNewOut> result = new List<GetOrderBillStatusNewOut>();
+
+            if (parIn?.OrderBillNos == null || parIn.OrderBillNos.Count == 0)
+            {
+                return Json(result);
+            }
+
+            foreach (var item in parIn.OrderBillNos)
+            {
+                // 占位逻辑：返回结构化出参，具体字段应由 BLL/DAL 查询替换真实数据
+                var outItem = new GetOrderBillStatusNewOut
+                {
+                    BillNo = item.BillNo ?? item.BillNo ?? "",
+                    OrderId = item.OrderId ?? item.OrderId ?? "",
+                    BillStatusCode = "0",
+                    BillStatus = "未知",
+                    BillDetails = new List<BillDetailsItemOut>(),
+                    RefundApplyFlag = "0",
+                    GreenChannel = "1",
+                    BalanceMode = ""
+                };
+
+                // 示例：若需要返回明细占位，可加入一条默认明细（此处保持空或按需填充）
+                // outItem.BillDetails.Add(new BillDetailsItemOut { BillDetailsId = "", ChargesId = "", SurplusQuantity = 0m });
+
+                result.Add(outItem);
+            }
+
+            return Json(result);
+        }
+
         /// <summary>
         /// 检查账单是否允许执行，并对未生效账单明细自动审核
         /// </summary>
@@ -374,7 +416,7 @@ namespace NewCostHjy.Controllers {
             //是否弹出费用审批界面，0不弹出，1弹出
             return Json(0);
         }
-
+         
         #endregion
 
         //以上为新费用系统相关的服务API///////////////////////////////////////////////////////////////////////////////////////////////

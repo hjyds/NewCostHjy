@@ -816,6 +816,46 @@ namespace NewCostHjy.Models {
 
     }
 
+    public class BillDetailsItemOut
+    {
+        public string BillDetailsId { get; set; }
+        public string ChargesId { get; set; }
+        public decimal SurplusQuantity { get; set; }
+    }
+
+    public class GetOrderBillStatusNewOut
+    {
+        public string BillNo { get; set; }
+        public string OrderId { get; set; }
+        public string BillStatusCode { get; set; }
+        public string BillStatus { get; set; }
+        public List<BillDetailsItemOut> BillDetails { get; set; }
+        public string RefundApplyFlag { get; set; }
+        public string GreenChannel { get; set; }
+        public string BalanceMode { get; set; }
+    }
+
+    /// <summary>
+    /// GetOrderBillStatusNew 请求模型
+    /// </summary>
+    public class GetOrderBillStatusNewIn
+    {
+        /// <summary>
+        /// 医嘱与账单列表
+        /// </summary>
+        public List<OrderBillNosItem> OrderBillNos { get; set; }
+
+        /// <summary>
+        /// 操作信息
+        /// </summary>
+        public OperateInfo OperateInfo { get; set; }
+
+        /// <summary>
+        /// 是否自动审核标志
+        /// </summary>
+        public bool AutoAuditFlag { get; set; }
+    }
+
     /// <summary>
     /// 医嘱账单号
     /// </summary>
@@ -1399,11 +1439,11 @@ namespace NewCostHjy.Models {
         /// <summary>
         /// 
         /// </summary>
-        public string orderId { get; set; }
+        public string OrderId { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public string billNo { get; set; }
+        public string BillNo { get; set; }
     }
 
     public class OperateInfo {
