@@ -1,0 +1,38 @@
+@{    ViewData["Title"] = "护理信息系统";
+    Layout = "~/Views/Shared/_HjyLyt.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">护理信息页面</h4>
+                    <p class="card-text">正在加载...</p>
+                    
+                    <div class="table-responsive">
+                        <table id="parameter-table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>参数名</th>
+                                    <th>参数值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 参数将通过JS动态填充 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 功能区域 -->
+                    <div id="function-area" class="mt-4">
+                        <!-- 功能内容将通过JS动态填充 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入护理信息系统页面逻辑111222-->
+<script src="/module/safthird/safthridhome.js"></script>

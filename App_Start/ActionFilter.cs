@@ -64,6 +64,7 @@ namespace NewCostHjy.App_Start {
                         return;
                     } else if (apiName == "/MRHOMEMANAGEMENT/GETPAGERECODEINFO"
                         || apiName == "/REPORT/GETPATIENTREPORTLIST"
+                        || apiName == "/API/USER/TOKEN"
                         || apiName == "/REPORT/ISCANWRITE"
                         || apiName == "/REPORT/WRITEIDENTIFY"
                         || apiName == "/API/INTERFACEPROCESS/GETSTATICRULE"
