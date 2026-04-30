@@ -651,6 +651,9 @@ namespace NewCostHjy.Controllers {
                 dataOut.FeeListResults.Add(item);
             }
             dataOut.CheckinResultInfo = "胡俊勇测试数据";
+            id = Guid.NewGuid().ToString();
+            string url = "http://192.168.56.1:5888/module/patientvte/mirc_out.html?id=" + id + "&calltype=byapi";
+            dataOut.CheckResulUrl = url;
             dynamic temp = new { Code = 200, Success = true, Msg = "", Data = dataOut };
             strInfo = JsonConvert.SerializeObject(temp);
 

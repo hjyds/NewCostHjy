@@ -431,6 +431,8 @@ namespace NewCostHjy.Models {
      
         public List<MircOutData> FeeListResults { get; set; }
         public string CheckinResultInfo { get; set; }
+
+        public string CheckResulUrl { get; set; }
     }
 
     /// <summary>
