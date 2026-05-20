@@ -43,7 +43,8 @@ function fun控件对象映射() {
     _界面控件._录入限量应用于 = $("#" + mapGuid._录入限量应用于);
     _界面控件._项目分类 = $("#" + mapGuid._项目分类);
     _界面控件._检验标本 = $("#" + mapGuid._检验标本);
-    _界面控件._诊疗频率 = $("#" + mapGuid._诊疗频率);
+    _界面控件._诊疗频率 = $("#" + mapGuid._诊疗频率);//弃用但是可能其它三方程序有可能会用
+    _界面控件._执行分类 = $("#" + mapGuid._执行分类);
     _界面控件._名称 = $("#" + mapGuid._名称);
     _界面控件._编码 = $("#" + mapGuid._编码);
     _界面控件._简码 = $("#" + mapGuid._简码);
@@ -66,6 +67,7 @@ function fun控件对象映射() {
     _界面控件._按规则计费 = $("#" + mapGuid._按规则计费);
     _界面控件._床旁术中 = $("#" + mapGuid._床旁术中);
     _界面控件._号别名称 = $("#" + mapGuid._号别名称);
+    _界面控件._给药大类 = $("#" + mapGuid._给药大类);
     _界面控件._手术项目标准编码 = $("#" + mapGuid._手术项目标准编码);
     _界面控件._输血检验对照 = $("#" + mapGuid._输血检验对照);
 
@@ -95,14 +97,21 @@ const mapGuid = {
     _其它源液: "f42be17e-0b17-462f-af22-0680464a615a",
     _其它量表学科: "cae106a0-d552-44fd-b9b6-f872f2420c14",
     _其它管码: "701a4da1-c20a-4d98-93f1-40ef745b9335",
-    _其它出院日期: "769b9617-63a3-498a-a354-2ee17b7ebe91",  
+    _其它出院日期: "769b9617-63a3-498a-a354-2ee17b7ebe91",
     _计算系数: "c5df1613-266b-4cd3-8abc-f2f42e295472",
-    _评估方式: "ac027ca7-60a9-4ced-8ba5-f4f856aefa67", 
+    _评估方式: "ac027ca7-60a9-4ced-8ba5-f4f856aefa67",
     _输液类型: "0caf7c4c-3efb-4526-88de-5f9d3536347a",
 
+    //---表格列
+    _皮试文字: "3d0171bd-4fd7-4b64-80cb-f43a33a09527",
+    _皮试标注: "a188691a-60d2-484c-a9bd-e30bc6d5bfaf",
+    _皮试过敏: "0c9fa8c0-4d8c-4822-9fb1-bfedd827331a",
+    _频率选择: "c154a78c-5722-4696-90c0-66097ba1c696",
+    _频率编码: "25cbc712-008a-4c4e-a4dd-563bd2d165af",
+
     _手术项目标准编码: "071cf29f-506f-409d-9ae3-79d537a63ed4",
-    _输血检验对照:"d0ca14e4-bfeb-4e08-8dde-d9cdf897db3d",
-    _号别名称: "1721357e-cfb3-46f8-bd35-3d93240feb4f",
+    _输血检验对照: "d0ca14e4-bfeb-4e08-8dde-d9cdf897db3d",
+    _号别名称: "1721357e-cfb3-46f8-bd35-3d93240feb4f", _给药大类: "1721357e-cfb3-46f8-bd35-3d93240feb4f",// 复用 给药大类
     _手术标准编码: "89cf63ac-5288-4f30-a267-87e0349cb9fc",
     _按规则计费: "d7af641d-5fa2-413a-994c-a4ed616609e8",
     _床旁术中: "21f87ebe-af8c-483c-9587-bfd0be12b24a",
@@ -119,7 +128,7 @@ const mapGuid = {
     _参考项目: "9cb058be-aa95-4a08-8bdd-cd3cd2c1bd2d",
     _使用科室: "3f220b4b-6124-470f-bae6-ea099417d916",
     _启用时间: "4a9194cb-3fd4-4014-8229-300566a6ff02",
-    _诊疗频率: "a3dc8991-6bff-4e0c-8e6b-3a650d995208",
+    _诊疗频率: "a3dc8991-6bff-4e0c-8e6b-3a650d995208", _执行分类: "a3dc8991-6bff-4e0c-8e6b-3a650d995208",// 执行分类 和 频率编码 复用
     _检验标本: "e8922a7f-2b0a-448f-96cc-59cb72b8c5fc",
     _项目分类: "1262bf6d-ba20-43ae-8177-2bcf4e81f493",
     _录入限量: "1e507659-dc89-477f-83c4-741b5a7cdfef",
@@ -137,6 +146,7 @@ const mapGuid = {
     _英文缩写: "02c6af90-6c19-40bf-941e-057cc7dc435d",
     _执行安排: "86f80c6d-5383-4b4b-8d0a-4ab6b767e19f",
     _单独应用: "54e90833-ab1d-4975-9b23-04326dc1c88e",
+    _标本部位: "963031a0-d203-43a1-bc0d-97d0c30afbd6",
 
     _页卡: "a1ae4553-3636-4255-a371-711b196832c1",
     _t项目属性: 0, _t执行科室: 1, _t检查部位: 2, _t皮试结果: 3, _t频率设置: 4, _t项目组合: 5, _t附加属性: 6,
@@ -160,11 +170,23 @@ const mapGuid = {
     _执行频率一: "cbc9fc2a-e2f0-4c60-b3fa-86c46cdb9897",
     _执行科室性质选项: "ae0d5b81-cdc9-48af-bdd9-b9cc309c6ed3",
     _病理类别选项: "8edef8d7-5748-4aa1-a287-608eda941dc0",
+    _诊疗频率选项: "ad532426-9c04-4f99-b354-9513a35c3dba",
+    _给药大类选项: "6f1d77b6-a562-4a6e-874b-045f41dfba3d",
+    _输血途径执行分类: "7ecd2e1b-d7af-4f6f-9b62-0c70be7ce8f2",
+    _采血管选项: "e3a95f51-bcad-4426-95d3-7336c45179e9",
+    _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",
+
     _视图区域: {
         _检验相关: "com_7rndcmrftzv",
         _检查相关: "com_0957jpk314wc",
         _手术相关: "com_uz4wkcfgj9",
+        _皮试标注: "com_i3l3u0fd60e",
+        _可选频率: "com_hn2gant7sd",
         _其它相关: "com_bzd3rlwp77b"
+    },
+    _数据: {
+        d执行标记: "c6315708-1b68-4768-9de4-44c16a417a04",
+        d执行分类: "070a8189-3640-42a9-885c-014d4d5cc4b0"
     }
 }
 
@@ -189,9 +211,22 @@ function fun修改项目数据加载() {
             }
         }
         _界面控件._操作类型.val(obj["845eb27c-e7b7-473f-8759-8c1aab2dd732"]);
-        _界面控件._检验标本.val(obj["963031a0-d203-43a1-bc0d-97d0c30afbd6"]);
+        _界面控件._检验标本.val(obj[mapGuid._标本部位]);
+        _界面控件._计算系数.val(obj["a0261188-c6e2-4801-be86-d734cddcda0d"]);
+        _界面控件._其它毫升.val(obj["a0261188-c6e2-4801-be86-d734cddcda0d"]);
         fun操作类型切换(_界面控件._操作类型.val());
         fun执行频率切换();
+        _界面控件._计算方式.val(obj[mapGuid._计算方式]);
+        const type = _界面控件._诊疗类别.val();
+        const oper = _界面控件._操作类型.val();
+        if (type == "E" && oper == "1") { 
+            if (parseInt(obj[mapGuid._数据.d执行标记] || 0) == 2) {
+                _界面控件._其它脱敏.val(1);
+            }
+            if (parseInt(obj[mapGuid._数据.d执行分类] || 0) == 5) {
+                _界面控件._其它源液.val(1);
+            }
+        }
     }
 }
 
@@ -250,7 +285,8 @@ function fun初始执行频率(type) {
 }
 
 function fun执行频率切换() {
-    if (_界面控件._执行频率.val() == "0" && _界面控件._诊疗类别.val() != "C") {
+    let type = _界面控件._诊疗类别.val();
+    if (_界面控件._执行频率.val() == "0" && type != "C") {
         fun显示页卡(mapGuid._t频率设置);
     } else {
         fun显示页卡(mapGuid._t频率设置, true);
@@ -261,6 +297,29 @@ function fun执行频率切换() {
         fun设置控件可见性(mapGuid._计算规则, false);
     }
 }
+function fun执行分类切换() {
+    const type = _界面控件._诊疗类别.val();
+    const oper = _界面控件._操作类型.val();
+    const exep = _界面控件._执行分类.val();
+    if (exep == "1" && type == "E" && oper == "2") {
+        fun加载编码项目(_界面控件._输液类型, mapGuid._输液类型选项);
+        fun设置控件可见性(mapGuid._输液类型, true);
+    } else {
+        fun设置控件可见性(mapGuid._输液类型, false);
+    }
+}
+
+function fun计算方式切换() {
+    const type = _界面控件._诊疗类别.val();
+    const oper = _界面控件._操作类型.val();
+    const exef = _界面控件._计算方式.val();
+    if (exef == "2" && type == "E" && oper == "3") {
+        fun设置控件可见性(mapGuid._计算系数, true);
+    } else {
+        fun设置控件可见性(mapGuid._计算系数, false);
+    }
+}
+
 
 function fun操作类型切换(oper) {
     let type = _界面控件._诊疗类别.val();
@@ -268,11 +327,149 @@ function fun操作类型切换(oper) {
 
     if (type == "D" && oper == "病理") {
         fun设置控件可见性(mapGuid._号别名称, true);
+        $("[data-owner-id='" + mapGuid._号别名称 + "'] .record-label").text("号别名称");
     } else {
         fun设置控件可见性(mapGuid._号别名称, false);
     }
 
+    if (type == "H") {
+        if (oper == "0") {
+            fun设置控件可编辑(_界面控件._执行频率, true);
+        } else {
+            fun设置控件可编辑(_界面控件._执行频率, false);
+            _界面控件._执行频率.val("2");
+        }
+    } else if (type == "E" && oper == "1") {
+        fun显示页卡(mapGuid._t皮试结果);
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+        fun设置视图区域可见性(mapGuid._视图区域._其它相关, true); 
+
+        fun设置控件可见性(mapGuid._其它分类说明, false);
+        fun设置控件可见性(mapGuid._其它毫升, false);
+        fun设置控件可见性(mapGuid._其它尿量, false);
+        fun设置控件可见性(mapGuid._其它脱敏, true);
+        fun设置控件可见性(mapGuid._其它源液, true);
+        fun设置控件可见性(mapGuid._其它量表学科, false);
+        fun设置控件可见性(mapGuid._其它管码, false);
+        fun设置控件可见性(mapGuid._其它出院日期, false);
+        fun设置控件可见性(mapGuid._计算系数, false);
+        fun设置控件可见性(mapGuid._评估方式, false);
+        fun设置控件可见性(mapGuid._输液类型, false);
+        fun设置控件可见性(mapGuid._其它毫升, false);
+        fun设置控件可见性(mapGuid._其它量表学科, false);
+        fun设置控件可见性(mapGuid._评估方式, false);
+        fun设置控件可见性(mapGuid._计算系数, false);
+
+    } else if (type == "E" && oper == "5") {
+        //特殊治疗
+        fun设置控件可编辑(_界面控件._计算方式, true);
+        fun显示页卡(mapGuid._t频率设置);
+    } else if (type == "E" && oper == "7") {//配血方法
+        _界面控件._执行频率.val("1");
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        _界面控件._计算方式.val("3");
+        fun设置控件可编辑(_界面控件._计算方式, false);
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+    } else if (type == "E" && oper == "8") {//输血途径
+        _界面控件._执行频率.val("1");
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        _界面控件._计算方式.val("3");
+        fun设置控件可编辑(_界面控件._计算方式, false);
+        fun设置控件可见性(mapGuid._计算规则, true);
+        fun设置控件可见性(mapGuid._执行分类, true);//复用为给药的执行分类
+        fun加载编码项目(_界面控件._执行分类, mapGuid._输血途径执行分类);
+        $("[data-owner-id='" + mapGuid._执行分类 + "'] .record-label").text("执行分类");
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+    } else if (type == "E" && oper == "9") {//输血采集
+        _界面控件._执行频率.val("1");
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        _界面控件._计算方式.val("3");
+        fun设置控件可编辑(_界面控件._计算方式, false);
+        fun设置视图区域可见性(mapGuid._视图区域._其它相关, true);
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+        fun设置控件可见性(mapGuid._其它分类说明, true);
+        fun设置控件可见性(mapGuid._其它管码, true);
+        fun加载编码项目(_界面控件._其它管码, mapGuid._采血管选项);
+    } else if (type == "E" && (oper == "10" || oper == "11")) {
+        //VTE评分表
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+        _界面控件._执行频率.val("1");
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        _界面控件._计算方式.val("3");
+        fun设置控件可编辑(_界面控件._计算方式, false);
+    } else if (type == "E" && oper == "12") {
+        //量表评估
+        _界面控件._执行频率.val("0");
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        _界面控件._计算方式.val("3");
+        fun设置控件可编辑(_界面控件._计算方式, false);
+        fun设置视图区域可见性(mapGuid._视图区域._其它相关, true);
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+
+        fun设置控件可见性(mapGuid._其它分类说明, false);
+        fun设置控件可见性(mapGuid._其它毫升, false);
+        fun设置控件可见性(mapGuid._其它尿量, false);
+        fun设置控件可见性(mapGuid._其它脱敏, false);
+        fun设置控件可见性(mapGuid._其它源液, false);
+        fun设置控件可见性(mapGuid._其它量表学科, false);
+        fun设置控件可见性(mapGuid._其它管码, false);
+        fun设置控件可见性(mapGuid._其它出院日期, false);
+        fun设置控件可见性(mapGuid._计算系数, false);
+        fun设置控件可见性(mapGuid._评估方式, false);
+        fun设置控件可见性(mapGuid._输液类型, false);
+        fun设置控件可见性(mapGuid._其它毫升, false);
+        fun加载编码项目(_界面控件._其它量表学科, mapGuid._量表学科选项);
+        fun设置控件可见性(mapGuid._其它量表学科, true);
+        fun设置控件可见性(mapGuid._评估方式, true);
+        fun设置控件可见性(mapGuid._计算系数, true);
+    }
+
+    if (type == "E" && (oper == "2" || oper == "3" || oper == "4")) {
+
+        _界面控件._执行频率.val("0");
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        _界面控件._计算方式.val("3");
+        fun设置控件可编辑(_界面控件._计算方式, false);
+
+        fun设置控件可见性(mapGuid._单独应用, true);
+
+        fun设置控件可见性(mapGuid._计算规则, true);
+        fun设置视图区域可见性(mapGuid._视图区域._其它相关, true);
+        fun设置视图区域可见性(mapGuid._视图区域._检查相关, false);
+        fun设置控件可见性(mapGuid._其它分类说明, true);
+        fun设置控件可见性(mapGuid._其它毫升, false);
+        fun设置控件可见性(mapGuid._其它尿量, false);
+        fun设置控件可见性(mapGuid._其它脱敏, false);
+        fun设置控件可见性(mapGuid._其它源液, false);
+        fun设置控件可见性(mapGuid._其它量表学科, false);
+        fun设置控件可见性(mapGuid._其它管码, false);
+        fun设置控件可见性(mapGuid._其它出院日期, false);
+        fun设置控件可见性(mapGuid._计算系数, false);
+        fun设置控件可见性(mapGuid._评估方式, false);
+        fun设置控件可见性(mapGuid._输液类型, false);
+        fun设置控件可见性(mapGuid._其它毫升, false);
+
+        if (oper == "2") {
+            fun设置控件可见性(mapGuid._给药大类, true);
+            $("[data-owner-id='" + mapGuid._给药大类 + "'] .record-label").text("给药大类");
+            fun加载编码项目(_界面控件._给药大类, mapGuid._给药大类选项);
+        }
+
+        let exepty = oper == "2" ? mapGuid._给药执行分类 : mapGuid._服法执行分类;
+        if (oper == "3") {
+            exepty = mapGuid._煎法执行分类;
+            fun加载编码项目(_界面控件._计算方式, mapGuid._煎法计算方式);
+            fun设置控件可编辑(_界面控件._计算方式, true);
+        }
+
+        fun设置控件可见性(mapGuid._执行分类, true);//复用为给药的执行分类
+        fun加载编码项目(_界面控件._执行分类, exepty);
+        $("[data-owner-id='" + mapGuid._执行分类 + "'] .record-label").text("执行分类");
+
+    }
+
 }
+
 function fun界面页卡切换(tab) {
     if (_界面控件._执行科室性质.length == 0) {
         console.log("第一次加载");
@@ -360,8 +557,71 @@ window.GetCitemSaveJsonPar = function () {
         if (parData.操作类型 == "病理") {
             parData.执行分类 = parseInt(_界面控件._号别名称.val() || 0);
         }
+    } else if (parData.诊疗类别 == "F") {
+        parData.手术操作ids = _界面控件._手术项目标准编码.val();
+        parData.计算规则 = null;
+        parData.组合项目 = 0;
+        parData.录入限量 = 0;
+        parData.执行标记 = 0;
+        parData.执行分类 = 0;
+        parData.按规则计费 = 0;
+        parData.计算方式 = 3;
+        parData.执行频率 = 1;
+    } else if (parData.诊疗类别 == "G") {
+        parData.计算规则 = null;
+        parData.组合项目 = 0;
+        parData.录入限量 = 0;
+        parData.执行标记 = 0;
+        parData.执行分类 = 0;
+        parData.按规则计费 = 0;
+        parData.计算方式 = 3;
+        parData.执行频率 = 1;
     }
 
+    if ("K" == parData.诊疗类别) {
+        parData.计算系数 = parseInt(_界面控件._其它毫升.val() || 0);
+    }
+
+    if (parData.诊疗类别 === "E" && parData.操作类型 === "1") {
+        const defaultVal = "阳性(+);阴性(-)";
+        parData.标本部位 = "";
+        if (parData.功能 === 2) {
+            parData.标本部位 = _界面控件._参数._项目数据[mapGuid._标本部位] || defaultVal;
+        }
+        const el = $(`[data-id="${mapGuid._视图区域._皮试标注}"]`)[0];
+        const result = el?.firstElementChild && fun生成皮试结果(el.firstElementChild.data);
+        if (result) parData.标本部位 = result;
+        if (!parData.标本部位) parData.标本部位 = defaultVal;
+
+        parData.执行标记 = parseInt(_界面控件._其它脱敏.val() || 0) == 1 ? 2 : 0;
+        parData.执行分类 = parseInt(_界面控件._其它源液.val() || 0) == 1 ? 5 : 0;
+    } 
+    if (parData.诊疗类别 == "F" || parData.诊疗类别 == "K") {
+        parData.输血检验对照 = (_界面控件._输血检验对照.val() || "").replace(",", "|");
+    }
+
+    if (parData.诊疗类别 == "L" || parData.诊疗类别 == "I" || parData.诊疗类别 == "H") {
+        parData.诊疗频率编码 = _界面控件._诊疗频率.val();
+    }
+
+    if (parData.诊疗类别 == "E" && (parData.操作类型 == "2" || parData.操作类型 == "3" || parData.操作类型 == "4")) {
+        parData.标本部位 = _界面控件._其它分类说明.val();
+        if (parData.操作类型 == "2") {
+            parData.给药大类 = _界面控件._给药大类.val();
+        }
+        parData.执行分类 = parseInt(_界面控件._执行分类.val() || 0);
+        parData.执行标记 = parseInt(_界面控件._执行分类._界面控件._输液类型 || 0);
+        parData.计算方式 = parseInt(_界面控件._计算方式.val() || 0);
+        parData.计算系数 = parseInt(_界面控件._计算方式.val() == "2" ? _界面控件._计算系数.val() || 0 : 0);
+        parData.计算规则 = parseInt(_界面控件._计算规则.val() || 0);
+    }
+     
+    parData.项目频率 = "";
+    if (parData.执行频率 == 0 && parData.诊疗类别 != "C") {
+        const el = $(`[data-id="${mapGuid._视图区域._可选频率}"]`)[0];
+        const result = el?.firstElementChild && fun生成项目频率结果(el.firstElementChild.data);
+        if (result) parData.项目频率 = result; 
+    }
     //执行科室
     parData.执行科室 = 1;
     if (_界面控件._执行科室性质) {
@@ -387,12 +647,14 @@ window.GetCitemSaveJsonPar = function () {
             }
         }
     }
-
+    if ((parData.诊疗类别 == "G" || parData.诊疗类别 == "F") && parData.执行科室 == 0) {
+        parData.执行科室 = 1;
+    }
     parData = { "Json_In": JSON.stringify(parData) }
     return parData;
 }
 
-function fun编辑项目检查检验(bln检验) {    
+function fun编辑项目检查检验(bln检验) {
 
     _界面控件._执行频率.val("1");
     fun设置控件可编辑(_界面控件._执行频率, true);
@@ -452,6 +714,7 @@ window.fun诊疗类别切换 = function (type) {
 
     fun设置控件可见性(mapGuid._操作类型, true);
     fun设置控件可见性(mapGuid._号别名称, false);
+    fun设置控件可见性(mapGuid._诊疗频率, false);
 
     fun加载编码项目(_界面控件._计算规则, mapGuid._计算规则选项);
     fun加载编码项目(_界面控件._号别名称, mapGuid._病理类别选项);
@@ -461,7 +724,7 @@ window.fun诊疗类别切换 = function (type) {
     fun设置视图区域可见性(mapGuid._视图区域._手术相关, false);
     fun设置视图区域可见性(mapGuid._视图区域._其它相关, false);
 
-    
+    $("[data-owner-id='" + mapGuid._诊疗频率 + "'] .record-label").text("诊疗频率");
 
     //操作类型控件处理
     switch (type) {
@@ -476,27 +739,52 @@ window.fun诊疗类别切换 = function (type) {
             _界面控件._操作类型标签.text("处置性质");
             fun设置控件可编辑(_界面控件._录入限量, true);
             fun设置控件可编辑(_界面控件._录入限量应用于, true);
-            
+
             fun设置视图区域可见性(mapGuid._视图区域._检查相关, true);
-            
+
             fun设置控件可见性(mapGuid._按规则计费, false);
             fun设置控件可见性(mapGuid._床旁术中, false);
             break;
         case "F":
+            _界面控件._执行频率.val("1");
+            fun设置控件可编辑(_界面控件._执行频率, false);
+            _界面控件._计算方式.val("3");
+            fun设置控件可编辑(_界面控件._计算方式, false);
+            _界面控件._计算单位.val("次");
+            fun设置控件可见性(mapGuid._单独应用, true);
+            fun设置控件可编辑(_界面控件._单独应用, true);
             fun加载编码项目(_界面控件._操作类型, mapGuid._手术操作类型);
             _界面控件._操作类型标签.text("手术规模");
-            fun设置视图区域可见性(mapGuid._视图区域._手术相关, true); 
+            fun设置视图区域可见性(mapGuid._视图区域._手术相关, true);
             fun设置控件可见性(mapGuid._手术项目标准编码, true);
             break;
         case "G":
+            _界面控件._执行频率.val("1");
+            fun设置控件可编辑(_界面控件._执行频率, false);
+            _界面控件._计算方式.val("3");
+            fun设置控件可编辑(_界面控件._计算方式, false);
+            _界面控件._计算单位.val("次");
+            fun设置控件可见性(mapGuid._单独应用, true);
+            fun设置控件可编辑(_界面控件._单独应用, true);
+
             fun加载编码项目(_界面控件._操作类型, mapGuid._麻醉操作类型);
             _界面控件._操作类型标签.text("麻醉类型");
             break;
         case "H":
+            _界面控件._执行频率.val("0");
+            fun设置控件可编辑(_界面控件._执行频率, true);
+            _界面控件._计算方式.val("2");
+            fun设置控件可编辑(_界面控件._计算方式, false);
+
+            fun设置控件可见性(mapGuid._诊疗频率, true);
+            fun加载编码项目(_界面控件._诊疗频率, mapGuid._诊疗频率选项);
+
             fun加载编码项目(_界面控件._操作类型, mapGuid._护理操作类型);
             _界面控件._操作类型标签.text("项目类型");
             break;
         case "I":
+            fun设置控件可见性(mapGuid._诊疗频率, true);
+            fun加载编码项目(_界面控件._诊疗频率, mapGuid._诊疗频率选项);
             fun设置控件可见性(mapGuid._操作类型, false);
             break;
         case "K":
@@ -513,8 +801,8 @@ window.fun诊疗类别切换 = function (type) {
             fun设置控件可编辑(_界面控件._单独应用, true);
 
             fun设置控件可见性(mapGuid._操作类型, false);
-            fun设置视图区域可见性(mapGuid._视图区域._手术相关, true); 
-            fun设置视图区域可见性(mapGuid._视图区域._其它相关, true); 
+            fun设置视图区域可见性(mapGuid._视图区域._手术相关, true);
+            fun设置视图区域可见性(mapGuid._视图区域._其它相关, true);
             fun设置控件可见性(mapGuid._手术项目标准编码, false);
 
             fun设置控件可见性(mapGuid._其它分类说明, false);
@@ -528,11 +816,12 @@ window.fun诊疗类别切换 = function (type) {
             fun设置控件可见性(mapGuid._计算系数, false);
             fun设置控件可见性(mapGuid._评估方式, false);
             fun设置控件可见性(mapGuid._输液类型, false);
-
             fun设置控件可见性(mapGuid._其它毫升, true);
 
             break;
         case "L":
+            fun设置控件可见性(mapGuid._诊疗频率, true);
+            fun加载编码项目(_界面控件._诊疗频率, mapGuid._诊疗频率选项);
             fun设置控件可见性(mapGuid._操作类型, false);
             break;
         case "M":
@@ -551,7 +840,10 @@ window.fun诊疗类别切换 = function (type) {
  * @param {PageContent} pageContent
 */
 page.onComponentLoaded = (pageContent) => {
-
+    $(page).off('click.switchCard')
+        .on('click.switchCard', '.switch_card .nav-link[data-toggle="tab"]', function (e) {
+            fun界面页卡切换(e);
+        });
 }
 
 /**
@@ -584,11 +876,8 @@ page.onLoaded = (pageContent) => {
         fun执行频率切换();
     });
 
-    $("#" + mapGuid._页卡).on("change", function () {
-        fun界面页卡切换($(this).val());
-    });
-
     $("#" + mapGuid._名称).on("change", function () {
+        debugger
         //项目名称
         $("#" + mapGuid._简码).val(GetPyCode($(this).val()));
         $("#" + mapGuid._简码五笔).val(GetWbCode($(this).val()));
@@ -599,6 +888,15 @@ page.onLoaded = (pageContent) => {
         $("#" + mapGuid._别名简码).val(GetPyCode($(this).val()));
         $("#" + mapGuid._别名简码五笔).val(GetWbCode($(this).val()));
     });
+
+    $("#" + mapGuid._执行分类).on("change", function () {
+        fun执行分类切换();
+    });
+
+    $("#" + mapGuid._计算方式).on("change", function () {
+        fun计算方式切换();
+    });
+
 }
 
 //拼音简码
@@ -707,4 +1005,36 @@ function IncStr(strVal) {
     }
 
     return strValue;
+}
+ 
+function fun生成项目频率结果(data) {
+    return data
+        .filter(item => { 
+            return item[mapGuid._频率选择] === "1" && (item[mapGuid._频率编码] || "") != "";
+        })
+        .map(item => item[mapGuid._频率编码])
+        .join('|');
+}
+
+function fun生成皮试结果(data) {    
+    function getPishiStr(tag) {
+        return data
+            .filter(item => {
+                // 1. 三个节点的值都不能为空
+                const text = item[mapGuid._皮试文字] || '';
+                const mark = item[mapGuid._皮试标注] || '';
+                const allergy = item[mapGuid._皮试过敏] || '';
+                 
+                if (!text.trim() || !mark.trim() || !allergy.trim()) {
+                    return false;
+                } 
+                return allergy === tag;
+            })
+            .map(item => `${item[mapGuid._皮试文字]}(${item[mapGuid._皮试标注]})`)
+            .join(',');
+    }     
+    const str0 = getPishiStr("0");
+    const str1 = getPishiStr("1");     
+    const finalResult = `${str1};${str0}`;
+    return finalResult
 }
