@@ -13,7 +13,7 @@
  *
  */
 
-window._界面控件 = {
+var _界面控件 = {
     _参数: {
         _诊疗项目id: null,
         _分类id: null,
@@ -89,7 +89,7 @@ function fun控件对象映射() {
     fun修改项目数据加载();
 }
 
-const mapGuid = {
+const mapGuid = { 
     _其它分类说明: "bde17ccf-199f-4f29-858e-eab74ddedc3e",
     _其它毫升: "0b45eb53-1a67-4d88-80e6-a81e56852c86",
     _其它尿量: "8596d18e-0a07-47ce-b25e-c3f88d5a5afb",
@@ -127,6 +127,9 @@ const mapGuid = {
     _站点: "5db43104-d881-468d-b5f9-2cc49579622b",
     _参考项目: "9cb058be-aa95-4a08-8bdd-cd3cd2c1bd2d",
     _使用科室: "3f220b4b-6124-470f-bae6-ea099417d916",
+    _定向执行科室: "1737e69e-e661-47af-a510-7a3132427e98",
+    _住院执行科室: "afc02460-afe5-4a8d-ab93-425c3b849370",
+    _门诊执行科室: "e72ea1e2-775a-4c68-9f12-aeba6ceb6903",
     _启用时间: "4a9194cb-3fd4-4014-8229-300566a6ff02",
     _诊疗频率: "a3dc8991-6bff-4e0c-8e6b-3a650d995208", _执行分类: "a3dc8991-6bff-4e0c-8e6b-3a650d995208",// 执行分类 和 频率编码 复用
     _检验标本: "e8922a7f-2b0a-448f-96cc-59cb72b8c5fc",
@@ -177,6 +180,7 @@ const mapGuid = {
     _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",
 
     _视图区域: {
+        _指定开单执行科室: "com_i8wtppmisw",
         _检验相关: "com_7rndcmrftzv",
         _检查相关: "com_0957jpk314wc",
         _手术相关: "com_uz4wkcfgj9",
@@ -467,18 +471,18 @@ function fun操作类型切换(oper) {
         $("[data-owner-id='" + mapGuid._执行分类 + "'] .record-label").text("执行分类");
 
     }
-
 }
 
 function fun界面页卡切换(tab) {
-    if (_界面控件._执行科室性质.length == 0) {
-        console.log("第一次加载");
+    if (0 == 1) {
+        if (_界面控件._执行科室性质.length == 0) {
+            _界面控件._执行科室性质 = $("#" + mapGuid._执行科室性质);
+            fun加载编码项目(_界面控件._执行科室性质, mapGuid._执行科室性质选项);
+        }
         _界面控件._执行科室性质 = $("#" + mapGuid._执行科室性质);
-        fun加载编码项目(_界面控件._执行科室性质, mapGuid._执行科室性质选项);
-    }
-    _界面控件._执行科室性质 = $("#" + mapGuid._执行科室性质);
-    if (_界面控件._执行科室性质.attr("data-option-code-list") != _界面控件._编码选项[mapGuid._执行科室性质选项]) {
-        fun加载编码项目(_界面控件._执行科室性质, mapGuid._执行科室性质选项);
+        if (_界面控件._执行科室性质.attr("data-option-code-list") != _界面控件._编码选项[mapGuid._执行科室性质选项]) {
+            fun加载编码项目(_界面控件._执行科室性质, mapGuid._执行科室性质选项);
+        }
     }
 }
 
@@ -622,36 +626,69 @@ window.GetCitemSaveJsonPar = function () {
         const result = el?.firstElementChild && fun生成项目频率结果(el.firstElementChild.data);
         if (result) parData.项目频率 = result; 
     }
+
+    //有可能没有切换，要把原值取出来，可以通过 First_In 这个参数来控件
     //执行科室
-    parData.执行科室 = 1;
-    if (_界面控件._执行科室性质) {
+    let isSel执行科室 = false;
+    parData.执行科室 = 1;    
+    temp = $("[data-id='com_jg4irjgrwg']")[0]?.firstElementChild?.GetCurrentData();
+    if (temp) {
+        isSel执行科室 = true;
+        //进了这个分支，说明切换了页卡，渲染了的
+        _界面控件._执行科室性质 = $("#" + mapGuid._执行科室性质);
         parData.执行科室 = parseInt(_界面控件._执行科室性质.val() || 0);
     }
-
     //门认住院执行科室
     if (parData.执行科室 == 4) {
-        temp = $("[data-id='com_3tg2waf0ofp']")[0].firstElementChild.GetCurrentData();
+        temp = $("[data-id='com_px2g4a4q2e']")[0]?.firstElementChild?.GetCurrentData();
         if (temp) {
-            parData.门诊执行科室id = Number(temp["fa0620eb-4d35-49cb-a11a-5522a773b78b"] || 0);
-            parData.住院执行科室id = Number(temp["837bc97c-97b0-416b-898a-3bd204f114f2"] || 0);
+            parData.门诊执行科室id = parseInt(temp["e72ea1e2-775a-4c68-9f12-aeba6ceb6903"] || 0);
+            parData.住院执行科室id = parseInt(temp["afc02460-afe5-4a8d-ab93-425c3b849370"] || 0);
 
             parData.门诊执行科室id = parData.门诊执行科室id == 0 ? null : parData.门诊执行科室id;
             parData.住院执行科室id = parData.住院执行科室id == 0 ? null : parData.住院执行科室id;
         }
-        temp = localStorage.getItem("citem_exe_depts");
-        if (temp) {
-            temp = JSON.parse(temp);
-            if (temp.length > 0) {
-                //指定开单执行科室
-                parData.定向执行 = generateFullString(temp);
-            }
-        }
+        const el = $(`[data-id="${mapGuid._视图区域._指定开单执行科室}"]`)[0];
+        const result = el?.firstElementChild && fun获取指定开单执行科室(el.firstElementChild.data);
+        if (result) parData.定向执行 = result;  
     }
+
     if ((parData.诊疗类别 == "G" || parData.诊疗类别 == "F") && parData.执行科室 == 0) {
         parData.执行科室 = 1;
     }
+
+    //如果没有切换执行科室，且功能是修改，那么取原值
+    if (!isSel执行科室 && parData.功能 == 2) {
+        parData.执行科室 = parseInt(_界面控件._参数._项目数据[mapGuid._执行科室性质] || 0);
+
+        parData.门诊执行科室id = parseInt(_界面控件._参数._项目数据[mapGuid._门诊执行科室] || 0);
+        parData.住院执行科室id = parseInt(_界面控件._参数._项目数据[mapGuid._住院执行科室] || 0);
+        parData.门诊执行科室id = parData.门诊执行科室id == 0 ? null : parData.门诊执行科室id;
+        parData.住院执行科室id = parData.住院执行科室id == 0 ? null : parData.住院执行科室id;
+
+        parData.定向执行 = _界面控件._参数._项目数据[mapGuid._定向执行科室];
+    }
+
+
     parData = { "Json_In": JSON.stringify(parData) }
     return parData;
+}
+
+function fun获取指定开单执行科室(dataArray) {
+    const KEY1 = "f0e438ad-4123-4fbf-bbfe-3597eba04a89";
+    const KEY2 = "80daff58-9c19-4d76-9d4d-ed5860cd1b09";
+    return dataArray 
+        .filter(item => {
+            const val = item[KEY2];
+            return val != null && String(val).trim() !== '';
+        }) 
+        .map(item => { 
+            const value1 = item[KEY1] ?? '';
+            const numList = value1.split(',');
+            const fixNum = item[KEY2];
+            return numList.map(n => `${n}^${fixNum}`).join('|');
+        })
+        .join('|');
 }
 
 function fun编辑项目检查检验(bln检验) {
