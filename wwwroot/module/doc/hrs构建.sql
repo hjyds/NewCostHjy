@@ -1,7 +1,13 @@
 Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
   --功能：诊疗项目管理
-  j_Input Pljson;
-  j_Json  Pljson;
+  j_Input    Pljson;
+  j_Json     Pljson;
+  j_Json_Tmp Pljson;
+  Jl_List    Pljson_List;
+  Jl_Pacs    Pljson_List;
+  j_Way      Pljson;
+
+  n_Count Number(3);
 
   n_功能 Number(3); --1-新增,2-修改，3-删除
 
@@ -58,6 +64,11 @@ Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
   v_机器名     Varchar2(3000);
   v_操作员信息 Varchar2(3000);
   v_用户名     Varchar2(300);
+  v_检查部位   Varchar2(300);
+  v_检查方法   Varchar2(300);
+  v_上级方法   Varchar2(300);
+
+  v_Jtemp Varchar2(4000);
 
 Begin
 
@@ -161,8 +172,158 @@ Begin
                          v_操作员信息);
   End If;
 
+  If v_类别 = 'D' Then
+    n_Count := 0;
+    If j_Json.Exist('检查部位列表') Then
+      Jl_List := j_Json.Get_Pljson_List('检查部位列表');
+      n_Count := Jl_List.Count;
+    End If;
+    If n_Count > 0 Then
+      If n_按规则计费 = 1 Then
+        Zl_放射项目部位_Update(n_记录id);
+      Else
+        Update 诊疗项目部位 Set ID = -id, 方法 = '-' || 方法 Where 项目id = n_记录id;
+      End If;
+      For I In 1 .. n_Count Loop
+        j_Json_Tmp := Pljson();
+        j_Json_Tmp := Pljson(Jl_List.Get(I));
+        v_检查部位 := j_Json_Tmp.Get_String('_部位');
+      
+        Select Max(Zl_Fun_检查方法解析(a.方法)) As 数组串
+        Into v_Jtemp
+        From 诊疗检查部位 A
+        Where a.类型 = v_操作类型 And a.名称 = v_检查部位;
+      
+        If v_Jtemp Is Not Null Then
+          Jl_Pacs := Pljson_List(v_Jtemp);
+          For K In 1 .. Jl_Pacs.Count Loop
+          
+            j_Way := Pljson();
+            j_Way := Pljson(Jl_Pacs.Get(K));
+          
+            v_检查方法 := j_Way.Get_String('方法名称');
+            v_上级方法 := j_Way.Get_String('上级方法');
+            If n_按规则计费 = 1 Then
+              Zl_放射项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法);
+            Else
+              Zl_诊疗项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法);
+            End If;
+          End Loop;
+        End If;      
+      End Loop;
+      If n_按规则计费 = 1 Then
+        Zl_放射项目部位_Delete(n_记录id, 1);
+      Else
+        Zl_诊疗项目部位_Delete(n_记录id, 1);
+      End If;
+    End If;
+  End If;
+
 Exception
   When Others Then
     zl_ErrorCenter(SQLCode, SQLErrM);
 End Zl_Hrssvr_Cedit;
+/
+
+Create Or Replace Function Zl_Fun_检查方法解析(方法_In Varchar2) Return Varchar2 Is
+  --功能：解析检查的方法串
+  --返回：json数组
+  --   序号         N 1
+  --   上级方法     C 1  
+  --   方法名称     C 1
+  --   共选         N 1 是否共选，0/1 1表示是共选
+  --   是否造影     N 1 是否造影，0/1 1表示有造影
+  v_方法串           Varchar2(4000);
+  v_上级方法         Varchar2(4000);
+  n_共选             Number(1);
+  n_是否造影         Number(1);
+  v_Jtmp             Varchar2(2000);
+  v_方法名称         Varchar2(2000);
+  v_方法名称上级temp Varchar2(2000);
+  n_子方法序号       Number(3);
+  n_序号             Number(3) := 0;
+  
+Begin
+
+  v_方法串 := 方法_In;
+  v_方法串 := Replace(v_方法串, Chr(9), ';' || Chr(9));
+
+  For r_One In (Select /*+cardinality(j,10) */
+                 Column_Value As 方法
+                From Table(f_Str2list(v_方法串, ';')) J) Loop
+  
+    n_子方法序号 := 0;
+    v_上级方法   := Null;
+  
+    If r_One.方法 Is Not Null Then
+      For r_Sub In (Select /*+cardinality(j,10) */
+                     Column_Value As 方法
+                    From Table(f_Str2list(r_One.方法, ',')) J) Loop
+        If r_Sub.方法 Is Not Null Then
+          n_是否造影 := 0;
+          v_方法名称 := r_Sub.方法;
+          If Instr(r_Sub.方法, Chr(9)) > 0 Then
+            n_共选     := 1;
+            v_方法名称 := Replace(r_Sub.方法, Chr(9), '');
+          Else
+            n_共选 := 0;
+          End If;
+        
+          If Substr(v_方法名称, 1, 1) = '1' Then
+            n_是否造影 := 1;
+            v_方法名称 := Replace('__' || v_方法名称, '__1', '');
+          Else
+            v_方法名称 := Replace('__' || v_方法名称, '__0', '');
+          End If;
+        
+          If n_子方法序号 > 0 Then
+            v_上级方法 := v_方法名称上级temp;
+          End If;
+        
+          If n_子方法序号 = 0 Then
+            v_方法名称上级temp := v_方法名称;
+          End If;
+          n_子方法序号 := n_子方法序号 + 1;
+        
+          n_序号 := n_序号 + 1;
+        
+          v_Jtmp := v_Jtmp || ',{"序号":' || n_序号 || ',"上级方法":"' || v_上级方法 || '","方法名称":"' || v_方法名称 || '","共选":' || n_共选 ||
+                    ',"是否造影":' || n_是否造影 || '}';
+        
+        End If;
+      End Loop;
+    End If;
+  End Loop;
+  If v_Jtmp Is Null Then
+    Return Null;
+  End If;
+  Return '[' || Substr(v_Jtmp, 2) || ']';
+Exception
+  When Others Then
+    zl_ErrorCenter(SQLCode, SQLErrM);
+End Zl_Fun_检查方法解析;
+/
+Create Or Replace Function Zlgetnextid
+(
+  Table_Name Varchar2,
+  Col_Name   Varchar2 := Null,
+  Quantity   Number := Null
+) Return Varchar2 Is
+  Functionresult Varchar2(4000);
+  v_Parin        Varchar2(3000);
+
+  --入参：Json_In:格式 
+  --input 
+  --  table_name    C  1 表名 
+  --  col_name      C  1 字段名  序列名称不一定是ID，例如记录ID 
+  --  quantity      N  0 所需序列的个数，如果只取一个该参不传或都传0 
+
+Begin
+
+  v_Parin := '{"input":{"table_name":"' || Table_Name || '","col_name":"' || Col_Name || '","quantity":' ||
+             Nvl(Quantity, 0) || '}}';
+
+  Zl_Exsesvr_Getnextid(v_Parin, Functionresult);
+  Return(Functionresult);
+End Zlgetnextid;
 /

@@ -13,7 +13,7 @@
  *
  */
 
-var _界面控件 = {
+window._界面控件 = {
     _参数: {
         _诊疗项目id: null,
         _分类id: null,
@@ -24,7 +24,8 @@ var _界面控件 = {
     _分类说明: null,
     _诊疗类别: null,
     _操作类型: null,
-    _操作类型标签: null
+    _操作类型标签: null,
+    _检查部位加载: ""
 };
 
 function fun控件对象映射() {
@@ -484,6 +485,18 @@ function fun界面页卡切换(tab) {
             fun加载编码项目(_界面控件._执行科室性质, mapGuid._执行科室性质选项);
         }
     }
+
+    if ($(tab.currentTarget).text() == "检查部位") {
+        let oper = _界面控件._操作类型.val();
+        let isrule = parseInt(_界面控件._按规则计费.val() || 0);
+        let itemid = parseInt(_界面控件._参数._诊疗项目id || 0);
+        let ckey = itemid + "_" + oper + "_" + isrule;
+        if (_界面控件._检查部位加载 != ckey) {
+            _界面控件._检查部位加载 = ckey;
+            //fun检查部位区域渲染();
+            fun获取检查部位列表(itemid, oper, isrule);
+        }
+    }
 }
 
 window.GetCitemSaveJsonPar = function () {
@@ -561,6 +574,16 @@ window.GetCitemSaveJsonPar = function () {
         if (parData.操作类型 == "病理") {
             parData.执行分类 = parseInt(_界面控件._号别名称.val() || 0);
         }
+
+        temp = $("[data-id='com_i12efkffikm']")[0]?.firstElementChild?.data;
+        if (temp) {
+            //检查项目的部位列表
+            parData.检查部位列表 = fun获取选择的检查部位(temp);
+            if (parData.检查部位列表.length > 0) {
+                parData.标本部位 = parData.检查部位列表.map(v => v._部位).filter(Boolean).join(',').slice(0, 60);
+            }
+        }
+
     } else if (parData.诊疗类别 == "F") {
         parData.手术操作ids = _界面控件._手术项目标准编码.val();
         parData.计算规则 = null;
@@ -1074,4 +1097,96 @@ function fun生成皮试结果(data) {
     const str1 = getPishiStr("1");     
     const finalResult = `${str1};${str0}`;
     return finalResult
+}
+
+function fun获取检查部位列表(itemid, oper, isrule) {
+    let params = {
+        "resTypeId": "c854b215-23ac-46fb-9110-330f713c9400",
+        "viewId": "e459b32a-b09a-4a49-94d7-1129ae5d219d",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "ef65c48b-495c-4f25-8bda-43d72967ee14",
+                "compare": "=",
+                "val": oper //操作类型
+            },
+            {
+                "relId": "db4955c4-9c2f-4d1f-a8a0-f2bf75f5c934",
+                "compare": "=",
+                "val": isrule //是否规则 0/1
+            },
+            {
+                "relId": "29e924a6-5292-4ff7-95f7-710c4949eb6a",
+                "compare": "=",
+                "val": itemid //项目ID
+            }
+        ]
+    }
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+    $('div[data-id="com_i12efkffikm"]')[0].firstElementChild.data = result.Data;
+    return result.Data;
+}
+
+function fun检查部位区域渲染() {
+    let viewId = "e459b32a-b09a-4a49-94d7-1129ae5d219d";
+    let reslt = HrsServer.Get("/api/FormalResourceView/GetResourceViewDataForSetUp?resViewId=" + viewId + "&source=资源类型");
+    if (!reslt.Success) {
+        layer.alert(reslt.Msg, { icon: 0 });
+        return;
+    }
+    $('div[data-id="com_i12efkffikm"] zl-qmlist')[0].View = reslt.Data;
+}
+
+window.fun检查部位区域连动参数 = function () {
+    let oper = _界面控件._操作类型.val();
+    let isrule = parseInt(_界面控件._按规则计费.val() || 0);
+    let itemid = parseInt(_界面控件._参数._诊疗项目id || 0);
+    return [oper, isrule, itemid];
+}
+
+function fun获取选择的检查部位(data) {       
+    // 字段映射
+    const keyMap = {
+        "cee6f427-f315-43d1-aa4f-33e366f7900f": "_选择",
+        "b2473c6f-5c45-42b1-bdb3-4afa15c44103": "_部位",
+        "30031a9c-15a1-48ea-90cf-0b70546a2043": "_方法",
+    };
+
+    // 判断是否为空
+    const isEmpty = (val) => {
+        return val === null || val === undefined || val.trim() === '';
+    };
+
+    // 完整处理逻辑
+    const result = data
+        .map(item => {
+            const newItem = {};
+            Object.keys(keyMap).forEach(oldKey => {
+                newItem[keyMap[oldKey]] = item[oldKey];
+            });
+            return newItem;
+        })
+        // 1. 只保留选择=1的数据
+        .filter(item => item._选择 === "1")
+        // 2. 排除部位/方法为空的数据
+        .filter(item => !isEmpty(item._部位) && !isEmpty(item._方法))
+        // 3. 方法按;分割，并转成 {方法名称:xxx}
+        .map(item => {
+            const methodList = item._方法
+                .split(';')
+                .map(m => m.trim())
+                .filter(m => m)
+                .map(name => ({ "方法名称": name }));
+
+            return {
+                _部位: item._部位,
+                _方法: methodList
+            };
+        });
+
+    return result;
 }
