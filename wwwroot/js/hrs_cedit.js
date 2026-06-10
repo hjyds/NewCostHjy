@@ -88,6 +88,20 @@ function fun控件对象映射() {
     _界面控件._诊疗类别.val("C");//默认检验   
     fun诊疗类别切换("C");
     fun修改项目数据加载();
+
+    _界面控件._项目分类.val(_界面控件._参数._分类id);
+    if (1 == _界面控件._参数._编辑状态 || 3 == _界面控件._参数._编辑状态) {
+        let tempVal = GetSimpleNodeVal("", "b12bf15a-eebb-44cb-813e-9f43dffe5593", "827358ad-99bc-447a-969f-fb2343103671", "a99c0fb8-e887-431e-9817-c5b3f16bdf02", "21ec4abc-26aa-42b4-9071-077c245aea1a");
+        $("#" + mapGuid._编码).val(IncStr(tempVal));//编码 
+        if (3 == _界面控件._参数._编辑状态) {
+            $("#" + mapGuid._名称).val("");
+            $("#" + mapGuid._简码).val("");
+            $("#" + mapGuid._简码五笔).val("");
+            $("#" + mapGuid._别名).val("");
+            $("#" + mapGuid._别名简码).val("");
+            $("#" + mapGuid._别名简码五笔).val("");
+        }
+    } 
 }
 
 const mapGuid = { 
@@ -196,7 +210,7 @@ const mapGuid = {
 }
 
 function fun修改项目数据加载() {
-    if (2 == _界面控件._参数._编辑状态) {
+    if (2 == _界面控件._参数._编辑状态 || 3 == _界面控件._参数._编辑状态) {
         _界面控件._参数._项目数据 = GetSimpleNodeVal(_界面控件._参数._诊疗项目id, "c1f32ce8-42f1-4519-a6f6-95332ea75516", "8d3a7de9-100a-4dc5-a7a0-b3a9680baf31", "1679487d-8564-45cc-a221-6f2461e19719", 1);
         _界面控件._参数._项目数据 = _界面控件._参数._项目数据[0];
 
@@ -914,17 +928,13 @@ page.onLoaded = (pageContent) => {
     let urlPar = new URLSearchParams(location.search);
     let class_id = parseInt(urlPar.get("class_id") || 0);
     let item_id = parseInt(urlPar.get("item_id") || 0);
-    let editsta = parseInt(urlPar.get("editsta") || 0);//编辑状态 1-新增，2-修改
+    let editsta = parseInt(urlPar.get("editsta") || 0);//编辑状态 1-新增，2-修改，3-复制新增
     _界面控件._参数._诊疗项目id = item_id;
     _界面控件._参数._分类id = class_id;
     _界面控件._参数._编辑状态 = editsta;
     debugger
     fun控件对象映射();
-    _界面控件._项目分类.val(class_id);
-    if (1 == _界面控件._参数._编辑状态) {
-        let tempVal = GetSimpleNodeVal("", "b12bf15a-eebb-44cb-813e-9f43dffe5593", "827358ad-99bc-447a-969f-fb2343103671", "a99c0fb8-e887-431e-9817-c5b3f16bdf02", "21ec4abc-26aa-42b4-9071-077c245aea1a");
-        $("#" + mapGuid._编码).val(IncStr(tempVal));//编码 
-    }
+    
     $("#" + mapGuid._诊疗类别).on("change", function () {
         fun诊疗类别切换($(this).val());
     });
