@@ -349,26 +349,16 @@ window.fun获取打开页面地址 = function (dataRow, type) {
         localStorage.removeItem("citem_to_charge_fee");//清除缓存 
         var source = 0;
         var is_part = 0;
-        var is_add = 0;
-        var deptids = "";
+        var is_add = 0; 
         var 对照方式 = "";
         if (citem_to_charge_fee) {
             citem_to_charge_fee = JSON.parse(citem_to_charge_fee);
-            对照方式 = citem_to_charge_fee?.对照方式 || "";
+            对照方式 = citem_to_charge_fee?.普通对照 || "";
         }
         if ("" == 对照方式) {
             return "";
         }
-        if ("门诊科室" == 对照方式 && citem_to_charge_fee.门诊科室) {
-            source = 1;
-            deptids = citem_to_charge_fee.门诊科室;
-        }
-
-        if ("住院科室" == 对照方式 && citem_to_charge_fee.住院科室) {
-            source = 2;
-            deptids = citem_to_charge_fee.住院科室;
-        }
-
+  
         if (citem_to_charge_fee.检查部位 == "1") {
             is_part = 1;
             is_add = 0;
@@ -396,7 +386,7 @@ window.fun获取打开页面地址 = function (dataRow, type) {
         //     "床旁或术中加收": "1"
         // }
 
-        url = `pageViewById?pageid=${pageid}&item_id=${item_id}&source=${source}&is_part=${is_part}&is_add=${is_add}&deptids=${deptids}`;
+        url = `pageViewById?pageid=${pageid}&item_id=${item_id}&source=${source}&is_part=${is_part}&is_add=${is_add}`;
     }
 
     return url;
@@ -406,7 +396,7 @@ window.CanOpen收费对照 = function () {
     var 对照方式 = "";
     if (citem_to_charge_fee) {
         citem_to_charge_fee = JSON.parse(citem_to_charge_fee);
-        对照方式 = citem_to_charge_fee?.对照方式 || "";
+        对照方式 = citem_to_charge_fee?.普通对照 || "";
     }
     if ("" == 对照方式) {
         return false;

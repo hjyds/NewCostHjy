@@ -13,7 +13,53 @@
  *
  */
 
+window._界面控件 = {
+    _参数: {
+        _诊疗项目id: null,
+        _分类id: null,
+        _编辑状态: null,
+        _项目数据: null
+    },
+    _编码选项: {
+        _收费方式采集: "0|0-正常收取,1|1-检验试管费用,2|2-一次发送只收取一次,3|3-当天只收取一次,4|4-当天未执行收取一次,5|5-当天只收取一次,排斥其他项目,6|6-当天未执行收取一次,排斥其他项目,7|7-每天首次不收取,8|8-按收费方案收取,9|9-自定义,31|31-当天只收取一次(相同部位)",
+        _收费方式: "0|0-正常收取,2|2-一次发送只收取一次,3|3-当天只收取一次,4|4-当天未执行收取一次,5|5-当天只收取一次,排斥其他项目,6|6-当天未执行收取一次,排斥其他项目,7|7-每天首次不收取,8|8-按收费方案收取,9|9-自定义,31|31-当天只收取一次(相同部位)",
+        _收费方式部位: "0|0-正常收取,2|2-一次发送只收取一次,9|9-自定义"
+    },    
+    _分类说明: null,
+    _诊疗类别: null,
+    _操作类型: null,
+    _操作类型标签: null,
+    _检查部位加载: ""
+}
 
+const mapGuid = {
+    _收费方式: "118e7842-94d5-4649-94f9-386fd2360deb",
+    _规格适配: "5f2c3a63-83dc-4f80-8618-aa9d5acb0056",
+    _部位加收: "1af43e21-c3cc-4dd4-92af-e94febe13e02",
+    _类别: "af5b0373-0360-4afd-841e-fad7a71cda0b_592e7eae-554a-45b5-8530-bd50f6a25123",
+    _病人来源: "ad662a41-fd1a-4ad6-833b-e01fd53f3823",
+    _适用科室: "0b721e28-6e09-475f-8bbc-fe22b69e9888",
+    _方法: "7b3eb36f-ebba-4c55-a1dd-1e06d09eb735",
+    _部位: "af4d9439-9a73-4885-92f1-fc2f4842676c",
+    _从项: "72c6b9cb-a219-4300-927d-3dbe5921763d",
+    _收费方式: "118e7842-94d5-4649-94f9-386fd2360deb",
+    _方案: "7692f539-af94-4bfc-92ae-a692d51000ea",
+
+    //数据相关
+    d_诊疗项目id: "955b461a-dc4e-4873-a7e6-b4fe97d5492a",
+    d_收费项目id: "304e52aa-b74d-4aec-a395-85118d8f04a0",
+    d_收费数量: "3b20f973-7876-4d82-93fc-885f8bfbb3ab",
+    d_固有对照: "bfa73749-1261-416d-b1ce-3966ac4c1ace",
+    d_按规格适配: "5f2c3a63-83dc-4f80-8618-aa9d5acb0056",
+    d_从属项目: "72c6b9cb-a219-4300-927d-3dbe5921763d",
+    d_收费方式: "118e7842-94d5-4649-94f9-386fd2360deb",
+    d_方案id: "7692f539-af94-4bfc-92ae-a692d51000ea",
+
+    d_操作类型: "4b3f520f-ce36-4f6e-a3f5-1bf2c92c0d7f",
+    d_服务对象: "8b5a4ace-6ba6-4bd2-bf1b-e9334fa635ae",
+    d_执行标记: "9e22ffeb-53b0-4670-92a9-5b46f7c18d0e",
+    d_诊疗类别: "c714b922-e9f0-4a7f-813b-2c9773c86051"
+}
 
 
 /**
@@ -31,6 +77,7 @@ page.onComponentLoaded = (pageContent) => {
 page.onLoaded = (pageContent) => {
     // 解析URL参数并挂载到 window.par_in
     let urlPar = new URLSearchParams(location.search);
+
     window.par_in = {
         source: parseInt(urlPar.get("source") || 0),
         fitemid: parseInt(urlPar.get("fitemid") || 0),
@@ -38,30 +85,94 @@ page.onLoaded = (pageContent) => {
         deptid: parseInt(urlPar.get("deptid") || 0),
         is_part: parseInt(urlPar.get("is_part") || 0),
         is_add: parseInt(urlPar.get("is_add") || 0),
+        edit: parseInt(urlPar.get("edit") || 0),
         part: urlPar.get("part") || "",
         way: urlPar.get("way") || ""
     };
+    if (window.par_in.citemid == 0) {
+        return;
+    }
+    const obj = window.GetFaceData(window.par_in.citemid, window.par_in.source, window.par_in.fitemid, window.par_in.deptid, window.par_in.is_part, window.par_in.is_add, window.par_in.part, window.par_in.way);
 
-    $("#af4d9439-9a73-4885-92f1-fc2f4842676c")[0].option_value(window.Get部位下拉列表(window.par_in.citemid));
+    window.par_in.basedata = obj;
 
-    $("#7b3eb36f-ebba-4c55-a1dd-1e06d09eb735")[0].option_value(window.Get方法下拉列表(window.par_in.citemid, window.par_in.part));
-    
-    $("#0b721e28-6e09-475f-8bbc-fe22b69e9888")[0].option_value(window.Get适用科室下拉列表(window.par_in.source));
+    if ("D" == obj[mapGuid.d_诊疗类别] && window.par_in.is_part == 1 && window.par_in.is_add == 0) {
+        $("#" + mapGuid._部位)[0].option_value(window.Get部位下拉列表(window.par_in.citemid));
+        $("#" + mapGuid._方法)[0].option_value(window.Get方法下拉列表(window.par_in.citemid, window.par_in.part));
+    }
 
-    fun修改项目数据加载();
+    if ("E" == obj[mapGuid.d_诊疗类别] && obj[mapGuid.d_操作类型] == "6") {
+        fun加载编码项目($("#" + mapGuid._收费方式), "_收费方式采集");
+    } else if (window.par_in.is_part == 1) {
+        fun加载编码项目($("#" + mapGuid._收费方式), "_收费方式部位");
+    } else if (window.par_in.is_add == 0) {
+        fun加载编码项目($("#" + mapGuid._收费方式), "_收费方式");
+    }
+
+    $("#" + mapGuid._适用科室)[0].option_value(window.Get适用科室下拉列表(window.par_in.source));
+
+    fun修改项目数据加载(obj);
+
+    fun设置界面控件显示状态();
+
+    //事件注册
+    $("#" + mapGuid._部位).on("change", function () {
+        //根据部位的选择，动态更新方法的选项
+        $("#" + mapGuid._方法)[0].option_value(window.Get方法下拉列表(window.par_in.citemid, $("#" + mapGuid._部位).val()));
+    });
+
+    $("#" + mapGuid._病人来源).on("change", function () {
+        //根据病人来源的选择，动态更新适用科室的选项
+        $("#" + mapGuid._适用科室)[0].option_value(window.Get适用科室下拉列表(parseInt($("#" + mapGuid._病人来源).val() || 0)));
+    });
 }
 
-function fun修改项目数据加载() {
-    const obj = window.GetFaceData(window.par_in.citemid, window.par_in.source, window.par_in.fitemid, window.par_in.deptid, window.par_in.is_part, window.par_in.is_add, window.par_in.part, window.par_in.way);
+function fun设置界面控件显示状态() {
+    const obj = window.par_in.basedata;
+    let isShow = false;
+    if ("D" == obj[mapGuid.d_诊疗类别] && window.par_in.is_part == 1 && window.par_in.is_add == 0) {
+        isShow = true
+    }
+
+    fun设置控件可见性(mapGuid._类别, isShow);
+    fun设置控件可见性(mapGuid._部位, isShow);
+    fun设置控件可见性(mapGuid._方法, isShow);
+
+    fun设置控件可见性(mapGuid._规格适配, ("E" == obj[mapGuid.d_诊疗类别] && obj[mapGuid.d_操作类型] == "6"));
+
+    fun设置控件可见性(mapGuid._部位加收, 1 == window.par_in.is_part);
+
+    if (window.par_in.is_add == 1) {
+        isShow = false;
+        fun设置控件可见性(mapGuid._从项, isShow);
+        fun设置控件可见性(mapGuid._收费方式, isShow);
+        fun设置控件可见性(mapGuid._方案, isShow);
+    }
+}
+
+function fun加载编码项目(obj控件, keyid) {
+    obj控件.attr("data-option-code-list", _界面控件._编码选项[keyid]);
+    obj控件.val(_界面控件._编码选项[keyid].split('|')[0]);//赋缺省值
+}
+
+function fun设置控件可见性(keyid, isShow) {
+    if (isShow) {
+        $(`[data-owner-id='${keyid}']`).show();
+    } else {
+        $(`[data-owner-id='${keyid}']`).hide();
+    }
+}
+
+function fun修改项目数据加载(obj) {
     for (let key in obj) {
         try {
             $("#" + key).val(obj[key]);
         } catch (err) {
             // 捕获错误
-            console.log("错误信息：", err.message);
+            console.log("收费对照错误信息：", err.message);
         } finally {
             // 无论成败都执行
-            console.log("执行完毕");
+            //console.log("收费对照执行完毕");
         }
     }
 }
@@ -167,4 +278,49 @@ window.Get适用科室下拉列表 = function (source) {
         JSON.stringify(params)
     );
     return result.Data;
+}
+
+window.GetEditDataToSave = function () {
+    debugger
+
+    let editData = $("[data-id='com_zkz5b7mqvrg']")[0]?.firstElementChild?.data;
+    let oldData = window.par_in.basedata;
+    var parData = {};
+
+    parData.功能 = 11;
+    parData.记录id = oldData[mapGuid.d_诊疗项目id];
+
+    parData.收费项目id = parseInt(editData[mapGuid.d_收费项目id] || 0);
+    parData.收费数量 = parseInt(editData[mapGuid.d_收费数量] || 0);
+    parData.固有对照 = parseInt(editData[mapGuid.d_固有对照] || 0);
+    parData.按规格适配 = parseInt(editData[mapGuid.d_按规格适配] || 0);
+    parData.从属项目 = parseInt(editData[mapGuid.d_从属项目] || 0);
+    parData.收费方式 = parseInt(editData[mapGuid.d_收费方式] || 0);
+    parData.方案id = parseInt(editData[mapGuid.d_方案id] || 0);
+    parData.病人来源 = parseInt(editData[mapGuid._病人来源] || 0);
+    parData.科室id = parseInt(editData[mapGuid._适用科室] || 0);
+    parData.检查部位 = editData[mapGuid._部位];
+    parData.检查方法 = editData[mapGuid._方法];
+
+    parData.对照方式 = 1;
+    if (window.par_in.is_part) {
+        parData.对照方式 = 2;
+    }
+    if (window.par_in.is_add) {
+        parData.对照方式 = 3;
+    }
+
+    if (window.par_in.edit == 2) {
+        //修改行
+        parData.old_收费项目id = parseInt(oldData[mapGuid.d_收费项目id] || 0);        
+        parData.old_病人来源 = parseInt(oldData[mapGuid._病人来源] || 0);
+        parData.old_科室id = parseInt(oldData[mapGuid._适用科室] || 0);
+        parData.old_检查部位 = oldData[mapGuid._部位];
+        parData.old_检查方法 = oldData[mapGuid._方法];
+    }
+
+    parData = { "Json_In": JSON.stringify(parData) };
+    
+    return parData;
+ 
 }

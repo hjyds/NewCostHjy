@@ -9,7 +9,13 @@ Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
 
   n_Count Number(3);
 
-  n_功能 Number(3); --1-新增,2-修改，3-删除
+  n_功能 Number(3); --1-新增,2-修改，3-删除，4-停用，5-启用，6-采集方式设置
+
+  --7-调整诊疗项目(计价性质)
+  --8-诊疗收费对照，通用设置    
+  --9-按范围删除收费对照
+  --10-删除一行收费对照
+  --11-插入一行收费对照   
 
   n_记录id           诊疗项目目录.Id%Type;
   n_分类id           诊疗项目目录.Id%Type;
@@ -68,7 +74,265 @@ Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
   v_检查方法   Varchar2(300);
   v_上级方法   Varchar2(300);
 
+  d_停用时间 Date;
+  v_停用原因 Varchar2(300);
+  v_启用原因 Varchar2(300);
+
   v_Jtemp Varchar2(4000);
+
+  n_收费项目id 诊疗收费关系.收费项目id%Type;
+  n_收费数量   诊疗收费关系.收费数量 %Type;
+  n_固有对照   诊疗收费关系.固有对照%Type;
+  n_按规格适配 诊疗收费关系.按规格适配%Type;
+  n_从属项目   诊疗收费关系.从属项目%Type;
+  n_收费方式   诊疗收费关系.收费方式%Type;
+  n_方案id     诊疗收费关系.方案id%Type;
+  n_病人来源   诊疗收费关系.病人来源%Type; --固定值0/1/2
+  n_适用科室id 诊疗收费关系.适用科室id%Type;
+  n_费用性质   诊疗收费关系.费用性质%Type;
+  n_部位加收   诊疗收费关系.部位加收%Type;
+
+  v_Error Varchar2(255);
+  Err_Custom Exception;
+
+  Procedure p_收费对照_通用 As
+    v_Type     Varchar2(20);
+    v_科室ids  Varchar2(4000);
+    n_对照方式 Number(3); --1-通用，2-部位，3-加收
+  
+    n_部位 Number(1) := 0;
+    n_加收 Number(1) := 0; --床旁术中加收
+    n_来源 Number(1) := 0;
+  Begin
+  
+    n_病人来源   := j_Json.Get_Number('病人来源');
+    n_对照方式   := j_Json.Get_Number('对照方式');
+    v_科室ids    := j_Json.Get_String('科室ids');
+    n_适用科室id := j_Json.Get_Number('科室id');
+    n_收费项目id := j_Json.Get_Number('收费项目id');
+    v_检查部位   := j_Json.Get_String('检查部位');
+    v_检查方法   := j_Json.Get_String('检查方法');
+  
+    n_来源 := n_病人来源;
+    If n_对照方式 = 2 Then
+      n_部位 := 1;
+    Elsif n_对照方式 = 3 Then
+      n_加收 := 1;
+    End If;
+  
+    Select a.类别, a.执行标记 Into v_类别, n_执行标记 From 诊疗项目目录 A Where a.Id = n_记录id;
+  
+    If Not (v_类别 = 'D' And n_执行标记 = 1) And n_加收 = 1 Then
+      v_Error := '只有检查类项目才可以设置床旁或术中加收费用。';
+      Raise Err_Custom;
+    End If;
+  
+    If v_类别 <> 'D' And n_部位 = 1 Then
+      v_Error := '只有检查类项目才可以设置部位方法费用。';
+      Raise Err_Custom;
+    End If;
+  
+    If 9 = n_功能 Then
+      Delete 诊疗收费关系 R
+      Where r.诊疗项目id = n_记录id And (0 = n_来源 And Nvl(r.适用科室id, 0) = 0 And Nvl(r.病人来源, 0) = 0 And
+            (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+            (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收) Or
+            1 = n_来源 And Nvl(r.适用科室id, 0) = n_适用科室id And Nvl(r.病人来源, 0) = 1 And
+            (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+            (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收) Or
+            2 = n_来源 And Nvl(r.适用科室id, 0) = n_适用科室id And Nvl(r.病人来源, 0) = 2 And
+            (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+            (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收));
+      Return;
+    End If;
+  
+    If 10 = n_功能 Then
+      Delete 诊疗收费关系 R
+      Where r.诊疗项目id = n_记录id And r.收费项目id = n_收费项目id And
+            (0 = n_来源 And Nvl(r.适用科室id, 0) = 0 And Nvl(r.病人来源, 0) = 0 And
+            (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+            (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收) Or
+            1 = n_来源 And Nvl(r.适用科室id, 0) = n_适用科室id And Nvl(r.病人来源, 0) = 1 And
+            (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+            (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收) Or
+            2 = n_来源 And Nvl(r.适用科室id, 0) = n_适用科室id And Nvl(r.病人来源, 0) = 2 And
+            (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+            (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收));
+      Return;
+    End If;
+  
+    If 11 = n_功能 Then
+      n_收费项目id := j_Json.Get_Number('old_收费项目id');
+      If Nvl(n_收费项目id, 0) > 0 Then
+        n_来源       := j_Json.Get_Number('old_病人来源');
+        n_适用科室id := j_Json.Get_Number('old_科室id');
+        v_检查部位   := j_Json.Get_String('old_检查部位');
+        v_检查方法   := j_Json.Get_String('old_检查方法');
+      
+        --如果传旧的对照，则先删除
+        Delete 诊疗收费关系 R
+        Where r.诊疗项目id = n_记录id And r.收费项目id = n_收费项目id And Nvl(r.病人来源, 0) = n_来源 And Nvl(r.适用科室id, 0) = n_适用科室id And
+              Nvl(r.费用性质, 0) = n_加收 And Nvl(r.检查部位, 'NONE') = Nvl(v_检查部位, 'NONE') And
+              Nvl(r.检查方法, 'NONE') = Nvl(v_检查方法, 'NONE');
+      
+        --将值还回去
+        n_来源 := n_病人来源;
+      
+        n_适用科室id := j_Json.Get_Number('科室id');
+      End If;
+    
+      n_收费项目id := j_Json.Get_Number('收费项目id');
+      n_收费数量   := j_Json.Get_Number('收费数量');
+      n_固有对照   := j_Json.Get_Number('固有对照');
+      n_按规格适配 := j_Json.Get_Number('按规格适配');
+      n_从属项目   := j_Json.Get_Number('从属项目');
+      n_收费方式   := j_Json.Get_Number('收费方式');
+      n_方案id     := j_Json.Get_Number('方案id');
+      n_适用科室id := j_Json.Get_Number('科室id');
+    
+      If Nvl(n_收费数量, 0) = 0 Then
+        n_收费数量 := 1;
+      End If;
+    
+      Select 类别 Into v_Type From 收费项目目录 Where ID = n_收费项目id;
+    
+      If Not (v_Type = '4' And n_收费方式 = 1 And n_按规格适配 = 1) Then
+        n_按规格适配 := Null;
+      End If;
+    
+      -- 收费方式=8 且方案id>0 才保留方案ID
+      If Not (n_收费方式 = 8 And n_方案id > 0) Then
+        n_方案id := Null;
+      End If;
+    
+      n_费用性质 := 0;
+      v_检查部位 := Null;
+      v_检查方法 := Null;
+      n_部位加收 := Null;
+    
+      If n_加收 = 1 Then
+        n_费用性质   := 1;
+        v_检查部位   := Null;
+        v_检查方法   := Null;
+        n_部位加收   := Null;
+        n_按规格适配 := Null;
+        n_方案id     := Null;
+      End If;
+    
+      If n_部位 = 1 Then
+        n_费用性质   := 0;
+        v_检查部位   := j_Json.Get_String('检查部位');
+        v_检查方法   := j_Json.Get_String('检查方法');
+        n_部位加收   := j_Json.Get_Number('部位加收');
+        n_按规格适配 := Null;
+        n_方案id     := Null;
+        If n_收费方式 Not In (0, 2, 9) Then
+          n_收费方式 := 0;
+        End If;
+      
+      End If;
+    
+      -- 最终插入
+      Insert Into 诊疗收费关系
+        (诊疗项目id, 收费项目id, 收费数量, 固有对照, 按规格适配, 从属项目, 费用性质, 检查部位, 检查方法, 收费方式, 适用科室id, 病人来源, 部位加收, 方案id)
+      Values
+        (n_记录id, n_收费项目id, n_收费数量, n_固有对照, n_按规格适配, n_从属项目, n_费用性质, v_检查部位, v_检查方法, n_收费方式, n_适用科室id, n_病人来源, n_部位加收,
+         n_方案id);
+    
+      Return;
+    End If;
+  
+    Delete 诊疗收费关系 R
+    Where r.诊疗项目id = n_记录id And (0 = n_来源 And Nvl(r.适用科室id, 0) = 0 And Nvl(r.病人来源, 0) = 0 And
+          (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+          (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收) Or
+          1 = n_来源 And Nvl(r.适用科室id, 0) > 0 And Nvl(r.病人来源, 0) = 1 And
+          (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+          (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收) Or
+          2 = n_来源 And Nvl(r.适用科室id, 0) > 0 And Nvl(r.病人来源, 0) = 2 And
+          (r.检查部位 Is Null And 0 = n_部位 Or r.检查部位 Is Not Null And 1 = n_部位) And
+          (Nvl(r.费用性质, 0) = 0 And 0 = n_加收 Or r.费用性质 = 1 And 1 = n_加收));
+  
+    Jl_List := j_Json.Get_Pljson_List('对照列表');
+    n_Count := Jl_List.Count;
+  
+    For I In 1 .. n_Count Loop
+    
+      j_Json_Tmp := Pljson();
+      j_Json_Tmp := Pljson(Jl_List.Get(I));
+    
+      n_收费项目id := j_Json_Tmp.Get_Number('收费项目id');
+      n_收费数量   := j_Json_Tmp.Get_Number('收费数量');
+      n_固有对照   := j_Json_Tmp.Get_Number('固有对照');
+      n_按规格适配 := j_Json_Tmp.Get_Number('按规格适配');
+      n_从属项目   := j_Json_Tmp.Get_Number('从属项目');
+      n_收费方式   := j_Json_Tmp.Get_Number('收费方式');
+      n_方案id     := j_Json_Tmp.Get_Number('方案id');
+    
+      If Nvl(n_收费数量, 0) = 0 Then
+        n_收费数量 := 1;
+      End If;
+    
+      Select 类别 Into v_Type From 收费项目目录 Where ID = n_收费项目id;
+    
+      If Not (v_Type = '4' And n_收费方式 = 1 And n_按规格适配 = 1) Then
+        n_按规格适配 := Null;
+      End If;
+    
+      -- 收费方式=8 且方案id>0 才保留方案ID
+      If Not (n_收费方式 = 8 And n_方案id > 0) Then
+        n_方案id := Null;
+      End If;
+    
+      n_适用科室id := Null;
+      n_费用性质   := 0;
+      v_检查部位   := Null;
+      v_检查方法   := Null;
+      n_部位加收   := Null;
+    
+      If n_加收 = 1 Then
+        n_费用性质   := 1;
+        v_检查部位   := Null;
+        v_检查方法   := Null;
+        n_部位加收   := Null;
+        n_按规格适配 := Null;
+        n_方案id     := Null;
+      End If;
+    
+      If n_部位 = 1 Then
+        n_费用性质   := 0;
+        v_检查部位   := j_Json_Tmp.Get_String('检查部位');
+        v_检查方法   := j_Json_Tmp.Get_String('检查方法');
+        n_部位加收   := j_Json_Tmp.Get_Number('部位加收');
+        n_按规格适配 := Null;
+        n_方案id     := Null;
+        If n_收费方式 Not In (0, 2, 9) Then
+          n_收费方式 := 0;
+        End If;
+      
+      End If;
+    
+      If v_科室ids Is Null Then
+        -- 最终插入
+        Insert Into 诊疗收费关系
+          (诊疗项目id, 收费项目id, 收费数量, 固有对照, 按规格适配, 从属项目, 费用性质, 检查部位, 检查方法, 收费方式, 适用科室id, 病人来源, 部位加收, 方案id)
+        Values
+          (n_记录id, n_收费项目id, n_收费数量, n_固有对照, n_按规格适配, n_从属项目, n_费用性质, v_检查部位, v_检查方法, n_收费方式, n_适用科室id, n_病人来源, n_部位加收,
+           n_方案id);
+      Else
+        For r_科室 In (Select /*+cardinality(j,10) */
+                      Column_Value As 科室id
+                     From Table(f_Str2list(v_科室ids)) J) Loop
+          n_适用科室id := To_Number(r_科室.科室id);
+          Insert Into 诊疗收费关系
+            (诊疗项目id, 收费项目id, 收费数量, 固有对照, 按规格适配, 从属项目, 费用性质, 检查部位, 检查方法, 收费方式, 适用科室id, 病人来源, 部位加收, 方案id)
+          Values
+            (n_记录id, n_收费项目id, n_收费数量, n_固有对照, n_按规格适配, n_从属项目, n_费用性质, v_检查部位, v_检查方法, n_收费方式, n_适用科室id, n_病人来源,
+             n_部位加收, n_方案id);
+        End Loop;
+      End If;
+    End Loop;
+  End;
 
 Begin
 
@@ -88,6 +352,16 @@ Begin
   n_功能   := j_Json.Get_Number('功能');
   n_记录id := j_Json.Get_Number('记录id');
 
+  If 7 = n_功能 Then
+    Update 诊疗项目目录 Set 计价性质 = j_Json.Get_Number('计价性质') Where ID = n_记录id;
+    Return;
+  End If;
+
+  If 8 = n_功能 Or 9 = n_功能 Or 10 = n_功能 Or 11 = n_功能 Then
+    p_收费对照_通用;
+    Return;
+  End If;
+
   v_操作员信息 := j_Json.Get_String('UserName') || '|' || j_Json.Get_String('AccountName') || '|' ||
              j_Json.Get_String('staff_id');
   v_用户名     := j_Json.Get_String('AccountName');
@@ -104,6 +378,33 @@ Begin
       End If;
     End Loop;
     Zl_Zlauditlog_Insert(v_用户名, v_机器名, 3, 100, '1054', '删除项目', '编码:' || v_编码 || ',名称:' || v_名称, v_操作员信息);
+    Return;
+  End If;
+
+  If 4 = n_功能 Then
+    --停用
+    d_停用时间 := To_Date(j_Json.Get_String('停用时间'), 'yyyy-mm-dd hh24:mi:ss');
+    v_停用原因 := j_Json.Get_String('停用原因');
+    v_名称     := j_Json.Get_String('名称');
+    Zl_诊疗项目_Stop(n_记录id, v_停用原因, d_停用时间);
+    Zl_Zlauditlog_Insert(v_用户名, v_机器名, 2, 100, '1054', '启用/停用', '停用项目：名称' || v_名称, v_操作员信息);
+    Return;
+  End If;
+
+  If 5 = n_功能 Then
+    --启用
+    v_启用原因 := j_Json.Get_String('启用原因');
+    Zl_诊疗项目_Reuse(n_记录id, v_启用原因);
+    v_名称 := j_Json.Get_String('名称');
+    Zl_Zlauditlog_Insert(v_用户名, v_机器名, 2, 100, '1054', '启用/停用', '启用项目：名称' || v_名称, v_操作员信息);
+    Return;
+  End If;
+
+  If 6 = n_功能 Then
+    --检验采集方式设置
+    Zl_用法用量_Update(n_记录id, Null, 0, 0, j_Json.Get_String('采集方式'), j_Json.Get_Number('应用范围类型'),
+                   j_Json.Get_String('应用范围'));
+    Zl_Zlauditlog_Insert(v_用户名, v_机器名, 2, 100, '1054', '采集方式', '采集方式修改改_项目ID=' || n_记录id, v_操作员信息);
     Return;
   End If;
 
@@ -209,7 +510,7 @@ Begin
               Zl_诊疗项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法);
             End If;
           End Loop;
-        End If;      
+        End If;
       End Loop;
       If n_按规则计费 = 1 Then
         Zl_放射项目部位_Delete(n_记录id, 1);
@@ -220,6 +521,8 @@ Begin
   End If;
 
 Exception
+  When Err_Custom Then
+    Raise_Application_Error(-20101, '[ZLSOFT]' || v_Error || '[ZLSOFT]');
   When Others Then
     zl_ErrorCenter(SQLCode, SQLErrM);
 End Zl_Hrssvr_Cedit;
