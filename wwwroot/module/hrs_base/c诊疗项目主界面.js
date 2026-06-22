@@ -349,7 +349,7 @@ window.fun获取打开页面地址 = function (dataRow, type) {
         localStorage.removeItem("citem_to_charge_fee");//清除缓存 
         var source = 0;
         var is_part = 0;
-        var is_add = 0; 
+        var is_add = 0;
         var 对照方式 = "";
         if (citem_to_charge_fee) {
             citem_to_charge_fee = JSON.parse(citem_to_charge_fee);
@@ -358,7 +358,7 @@ window.fun获取打开页面地址 = function (dataRow, type) {
         if ("" == 对照方式) {
             return "";
         }
-  
+
         if (citem_to_charge_fee.检查部位 == "1") {
             is_part = 1;
             is_add = 0;
@@ -376,8 +376,9 @@ window.fun获取打开页面地址 = function (dataRow, type) {
         } else {
             pageid = "f1c6ee87-5399-4494-9395-0524d6aacf5c";//一般通用
         }
-
-
+        if (citem_to_charge_fee.按规则计费 == "1") {
+            pageid = "bbcbfa69-32b8-4414-9e19-fed84231147f";//新放射
+        }
         // {
         //     "对照方式": "门诊科室",
         //     "门诊科室": "1484335",
