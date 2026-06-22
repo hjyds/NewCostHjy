@@ -1,21 +1,22 @@
 Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
-  --功能：诊疗项目管理
+  --功能：诊疗项目目录数据的增删改
+  --              诊疗项目的收费对照数据编辑
+
   j_Input    Pljson;
   j_Json     Pljson;
   j_Json_Tmp Pljson;
   Jl_List    Pljson_List;
   Jl_Pacs    Pljson_List;
   j_Way      Pljson;
-
-  n_Count Number(3);
+  n_Count    Number(3);
 
   n_功能 Number(3); --1-新增,2-修改，3-删除，4-停用，5-启用，6-采集方式设置
-
-  --7-调整诊疗项目(计价性质)
-  --8-诊疗收费对照，通用设置    
-  --9-按范围删除收费对照
-  --10-删除一行收费对照
-  --11-插入一行收费对照   
+  --                        7-调整诊疗项目(计价性质)（按规则计费的方案处理）
+  --                        8-诊疗收费对照，通用设置    
+  --                        9-按范围删除收费对照
+  --                        10-删除一行收费对照
+  --                        11-插入一行收费对照  
+  --                        12-新放射诊疗项目对照编辑一行
 
   n_记录id           诊疗项目目录.Id%Type;
   n_分类id           诊疗项目目录.Id%Type;
@@ -91,9 +92,58 @@ Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
   n_适用科室id 诊疗收费关系.适用科室id%Type;
   n_费用性质   诊疗收费关系.费用性质%Type;
   n_部位加收   诊疗收费关系.部位加收%Type;
+  n_规则id     Number(18);
+  n_计价性质   Number(3);
 
   v_Error Varchar2(255);
   Err_Custom Exception;
+
+  --新放射收费对照(单行数据的，改，删，增)
+  Procedure p_收费对照_放射 As
+    v_分组名称 Varchar2(600);
+    n_指定总量 放射收费关系.指定总量%Type;
+    n_费用性质 放射收费关系.费用性质%Type;
+    n_删除行   Number(3);
+  Begin  
+    n_收费项目id := j_Json.Get_Number('old_收费项目id');
+    If n_收费项目id > 0 Then
+      n_费用性质 := j_Json.Get_Number('old_费用性质');
+      v_检查部位 := j_Json.Get_String('old_检查部位');
+      v_检查方法 := j_Json.Get_String('old_检查方法');
+      Delete 放射收费关系 R
+      Where r.诊疗项目id = n_记录id And r.收费项目id = n_收费项目id And Nvl(r.费用性质, 0) = n_费用性质 And
+            Nvl(r.检查部位, 'NONE') = Nvl(v_检查部位, 'NONE') And Nvl(r.检查方法, 'NONE') = Nvl(v_检查方法, 'NONE');
+    End If;
+  
+    n_收费项目id := j_Json.Get_Number('收费项目id');
+    n_费用性质   := j_Json.Get_Number('费用性质');
+    v_检查部位   := j_Json.Get_String('检查部位');
+    v_检查方法   := j_Json.Get_String('检查方法');
+  
+    n_删除行 := j_Json.Get_Number('删除行');
+  
+    If n_删除行 = 1 Then
+      Delete 放射收费关系 R
+      Where r.诊疗项目id = n_记录id And r.收费项目id = n_收费项目id And Nvl(r.费用性质, 0) = n_费用性质 And
+            Nvl(r.检查部位, 'NONE') = Nvl(v_检查部位, 'NONE') And Nvl(r.检查方法, 'NONE') = Nvl(v_检查方法, 'NONE');
+      Return;
+    End If;
+  
+    If Nvl(n_收费数量, 0) = 0 Then
+      n_收费数量 := 1;
+    End If;
+  
+    n_收费数量 := j_Json.Get_Number('收费数量');
+    n_指定总量 := j_Json.Get_Number('指定总量');
+    v_分组名称 := j_Json.Get_String('分组名称');
+    n_收费方式 := j_Json.Get_Number('收费方式');
+  
+    Insert Into 放射收费关系
+      (诊疗项目id, 收费项目id, 费用性质, 收费数量, 分组名称, 检查部位, 检查方法, 指定总量, 收费方式)
+    Values
+      (n_记录id, n_收费项目id, n_费用性质, n_收费数量, v_分组名称, v_检查部位, v_检查方法, n_指定总量, n_收费方式);
+  
+  End;
 
   Procedure p_收费对照_通用 As
     v_Type     Varchar2(20);
@@ -353,12 +403,34 @@ Begin
   n_记录id := j_Json.Get_Number('记录id');
 
   If 7 = n_功能 Then
-    Update 诊疗项目目录 Set 计价性质 = j_Json.Get_Number('计价性质') Where ID = n_记录id;
+    n_按规则计费 := j_Json.Get_Number('按规则计费');
+    n_规则id     := j_Json.Get_Number('规则id');
+  
+    n_计价性质 := j_Json.Get_Number('计价性质');
+  
+    If n_按规则计费 = 1 Then
+      n_计价性质 := 0;
+    
+      If n_规则id > 0 Then
+        Zl_收费规则适用_Update(n_记录id, n_规则id);
+      Else
+        Delete 收费规则适用 Where 诊疗项目id = n_记录id;
+      End If;
+    
+    End If;
+  
+    Update 诊疗项目目录 Set 计价性质 = n_计价性质 Where ID = n_记录id;
+  
     Return;
   End If;
 
   If 8 = n_功能 Or 9 = n_功能 Or 10 = n_功能 Or 11 = n_功能 Then
     p_收费对照_通用;
+    Return;
+  End If;
+
+  If 12 = n_功能 Then
+    p_收费对照_放射;
     Return;
   End If;
 
@@ -490,10 +562,17 @@ Begin
         j_Json_Tmp := Pljson(Jl_List.Get(I));
         v_检查部位 := j_Json_Tmp.Get_String('_部位');
       
-        Select Max(Zl_Fun_检查方法解析(a.方法)) As 数组串
-        Into v_Jtemp
-        From 诊疗检查部位 A
-        Where a.类型 = v_操作类型 And a.名称 = v_检查部位;
+        If 1 = n_按规则计费 Then
+          Select Max(Zl_Fun_检查方法解析(a.方法)) As 数组串
+          Into v_Jtemp
+          From 放射检查部位 A
+          Where a.类型 = v_操作类型 And a.名称 = v_检查部位;
+        Else
+          Select Max(Zl_Fun_检查方法解析(a.方法)) As 数组串
+          Into v_Jtemp
+          From 诊疗检查部位 A
+          Where a.类型 = v_操作类型 And a.名称 = v_检查部位;
+        End If;
       
         If v_Jtemp Is Not Null Then
           Jl_Pacs := Pljson_List(v_Jtemp);
