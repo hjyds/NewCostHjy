@@ -1,4 +1,5 @@
-﻿using NewCostHjy.Common;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NewCostHjy.Common;
 using NewCostHjy.DAL;
 using NewCostHjy.Models;
 using Newtonsoft.Json;
@@ -7,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using ZLSoft.Base.Tracing;
 using static NewCostHjy.Common.Const;
 
@@ -724,6 +727,19 @@ namespace NewCostHjy.BLL
                 outList.Add(oneRow);
             }
             return outList;
+        }
+
+        public string TestMA(string appId, string key, string timestamp)
+        {
+            //throw new NotImplementedException();
+
+            string input = $"SOFTUN|{appId}|{key}|{timestamp}|SOFTUN";
+            using var md5 = MD5.Create();
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var hash = md5.ComputeHash(bytes);
+            var sb = new StringBuilder(hash.Length * 2);
+            foreach (var b in hash) sb.Append(b.ToString("x2"));
+            return $"Bearer {sb}";
         }
     }
 }

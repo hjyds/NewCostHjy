@@ -68,3 +68,27 @@ function AioSendDataToVb(dataIn) {
     }
     
 }
+
+var appsetings =
+
+{
+    "platformBase": {  //平台地址基本信息
+        "apiUrl": "http://192.168.31.226:13100/instance/publish/rmip/HIPMessageServer", //平台api地址
+        "appId": "4edd87c8-890a-478f-b615-06af6c5538e0",                                //应用id
+        "secretKey": "BzRsoJGGxptFHDOg/338u3ULT+KddqZyqaZ1IRIhChV5CaKDmzMpFhHWYGyvaGfw" //应用密钥
+    },
+    "regionImageBiz": { //影像业务配置
+        "enable": 1,    //是否启用影像业务 0/1
+        "allowedPACSItems": "22,134,33,134"  //检查诊疗项目id逗号拼串，不能为空
+    },
+    "transferBiz": {                //转诊业务配置
+        "enable": 1,                //是否启用转诊业务 0/1
+        "receiveMode": {            //接收模式配置
+            "centralReceive": 1,    //集中接收模式 0/1
+            "windowReceive": 1      //窗口接收模式 0/1
+        }
+    },
+    "regionEmrBrowser": {           //区域电子病历浏览器配置
+        "enable": 1                 //是否启用区域电子病历浏览器 0/1
+    }
+}

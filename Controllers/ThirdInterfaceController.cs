@@ -837,5 +837,14 @@ namespace NewCostHjy.Controllers {
                 return Json(new { success = false, message = "查询失败：" + ex.Message });
             }
         }
+
+        [HttpGet("TestMA")]
+        public IActionResult TestMA()
+        {
+            ZlhisInterfaceBLL zlhisInterfaceBLL = new ZlhisInterfaceBLL();
+            string st = Convert.ToString(DateTime.Now.Ticks);
+            string strOut = zlhisInterfaceBLL.TestMA("4edd87c8-890a-478f-b615-06af6c5538e0", "BzRsoJGGxptFHDOg/338u3ULT+KddqZyqaZ1IRIhChV5CaKDmzMpFhHWYGyvaGfw", st);
+            return Json(new { success = true, message = "测试成功", data = "MA接口测试成功" });
+        }
     }
 }
