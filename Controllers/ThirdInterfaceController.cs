@@ -544,6 +544,84 @@ namespace NewCostHjy.Controllers {
         }
 
         /// <summary>
+        /// HIP 消息服务模拟接口
+        /// </summary>
+        /// <param name="parIn">HIP 消息服务入参</param>
+        /// <returns>固定返回结果，target_id 取自入参 head.id</returns>
+        [HttpPost("HIPMessageServer")]
+        public IActionResult HIPMessageServer([FromBody] dynamic parIn)
+        {
+            #region 把入参记录下来 测试日志
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            string id = Guid.NewGuid().ToString();
+            string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
+            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", "HIPMessageServer");
+            #endregion
+
+            string targetId = string.Empty;
+            try
+            {
+                targetId = parIn?.head?.id?.ToString() ?? string.Empty;
+            }
+            catch
+            {
+                targetId = string.Empty;
+            }
+
+            string appCode = string.Empty;
+            try
+            {
+                appCode = parIn?.head?.app_code?.ToString() ?? string.Empty;
+            }
+            catch
+            {
+                appCode = string.Empty;
+            }
+
+            string targetAppCode = string.Empty;
+            try
+            {
+                targetAppCode = parIn?.head?.target_app_code?.ToString() ?? string.Empty;
+            }
+            catch
+            {
+                targetAppCode = string.Empty;
+            }
+
+            string serviceCode = string.Empty;
+            try
+            {
+                serviceCode = parIn?.head?.service_code?.ToString() ?? string.Empty;
+            }
+            catch
+            {
+                serviceCode = string.Empty;
+            }
+
+            string strWebUrl = "/PatientVte/medasso"
+                + "?app_code=" + Uri.EscapeDataString(appCode)
+                + "&target_app_code=" + Uri.EscapeDataString(targetAppCode)
+                + "&service_code=" + Uri.EscapeDataString(serviceCode);
+            dynamic dataTmp = new
+            {
+                head = new
+                {
+                    id = Guid.NewGuid().ToString(),
+                    target_id = targetId,
+                    code = 0,
+                    timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                    count = 0,
+                    msg = "没有找到对应的账号"
+                },
+                data = new
+                {
+                    web_url = strWebUrl
+                }
+            };
+            return Json(dataTmp);
+        }
+
+        /// <summary>
         /// 'WEB病案首页管理系统', '取消提交检查' 导航台住院医生站 取消提交检查时调用
         /// </summary>
         /// <param name="parIn">{"PatientId": "病人id","EnconterId": "就诊id"}->{"PatientId":"190675","EnconterId":"1"} </param>

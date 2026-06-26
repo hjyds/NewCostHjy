@@ -85,5 +85,30 @@ namespace NewCostHjy.Controllers.WebPage {
         {
             return View();
         }
+
+        /// <summary>
+        /// MEDASSO 参数展示页面
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult medasso()
+        {
+            Dictionary<string, string> parDic = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var item in Request.Query)
+            {
+                parDic[item.Key] = item.Value.ToString();
+            }
+
+            if (Request.HasFormContentType)
+            {
+                foreach (var item in Request.Form)
+                {
+                    parDic[item.Key] = item.Value.ToString();
+                }
+            }
+
+            ViewBag.BaseData = parDic;
+            return View();
+        }
     }
 }

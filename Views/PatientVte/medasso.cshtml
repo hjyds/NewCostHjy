@@ -1,0 +1,74 @@
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "MEDASSO参数展示";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var parDic = ViewBag.BaseData as IDictionary<string, string> ?? new Dictionary<string, string>();
+}
+
+<style>
+    .medasso-page {
+        padding: 24px;
+    }
+
+    .medasso-title {
+        margin-bottom: 16px;
+        font-size: 22px;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .medasso-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+    .medasso-table th,
+    .medasso-table td {
+        padding: 12px 14px;
+        border: 1px solid #d9e2f1;
+        text-align: left;
+        vertical-align: top;
+        word-break: break-all;
+    }
+
+    .medasso-table th {
+        background: #eef4fb;
+        color: #1f2937;
+    }
+
+    .medasso-empty {
+        color: #6b7280;
+    }
+</style>
+
+<div class="medasso-page">
+    <div class="medasso-title">(医共体测试网页)入参信息</div>
+
+    <table class="medasso-table">
+        <thead>
+            <tr>
+                <th style="width: 240px;">参数名</th>
+                <th>参数值</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (parDic.Count == 0)
+            {
+                <tr>
+                    <td colspan="2" class="medasso-empty">当前请求没有接收到参数。</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in parDic)
+                {
+                    <tr>
+                        <td>@item.Key</td>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
