@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Elasticsearch.Net;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NewCostHjy.Common;
 using NewCostHjy.DAL;
 using NewCostHjy.Models;
@@ -740,6 +741,38 @@ namespace NewCostHjy.BLL
             var sb = new StringBuilder(hash.Length * 2);
             foreach (var b in hash) sb.Append(b.ToString("x2"));
             return $"Bearer {sb}";
+        }
+
+        /// <summary>
+        /// 医共体，处方上传功能服务号（M_DRUG_4002）
+        /// </summary>
+        /// <param name="dynamic"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public M_DRUG_4002_Out M_DRUG_4002_Fun(string dynamic)
+        {
+            M_DRUG_4002_In inpar = new M_DRUG_4002_In();
+            inpar = Newtonsoft.Json.JsonConvert.DeserializeObject<M_DRUG_4002_In>(dynamic);
+            M_DRUG_4002_Out outData = new M_DRUG_4002_Out();
+            List<M_DRUG_4002_Out_Item> lstData = new List<M_DRUG_4002_Out_Item>();
+
+            foreach (M_DRUG_4002_Item item in inpar.body)
+            {
+                M_DRUG_4002_Out_Item one = new M_DRUG_4002_Out_Item();
+                one.internal_give_no = item.internal_give_no;
+                one.detailModels = new List<M_DRUG_4002_Out_dts>();
+                foreach (M_DRUG_4002_dts itemDt in item.details)
+                {
+                    M_DRUG_4002_Out_dts oneDt = new M_DRUG_4002_Out_dts();
+                    oneDt.drug_code = itemDt.drug_code;
+                    oneDt.price = 77.77;
+                    oneDt.in_store_price = 66.66;
+                    one.detailModels.Add(oneDt);
+                }
+                lstData.Add(one);
+            }
+            outData.data = lstData;
+            return outData;
         }
     }
 }

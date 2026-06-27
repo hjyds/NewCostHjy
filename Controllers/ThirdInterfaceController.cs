@@ -618,6 +618,40 @@ namespace NewCostHjy.Controllers {
                     web_url = strWebUrl
                 }
             };
+            if ("M_PACS_2001" == serviceCode)
+            {
+                dataTmp = new
+                {
+                    head = new
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        target_id = targetId,
+                        code = 0,
+                        timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                        count = 0,
+                        msg = "没有找到对应的账号"
+                    },
+                    data = new[]
+                    {
+                        new
+                        {
+                            code = "CODE001",
+                            name = "医区体机构A"
+                        },
+                        new
+                        {
+                            code = "CODE002",
+                            name = "医区体机构B"
+                        }
+                    }
+                };
+            }
+            ZlhisInterfaceBLL zlhisInterfaceBLL = new ZlhisInterfaceBLL();
+            if ("M_DRUG_4002" == serviceCode)
+            {
+                var dataMod = zlhisInterfaceBLL.M_DRUG_4002_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
+                return Json(dataMod);
+            }
             return Json(dataTmp);
         }
 
