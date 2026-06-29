@@ -55,7 +55,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 成本价
         /// </summary>
-        public double in_store_price { get; set; }
+        public double? in_store_price { get; set; }
         /// <summary>
         /// 布洛芬缓释胶囊
         /// </summary>
@@ -67,7 +67,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 售价，单价，药品单价
         /// </summary>
-        public double price { get; set; }
+        public double? price { get; set; }
     }
 
     public class M_DRUG_4002_Out_Item
@@ -116,11 +116,11 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 
         /// </summary>
-        public int single { get; set; }
+        public decimal? single { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int total_qty { get; set; }
+        public decimal? total_qty { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -152,7 +152,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 
         /// </summary>
-        public int rec_prop { get; set; }
+        public int? rec_prop { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -252,7 +252,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 
         /// </summary>
-        public int package { get; set; }
+        public int? package { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -268,7 +268,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 
         /// </summary>
-        public int give_count { get; set; }
+        public int? give_count { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -288,7 +288,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 
         /// </summary>
-        public int dispensing_type { get; set; }
+        public string dispensing_type { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -320,7 +320,7 @@ namespace NewCostHjy.Models
         /// <summary>
         /// 
         /// </summary>
-        public int drug_status { get; set; }
+        public int? drug_status { get; set; }
         /// <summary>
         /// 
         /// </summary>

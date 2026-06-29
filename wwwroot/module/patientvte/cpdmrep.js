@@ -18,7 +18,21 @@
             CpdmDrugLoad()
         });
 
+        
+        $('body').on('click', "#btn_patitest", function (e) {
+            CpdmRepDrugTestMsg()
+        });
+
     });
+
+    function CpdmRepDrugTestMsg() {
+        var dataMsg = { "Action": "Close", "SysTag": "专业版病人管理系统", "Opportunity": "MsgByAIO", "Data": { "PatiId": 204700, "ApplyId": "8708e90f-38dc-4fd4-b550-0b4386e52586" } };
+    
+        try {
+            //AIO方式
+            AioSendDataToVb(dataMsg);
+        } catch (e) { }
+    }
 
     function CpdmDrugLoad() {
         const data = JSON.parse(_mvcData.data);
