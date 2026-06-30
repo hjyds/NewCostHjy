@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NewCostHjy.Models
 {
@@ -7,6 +8,307 @@ namespace NewCostHjy.Models
     /// </summary>
     public class MAModelClass
     {
+    }
+
+    /// <summary>
+    /// 医共体服务调用后出参的头信息
+    /// </summary>
+    public class MA_API_Return_hd
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string target_id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string timestamp { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int count { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string msg { get; set; }
+    }
+
+    public class M_PACS_2002_Part_listItem
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public int sort { get; set; }
+        /// <summary>
+        /// 蝶鞍
+        /// </summary>
+        public string study_part_code { get; set; }
+        /// <summary>
+        /// 蝶鞍
+        /// </summary>
+        public string study_part_name { get; set; }
+        /// <summary>
+        /// 侧位
+        /// </summary>
+        public string study_method_code { get; set; }
+        /// <summary>
+        /// 侧位
+        /// </summary>
+        public string study_method_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string superior_method_code { get; set; }
+    }
+
+
+    public class M_PACS_2002_Body_item
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public int area_type { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string order_apply_org_code { get; set; }
+        /// <summary>
+        /// 中联医院信息系统（测试）
+        /// </summary>
+        public string order_apply_org_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string order_apply_dept_code { get; set; }
+        /// <summary>
+        /// 内科
+        /// </summary>
+        public string order_apply_dept_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string order_apply_doctor_code { get; set; }
+        /// <summary>
+        /// 张永康
+        /// </summary>
+        public string order_apply_doctor_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string order_apply_doctor_phone { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? order_apply_time { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_id { get; set; }
+        /// <summary>
+        /// 测试人
+        /// </summary>
+        public string pt_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_sex { get; set; }
+        /// <summary>
+        /// 27岁
+        /// </summary>
+        public string pt_age { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_birthday { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int pt_heights { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int pt_weight { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_bed_no { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_idcard { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_phone { get; set; }
+        /// <summary>
+        /// 中国
+        /// </summary>
+        public string pt_country { get; set; }
+        /// <summary>
+        /// 辽宁省丹东市凤城市沙里寨镇
+        /// </summary>
+        public string pt_address { get; set; }
+        /// <summary>
+        /// 辽宁省丹东市凤城市沙里寨镇
+        /// </summary>
+        public string pt_address_extras { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int pt_source_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string pt_visit_no { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? visit_time { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string clinical_purpose { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string clinical_diagnosis { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string clinical_show { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string study_order_no { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string study_instance_uid { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string study_item_code { get; set; }
+        /// <summary>
+        /// 胸部体层摄影
+        /// </summary>
+        public string study_item_name { get; set; }
+        /// <summary>
+        /// X线
+        /// </summary>
+        public string study_type_code { get; set; }
+        /// <summary>
+        /// X线
+        /// </summary>
+        public string study_type_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string area_apply_org_code { get; set; }
+        /// <summary>
+        /// 中联医院信息系统（测试）
+        /// </summary>
+        public string area_apply_org_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string area_apply_doctor_code { get; set; }
+        /// <summary>
+        /// 张永康
+        /// </summary>
+        public string area_apply_doctor_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string area_apply_dept_code { get; set; }
+        /// <summary>
+        /// 内科
+        /// </summary>
+        public string area_apply_dept_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string area_diagnosis_org_code { get; set; }
+        /// <summary>
+        /// 医区体机构A
+        /// </summary>
+        public string area_diagnosis_org_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? area_apply_time { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int is_emergency { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string exec_dept_code { get; set; }
+        /// <summary>
+        /// 一病区
+        /// </summary>
+        public string exec_dept_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string register_doctor_code { get; set; }
+        /// <summary>
+        /// 张永康
+        /// </summary>
+        public string register_doctor_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string register_time { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string study_time { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string study_eqpt_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string diagnosis_doctor_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string diagnosis_doctor_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string diagnosis_time { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int positive_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int critical_value_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<M_PACS_2002_Part_listItem> part_list { get; set; }
+    }
+
+    /// <summary>
+    /// 影像检查项目申请
+    /// </summary>
+    public class M_PACS_2002_In {
+        public MA_head_in head { get; set; }
+        public M_PACS_2002_Body_item body { get;set ; }
+
     }
 
     /// <summary>
@@ -25,7 +327,6 @@ namespace NewCostHjy.Models
     /// </summary>
     public class M_DRUG_4002_Out
     {
-
         public MA_head_out head { get; set; }
 
         public List<M_DRUG_4002_Out_Item> data { get; set; }

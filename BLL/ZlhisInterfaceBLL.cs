@@ -693,7 +693,7 @@ namespace NewCostHjy.BLL
         {
             List<Eisai_item_listItem> outList = new List<Eisai_item_listItem>();
             foreach (Req_infoItem itemLp in lstIn)
-            {
+            {                
                 Eisai_item_listItem oneRow = new Eisai_item_listItem();
                 oneRow.eisai_item_id = itemLp.eisai_item_id;
                 oneRow.eisai_item_store_id = itemLp.eisai_item_store_id;
@@ -748,7 +748,6 @@ namespace NewCostHjy.BLL
         /// </summary>
         /// <param name="dynamic"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public M_DRUG_4002_Out M_DRUG_4002_Fun(string dynamic)
         {
             M_DRUG_4002_In inpar = new M_DRUG_4002_In();
@@ -772,6 +771,15 @@ namespace NewCostHjy.BLL
                 lstData.Add(one);
             }
             outData.data = lstData;
+            outData.head = new MA_head_out() 
+            {
+                id = Guid.NewGuid().ToString(),
+                target_id = "hjy_mytesttid",
+                code = 1,
+                timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                count = 0,
+                msg = ""
+            };
             return outData;
         }
     }

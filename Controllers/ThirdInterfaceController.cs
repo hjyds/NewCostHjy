@@ -10,7 +10,8 @@ using System.Data;
 using System.Dynamic;
 using System.Text.Json.Nodes;
 
-namespace NewCostHjy.Controllers {
+namespace NewCostHjy.Controllers
+{
     /// <summary>
     /// 通用的三方测试服务方法控制器其中返回值都是原样返回不经过ActionFilter处理，不用会去包装CODE SUCCESS 等结点
     /// </summary>
@@ -180,13 +181,13 @@ namespace NewCostHjy.Controllers {
             } else if ("S6139" == strBizno)
             {
                 //批次拆分                
-                rootJCPT.input.eisai_item_list = zlhisInterfaceBLL.SPDItemsBatchSplit(parIn.input.req_info);                 
+                rootJCPT.input.eisai_item_list = zlhisInterfaceBLL.SPDItemsBatchSplit(parIn.input.req_info);
             }
-                //if (strBizno == "S6129")
-                //{
-                //    throw new Exception("测试异常");
-                //}
-                return Json(rootJCPT);
+            //if (strBizno == "S6129")
+            //{
+            //    throw new Exception("测试异常");
+            //}
+            return Json(rootJCPT);
         }
 
         //公司环境
@@ -551,19 +552,11 @@ namespace NewCostHjy.Controllers {
         [HttpPost("HIPMessageServer")]
         public IActionResult HIPMessageServer([FromBody] dynamic parIn)
         {
-            #region 把入参记录下来 测试日志
-            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
-            string id = Guid.NewGuid().ToString();
-            string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
-            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", "HIPMessageServer");
-            #endregion
-
             string targetId = string.Empty;
             try
             {
                 targetId = parIn?.head?.id?.ToString() ?? string.Empty;
-            }
-            catch
+            } catch
             {
                 targetId = string.Empty;
             }
@@ -572,8 +565,7 @@ namespace NewCostHjy.Controllers {
             try
             {
                 appCode = parIn?.head?.app_code?.ToString() ?? string.Empty;
-            }
-            catch
+            } catch
             {
                 appCode = string.Empty;
             }
@@ -582,8 +574,7 @@ namespace NewCostHjy.Controllers {
             try
             {
                 targetAppCode = parIn?.head?.target_app_code?.ToString() ?? string.Empty;
-            }
-            catch
+            } catch
             {
                 targetAppCode = string.Empty;
             }
@@ -592,8 +583,7 @@ namespace NewCostHjy.Controllers {
             try
             {
                 serviceCode = parIn?.head?.service_code?.ToString() ?? string.Empty;
-            }
-            catch
+            } catch
             {
                 serviceCode = string.Empty;
             }
@@ -602,17 +592,27 @@ namespace NewCostHjy.Controllers {
                 + "?app_code=" + Uri.EscapeDataString(appCode)
                 + "&target_app_code=" + Uri.EscapeDataString(targetAppCode)
                 + "&service_code=" + Uri.EscapeDataString(serviceCode);
+
+            #region 把入参记录下来 测试日志
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            string id = Guid.NewGuid().ToString();
+            string strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(parIn);
+            #endregion
+
+            //出参的头信息
+            MA_API_Return_hd rhead = new MA_API_Return_hd()
+            {
+                id = Guid.NewGuid().ToString(),
+                target_id = targetId,
+                code = 1,
+                timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                count = 0,
+                msg = ""
+            };
+
             dynamic dataTmp = new
             {
-                head = new
-                {
-                    id = Guid.NewGuid().ToString(),
-                    target_id = targetId,
-                    code = 0,
-                    timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                    count = 0,
-                    msg = "没有找到对应的账号"
-                },
+                head = rhead,
                 data = new
                 {
                     web_url = strWebUrl
@@ -622,15 +622,7 @@ namespace NewCostHjy.Controllers {
             {
                 dataTmp = new
                 {
-                    head = new
-                    {
-                        id = Guid.NewGuid().ToString(),
-                        target_id = targetId,
-                        code = 0,
-                        timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                        count = 0,
-                        msg = "没有找到对应的账号"
-                    },
+                    head = rhead,
                     data = new[]
                     {
                         new
@@ -649,9 +641,26 @@ namespace NewCostHjy.Controllers {
             ZlhisInterfaceBLL zlhisInterfaceBLL = new ZlhisInterfaceBLL();
             if ("M_DRUG_4002" == serviceCode)
             {
+
+                zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", $"_{appCode}_{targetAppCode}_{serviceCode}_");
                 var dataMod = zlhisInterfaceBLL.M_DRUG_4002_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
                 return Json(dataMod);
             }
+
+            if ("M_DRUG_4002" == serviceCode)
+            {
+                M_DRUG_4002_In inpar = new M_DRUG_4002_In();
+                inpar = Newtonsoft.Json.JsonConvert.DeserializeObject<M_DRUG_4002_In>(strInfo);
+                strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(inpar);
+            } else if ("M_PACS_2002" == serviceCode)
+            {
+                M_PACS_2002_In inpar = new M_PACS_2002_In();
+                inpar = Newtonsoft.Json.JsonConvert.DeserializeObject<M_PACS_2002_In>(strInfo);
+                strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(inpar);
+            }
+            zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", $"_{appCode}_{targetAppCode}_{serviceCode}_");
+
+
             return Json(dataTmp);
         }
 
@@ -718,8 +727,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Insert生僻字对照目录(data);
                 return Json(new { success = true, message = "新增成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "新增失败：" + ex.Message });
             }
@@ -738,8 +746,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Update生僻字对照目录(data);
                 return Json(new { success = true, message = "更新成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "更新失败：" + ex.Message });
             }
@@ -758,8 +765,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Delete生僻字对照目录(data.ID.ToString());
                 return Json(new { success = true, message = "删除成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "删除失败：" + ex.Message });
             }
@@ -778,8 +784,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Insert基础数据生僻字对照(data);
                 return Json(new { success = true, message = "新增成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "新增失败：" + ex.Message });
             }
@@ -798,8 +803,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Update基础数据生僻字对照(data);
                 return Json(new { success = true, message = "更新成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "更新失败：" + ex.Message });
             }
@@ -818,8 +822,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Delete基础数据生僻字对照(data.ID.ToString());
                 return Json(new { success = true, message = "删除成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "删除失败：" + ex.Message });
             }
@@ -838,8 +841,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Insert业务数据生僻字对照(data);
                 return Json(new { success = true, message = "新增成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "新增失败：" + ex.Message });
             }
@@ -858,8 +860,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Update业务数据生僻字对照(data);
                 return Json(new { success = true, message = "更新成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "更新失败：" + ex.Message });
             }
@@ -878,8 +879,7 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 int result = zlhisInterfaceDAL.Delete业务数据生僻字对照(data.ID.ToString());
                 return Json(new { success = true, message = "删除成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "删除失败：" + ex.Message });
             }
@@ -898,18 +898,17 @@ namespace NewCostHjy.Controllers {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 string targetTable = data.targetTable.ToString();
                 string querySql = data.querySql.ToString();
-                
+
                 // 解析字段映射
                 Dictionary<string, string> fieldMapping = new Dictionary<string, string>();
                 foreach (var item in data.fieldMapping)
                 {
                     fieldMapping.Add(item.Name, item.Value.ToString());
                 }
-                
+
                 int result = zlhisInterfaceDAL.InsertDataByQuery(targetTable, querySql, fieldMapping);
                 return Json(new { success = true, message = "插入成功", data = result });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "插入失败：" + ex.Message });
             }
@@ -927,9 +926,9 @@ namespace NewCostHjy.Controllers {
             {
                 ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
                 string querySql = data.querySql.ToString();
-                
+
                 DataTable result = zlhisInterfaceDAL.ExecuteQuery(querySql);
-                
+
                 // 将DataTable转换为JSON格式
                 var jsonResult = new List<Dictionary<string, object>>();
                 foreach (DataRow row in result.Rows)
@@ -941,10 +940,9 @@ namespace NewCostHjy.Controllers {
                     }
                     jsonResult.Add(dict);
                 }
-                
+
                 return Json(new { success = true, message = "查询成功", data = jsonResult });
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return Json(new { success = false, message = "查询失败：" + ex.Message });
             }
