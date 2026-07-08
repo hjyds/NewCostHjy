@@ -641,11 +641,10 @@ namespace NewCostHjy.Controllers
             ZlhisInterfaceBLL zlhisInterfaceBLL = new ZlhisInterfaceBLL();
             if ("M_DRUG_4002" == serviceCode)
             {
-
                 zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", $"_{appCode}_{targetAppCode}_{serviceCode}_");
-                var dataMod = zlhisInterfaceBLL.M_DRUG_4002_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
-                return Json(dataMod);
+                dataTmp = zlhisInterfaceBLL.M_DRUG_4002_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));             
             }
+
 
             if ("M_DRUG_4002" == serviceCode)
             {
