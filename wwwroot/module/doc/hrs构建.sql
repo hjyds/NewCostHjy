@@ -104,7 +104,7 @@ Create Or Replace Procedure Zl_Hrssvr_Cedit(Json_In Clob) As
     n_指定总量 放射收费关系.指定总量%Type;
     n_费用性质 放射收费关系.费用性质%Type;
     n_删除行   Number(3);
-  Begin  
+  Begin
     n_收费项目id := j_Json.Get_Number('old_收费项目id');
     If n_收费项目id > 0 Then
       n_费用性质 := j_Json.Get_Number('old_费用性质');
@@ -388,11 +388,11 @@ Begin
 
   --记录入参信息
   --Select Log_Info_Ex From Zlloginfo Where Call_Name = 'HJY_HRS_PRO';
-  Zltools.Zlloginfo_Insert(Log_Level_In => Null, Server_In => Null, User_Name_In => Null, Session_Id_In => Null,
-                           Ip_In => Null, Station_In => Null, Process_Id_In => Null, Process_Name_In => Null,
-                           Category_Name_In => Null, Component_Name_In => Null, Module_Name_In => Null,
-                           Function_Name_In => Null, Call_Name_In => 'HJY_HRS_PRO', Stage_In => Null,
-                           Log_Info_In => Null, Log_Info_Ex_In => Json_In);
+  -- Zltools.Zlloginfo_Insert(Log_Level_In => Null, Server_In => Null, User_Name_In => Null, Session_Id_In => Null,
+  --                          Ip_In => Null, Station_In => Null, Process_Id_In => Null, Process_Name_In => Null,
+  --                         Category_Name_In => Null, Component_Name_In => Null, Module_Name_In => Null,
+  --                        Function_Name_In => Null, Call_Name_In => 'HJY_HRS_PRO', Stage_In => Null,
+  --                         Log_Info_In => Null, Log_Info_Ex_In => Json_In);
 
   Select Sys_Context('USERENV', 'HOST') Into v_机器名 From Dual;
 
@@ -584,9 +584,9 @@ Begin
             v_检查方法 := j_Way.Get_String('方法名称');
             v_上级方法 := j_Way.Get_String('上级方法');
             If n_按规则计费 = 1 Then
-              Zl_放射项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法);
+              Zl_放射项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法, K);
             Else
-              Zl_诊疗项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法);
+              Zl_诊疗项目部位_Insert(n_记录id, v_操作类型, v_检查部位, v_检查方法, Null, v_上级方法, K);
             End If;
           End Loop;
         End If;
@@ -607,25 +607,135 @@ Exception
 End Zl_Hrssvr_Cedit;
 /
 
-Create Or Replace Function Zl_Fun_检查方法解析(方法_In Varchar2) Return Varchar2 Is
+Create Or Replace Function Zl_Fun_检查方法解析
+(
+  方法_In   Varchar2,
+  功能_In   Number := Null,
+  项目id_In Number := Null,
+  部位_In   Varchar2 := Null
+) Return Varchar2 Is
   --功能：解析检查的方法串
+  --入参：
+  --     功能_In    null/0-缺省为空，即解析，方法串，
+  --                1-表示构建选择值，
+  --                2-表示构建当前项目的已选方法串
   --返回：json数组
   --   序号         N 1
   --   上级方法     C 1  
   --   方法名称     C 1
   --   共选         N 1 是否共选，0/1 1表示是共选
   --   是否造影     N 1 是否造影，0/1 1表示有造影
-  v_方法串           Varchar2(4000);
-  v_上级方法         Varchar2(4000);
-  n_共选             Number(1);
-  n_是否造影         Number(1);
-  v_Jtmp             Varchar2(2000);
-  v_方法名称         Varchar2(2000);
+  --   是否勾选     N 1 表示当前项目是不中选择了
+  v_方法串   Varchar2(4000);
+  v_上级方法 Varchar2(4000);
+  n_共选     Number(1);
+  n_是否造影 Number(1);
+  v_Jtmp     Varchar2(2000);
+  v_方法名称 Varchar2(2000);
+
   v_方法名称上级temp Varchar2(2000);
-  n_子方法序号       Number(3);
-  n_序号             Number(3) := 0;
+
+  n_子方法序号 Number(3);
+  n_序号       Number(3) := 0;
+  n_是否勾选   Number(3);
+
+  n_Have   Number(3);
+  v_Result Varchar2(32767);
+
+  Procedure Get_检查部位显示(Strjlst_In Varchar2) As
+    Jl_List    Pljson_List;
+    j_Json_Tmp Pljson;
   
+    n_Count Pls_Integer;
+    I       Pls_Integer;
+  
+    v_上级方法 Varchar2(200);
+    v_方法名称 Varchar2(200);
+    n_共选     Number;
+    n_是否勾选 Number;
+    v_连接符   Varchar2(100) := ' ';
+  
+    v_Prefix Varchar2(10);
+    v_Item   Varchar2(500);
+  
+    Type t_Str_Tab Is Table Of Varchar2(32767) Index By Pls_Integer;
+    l_Result_Tab   t_Str_Tab;
+    n_Result_Count Pls_Integer := 0;
+  
+    Type t_Group_Map Is Table Of Varchar2(32767) Index By Varchar2(200);
+    l_Group_Map t_Group_Map;
+  
+    Type t_Group_Pos Is Table Of Pls_Integer Index By Varchar2(200);
+    l_Group_Pos t_Group_Pos;
+  
+  Begin
+    Jl_List := Pljson_List(Strjlst_In);
+  
+    n_Count := Jl_List.Count;
+  
+    For I In 1 .. n_Count Loop
+      j_Json_Tmp := Pljson(Jl_List.Get(I));
+    
+      v_上级方法 := Nvl(j_Json_Tmp.Get_String('上级方法'), '');
+      v_方法名称 := Nvl(j_Json_Tmp.Get_String('方法名称'), '');
+      n_共选     := Nvl(j_Json_Tmp.Get_Number('共选'), 0);
+      n_是否勾选 := Nvl(j_Json_Tmp.Get_Number('是否勾选'), 0);
+    
+      If n_共选 = 1 Then
+        If n_是否勾选 = 1 Then
+          v_Prefix := '■';
+        Else
+          v_Prefix := '□';
+        End If;
+      Else
+        If n_是否勾选 = 1 Then
+          v_Prefix := '●';
+        Else
+          v_Prefix := '○';
+        End If;
+      End If;
+    
+      v_Item := v_Prefix || v_方法名称;
+    
+      If Trim(v_上级方法) Is Null Then
+        n_Result_Count := n_Result_Count + 1;
+        l_Result_Tab(n_Result_Count) := v_Item;
+      Else
+        If Not l_Group_Pos.Exists(v_上级方法) Then
+          n_Result_Count := n_Result_Count + 1;
+          l_Group_Pos(v_上级方法) := n_Result_Count;
+          l_Group_Map(v_上级方法) := v_Item;
+        Else
+          l_Group_Map(v_上级方法) := l_Group_Map(v_上级方法) || v_连接符 || v_Item;
+        End If;
+      
+        l_Result_Tab(l_Group_Pos(v_上级方法)) := '<' || l_Group_Map(v_上级方法) || '>';
+      End If;
+    End Loop;
+  
+    v_Result := '';
+    For I In 1 .. n_Result_Count Loop
+      If I = 1 Then
+        v_Result := l_Result_Tab(I);
+      Else
+        v_Result := v_Result || v_连接符 || l_Result_Tab(I);
+      End If;
+    End Loop;
+  
+    --    Dbms_Output.Put_Line(v_Result);
+  End;
+
 Begin
+
+  If 功能_In = 2 Then
+    For R In (Select b.方法
+              From 诊疗项目部位 B
+              Where b.项目id = 项目id_In And b.部位 = 部位_In And b.默认 = 1
+              Order By b.序号) Loop
+      v_Jtmp := v_Jtmp || ',' || r.方法;
+    End Loop;
+    Return Substr(v_Jtmp, 2);
+  End If;
 
   v_方法串 := 方法_In;
   v_方法串 := Replace(v_方法串, Chr(9), ';' || Chr(9));
@@ -669,16 +779,38 @@ Begin
         
           n_序号 := n_序号 + 1;
         
+          If v_上级方法 Is Not Null Then
+            n_共选 := 1;
+          End If;
+        
+          n_是否勾选 := 0;
+          If 功能_In = 1 Then
+            Select Count(1)
+            Into n_Have
+            From 诊疗项目部位 B
+            Where b.项目id = 项目id_In And b.部位 = 部位_In And b.默认 = 1 And b.方法 = v_方法名称;
+            If n_Have > 0 Then
+              n_是否勾选 := 1;
+            End If;
+          End If;
+        
           v_Jtmp := v_Jtmp || ',{"序号":' || n_序号 || ',"上级方法":"' || v_上级方法 || '","方法名称":"' || v_方法名称 || '","共选":' || n_共选 ||
-                    ',"是否造影":' || n_是否造影 || '}';
+                    ',"是否造影":' || n_是否造影 || ',"是否勾选":' || n_是否勾选 || '}';
         
         End If;
       End Loop;
     End If;
   End Loop;
+
   If v_Jtmp Is Null Then
     Return Null;
   End If;
+
+  If 功能_In = 1 Then
+    Get_检查部位显示('[' || Substr(v_Jtmp, 2) || ']');
+    Return v_Result;
+  End If;
+
   Return '[' || Substr(v_Jtmp, 2) || ']';
 Exception
   When Others Then
