@@ -93,7 +93,8 @@ const _功能按钮 = {
 class SchemeManager {
     constructor() {
         this.itemField = {
-            "ID": "e76a5f1c-828c-4fff-9068-0da320b22bc0" //ID        
+            "ID": "e76a5f1c-828c-4fff-9068-0da320b22bc0", //ID     
+            "服务对象": "9c69e702-8ca4-4222-954d-04939a3830ca"
         };
 
         this.adviceField = {
@@ -131,12 +132,12 @@ class SchemeManager {
         };
         //当前选中成套方案ID
         this.SchemeId = 0;
+        this.ServiceObject = "";  //服务对象
     }
 
     //事件处理
     InitEvent() {
         let self = this;
-        debugger;
         //选中方案分类
         $('body').on('click', `div[data-id="${_成套分类.Id}"] tbody tr`, function () {
             let classId = zlnvl($(this).attr("data-uniqueid"));  //"*********123"
@@ -170,7 +171,6 @@ class SchemeManager {
         let schemeItems = dataOut.Data;
         _成套明细.LoadData(schemeItems);
         _成套组合.LoadData([]);
-        debugger;
         //根据选中行加载成套方案内容
         setTimeout(() => {
             let row = _成套明细.GetCurrentData();
@@ -178,9 +178,11 @@ class SchemeManager {
             if (row) schemeId = zlval(row[this.itemField["ID"]]);
             if (schemeId > 0) {
                 this.LoadSchemeAdvice(schemeId);
+
             }
             else {
                 this.SchemeId = 0;
+                this.ServiceObject = "";
                 _成套组合.LoadData([]);
             }
         }, 500);
@@ -188,8 +190,20 @@ class SchemeManager {
     }
     //加载成套方案内容
     LoadSchemeAdvice(schemeId) {
-        debugger;
+        let tempVal;
+        let fieldItem = this.itemField;
         this.SchemeId = schemeId;
+        let selectRow = _成套明细.GetCurrentData();
+        if (selectRow) {
+            tempVal = zlval(selectRow[fieldItem["服务对象"]]);
+            if (tempVal == 1) {
+                this.ServiceObject = "1,3";
+            } else if (tempVal == 2) {
+                this.ServiceObject = "2,3";
+            } else {
+                this.ServiceObject = "1,2,3";
+            }
+        }
         let dataIn = {
             "resTypeId": "a0b93495-50a8-4bd0-b89a-2b4bbe5c3925",  //SQL_诊疗项目组合
             "viewId": "6ce9df13-53ca-45d6-875e-7caa41382aff", //SQL_诊疗项目组合_列表
@@ -317,7 +331,6 @@ window.fun菜单按钮执行条件 = function (dataRow, type) {
 }
 
 window.fun获取打开页面地址 = function (dataRow, type) {
-    debugger
     let item_id = 0, class_id = 0, pageid = "", url = "", editsta;
 
     pageid = "a0107b04-1846-4933-8cb9-f8d3b0bb3890";  //通用编辑页面
@@ -417,7 +430,6 @@ page.onComponentLoaded = (pageContent) => {
  * @param {PageContent} pageContent
 */
 page.onLoaded = (pageContent) => {
-    debugger;
     window.mobjSchemeManager = new SchemeManager();
     //声明事件
     mobjSchemeManager.InitEvent();
