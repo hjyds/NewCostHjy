@@ -1158,12 +1158,12 @@ window.fun检查部位区域连动参数 = function () {
     return [oper, isrule, itemid];
 }
 
-function fun获取选择的检查部位(data) {
+window.fun获取选择的检查部位 = function (data) {
+    debugger
     // 字段映射
     const keyMap = {
-        "cee6f427-f315-43d1-aa4f-33e366f7900f": "_选择",
         "b2473c6f-5c45-42b1-bdb3-4afa15c44103": "_部位",
-        "30031a9c-15a1-48ea-90cf-0b70546a2043": "_方法",
+        "89de4754-73f5-41ce-972b-2f36e14d99df": "_方法"
     };
 
     // 判断是否为空
@@ -1180,14 +1180,9 @@ function fun获取选择的检查部位(data) {
             });
             return newItem;
         })
-        // 1. 只保留选择=1的数据
-        .filter(item => item._选择 === "1")
-        // 2. 排除部位/方法为空的数据
-        .filter(item => !isEmpty(item._部位) && !isEmpty(item._方法))
-        // 3. 方法按;分割，并转成 {方法名称:xxx}
         .map(item => {
             const methodList = item._方法
-                .split(';')
+                .split(',')
                 .map(m => m.trim())
                 .filter(m => m)
                 .map(name => ({ "方法名称": name }));

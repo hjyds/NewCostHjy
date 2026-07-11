@@ -45,6 +45,71 @@ function getJcbwDisplay(list, separator = "，") {
     return result.join(separator);
 }
 
+
+function expandJsonBInPlace(jsonA, jsonB) {
+    const aMap = new Map(
+        (jsonA || []).map(item => [item.部位, item])
+    );
+
+    (jsonB || []).forEach(bItem => {
+        const aItem = aMap.get(bItem.部位);
+        const selectedList = Array.isArray(bItem.已选方法) ? bItem.已选方法 : [];
+
+        // 用 部位 + 方法 + 上级方法 做唯一匹配，避免“水平位”这类重名方法冲突
+        const selectedSet = new Set(
+            selectedList.map(sel =>
+                `${sel.部位 || ""}__${sel.方法 || ""}__${sel.上级方法 || ""}`
+            )
+        );
+
+        bItem.方法 = Array.isArray(aItem?.方法)
+            ? aItem.方法.map(item => {
+                const key = `${bItem.部位 || ""}__${item.方法名称 || ""}__${item.上级方法 || ""}`;
+                return {
+                    ...item,
+                    是否勾选: selectedSet.has(key) ? 1 : 0
+                };
+            })
+            : [];
+
+        bItem.方法显示 = getJcbwDisplay(bItem.方法, "，");
+
+        // 排开第0个
+        bItem.方法选择 = selectedList
+            .slice(1)
+            .map(item => item.方法)
+            .join("，");
+    });
+}
+
+function buildDirectoryData(currentList, directoryTemplateList) {
+    const makeGuid = () => {
+        if (globalThis.crypto?.randomUUID) {
+            return globalThis.crypto.randomUUID();
+        }
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+            const r = Math.random() * 16 | 0;
+            const v = c === "x" ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    };
+
+    const sourceList = Array.isArray(currentList) ? currentList : [currentList];
+    const template = Array.isArray(directoryTemplateList)
+        ? (directoryTemplateList[0] || {})
+        : (directoryTemplateList || {});
+
+    return sourceList.map(item => ({
+        ...template,
+        resource_detail_id: makeGuid(),
+        "5b17b544-1410-4172-94aa-774e913b1a7e": item["分组"] ?? "",
+        "b2473c6f-5c45-42b1-bdb3-4afa15c44103": item["部位"] ?? "",
+        detail_name: item["部位"] ?? "",
+        "89de4754-73f5-41ce-972b-2f36e14d99df": item["方法选择"] ?? "",
+        "9e1b983d-9e64-4365-a126-cc3520bc234a": item["方法显示"] ?? ""
+    }));
+}
+
 默认
 默认
 普通数字
@@ -115,6 +180,71 @@ return data部位列表;
 
 //////////////////////////////////////
 
+function buildJsonC(jsonA, jsonB) {
+    const result = [];
+
+    for (const aItem of jsonA) {
+        const part = aItem["部位"];
+        const bItem = jsonB.find(item => item["部位"] === part);
+
+        if (!bItem || !Array.isArray(bItem["方法"])) {
+            continue;
+        }
+
+        const methodPool = bItem["方法"].map(item => ({
+            ...item,
+            __used: false
+        }));
+
+        const methodList = String(aItem["方法"] || "")
+            .split(/[，,]/)
+            .map(item => item.trim())
+            .filter(Boolean);
+
+        let currentParent = "";
+
+        for (const methodName of methodList) {
+            let matched =
+                methodPool.find(
+                    item =>
+                        !item.__used &&
+                        item["方法名称"] === methodName &&
+                        (item["上级方法"] || "") === currentParent
+                ) ||
+                methodPool.find(
+                    item =>
+                        !item.__used &&
+                        item["方法名称"] === methodName &&
+                        (item["上级方法"] || "") === ""
+                ) ||
+                methodPool.find(
+                    item =>
+                        !item.__used &&
+                        item["方法名称"] === methodName
+                );
+
+            if (!matched) {
+                continue;
+            }
+
+            matched.__used = true;
+
+            result.push({
+                "方法": matched["方法名称"],
+                "上级方法": matched["上级方法"] || null,
+                "部位": part
+            });
+
+            if ((matched["上级方法"] || "") === "") {
+                currentParent = matched["方法名称"];
+            } else {
+                currentParent = matched["上级方法"];
+            }
+        }
+    }
+
+    return result;
+}
 
 
 (function (win, $) {
@@ -463,3 +593,435 @@ debugger
 var tempdata = outData部位列表;
 var tempdataSel = outData已选信息;
 openMethodLayer(tempdata);
+
+
+ 
+
+var domData = $("[data-id='com_i12efkffikm']")[0]?.firstElementChild?.data;
+var lst部位列列 = outData部位列表;
+
+
+
+const dataShowMap = [
+    {
+        "id": "已选方法",
+        "name": "89de4754-73f5-41ce-972b-2f36e14d99df"
+    },
+    {
+        "id": "选择",
+        "name": "cee6f427-f315-43d1-aa4f-33e366f7900f"
+    },
+    {
+        "id": "按规则计费",
+        "name": "db4955c4-9c2f-4d1f-a8a0-f2bf75f5c934"
+    },
+    {
+        "id": "名称",
+        "name": "b2473c6f-5c45-42b1-bdb3-4afa15c44103"
+    },
+    {
+        "id": "编码",
+        "name": "60b5ac73-36ca-420c-8e41-54cabdd8e489"
+    },
+    {
+        "id": "方法",
+        "name": "30031a9c-15a1-48ea-90cf-0b70546a2043"
+    },
+    {
+        "id": "备注",
+        "name": "dbb2cf2c-47d2-4e38-9327-7515f5357171"
+    },
+    {
+        "id": "分组",
+        "name": "5b17b544-1410-4172-94aa-774e913b1a7e"
+    },
+    {
+        "id": "诊疗项目id",
+        "name": "29e924a6-5292-4ff7-95f7-710c4949eb6a"
+    },
+    {
+        "id": "方法显示",
+        "name": "9e1b983d-9e64-4365-a126-cc3520bc234a"
+    },
+    {
+        "id": "项目ID",
+        "name": "9f95df22-a8d3-476c-a543-62f1d3c67c4a"
+    },
+    {
+        "id": "操作类型",
+        "name": "ef65c48b-495c-4f25-8bda-43d72967ee14"
+    }
+]
+
+var oneObject = {
+    "resource_detail_id": "0101",
+    "resource_view_id": "e459b32a-b09a-4a49-94d7-1129ae5d219d",
+    "resource_type_id": "c854b215-23ac-46fb-9110-330f713c9400",
+    "resource_source_type": "bde66990-68c9-4674-80ba-7605e46aa239",
+    "detail_name": "颅脑",
+    "is_edit": true,
+    "b2473c6f-5c45-42b1-bdb3-4afa15c44103": "颅脑",
+    "9e1b983d-9e64-4365-a126-cc3520bc234a": "○平扫 ○增强扫描 ■颅骨重建 □平扫加增强",
+    "89de4754-73f5-41ce-972b-2f36e14d99df": "颅骨重建",
+    "dbb2cf2c-47d2-4e38-9327-7515f5357171": null,
+    "cee6f427-f315-43d1-aa4f-33e366f7900f": null,
+    "5b17b544-1410-4172-94aa-774e913b1a7e": "01-颅脑",
+    "30031a9c-15a1-48ea-90cf-0b70546a2043": "平扫;增强扫描;颅骨重建;平扫加增强"
+}
+
+//已选方法 中的第0行 可以理解为只勾选了部位
+var selDatalst = [
+    {
+        "分组": "彩超",
+        "部位": "常规",
+        "方法": [
+            {
+                "序号": 1,
+                "上级方法": "",
+                "方法名称": "泌尿系",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 2,
+                "上级方法": "",
+                "方法名称": "胃上腺",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 3,
+                "上级方法": "",
+                "方法名称": "阑尾",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 4,
+                "上级方法": "",
+                "方法名称": "前列腺（经直肠）",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 5,
+                "上级方法": "",
+                "方法名称": "胆囊收缩功能",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 6,
+                "上级方法": "",
+                "方法名称": "膈肌",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 7,
+                "上级方法": "",
+                "方法名称": "肺",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 8,
+                "上级方法": "",
+                "方法名称": "门脉系统（含门静脉、脾静脉）",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 9,
+                "上级方法": "",
+                "方法名称": "肠系膜淋巴结",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 10,
+                "上级方法": "",
+                "方法名称": "弹性成像(注明部位）",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 11,
+                "上级方法": "",
+                "方法名称": "肝胆胰脾",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 12,
+                "上级方法": "",
+                "方法名称": "肝胆胰脾+肝纤维化",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            }
+        ],
+        "已选方法": [
+            {
+                "方法": "on",
+                "上级方法": null,
+                "部位": "常规"
+            },
+            {
+                "方法": "胃上腺",
+                "上级方法": null,
+                "部位": "常规"
+            },
+            {
+                "方法": "肝胆胰脾+肝纤维化",
+                "上级方法": null,
+                "部位": "常规"
+            }
+        ],
+        "备注": ""
+    },
+    {
+        "分组": "彩超",
+        "部位": "浅表",
+        "方法": [
+            {
+                "序号": 1,
+                "上级方法": "",
+                "方法名称": "双侧乳腺及区域淋巴结",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 2,
+                "上级方法": "",
+                "方法名称": "左乳腺及区域淋巴结",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 3,
+                "上级方法": "",
+                "方法名称": "右乳腺及区域淋巴结",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 4,
+                "上级方法": "",
+                "方法名称": "甲状腺及区域淋巴结",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 5,
+                "上级方法": "",
+                "方法名称": "腮腺+颌下腺+引流区淋巴结",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 6,
+                "上级方法": "",
+                "方法名称": "腮腺",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 7,
+                "上级方法": "",
+                "方法名称": "颌下腺",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 8,
+                "上级方法": "",
+                "方法名称": "腹直肌",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 9,
+                "上级方法": "",
+                "方法名称": "耻骨联合",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 10,
+                "上级方法": "",
+                "方法名称": "小儿颅脑",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 11,
+                "上级方法": "",
+                "方法名称": "脑黑质",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 12,
+                "上级方法": "",
+                "方法名称": "双眼",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 13,
+                "上级方法": "",
+                "方法名称": "双侧胸锁乳突肌",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 14,
+                "上级方法": "",
+                "方法名称": "双侧精索静脉",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 15,
+                "上级方法": "",
+                "方法名称": "左侧精索静脉",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 16,
+                "上级方法": "",
+                "方法名称": "右侧精索静脉",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 17,
+                "上级方法": "",
+                "方法名称": "阴茎动脉",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 18,
+                "上级方法": "",
+                "方法名称": "阴囊内容物",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 19,
+                "上级方法": "",
+                "方法名称": "浅表淋巴结（注明部位",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 20,
+                "上级方法": "",
+                "方法名称": "体表肿块(注明部位)",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 21,
+                "上级方法": "",
+                "方法名称": "皮肤（注明部位）",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 22,
+                "上级方法": "",
+                "方法名称": "体表血管（注明部位）",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            },
+            {
+                "序号": 23,
+                "上级方法": "",
+                "方法名称": "肋骨（注明部位）",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            }
+        ],
+        "已选方法": [
+            {
+                "方法": "on",
+                "上级方法": null,
+                "部位": "浅表"
+            },
+            {
+                "方法": "左乳腺及区域淋巴结",
+                "上级方法": null,
+                "部位": "浅表"
+            },
+            {
+                "方法": "肋骨（注明部位）",
+                "上级方法": null,
+                "部位": "浅表"
+            }
+        ],
+        "备注": ""
+    }
+]
+
+
+return new Promise(function (resolve, reject) {
+    layer.confirm(`确实要删除临床路径“${组件资源.资源视图列.名称}”吗？`, {
+        icon: 3,
+        title: "询问",
+        btn: ["是", "否"],
+        cancel: function (index, layero) {
+            resolve(0);
+        },
+        success: function (layero, index) {
+
+        },
+        end: function () {
+
+        }
+    }, function (index) {
+        layer.close(index);
+        resolve(1);
+
+    }, function (index) {
+        layer.close(index);
+        resolve(0);
+    });
+});
