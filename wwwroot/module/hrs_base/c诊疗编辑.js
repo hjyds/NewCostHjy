@@ -91,7 +91,11 @@ function fun控件对象映射() {
 
     _界面控件._项目分类.val(_界面控件._参数._分类id);
     if (1 == _界面控件._参数._编辑状态 || 3 == _界面控件._参数._编辑状态) {
-        let tempVal = GetSimpleNodeVal("", "b12bf15a-eebb-44cb-813e-9f43dffe5593", "827358ad-99bc-447a-969f-fb2343103671", "a99c0fb8-e887-431e-9817-c5b3f16bdf02", "21ec4abc-26aa-42b4-9071-077c245aea1a");
+        let tempVal = GetSimpleNodeVal(_界面控件._参数._分类id,
+            "d9a8b34b-445f-47e5-89f9-90663a49d92f",
+            "f2ea9379-af8c-4f91-85a7-ca48bdc0a4ca",
+            "7b32f2e2-fc3a-4d57-9823-4e893d7d9437",
+            "0f6baa1f-2e02-431d-a474-964a57f5b4c3");
         $("#" + mapGuid._编码).val(IncStr(tempVal));//编码 
         if (3 == _界面控件._参数._编辑状态) {
             $("#" + mapGuid._名称).val("");

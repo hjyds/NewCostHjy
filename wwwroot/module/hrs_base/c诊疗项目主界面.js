@@ -337,7 +337,7 @@ window.fun获取打开页面地址 = function (dataRow, type) {
     class_id = $(`div[data-id="com_gyd68y2nnt"] zl-container zl-treelist`)[0]?.GetCurrentData()?.resource_detail_id;
     item_id = $(`div[data-id="com_gs502rf700d"] zl-container zl-qmlist`)[0]?.GetCurrentData()?.resource_detail_id;
     editsta = 1;
-
+    item_id = parseInt(item_id || 0);//诊疗项目ID
     if (_功能按钮.复制新增 == type) editsta = 3;
 
     url = `pageViewById?pageid=${pageid}&editsta=${editsta}&class_id=${class_id}&item_id=${item_id}`;
