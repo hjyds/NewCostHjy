@@ -739,6 +739,29 @@ accomplishStatus
             return "";
         }
 
+
+        /// <summary>
+        /// 获取拼音简码
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public string zlSpellCode(string txt, int len = 10)
+        {
+            string sql = "select ZLTOOLS.zlSpellCode(:txt,:len) as 拼音简码 from dual";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] parameters = {
+                new OracleParameter("txt",OracleDbType.Varchar2,txt,ParameterDirection.Input),
+                new OracleParameter("len",OracleDbType.Int64,len,ParameterDirection.Input)
+            };
+            DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
+            if (data.Rows.Count > 0)
+            {
+                return data.Rows[0]["拼音简码"].ToString();
+            }
+            return "";
+        }
+
         /// <summary>
         /// 获取某个字段的值
         /// </summary>
@@ -859,9 +882,11 @@ accomplishStatus
         {
             //ORACLE 字段长度超过了 4000 就查询就显示不出来，虽然字段长度可以超过4000
             string loginfo = logInfoModel.LogInfo;
-
-            if (loginfo.Length > 4000)
-                loginfo = loginfo.Substring(0, 4000);
+            if (!string.IsNullOrWhiteSpace(loginfo))
+            {
+                if (loginfo.Length > 4000)
+                    loginfo = loginfo.Substring(0, 4000);
+            }
 
             OracleDataAccess oda = new OracleDataAccess();
             OracleParameter[] oracleParameters = {

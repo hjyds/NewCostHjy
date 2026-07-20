@@ -1,0 +1,149 @@
+{
+  "tableName": "表B.1世界卫生组织《针灸经穴定位》(西太平洋地区)人体分区术语表",
+  "note": [
+    "注1:位于界线上的经穴属于上区。",
+    "注2:脐属于上腹部,臀沟属于臀部。"
+  ],
+  "data": [
+    {
+      "mainPartition": "头部",
+      "subPartition": "头部",
+      "boundary": "眶上缘、颧弓上缘、外耳门上缘、乳突尖端、上项线与枕外隆凸的连线"
+    },
+    {
+      "mainPartition": "头部",
+      "subPartition": "面部",
+      "boundary": "眶上缘、颧弓上缘、外耳门上缘、乳突尖端、上项线与下颌骨下缘的连线之内"
+    },
+    {
+      "mainPartition": "颈部",
+      "subPartition": "颈前部",
+      "boundary": "上界:头部与面部的下界线；下界:锁骨；后界:斜方肌前缘"
+    },
+    {
+      "mainPartition": "颈部",
+      "subPartition": "颈后部",
+      "boundary": "上界:头部的下界线；下界:第7颈椎(C7)棘突与肩峰的连线；前界:斜方肌前缘"
+    },
+    {
+      "mainPartition": "背部",
+      "subPartition": "背部",
+      "boundary": "上界:第7颈椎(C7)棘突与肩峰的连线；外侧界:腋后线；下界:第12肋尖端与第12胸椎(T12)棘突的连线"
+    },
+    {
+      "mainPartition": "背部",
+      "subPartition": "肩胛部",
+      "boundary": "用表面解剖术语无法描述以下分区:肩胛部、腹股沟、肩带部、会阴部、腋区、臀部,宜遵循常规分法"
+    },
+    {
+      "mainPartition": "腰部",
+      "subPartition": "腰部",
+      "boundary": "上界:第12肋尖端与第12胸椎(T12)棘突的连线；外侧界:腋后线；下界:第5腰椎(L5)棘突与髂嵴的连线"
+    },
+    {
+      "mainPartition": "骶部",
+      "subPartition": "骶部",
+      "boundary": "上界:第5腰椎(L5)棘突与髂嵴的连线；外侧界:骶骨外侧缘；下界:尾骨"
+    },
+    {
+      "mainPartition": "胸部",
+      "subPartition": "前胸部",
+      "boundary": "上界:锁骨；下界:剑胸结合、肋弓与第11、12肋骨下缘的连线；外侧界:腋前线"
+    },
+    {
+      "mainPartition": "胸部",
+      "subPartition": "侧胸部",
+      "boundary": "上界:腋前、后纹头的连线；下界:肋弓与第11、12肋骨下缘的连线；前界:腋前线；后界:腋后线"
+    },
+    {
+      "mainPartition": "腹部",
+      "subPartition": "上腹部",
+      "boundary": "上界:剑胸结合、肋弓与肋骨下缘的连线；下界:脐水平线；外侧界:腋前线"
+    },
+    {
+      "mainPartition": "腹部",
+      "subPartition": "下腹部",
+      "boundary": "上界:脐水平线；下界:耻骨联合上缘；外侧界:腹股沟斜纹、腋前线"
+    },
+    {
+      "mainPartition": "腹部",
+      "subPartition": "侧腹部",
+      "boundary": "上界:侧胸部的下界；前界:腋前线；下界:髂嵴；后界:腋后线"
+    },
+    {
+      "mainPartition": "腹股沟",
+      "subPartition": "腹股沟",
+      "boundary": "参见肩胛部"
+    },
+    {
+      "mainPartition": "肩带部",
+      "subPartition": "肩带部",
+      "boundary": "参见肩胛部"
+    },
+    {
+      "mainPartition": "腋区",
+      "subPartition": "腋区",
+      "boundary": "参见肩胛部"
+    },
+    {
+      "mainPartition": "上肢",
+      "subPartition": "上臂",
+      "boundary": "分为臂前侧、后侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "上肢",
+      "subPartition": "肘部",
+      "boundary": "分为肘前侧、后侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "上肢",
+      "subPartition": "前臂部",
+      "boundary": "分为前臂前侧、后侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "上肢",
+      "subPartition": "手",
+      "boundary": "手背、手掌"
+    },
+    {
+      "mainPartition": "臀部",
+      "subPartition": "臀部",
+      "boundary": "参见肩胛部"
+    },
+    {
+      "mainPartition": "下肢",
+      "subPartition": "股",
+      "boundary": "分为股前侧、后侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "下肢",
+      "subPartition": "膝部",
+      "boundary": "分为膝前侧、后侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "下肢",
+      "subPartition": "小腿",
+      "boundary": "分为小腿前侧、后侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "下肢",
+      "subPartition": "足",
+      "boundary": "足背、足底,足内侧、外侧"
+    },
+    {
+      "mainPartition": "下肢",
+      "subPartition": "踝",
+      "boundary": "分为踝前侧、内侧、外侧"
+    },
+    {
+      "mainPartition": "下肢",
+      "subPartition": "足趾",
+      "boundary": ""
+    },
+    {
+      "mainPartition": "会阴部",
+      "subPartition": "会阴部",
+      "boundary": "参见肩胛部"
+    }
+  ]
+}

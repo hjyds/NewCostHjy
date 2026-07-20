@@ -101,7 +101,7 @@ namespace NewCostHjy {
 
             //new ZlhisInterfaceBLL().TestFunc();
             //string strTemp = new NewCostHjy.Common.FunTestCom().DecryptString("UBVagpW", "zlsoft.third.ftp");
-          
+            //string strTemp = new NewCostHjy.Common.FunTestCom().Read中医穴位信息();
             //跨域
             app.UseCors("CustomCorsPolicy");
 

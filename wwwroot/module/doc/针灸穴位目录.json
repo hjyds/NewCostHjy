@@ -1,0 +1,2638 @@
+{
+  "chapterCode": "5",
+  "chapterName": "十四经穴名称与定位",
+  "children": [
+    {
+      "chapterCode": "5.1",
+      "chapterName": "手太阴肺经穴",
+      "meridianName": "手太阴肺经",
+      "children": [
+        {
+          "pointCode": "5.1.1",
+          "pointName": "中府",
+          "pinyin": "Zhongfu",
+          "stdCode": "LU1",
+          "location": "在前胸部，横平第1肋间隙，锁骨下窝外侧，前正中线旁开6寸。注1：先确定云门(LU2).中府即在云门(LU2)下1寸。注2：横平内侧的库房(ST14)、彧中(KI26)、华盖(CV20)，穴略呈一弧形分布，其弧度与第1肋间隙弧度相应。"
+        },
+        {
+          "pointCode": "5.1.2",
+          "pointName": "云门",
+          "pinyin": "Yunmen",
+          "stdCode": "LU2",
+          "location": "在前胸部，锁骨下窝凹陷中，肩胛骨喙突内缘，前正中线旁开6寸。注：横平内侧的气户(ST13)、俞府(KI27)、璇玑(CV21)，穴略呈一弧形分布，其弧度与锁骨下缘弧度相应。"
+        },
+        {
+          "pointCode": "5.1.3",
+          "pointName": "天府",
+          "pinyin": "Tianfu",
+          "stdCode": "LU3",
+          "location": "在臂前外侧，腋前纹头下3寸，肱二头肌桡侧缘处。注：肱二头肌外侧沟平腋前纹头处至尺泽(LU5)连线的上1/3与下2/3的交界处。"
+        },
+        {
+          "pointCode": "5.1.4",
+          "pointName": "侠白",
+          "pinyin": "Xiabai",
+          "stdCode": "LU4",
+          "location": "在臂前外侧，腋前纹头下4寸，肱二头肌桡侧缘处。"
+        },
+        {
+          "pointCode": "5.1.5",
+          "pointName": "尺泽",
+          "pinyin": "Chize",
+          "stdCode": "LU5",
+          "location": "在肘前侧，肘横纹上，肱二头肌腱桡侧缘凹陷中。注：屈肘，肘横纹上，曲池(LI11)与曲泽(PC3)之间，与曲泽(PC3)相隔一肌腱(肱二头肌腱)。"
+        },
+        {
+          "pointCode": "5.1.6",
+          "pointName": "孔最",
+          "pinyin": "Kongzui",
+          "stdCode": "LU6",
+          "location": "在前臂前外侧，腕掌侧远端横纹上7寸，尺泽(LU5)与太渊(LU9)连线上。注：尺泽(LU5)下5寸，即尺泽(LU5)与太渊(LU9)连线的中点上1寸。"
+        },
+        {
+          "pointCode": "5.1.7",
+          "pointName": "列缺",
+          "pinyin": "Lieque",
+          "stdCode": "LU7",
+          "location": "在前臂外侧，腕掌侧远端横纹上1.5寸，拇短伸肌腱与拇长展肌腱之间，拇长展肌腱沟的凹陷中。"
+        },
+        {
+          "pointCode": "5.1.8",
+          "pointName": "经渠",
+          "pinyin": "Jingqu",
+          "stdCode": "LU8",
+          "location": "在前臂前外侧，腕掌侧远端横纹上1寸，桡骨茎突与桡动脉之间。注：太渊(LU9)上1寸约当腕掌侧近端横纹中。"
+        },
+        {
+          "pointCode": "5.1.9",
+          "pointName": "太渊",
+          "pinyin": "Taiyuan",
+          "stdCode": "LU9",
+          "location": "在腕前外侧，桡骨茎突与腕舟状骨之间，拇长展肌腱尺侧凹陷中。注：在腕掌侧远端横纹桡侧，桡动脉搏动处。"
+        },
+        {
+          "pointCode": "5.1.10",
+          "pointName": "鱼际",
+          "pinyin": "Yuji",
+          "stdCode": "LU10",
+          "location": "在手掌，第1掌骨桡侧中点赤白肉际处。"
+        },
+        {
+          "pointCode": "5.1.11",
+          "pointName": "少商",
+          "pinyin": "Shaoshang",
+          "stdCode": "LU11",
+          "location": "在手指，拇指末节桡侧，指甲根角侧上方0.1寸。注：拇指侧指甲根角侧上方(即沿角平分线方向)0.1寸。相当于沿爪甲侧画一直线与爪甲基底缘水平线交点处取穴。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.2",
+      "chapterName": "手阳明大肠经穴",
+      "meridianName": "手阳明大肠经",
+      "children": [
+        {
+          "pointCode": "5.2.1",
+          "pointName": "商阳",
+          "pinyin": "Shangyang",
+          "stdCode": "LI1",
+          "location": "在手指，食指末节桡侧，指甲根角侧上方0.1寸。注：食指侧指甲根角侧上方(即沿角平分线方向)0.1寸。相当于沿爪甲侧画一直线与爪甲基底缘水平线交点处取穴。"
+        },
+        {
+          "pointCode": "5.2.2",
+          "pointName": "二间",
+          "pinyin": "Erjian",
+          "stdCode": "LI2",
+          "location": "在手指，第2掌指关节桡侧远端赤白肉际处。"
+        },
+        {
+          "pointCode": "5.2.3",
+          "pointName": "三间",
+          "pinyin": "Sanjian",
+          "stdCode": "LI3",
+          "location": "在手背，第2掌指关节桡侧近端凹陷中。"
+        },
+        {
+          "pointCode": "5.2.4",
+          "pointName": "合谷",
+          "pinyin": "Hegu",
+          "stdCode": "LI4",
+          "location": "在手背，第一掌骨和第二掌骨之间，约平第2掌骨桡侧的中点。"
+        },
+        {
+          "pointCode": "5.2.5",
+          "pointName": "阳溪",
+          "pinyin": "Yangxi",
+          "stdCode": "LI5",
+          "location": "在腕后外侧，腕背侧远端横纹桡侧，桡骨茎突远端，解剖学\"鼻烟窝\"凹陷中。注：手拇指分外展和后伸时，手背外侧部拇长伸肌腱与拇短伸肌腱之间形成一明显的凹陷--解剖学\"鼻烟窝\"，其最凹陷处即本穴。"
+        },
+        {
+          "pointCode": "5.2.6",
+          "pointName": "偏历",
+          "pinyin": "Pianli",
+          "stdCode": "LI6",
+          "location": "在前臂后外侧，腕背侧远端横纹上3寸，阳溪(LI5)与曲池(LI11)连线上。注：阳溪(LI5)至曲池(LI11)连线的下1/4与上3/4的交点处。"
+        },
+        {
+          "pointCode": "5.2.7",
+          "pointName": "温溜",
+          "pinyin": "Wenliu",
+          "stdCode": "LI7",
+          "location": "在前臂后外侧，腕背侧远端横纹上5寸，阳溪(LI5)与曲池(LI11)连线上。"
+        },
+        {
+          "pointCode": "5.2.8",
+          "pointName": "下廉",
+          "pinyin": "Xialian",
+          "stdCode": "LI8",
+          "location": "在前臂后外侧，肘横纹下4寸，阳溪(LI5)与曲池(LI11)连线上。注：阳溪(LI5)与曲池(LI11)连线的上1/3与下2/3的交点处，上廉(LI9)下1寸。"
+        },
+        {
+          "pointCode": "5.2.9",
+          "pointName": "上廉",
+          "pinyin": "Shanglian",
+          "stdCode": "LI9",
+          "location": "在前臂后外侧，肘横纹下3寸，阳溪(LI5)与曲池(LI11)连线上。"
+        },
+        {
+          "pointCode": "5.2.10",
+          "pointName": "手三里",
+          "pinyin": "Shousanli",
+          "stdCode": "LI10",
+          "location": "在前臂后外侧，肘横纹下2寸，阳溪(LI5)与曲池(LI11)连线上。"
+        },
+        {
+          "pointCode": "5.2.11",
+          "pointName": "曲池",
+          "pinyin": "Quchi",
+          "stdCode": "LI11",
+          "location": "在肘外侧，尺泽(LU5)与肱骨外上髁连线的中点处。注：90°屈肘，肘横纹外侧端外凹陷中；极度屈肘，肘横纹侧端凹陷中。"
+        },
+        {
+          "pointCode": "5.2.12",
+          "pointName": "肘髎",
+          "pinyin": "Zhouliao",
+          "stdCode": "LI12",
+          "location": "在肘后外侧，肱骨外上髁上缘，髁上嵴的前缘。"
+        },
+        {
+          "pointCode": "5.2.13",
+          "pointName": "手五里",
+          "pinyin": "Shouwuli",
+          "stdCode": "LI13",
+          "location": "在臂外侧，肘横纹上3寸，曲池(LI11)与肩髃(LI15)连线上。"
+        },
+        {
+          "pointCode": "5.2.14",
+          "pointName": "臂臑",
+          "pinyin": "Binao",
+          "stdCode": "LI14",
+          "location": "在臂外侧，在曲池(LI11)与肩髃(LI15)连线上，三角肌前缘处。注：在曲池(LI11)与肩髃(LI15)连线上，约曲池上7寸，三角肌前缘处。"
+        },
+        {
+          "pointCode": "5.2.15",
+          "pointName": "肩髃",
+          "pinyin": "Jianyu",
+          "stdCode": "LI15",
+          "location": "在肩带部，肩峰外侧缘前端与肱骨大结节两骨间凹陷中。注：屈臂外展，肩峰外侧缘前后端呈现两个凹，前较深凹陷即本穴，后一凹陷为肩髎(TE14)。"
+        },
+        {
+          "pointCode": "5.2.16",
+          "pointName": "巨骨",
+          "pinyin": "Jugu",
+          "stdCode": "LI16",
+          "location": "在肩带部，锁骨肩峰端与肩胛冈之间凹陷中。注：冈上窝外端两骨间凹陷中。"
+        },
+        {
+          "pointCode": "5.2.17",
+          "pointName": "天鼎",
+          "pinyin": "Tianding",
+          "stdCode": "LI17",
+          "location": "在颈前部，横平环状软骨，胸锁乳突肌后缘。注：扶突(LI18)直下，横平水突(ST10)。"
+        },
+        {
+          "pointCode": "5.2.18",
+          "pointName": "扶突",
+          "pinyin": "Futu",
+          "stdCode": "LI18",
+          "location": "在颈前部，横平甲状软骨上缘(约相当于喉结处)，胸锁乳突肌前、后缘中间。"
+        },
+        {
+          "pointCode": "5.2.19",
+          "pointName": "口禾髎",
+          "pinyin": "Kouheliao",
+          "stdCode": "LI19",
+          "location": "在面部，横平人中沟上1/3与下2/3交点，鼻孔外缘直下。注：水沟(GV26)旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.2.20",
+          "pointName": "迎香",
+          "pinyin": "Yingxiang",
+          "stdCode": "LI20",
+          "location": "在面部，鼻翼外缘中点旁，鼻唇沟中。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.3",
+      "chapterName": "足阳明胃经穴",
+      "meridianName": "足阳明胃经",
+      "children": [
+        {
+          "pointCode": "5.3.1",
+          "pointName": "承泣",
+          "pinyin": "Chengqi",
+          "stdCode": "ST1",
+          "location": "在面部，眼球与眶下缘之间，瞳孔直下。"
+        },
+        {
+          "pointCode": "5.3.2",
+          "pointName": "四白",
+          "pinyin": "Sibai",
+          "stdCode": "ST2",
+          "location": "在面部，眶下孔处。"
+        },
+        {
+          "pointCode": "5.3.3",
+          "pointName": "巨髎",
+          "pinyin": "Juliao",
+          "stdCode": "ST3",
+          "location": "在面部，横平鼻翼下缘，瞳孔直下。"
+        },
+        {
+          "pointCode": "5.3.4",
+          "pointName": "地仓",
+          "pinyin": "Dicang",
+          "stdCode": "ST4",
+          "location": "在面部，口角旁开0.4寸。注：口角旁，在鼻唇沟或鼻唇沟延长线上。"
+        },
+        {
+          "pointCode": "5.3.5",
+          "pointName": "大迎",
+          "pinyin": "Daying",
+          "stdCode": "ST5",
+          "location": "在面部，下颌角前方，咬肌附着部的前缘凹陷中，面动脉搏动处。"
+        },
+        {
+          "pointCode": "5.3.6",
+          "pointName": "颊车",
+          "pinyin": "Jiache",
+          "stdCode": "ST6",
+          "location": "在面部，下颌角前上方一横指。注：沿下颌角角平分线上一横指，闭口咬紧牙时咬肌隆起，放松时按之有凹陷处。"
+        },
+        {
+          "pointCode": "5.3.7",
+          "pointName": "下关",
+          "pinyin": "Xiaguan",
+          "stdCode": "ST7",
+          "location": "在面部，颧弓下缘中央与下颌切迹之间凹陷中。注：闭口，上关(GB3)直下，弓下缘凹陷中。"
+        },
+        {
+          "pointCode": "5.3.8",
+          "pointName": "头维",
+          "pinyin": "Touwei",
+          "stdCode": "ST8",
+          "location": "在头部，额角发际直上0.5寸，头正中线旁开4.5寸。"
+        },
+        {
+          "pointCode": "5.3.9",
+          "pointName": "人迎",
+          "pinyin": "Renying",
+          "stdCode": "ST9",
+          "location": "在颈前部，横平甲状软骨上缘(约相当于喉结处)，胸锁乳突肌前缘，颈总动脉搏动处。注1：取一侧穴，令病人头转向对侧以显露胸锁乳突肌，抗阻力转动时则肌肉显露更明显。注2：本穴与扶突(LI18)、天窗(SI16)二穴的关系为：胸锁乳突肌前缘处为人迎(ST9)，后缘为天窗(SI16)，中间为扶突(LI18)。"
+        },
+        {
+          "pointCode": "5.3.10",
+          "pointName": "水突",
+          "pinyin": "Shuitu",
+          "stdCode": "ST10",
+          "location": "在颈前部，横平环状软骨，胸锁乳突肌前缘。"
+        },
+        {
+          "pointCode": "5.3.11",
+          "pointName": "气舍",
+          "pinyin": "Qishe",
+          "stdCode": "ST11",
+          "location": "在颈前部，锁骨上小窝，锁骨胸骨端上缘，胸锁乳突肌胸骨头与锁骨头中间的凹陷中。注1：取一侧穴，令病人头转向对侧以显露胸锁乳突肌，抗阻力转动时则肌肉显露更明显。注2：人迎(ST9)直下，在锁骨的上缘处。"
+        },
+        {
+          "pointCode": "5.3.12",
+          "pointName": "缺盆",
+          "pinyin": "Quepen",
+          "stdCode": "ST12",
+          "location": "在颈前部，锁骨上大窝，锁骨上缘凹陷中，前正中线旁开4寸。"
+        },
+        {
+          "pointCode": "5.3.13",
+          "pointName": "气户",
+          "pinyin": "Qihu",
+          "stdCode": "ST13",
+          "location": "在前胸部，锁骨下缘，前正中线旁开4寸。"
+        },
+        {
+          "pointCode": "5.3.14",
+          "pointName": "库房",
+          "pinyin": "Kufang",
+          "stdCode": "ST14",
+          "location": "在前胸部，第1肋间隙，前正中线旁开4寸。"
+        },
+        {
+          "pointCode": "5.3.15",
+          "pointName": "屋翳",
+          "pinyin": "Wuyi",
+          "stdCode": "ST15",
+          "location": "在前胸部，第2肋间隙，前正中线旁开4寸。注：先于胸骨角水平确定2肋，其下为第2肋间隙；男性可以乳头定第4肋，再向上2肋为第2肋间隙。"
+        },
+        {
+          "pointCode": "5.3.16",
+          "pointName": "膺窗",
+          "pinyin": "Yingchuang",
+          "stdCode": "ST16",
+          "location": "在前胸部，第3肋间隙，前正中线旁开4寸。"
+        },
+        {
+          "pointCode": "5.3.17",
+          "pointName": "乳中",
+          "pinyin": "Ruzhong",
+          "stdCode": "ST17",
+          "location": "在前胸部，乳头中央。"
+        },
+        {
+          "pointCode": "5.3.18",
+          "pointName": "乳根",
+          "pinyin": "Rugen",
+          "stdCode": "ST18",
+          "location": "在前胸部，第5肋间隙，前正中线旁开4寸。注：男性在乳头下1肋，即乳中线与第5肋间隙的相交处。女性在乳房根部弧线中点处。"
+        },
+        {
+          "pointCode": "5.3.19",
+          "pointName": "不容",
+          "pinyin": "Burong",
+          "stdCode": "ST19",
+          "location": "在上腹部，脐中上6寸，前正中线旁开2寸。注1：巨阙(CV14)旁开2寸。注2：对于某些肋弓角较狭小的人，此穴下可能正当肋骨，可采用斜刺的方法。"
+        },
+        {
+          "pointCode": "5.3.20",
+          "pointName": "承满",
+          "pinyin": "Chengman",
+          "stdCode": "ST20",
+          "location": "在上腹部，脐中上5寸，前正中线旁开2寸。注：天枢(ST25)上5寸，不容(ST19)下1寸，上脘(CV13)旁开2寸。"
+        },
+        {
+          "pointCode": "5.3.21",
+          "pointName": "梁门",
+          "pinyin": "Liangmen",
+          "stdCode": "ST21",
+          "location": "在上腹部，脐中上4寸，前正中线旁开2寸。注：天枢(ST25)上4寸，承满(ST20)下1寸，中脘(CV12)旁开2寸。"
+        },
+        {
+          "pointCode": "5.3.22",
+          "pointName": "关门",
+          "pinyin": "Guanmen",
+          "stdCode": "ST22",
+          "location": "在上腹部，脐中上3寸，前正中线旁开2寸。注：横平内侧的石关(KI18)、建里(CV11)。"
+        },
+        {
+          "pointCode": "5.3.23",
+          "pointName": "太乙",
+          "pinyin": "Taiyi",
+          "stdCode": "ST23",
+          "location": "在上腹部，脐中上2寸，前正中线旁开2寸。注：横平内侧的商曲(KI17)、下脘(CV10)。"
+        },
+        {
+          "pointCode": "5.3.24",
+          "pointName": "滑肉门",
+          "pinyin": "Huaroumen",
+          "stdCode": "ST24",
+          "location": "在上腹部，脐中上1寸，前正中线旁开2寸。注：横平内侧的水分(CV9)。"
+        },
+        {
+          "pointCode": "5.3.25",
+          "pointName": "天枢",
+          "pinyin": "Tianshu",
+          "stdCode": "ST25",
+          "location": "在上腹部，横平脐中，前正中线旁开2寸。"
+        },
+        {
+          "pointCode": "5.3.26",
+          "pointName": "外陵",
+          "pinyin": "Wailing",
+          "stdCode": "ST26",
+          "location": "在下腹部，脐中下1寸，前正中线旁开2寸。注：横平内侧的中注(KI15)、阴交(CV7)。"
+        },
+        {
+          "pointCode": "5.3.27",
+          "pointName": "大巨",
+          "pinyin": "Daju",
+          "stdCode": "ST27",
+          "location": "在下腹部，脐中下2寸，前正中线旁开2寸。注：横平内侧的四满(KI14)、石门(CV5)。"
+        },
+        {
+          "pointCode": "5.3.28",
+          "pointName": "水道",
+          "pinyin": "Shuidao",
+          "stdCode": "ST28",
+          "location": "在下腹部，脐中下3寸，前正中线旁开2寸。注：天枢(ST25)下3寸，大巨(ST27)下1寸，关元(CV4)旁开2寸。"
+        },
+        {
+          "pointCode": "5.3.29",
+          "pointName": "归来",
+          "pinyin": "Guilai",
+          "stdCode": "ST29",
+          "location": "在下腹部，脐中下4寸，前正中线旁开2寸。注：天枢(ST25)下4寸，水道(ST28)下1寸，中极(CV3)旁开2寸。"
+        },
+        {
+          "pointCode": "5.3.30",
+          "pointName": "气冲",
+          "pinyin": "Qichong",
+          "stdCode": "ST30",
+          "location": "在腹股沟，耻骨联合上缘，前正中线旁开2寸，动脉搏动处。注：天枢(ST25)下5寸，曲骨(CV2)旁开2寸。"
+        },
+        {
+          "pointCode": "5.3.31",
+          "pointName": "髀关",
+          "pinyin": "Biguan",
+          "stdCode": "ST31",
+          "location": "在股前侧，股直肌近端、缝匠肌与阔筋膜张肌3条肌肉之间凹陷中。注1：跷足，稍屈膝，大腿稍外展外旋，绷紧肌肉，在股直肌近端显现出2条相交叉的肌肉(斜向内侧为缝匠肌，外侧为阔筋膜张肌)，3条肌肉间围成一个三角形凹陷，其三角形顶角下凹陷中即为本穴。注2：约相当于前上棘、髌底外侧端连线与耻骨联合下缘水平线的交点处。"
+        },
+        {
+          "pointCode": "5.3.32",
+          "pointName": "伏兔",
+          "pinyin": "Futu",
+          "stdCode": "ST32",
+          "location": "在股前外侧，髌底上6寸，髂前上棘与髌底外侧端的连线上。"
+        },
+        {
+          "pointCode": "5.3.33",
+          "pointName": "阴市",
+          "pinyin": "Yinshi",
+          "stdCode": "ST33",
+          "location": "在股前外侧，髌底上3寸，股直肌肌腱外侧缘。注：伏兔(ST32)与髌底外侧端连线中点。"
+        },
+        {
+          "pointCode": "5.3.34",
+          "pointName": "梁丘",
+          "pinyin": "Liangqiu",
+          "stdCode": "ST34",
+          "location": "在股前外侧，髌底上2寸，股外侧肌与股直肌肌腱之间。注：令大腿肌肉绷紧，显现股直肌肌腱与股外侧肌，于两肌之间，阴市(ST33)直下1寸处取穴。"
+        },
+        {
+          "pointCode": "5.3.35",
+          "pointName": "犊鼻",
+          "pinyin": "Dubi",
+          "stdCode": "ST35",
+          "location": "在膝前侧，髌韧带外侧凹陷中。注：屈膝45°，髌骨外下方的凹陷中。"
+        },
+        {
+          "pointCode": "5.3.36",
+          "pointName": "足三里",
+          "pinyin": "Zusanli",
+          "stdCode": "ST36",
+          "location": "在小腿外侧，犊鼻(ST35)下3寸，犊鼻(ST35)与解溪(ST41)连线上。注：在胫骨前肌上取穴。"
+        },
+        {
+          "pointCode": "5.3.37",
+          "pointName": "上巨虚",
+          "pinyin": "Shangjuxu",
+          "stdCode": "ST37",
+          "location": "在小腿外侧，犊鼻(ST35)下6寸，犊鼻(ST35)与解溪(ST41)连线上。注：在胫骨前肌上取穴。"
+        },
+        {
+          "pointCode": "5.3.38",
+          "pointName": "条口",
+          "pinyin": "Tiaokou",
+          "stdCode": "ST38",
+          "location": "在小腿外侧，犊鼻(ST35)下8寸，犊鼻(ST35)与解溪(ST41)连线上。注：在胫骨前肌上取穴，横平丰隆(ST40)。"
+        },
+        {
+          "pointCode": "5.3.39",
+          "pointName": "下巨虚",
+          "pinyin": "Xiajuxu",
+          "stdCode": "ST39",
+          "location": "在小腿外侧，犊鼻(ST35)下9寸，犊鼻(ST35)与解溪(ST41)连线上。注：在胫骨前肌上取穴，横平外丘(GB36)、阳交(GB35)。"
+        },
+        {
+          "pointCode": "5.3.40",
+          "pointName": "丰隆",
+          "pinyin": "Fenglong",
+          "stdCode": "ST40",
+          "location": "在小腿外侧，外踝尖上8寸，胫骨前肌的外缘。注：犊鼻(ST35)与解溪(ST41)连线的中点，条口(ST38)外侧一横指处。"
+        },
+        {
+          "pointCode": "5.3.41",
+          "pointName": "解溪",
+          "pinyin": "Jiexi",
+          "stdCode": "ST41",
+          "location": "在踝前侧，踝关节前面中央凹陷中，长伸肌腱与趾长伸肌腱之间。注：令足趾上跷，显现足背部两肌腱，穴在两腱之间，相当于内、外踝尖连线的中点处。"
+        },
+        {
+          "pointCode": "5.3.42",
+          "pointName": "冲阳",
+          "pinyin": "Chongyang",
+          "stdCode": "ST42",
+          "location": "在足背，第2跖骨基底部与中间楔状骨关节处，可触及足背动脉。"
+        },
+        {
+          "pointCode": "5.3.43",
+          "pointName": "陷谷",
+          "pinyin": "Xiangu",
+          "stdCode": "ST43",
+          "location": "在足背，第2、3跖骨间，第2跖趾关节近端凹陷中。"
+        },
+        {
+          "pointCode": "5.3.44",
+          "pointName": "内庭",
+          "pinyin": "Neiting",
+          "stdCode": "ST44",
+          "location": "在足背，第2、3趾间，趾蹼缘后方赤白肉际处。"
+        },
+        {
+          "pointCode": "5.3.45",
+          "pointName": "厉兑",
+          "pinyin": "Lidui",
+          "stdCode": "ST45",
+          "location": "在足趾，第2趾末节外侧，趾甲根角侧后方0.1寸。注：足第2趾外侧甲根角侧后方(即沿角平分线方向)0.1寸。相当于沿爪甲外侧画一直线与爪甲基底缘水平线交点处取穴。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.4",
+      "chapterName": "足太阴脾经穴",
+      "meridianName": "足太阴脾经",
+      "children": [
+        {
+          "pointCode": "5.4.1",
+          "pointName": "隐白",
+          "pinyin": "Yinbai",
+          "stdCode": "SP1",
+          "location": "在足趾，大趾末节内侧，趾甲根角侧后方0.1寸。注：足大趾内侧甲根角侧后方(即沿角平分线方向)0.1寸。相当于沿爪甲内侧画一直线与爪甲基底缘水平线交点处取穴。"
+        },
+        {
+          "pointCode": "5.4.2",
+          "pointName": "大都",
+          "pinyin": "Dadu",
+          "stdCode": "SP2",
+          "location": "在足趾，第1跖趾关节远端赤白肉际凹陷中。"
+        },
+        {
+          "pointCode": "5.4.3",
+          "pointName": "太白",
+          "pinyin": "Taibai",
+          "stdCode": "SP3",
+          "location": "在足内侧，第1跖趾关节近端赤白肉际凹陷中。"
+        },
+        {
+          "pointCode": "5.4.4",
+          "pointName": "公孙",
+          "pinyin": "Gongsun",
+          "stdCode": "SP4",
+          "location": "在足内侧，第1跖骨底的前下缘赤白肉际处。注：沿太白(SP3)向后推至一凹陷，即为本穴。"
+        },
+        {
+          "pointCode": "5.4.5",
+          "pointName": "商丘",
+          "pinyin": "Shangqiu",
+          "stdCode": "SP5",
+          "location": "在足内侧，内踝前下方，舟骨粗隆与内踝尖连线中点凹陷中。注1：内踝前缘直下与内踝下缘横线的交点处。注2：本穴前为中封(LR4)，后为照海(KI6)。"
+        },
+        {
+          "pointCode": "5.4.6",
+          "pointName": "三阴交",
+          "pinyin": "Sanyinjiao",
+          "stdCode": "SP6",
+          "location": "在小腿内侧，内踝尖上3寸，胫骨内侧缘后际。注：交信(KI8)上1寸。"
+        },
+        {
+          "pointCode": "5.4.7",
+          "pointName": "漏谷",
+          "pinyin": "Lougu",
+          "stdCode": "SP7",
+          "location": "在小腿内侧，内踝尖上6寸，胫骨内侧缘后际。注：三阴交(SP6)上3寸处。"
+        },
+        {
+          "pointCode": "5.4.8",
+          "pointName": "地机",
+          "pinyin": "Diji",
+          "stdCode": "SP8",
+          "location": "在小腿内侧，阴陵泉(SP9)下3寸，胫骨内侧缘后际。"
+        },
+        {
+          "pointCode": "5.4.9",
+          "pointName": "阴陵泉",
+          "pinyin": "Yinlingquan",
+          "stdCode": "SP9",
+          "location": "在小腿内侧，由胫骨内侧髁下缘与胫骨内侧缘形成的凹陷中。注：用拇指沿骨内缘由下往上推，推至骨内侧下缘的凹陷中即是本穴。"
+        },
+        {
+          "pointCode": "5.4.10",
+          "pointName": "血海",
+          "pinyin": "Xuehai",
+          "stdCode": "SP10",
+          "location": "在股前内侧，髌底内侧端上2寸，股内侧肌隆起处。"
+        },
+        {
+          "pointCode": "5.4.11",
+          "pointName": "箕门",
+          "pinyin": "Jimen",
+          "stdCode": "SP11",
+          "location": "在股内侧，髌底内侧端与冲门(SP12)的连线上1/3与下2/3交点，长收肌和缝匠肌交角的动脉搏动处。"
+        },
+        {
+          "pointCode": "5.4.12",
+          "pointName": "冲门",
+          "pinyin": "Chongmen",
+          "stdCode": "SP12",
+          "location": "在腹股沟，腹股沟斜纹中，髂外动脉搏动处的外侧。注：平曲骨(CV2)，府舍(SP13)稍内下方。"
+        },
+        {
+          "pointCode": "5.4.13",
+          "pointName": "府舍",
+          "pinyin": "Fushe",
+          "stdCode": "SP13",
+          "location": "在下腹部，脐中下4.3寸，前正中线旁开4寸。"
+        },
+        {
+          "pointCode": "5.4.14",
+          "pointName": "腹结",
+          "pinyin": "Fujie",
+          "stdCode": "SP14",
+          "location": "在下腹部，脐中下1.3寸，前正中线旁开4寸。"
+        },
+        {
+          "pointCode": "5.4.15",
+          "pointName": "大横",
+          "pinyin": "Daheng",
+          "stdCode": "SP15",
+          "location": "在上腹部，脐中旁开4寸。注：横平内侧的天枢(ST25)、肓俞(KI16)、神阙(CV8)。"
+        },
+        {
+          "pointCode": "5.4.16",
+          "pointName": "腹哀",
+          "pinyin": "Fu'ai",
+          "stdCode": "SP16",
+          "location": "在上腹部，脐中上3寸，前正中线旁开4寸。注：大横(SP15)直上3寸，横平建里(CV11)。"
+        },
+        {
+          "pointCode": "5.4.17",
+          "pointName": "食窦",
+          "pinyin": "Shidou",
+          "stdCode": "SP17",
+          "location": "在前胸部，第5肋间隙，前正中线旁开6寸。注：平内侧的乳根(ST18)、步廊(KI22)、中庭(CV1)，4穴略呈一弧形分布，其弧度与第5肋间隙弧度相应。"
+        },
+        {
+          "pointCode": "5.4.18",
+          "pointName": "天溪",
+          "pinyin": "Tianxi",
+          "stdCode": "SP18",
+          "location": "在前胸部，第4肋间隙，前正中线旁开6寸。注：平内侧的乳中(ST17)、神封(KI23)、膻中(CV17)，4穴略呈一弧形分布，其弧度与第4肋间隙弧度相应。"
+        },
+        {
+          "pointCode": "5.4.19",
+          "pointName": "胸乡",
+          "pinyin": "Xiongxiang",
+          "stdCode": "SP19",
+          "location": "在前胸部，第3肋间隙，前正中线旁开6寸。注：平内侧的屋翳(ST15)、灵墟(KI24)、玉堂(CV18)，穴略呈一弧形分布，其弧度与第3肋间隙弧度相应。"
+        },
+        {
+          "pointCode": "5.4.20",
+          "pointName": "周荣",
+          "pinyin": "Zhourong",
+          "stdCode": "SP20",
+          "location": "在前胸部，第2肋间隙，前正中线旁开6寸。注：平内侧的屋翳(ST15)、神藏(KI25)、紫宫(CV19)，穴略呈一弧形分布，其弧度与第2肋间隙弧度相应。"
+        },
+        {
+          "pointCode": "5.4.21",
+          "pointName": "大包",
+          "pinyin": "Dabao",
+          "stdCode": "SP21",
+          "location": "在侧胸部，第6肋间隙，腋中线上。注：侧卧举臂，在第6肋间隙与腋中线的交点处。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.5",
+      "chapterName": "手少阴心经穴",
+      "meridianName": "手少阴心经",
+      "children": [
+        {
+          "pointCode": "5.5.1",
+          "pointName": "极泉",
+          "pinyin": "Jiquan",
+          "stdCode": "HT1",
+          "location": "在腋窝中央，腋动脉搏动处。"
+        },
+        {
+          "pointCode": "5.5.2",
+          "pointName": "青灵",
+          "pinyin": "Qingling",
+          "stdCode": "HT2",
+          "location": "在臂内侧，肘横纹上3寸，肱二头肌的内侧沟中。注：屈肘举臂，在极泉(HT1)与少海(HT3)连线的上2/3与下1/3交点处。"
+        },
+        {
+          "pointCode": "5.5.3",
+          "pointName": "少海",
+          "pinyin": "Shaohai",
+          "stdCode": "HT3",
+          "location": "在肘前内侧，横平肘横纹，肱骨内上髁前缘。注：屈肘，在肘横纹内侧端与肱骨内上髁连线的中点处。"
+        },
+        {
+          "pointCode": "5.5.4",
+          "pointName": "灵道",
+          "pinyin": "Lingdao",
+          "stdCode": "HT4",
+          "location": "在前臂前内侧，腕掌侧远端横纹上1.5寸，尺侧腕屈肌腱的桡侧缘。注1：神门(HT7)上1.5寸，横平尺骨头上缘(根部)。注2：豌豆骨上缘侧直上1.5寸取穴。"
+        },
+        {
+          "pointCode": "5.5.5",
+          "pointName": "通里",
+          "pinyin": "Tongli",
+          "stdCode": "HT5",
+          "location": "在前臂前内侧，腕掌侧远端横纹上1寸，尺侧腕屈肌腱的桡侧缘。注1：神门(HT7)上1寸。该穴与灵道(HT4)、阴郄(HT6)2穴的位置关系为：平尺骨头根部是灵道(HT4)，横平尺骨头中部是通里(HT5)，横平尺骨头头部是阴郄(HT6)。注2：豌豆骨上缘桡侧直上1寸取穴。"
+        },
+        {
+          "pointCode": "5.5.6",
+          "pointName": "阴郄",
+          "pinyin": "Yinxi",
+          "stdCode": "HT6",
+          "location": "在前臂前内侧，腕掌侧远端横纹上0.5寸，尺侧腕屈肌腱的桡侧缘。注1：神门(HT7)上0.5寸，横平尺骨头的下缘(头部)。注2：豌豆骨上缘桡侧直上0.5寸取穴。"
+        },
+        {
+          "pointCode": "5.5.7",
+          "pointName": "神门",
+          "pinyin": "Shenmen",
+          "stdCode": "HT7",
+          "location": "在腕前内侧，腕掌侧远端横纹尺侧端，尺侧腕屈肌腱的桡侧缘。注：于豌豆骨上缘侧凹陷中，在腕掌侧远端横纹上取穴。"
+        },
+        {
+          "pointCode": "5.5.8",
+          "pointName": "少府",
+          "pinyin": "Shaofu",
+          "stdCode": "HT8",
+          "location": "在手掌，横平第5掌指关节近端，第4、5掌骨之间。注：第4、5掌骨之间，握拳时，小指尖所指处，横平劳宫(PC8)。"
+        },
+        {
+          "pointCode": "5.5.9",
+          "pointName": "少冲",
+          "pinyin": "Shaochong",
+          "stdCode": "HT9",
+          "location": "在手指，小指末节桡侧，指甲根角侧上方0.1寸。注：手小指侧指甲根角侧上方(即沿角平分线方向)0.1寸。相当于沿爪甲侧画一直线与爪甲基底缘水平线交点处。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.6",
+      "chapterName": "手太阳小肠经穴",
+      "meridianName": "手太阳小肠经",
+      "children": [
+        {
+          "pointCode": "5.6.1",
+          "pointName": "少泽",
+          "pinyin": "Shaoze",
+          "stdCode": "SI1",
+          "location": "在手指，小指末节尺侧，指甲根角侧上方0.1寸。注：手小指尺侧指甲根角侧上方(即沿角平分线方向)0.1寸。相当于沿爪甲尺侧画一直线与爪甲基底缘水平线交点处。"
+        },
+        {
+          "pointCode": "5.6.2",
+          "pointName": "前谷",
+          "pinyin": "Qiangu",
+          "stdCode": "SI2",
+          "location": "在手指，第5掌指关节尺侧远端赤白肉际凹陷中。注：半握拳，第5掌指横纹尺侧端。"
+        },
+        {
+          "pointCode": "5.6.3",
+          "pointName": "后溪",
+          "pinyin": "Houxi",
+          "stdCode": "SI3",
+          "location": "在手背，第5掌指关节尺侧近端赤白肉际凹陷中。注：半握拳，掌远侧横纹头(尺侧)赤白肉际处。"
+        },
+        {
+          "pointCode": "5.6.4",
+          "pointName": "腕骨",
+          "pinyin": "Wanggu",
+          "stdCode": "SI4",
+          "location": "在腕后内侧，第5掌骨底与三角骨之间的赤白肉际凹陷中。注：由后溪(SI3)向上沿掌骨直推至一突起骨，于两骨之间凹陷中取穴。"
+        },
+        {
+          "pointCode": "5.6.5",
+          "pointName": "阳谷",
+          "pinyin": "Yanggu",
+          "stdCode": "SI5",
+          "location": "在腕后内侧，尺骨茎突与三角骨之间的凹陷中。注：由腕骨(SI4)向上，相隔一骨(即三角骨)与尺骨茎突之间的凹陷中。"
+        },
+        {
+          "pointCode": "5.6.6",
+          "pointName": "养老",
+          "pinyin": "Yanglao",
+          "stdCode": "SI6",
+          "location": "在前臂后侧，腕背横纹上1寸，尺骨头桡侧凹陷中。注：掌心向下，用一手指按在尺骨头的最高点上，然后手掌旋后，在手指滑入的骨缝中。"
+        },
+        {
+          "pointCode": "5.6.7",
+          "pointName": "支正",
+          "pinyin": "Zhizheng",
+          "stdCode": "SI7",
+          "location": "在前臂外侧，腕背侧远端横纹上5寸，尺骨尺侧与尺侧腕屈肌之间。注：阳谷(SI5)与小海(SI8)连线中点下1寸。"
+        },
+        {
+          "pointCode": "5.6.8",
+          "pointName": "小海",
+          "pinyin": "Xiaohai",
+          "stdCode": "SI8",
+          "location": "在肘后内侧，尺骨鹰嘴(即肘尖)与肱骨内上髁之间凹陷中。注：微曲肘，在尺神经沟中，用手指弹敲此处时有触电麻感直达小指。"
+        },
+        {
+          "pointCode": "5.6.9",
+          "pointName": "肩贞",
+          "pinyin": "Jianzhen",
+          "stdCode": "SI9",
+          "location": "在肩带部，肩关节后下方，腋后纹头直上1寸。注：臂内收时，腋后纹头直上1寸，三角肌后缘。"
+        },
+        {
+          "pointCode": "5.6.10",
+          "pointName": "臑俞",
+          "pinyin": "Naoshu",
+          "stdCode": "SI10",
+          "location": "在肩带部，腋后纹头直上，肩胛冈下缘凹陷中。"
+        },
+        {
+          "pointCode": "5.6.11",
+          "pointName": "天宗",
+          "pinyin": "Tianzong",
+          "stdCode": "SI11",
+          "location": "在肩带部，肩胛冈中点与肩胛骨下角连线上1/3与下2/3交点凹陷中。"
+        },
+        {
+          "pointCode": "5.6.12",
+          "pointName": "秉风",
+          "pinyin": "Bingfeng",
+          "stdCode": "SI12",
+          "location": "在肩带部，肩胛冈中点上方冈上窝中。"
+        },
+        {
+          "pointCode": "5.6.13",
+          "pointName": "曲垣",
+          "pinyin": "Quyuan",
+          "stdCode": "SI13",
+          "location": "在肩带部，肩胛冈内侧端上缘凹陷中。注：臑俞(SI10)与第2胸椎棘突连线的中点处。"
+        },
+        {
+          "pointCode": "5.6.14",
+          "pointName": "肩外俞",
+          "pinyin": "Jianwaishu",
+          "stdCode": "SI14",
+          "location": "在背部，第1胸椎棘突下，后正中线旁开3寸。注1：肩胛骨脊柱缘的垂线与第1胸椎棘突下的水平线相交处。注2：本穴与内侧的大杼(BL11)、陶道(GV13)均位于第1胸椎棘突下水平。"
+        },
+        {
+          "pointCode": "5.6.15",
+          "pointName": "肩中俞",
+          "pinyin": "Jianzhongshu",
+          "stdCode": "SI15",
+          "location": "在背部，第7颈椎棘突下，后正中线旁开2寸。注：大椎(GV14)旁开2寸。"
+        },
+        {
+          "pointCode": "5.6.16",
+          "pointName": "天窗",
+          "pinyin": "Tianchuang",
+          "stdCode": "SI16",
+          "location": "在颈前部，横平甲状软骨上缘(约相当于喉结处)，胸锁乳突肌的后缘。注1：取一侧穴，令病人头转向对侧以显露胸锁乳突肌，抗阻力转动时则肌肉显露更明显。注2：本穴与人迎(ST9)、扶突(LI18)均横平喉结，三者的位置关系为：胸锁乳突肌前缘处为人迎(ST9)，后缘为天窗(SI16)，前后缘中间为扶突(LI18)。"
+        },
+        {
+          "pointCode": "5.6.17",
+          "pointName": "天容",
+          "pinyin": "Tianrong",
+          "stdCode": "SI17",
+          "location": "在颈前部，下颌角后方，胸锁乳突肌的前缘凹陷中。注：取一侧穴，令病人头转向对侧以显露胸锁乳突肌，抗阻力转动时则肌肉显露更明显。"
+        },
+        {
+          "pointCode": "5.6.18",
+          "pointName": "颧髎",
+          "pinyin": "Quanliao",
+          "stdCode": "SI18",
+          "location": "在面部，颧骨下缘，目外眦直下凹陷中。"
+        },
+        {
+          "pointCode": "5.6.19",
+          "pointName": "听宫",
+          "pinyin": "Tinggong",
+          "stdCode": "SI19",
+          "location": "在面部，耳屏正中与下颌骨髁突之间的凹陷中。注：微张口，耳屏正中前缘凹陷中，在耳门(TE21)与听会(GB2)之间。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.7",
+      "chapterName": "足太阳膀胱经穴",
+      "meridianName": "足太阳膀胱经",
+      "children": [
+        {
+          "pointCode": "5.7.1",
+          "pointName": "睛明",
+          "pinyin": "Jingming",
+          "stdCode": "BL1",
+          "location": "在面部，目内眦内上方眶内侧壁凹陷中。注：闭目，在目内眦内上方0.1寸的凹陷中。"
+        },
+        {
+          "pointCode": "5.7.2",
+          "pointName": "攒竹",
+          "pinyin": "Cuanzhu",
+          "stdCode": "BL2",
+          "location": "在面部，眉头凹陷中，额切迹处。注：沿晴明直上至眉头边缘可触及一凹陷，即额切迹处。"
+        },
+        {
+          "pointCode": "5.7.3",
+          "pointName": "眉冲",
+          "pinyin": "Meichong",
+          "stdCode": "BL3",
+          "location": "在头部，额切迹直上入发际0.5寸。注：神庭与曲差中间。"
+        },
+        {
+          "pointCode": "5.7.4",
+          "pointName": "曲差",
+          "pinyin": "Qucha",
+          "stdCode": "BL4",
+          "location": "在头部，前发际正中直上0.5寸，旁开1.5寸。注：神庭与头维连线的内1/3与外2/3的交点处。"
+        },
+        {
+          "pointCode": "5.7.5",
+          "pointName": "五处",
+          "pinyin": "Wuchu",
+          "stdCode": "BL5",
+          "location": "在头部，前发际正中直上1寸，旁开1.5寸。注：曲差直上0.5寸处，横平上星。"
+        },
+        {
+          "pointCode": "5.7.6",
+          "pointName": "承光",
+          "pinyin": "Chengguang",
+          "stdCode": "BL6",
+          "location": "在头部，前发际正中直上2.5寸，旁开1.5寸。注：五处直上1.5寸，曲差直上2寸处。"
+        },
+        {
+          "pointCode": "5.7.7",
+          "pointName": "通天",
+          "pinyin": "Tongtian",
+          "stdCode": "BL7",
+          "location": "在头部，前发际正中直上4寸，旁开1.5寸。注：承光与络却中点。"
+        },
+        {
+          "pointCode": "5.7.8",
+          "pointName": "络却",
+          "pinyin": "Luoque",
+          "stdCode": "BL8",
+          "location": "在头部，前发际正中直上5.5寸，旁开1.5寸。注：百会后0.5寸，旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.9",
+          "pointName": "玉枕",
+          "pinyin": "Yuzhen",
+          "stdCode": "BL9",
+          "location": "在头部，横平枕外隆凸上缘，后发际正中旁开1.3寸。注：斜方肌外侧缘直上与枕外上缘水平线的交点，横平脑户。"
+        },
+        {
+          "pointCode": "5.7.10",
+          "pointName": "天柱",
+          "pinyin": "Tianzhu",
+          "stdCode": "BL10",
+          "location": "在颈后部，横平第2颈椎棘突上际，斜方肌外缘凹陷中。"
+        },
+        {
+          "pointCode": "5.7.11",
+          "pointName": "大杼",
+          "pinyin": "Dazhu",
+          "stdCode": "BL11",
+          "location": "在背部，第1胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.12",
+          "pointName": "风门",
+          "pinyin": "Fengmen",
+          "stdCode": "BL12",
+          "location": "在背部，第2胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.13",
+          "pointName": "肺俞",
+          "pinyin": "Feishu",
+          "stdCode": "BL13",
+          "location": "在背部，第3胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.14",
+          "pointName": "厥阴俞",
+          "pinyin": "Jueyinshu",
+          "stdCode": "BL14",
+          "location": "在背部，第4胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.15",
+          "pointName": "心俞",
+          "pinyin": "Xinshu",
+          "stdCode": "BL15",
+          "location": "在背部，第5胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.16",
+          "pointName": "督俞",
+          "pinyin": "Dushu",
+          "stdCode": "BL16",
+          "location": "在背部，第6胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.17",
+          "pointName": "膈俞",
+          "pinyin": "Geshu",
+          "stdCode": "BL17",
+          "location": "在背部，第7胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.18",
+          "pointName": "肝俞",
+          "pinyin": "Ganshu",
+          "stdCode": "BL18",
+          "location": "在背部，第9胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.19",
+          "pointName": "胆俞",
+          "pinyin": "Danshu",
+          "stdCode": "BL19",
+          "location": "在背部，第10胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.20",
+          "pointName": "脾俞",
+          "pinyin": "Pishu",
+          "stdCode": "BL20",
+          "location": "在背部，第11胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.21",
+          "pointName": "胃俞",
+          "pinyin": "Weishu",
+          "stdCode": "BL21",
+          "location": "在背部，第12胸椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.22",
+          "pointName": "三焦俞",
+          "pinyin": "Sanjiaoshu",
+          "stdCode": "BL22",
+          "location": "在腰部，第1腰椎棘突下，后正中线旁开1.5寸。注：先定第12胸椎棘突，下数第1个棘突即第1腰椎棘突。"
+        },
+        {
+          "pointCode": "5.7.23",
+          "pointName": "肾俞",
+          "pinyin": "Shenshu",
+          "stdCode": "BL23",
+          "location": "在腰部，第2腰椎棘突下，后正中线旁开1.5寸。注：先定第12胸椎棘突，下数第2个棘突即第2腰椎棘突。"
+        },
+        {
+          "pointCode": "5.7.24",
+          "pointName": "气海俞",
+          "pinyin": "Qihaishu",
+          "stdCode": "BL24",
+          "location": "在腰部，第3腰椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.25",
+          "pointName": "大肠俞",
+          "pinyin": "Dachangshu",
+          "stdCode": "BL25",
+          "location": "在腰部，第4腰椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.26",
+          "pointName": "关元俞",
+          "pinyin": "Guanyuanshu",
+          "stdCode": "BL26",
+          "location": "在腰部，第5腰椎棘突下，后正中线旁开1.5寸。"
+        },
+        {
+          "pointCode": "5.7.27",
+          "pointName": "小肠俞",
+          "pinyin": "Xiaochangshu",
+          "stdCode": "BL27",
+          "location": "在骶部，横平第1骶后孔，骶正中旁开1.5寸。注：横平上髎。"
+        },
+        {
+          "pointCode": "5.7.28",
+          "pointName": "膀胱俞",
+          "pinyin": "Pangguangshu",
+          "stdCode": "BL28",
+          "location": "在骶部，横平第2骶后孔，骶正中旁开1.5寸。注：横平次髎。"
+        },
+        {
+          "pointCode": "5.7.29",
+          "pointName": "中膂俞",
+          "pinyin": "Zhonglüshu",
+          "stdCode": "BL29",
+          "location": "在骶部，横平第3骶后孔，骶正中旁开1.5寸。注：横平中髎。"
+        },
+        {
+          "pointCode": "5.7.30",
+          "pointName": "白环俞",
+          "pinyin": "Baihuanshu",
+          "stdCode": "BL30",
+          "location": "在骶部，横平第4骶后孔，骶正中旁开1.5寸。注：骶管裂孔旁开1.5寸，横平下髎。"
+        },
+        {
+          "pointCode": "5.7.31",
+          "pointName": "上髎",
+          "pinyin": "Shangliao",
+          "stdCode": "BL31",
+          "location": "在骶部，正对第1骶后孔中。注：从次髎向上触摸到的凹陷即第一后孔。"
+        },
+        {
+          "pointCode": "5.7.32",
+          "pointName": "次髎",
+          "pinyin": "Ciliao",
+          "stdCode": "BL32",
+          "location": "在骶部，第2骶后孔中。注：俯卧，髂后上棘与第2椎棘突连线的中点凹陷中。"
+        },
+        {
+          "pointCode": "5.7.33",
+          "pointName": "中髎",
+          "pinyin": "Zhongliao",
+          "stdCode": "BL33",
+          "location": "在骶部，正对第3骶后孔中。注：次髎向下触摸到的第1个凹陷即第3后孔。"
+        },
+        {
+          "pointCode": "5.7.34",
+          "pointName": "下髎",
+          "pinyin": "Xialiao",
+          "stdCode": "BL34",
+          "location": "在骶部，正对第4骶后孔中。注：次髎向下触摸到的第2个凹陷即第4后孔，横平骶管裂孔。"
+        },
+        {
+          "pointCode": "5.7.35",
+          "pointName": "会阳",
+          "pinyin": "Huiyang",
+          "stdCode": "BL35",
+          "location": "在臀部，尾骨端旁开0.5寸。注：俯卧或伏卧位，按取尾骨下端旁软陷处取穴。"
+        },
+        {
+          "pointCode": "5.7.36",
+          "pointName": "承扶",
+          "pinyin": "Chengfu",
+          "stdCode": "BL36",
+          "location": "在臀部，臀沟的中点。"
+        },
+        {
+          "pointCode": "5.7.37",
+          "pointName": "殷门",
+          "pinyin": "Yinmen",
+          "stdCode": "BL37",
+          "location": "在股后侧，臀沟下6寸，股二头肌与半腱肌之间。注：承扶与委中连线的中点上1寸处取穴。"
+        },
+        {
+          "pointCode": "5.7.38",
+          "pointName": "浮郄",
+          "pinyin": "Fuxi",
+          "stdCode": "BL38",
+          "location": "在膝后侧，腘横纹上1寸，股二头肌腱的内侧缘。注：委阳上1寸取穴。"
+        },
+        {
+          "pointCode": "5.7.39",
+          "pointName": "委阳",
+          "pinyin": "Weiyang",
+          "stdCode": "BL39",
+          "location": "在膝后外侧，腘横纹上，股二头肌腱的内侧缘。注：稍屈膝，即可显露股二头肌腱。"
+        },
+        {
+          "pointCode": "5.7.40",
+          "pointName": "委中",
+          "pinyin": "Weizhong",
+          "stdCode": "BL40",
+          "location": "在膝后侧，腘横纹中点。"
+        },
+        {
+          "pointCode": "5.7.41",
+          "pointName": "附分",
+          "pinyin": "Fufen",
+          "stdCode": "BL41",
+          "location": "在背部，第2胸椎棘突下，后正中线旁开3寸。注：与风门同一水平。"
+        },
+        {
+          "pointCode": "5.7.42",
+          "pointName": "魄户",
+          "pinyin": "Pohu",
+          "stdCode": "BL42",
+          "location": "在背部，第3胸椎棘突下，后正中线旁开3寸。注：与肺俞、身柱同一水平。"
+        },
+        {
+          "pointCode": "5.7.43",
+          "pointName": "膏肓",
+          "pinyin": "Gaohuang",
+          "stdCode": "BL43",
+          "location": "在背部，第4胸椎棘突下，后正中线旁开3寸。注：与厥阴俞同一水平。"
+        },
+        {
+          "pointCode": "5.7.44",
+          "pointName": "神堂",
+          "pinyin": "Shentang",
+          "stdCode": "BL44",
+          "location": "在背部，第5胸椎棘突下，后正中线旁开3寸。注：与心俞、神道同一水平。"
+        },
+        {
+          "pointCode": "5.7.45",
+          "pointName": "譩嘻",
+          "pinyin": "Yixi",
+          "stdCode": "BL45",
+          "location": "在背部，第6胸椎棘突下，后正中线旁开3寸。注：坐位宜抱肘展肩取穴。"
+        },
+        {
+          "pointCode": "5.7.46",
+          "pointName": "膈关",
+          "pinyin": "Geguan",
+          "stdCode": "BL46",
+          "location": "在背部，第7胸椎棘突下，后正中线旁开3寸。注：坐位宜抱肘展肩取穴。"
+        },
+        {
+          "pointCode": "5.7.47",
+          "pointName": "魂门",
+          "pinyin": "Hunmen",
+          "stdCode": "BL47",
+          "location": "在背部，第9胸椎棘突下，后正中线旁开3寸。注：与肝俞、筋缩同一水平。"
+        },
+        {
+          "pointCode": "5.7.48",
+          "pointName": "阳纲",
+          "pinyin": "Yanggang",
+          "stdCode": "BL48",
+          "location": "在背部，第10胸椎棘突下，后正中线旁开3寸。注：与胆俞、中枢同一水平。"
+        },
+        {
+          "pointCode": "5.7.49",
+          "pointName": "意舍",
+          "pinyin": "Yishe",
+          "stdCode": "BL49",
+          "location": "在背部，第11胸椎棘突下，后正中线旁开3寸。注：与脾俞、脊中同一水平。"
+        },
+        {
+          "pointCode": "5.7.50",
+          "pointName": "胃仓",
+          "pinyin": "Weicang",
+          "stdCode": "BL50",
+          "location": "在背部，第12胸椎棘突下，后正中线旁开3寸。注：与胃俞同一水平。"
+        },
+        {
+          "pointCode": "5.7.51",
+          "pointName": "肓门",
+          "pinyin": "Huangmen",
+          "stdCode": "BL51",
+          "location": "在腰部，第1腰椎棘突下，后正中线旁开3寸。注：与三焦俞、悬枢同一水平。"
+        },
+        {
+          "pointCode": "5.7.52",
+          "pointName": "志室",
+          "pinyin": "Zhishi",
+          "stdCode": "BL52",
+          "location": "在腰部，第2腰椎棘突下，后正中线旁开3寸。注：与肾俞、命门同一水平。"
+        },
+        {
+          "pointCode": "5.7.53",
+          "pointName": "胞肓",
+          "pinyin": "Baohuang",
+          "stdCode": "BL53",
+          "location": "在臀部，横平第2骶后孔，骶正中旁开3寸。注：与膀胱俞、次髎同一水平。"
+        },
+        {
+          "pointCode": "5.7.54",
+          "pointName": "秩边",
+          "pinyin": "Zhibian",
+          "stdCode": "BL54",
+          "location": "在臀部，横平第4骶后孔，骶正中嵴旁开3寸。注：骶管裂孔旁开3寸。"
+        },
+        {
+          "pointCode": "5.7.55",
+          "pointName": "合阳",
+          "pinyin": "Heyang",
+          "stdCode": "BL55",
+          "location": "在小腿后侧，腘横纹下2寸，腓肠肌内、外侧头之间。注：委中直下2寸。"
+        },
+        {
+          "pointCode": "5.7.56",
+          "pointName": "承筋",
+          "pinyin": "Chengjin",
+          "stdCode": "BL56",
+          "location": "在小腿后侧，腘横纹下5寸，腓肠肌两肌腹之间。注：合阳与承山连线中点。"
+        },
+        {
+          "pointCode": "5.7.57",
+          "pointName": "承山",
+          "pinyin": "Chengshan",
+          "stdCode": "BL57",
+          "location": "在小腿后侧，腓肠肌两肌腹与跟腱交角处。注：伸足上提，出现人字凹陷处。"
+        },
+        {
+          "pointCode": "5.7.58",
+          "pointName": "飞扬",
+          "pinyin": "Feiyang",
+          "stdCode": "BL58",
+          "location": "在小腿后外侧，腓肠肌外下缘与跟腱移行处，昆仑直上7寸。注：承山外侧斜下方1寸。"
+        },
+        {
+          "pointCode": "5.7.59",
+          "pointName": "跗阳",
+          "pinyin": "Fuyang",
+          "stdCode": "BL59",
+          "location": "在小腿后外侧，昆仑直上3寸，腓骨与跟腱之间。"
+        },
+        {
+          "pointCode": "5.7.60",
+          "pointName": "昆仑",
+          "pinyin": "Kunlun",
+          "stdCode": "BL60",
+          "location": "在踝后外侧，外踝尖与跟腱之间的凹陷中。"
+        },
+        {
+          "pointCode": "5.7.61",
+          "pointName": "仆参",
+          "pinyin": "Pucan",
+          "stdCode": "BL61",
+          "location": "在足外侧，昆仑直下，跟骨外侧赤白肉际处。"
+        },
+        {
+          "pointCode": "5.7.62",
+          "pointName": "申脉",
+          "pinyin": "Shenmai",
+          "stdCode": "BL62",
+          "location": "在足外侧，外踝尖直下，外踝下缘与跟骨之间凹陷中。注：与照海内外相对。"
+        },
+        {
+          "pointCode": "5.7.63",
+          "pointName": "金门",
+          "pinyin": "Jinmen",
+          "stdCode": "BL63",
+          "location": "在足背，外踝前缘直下，第5跖骨粗隆后方，骰骨下缘凹陷中。"
+        },
+        {
+          "pointCode": "5.7.64",
+          "pointName": "京骨",
+          "pinyin": "Jinggu",
+          "stdCode": "BL64",
+          "location": "在足外侧，第5跖骨粗隆前下方，赤白肉际处。"
+        },
+        {
+          "pointCode": "5.7.65",
+          "pointName": "束骨",
+          "pinyin": "Shugu",
+          "stdCode": "BL65",
+          "location": "在足外侧，第5跖趾关节近端赤白肉际处。"
+        },
+        {
+          "pointCode": "5.7.66",
+          "pointName": "足通谷",
+          "pinyin": "Zutonggu",
+          "stdCode": "BL66",
+          "location": "在足趾，第5跖趾关节远端赤白肉际处。"
+        },
+        {
+          "pointCode": "5.7.67",
+          "pointName": "至阴",
+          "pinyin": "Zhiyin",
+          "stdCode": "BL67",
+          "location": "在足趾，小趾末节外侧，趾甲根角侧后方0.1寸。注：沿爪甲外侧画直线与爪甲基底水平线交点取穴。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.8",
+      "chapterName": "足少阴肾经穴",
+      "meridianName": "足少阴肾经",
+      "children": [
+        {
+          "pointCode": "5.8.1",
+          "pointName": "涌泉",
+          "pinyin": "Yongquan",
+          "stdCode": "KI1",
+          "location": "在足底，屈足卷趾时足心最凹陷中。注：足底2、3趾缘与足跟连线前1/3与后2/3交点。"
+        },
+        {
+          "pointCode": "5.8.2",
+          "pointName": "然谷",
+          "pinyin": "Rangu",
+          "stdCode": "KI2",
+          "location": "在足内侧，足舟骨粗隆下方，赤白肉际处。"
+        },
+        {
+          "pointCode": "5.8.3",
+          "pointName": "太溪",
+          "pinyin": "Taixi",
+          "stdCode": "KI3",
+          "location": "在踝后内侧，内踝尖与跟腱之间的凹陷中。"
+        },
+        {
+          "pointCode": "5.8.4",
+          "pointName": "大钟",
+          "pinyin": "Dazhong",
+          "stdCode": "KI4",
+          "location": "在足内侧，内踝后下方，跟骨上缘，跟腱附着部内侧前缘凹陷中。"
+        },
+        {
+          "pointCode": "5.8.5",
+          "pointName": "水泉",
+          "pinyin": "Shuiquan",
+          "stdCode": "KI5",
+          "location": "在足内侧，太溪直下1寸，跟骨结节内侧凹陷中。"
+        },
+        {
+          "pointCode": "5.8.6",
+          "pointName": "照海",
+          "pinyin": "Zhaohai",
+          "stdCode": "KI6",
+          "location": "在足内侧，内踝尖下1寸，内踝下缘边际凹陷中。注：与申脉内外相对。"
+        },
+        {
+          "pointCode": "5.8.7",
+          "pointName": "复溜",
+          "pinyin": "Fuliu",
+          "stdCode": "KI7",
+          "location": "在小腿后内侧，内踝尖上2寸，跟腱的前缘。注：与交信平齐。"
+        },
+        {
+          "pointCode": "5.8.8",
+          "pointName": "交信",
+          "pinyin": "Jiaoxin",
+          "stdCode": "KI8",
+          "location": "在小腿内侧，内踝尖上2寸，胫骨内侧缘后际凹陷中。注：复溜前0.5寸。"
+        },
+        {
+          "pointCode": "5.8.9",
+          "pointName": "筑宾",
+          "pinyin": "Zhubin",
+          "stdCode": "KI9",
+          "location": "在小腿后内侧，太溪直上5寸，比目鱼肌与跟腱之间。注：横平蠡沟。"
+        },
+        {
+          "pointCode": "5.8.10",
+          "pointName": "阴谷",
+          "pinyin": "Yingu",
+          "stdCode": "KI10",
+          "location": "在膝后内侧，腘横纹上，半腱肌肌腱外侧缘。注：屈膝取穴。"
+        },
+        {
+          "pointCode": "5.8.11",
+          "pointName": "横骨",
+          "pinyin": "Henggu",
+          "stdCode": "KI11",
+          "location": "在下腹部，脐中下5寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.12",
+          "pointName": "大赫",
+          "pinyin": "Dahe",
+          "stdCode": "KI12",
+          "location": "在下腹部，脐中下4寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.13",
+          "pointName": "气穴",
+          "pinyin": "Qixue",
+          "stdCode": "KI13",
+          "location": "在下腹部，脐中下3寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.14",
+          "pointName": "四满",
+          "pinyin": "Siman",
+          "stdCode": "KI14",
+          "location": "在下腹部，脐中下2寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.15",
+          "pointName": "中注",
+          "pinyin": "Zhongzhu",
+          "stdCode": "KI15",
+          "location": "在下腹部，脐中下1寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.16",
+          "pointName": "肓俞",
+          "pinyin": "Huangshu",
+          "stdCode": "KI16",
+          "location": "在上腹部，脐中旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.17",
+          "pointName": "商曲",
+          "pinyin": "Shangqu",
+          "stdCode": "KI17",
+          "location": "在上腹部，脐中上2寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.18",
+          "pointName": "石关",
+          "pinyin": "Shiguan",
+          "stdCode": "KI18",
+          "location": "在上腹部，脐中上3寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.19",
+          "pointName": "阴都",
+          "pinyin": "Yindu",
+          "stdCode": "KI19",
+          "location": "在上腹部，脐中上4寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.20",
+          "pointName": "腹通谷",
+          "pinyin": "Futonggu",
+          "stdCode": "KI20",
+          "location": "在上腹部，脐中上5寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.21",
+          "pointName": "幽门",
+          "pinyin": "Youmen",
+          "stdCode": "KI21",
+          "location": "在上腹部，脐中上6寸，前正中线旁开0.5寸。"
+        },
+        {
+          "pointCode": "5.8.22",
+          "pointName": "步廊",
+          "pinyin": "Bulang",
+          "stdCode": "KI22",
+          "location": "在前胸部，第5肋间隙，前正中线旁开2寸。"
+        },
+        {
+          "pointCode": "5.8.23",
+          "pointName": "神封",
+          "pinyin": "Shenfeng",
+          "stdCode": "KI23",
+          "location": "在前胸部，第4肋间隙，前正中线旁开2寸。"
+        },
+        {
+          "pointCode": "5.8.24",
+          "pointName": "灵墟",
+          "pinyin": "Lingxu",
+          "stdCode": "KI24",
+          "location": "在前胸部，第3肋间隙，前正中线旁开2寸。"
+        },
+        {
+          "pointCode": "5.8.25",
+          "pointName": "神藏",
+          "pinyin": "Shencang",
+          "stdCode": "KI25",
+          "location": "在前胸部，第2肋间隙，前正中线旁开2寸。"
+        },
+        {
+          "pointCode": "5.8.26",
+          "pointName": "彧中",
+          "pinyin": "Yuzhong",
+          "stdCode": "KI26",
+          "location": "在前胸部，第1肋间隙，前正中线旁开2寸。"
+        },
+        {
+          "pointCode": "5.8.27",
+          "pointName": "俞府",
+          "pinyin": "Shufu",
+          "stdCode": "KI27",
+          "location": "在前胸部，锁骨下缘，前正中线旁开2寸。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.9",
+      "chapterName": "手厥阴心包经穴",
+      "meridianName": "手厥阴心包经",
+      "children": [
+        {
+          "pointCode": "5.9.1",
+          "pointName": "天池",
+          "pinyin": "Tianchi",
+          "stdCode": "PC1",
+          "location": "在前胸部，第4肋间隙，前正中线旁开5寸。"
+        },
+        {
+          "pointCode": "5.9.2",
+          "pointName": "天泉",
+          "pinyin": "Tianquan",
+          "stdCode": "PC2",
+          "location": "在臂前侧，腋前纹头下2寸，肱二头肌长、短头之间。"
+        },
+        {
+          "pointCode": "5.9.3",
+          "pointName": "曲泽",
+          "pinyin": "Quze",
+          "stdCode": "PC3",
+          "location": "在肘前侧，肘横纹上，肱二头肌腱尺侧缘凹陷中。注：屈肘45°取穴。"
+        },
+        {
+          "pointCode": "5.9.4",
+          "pointName": "郄门",
+          "pinyin": "Ximen",
+          "stdCode": "PC4",
+          "location": "在前臂前侧，腕掌侧远端横纹上5寸，掌长肌腱与桡侧腕屈肌腱之间。注：曲泽与大陵连线中点下1寸。"
+        },
+        {
+          "pointCode": "5.9.5",
+          "pointName": "间使",
+          "pinyin": "Jianshi",
+          "stdCode": "PC5",
+          "location": "在前臂前侧，腕掌侧远端横纹上3寸，掌长肌腱与桡侧腕屈肌腱之间。注：大陵直上3寸。"
+        },
+        {
+          "pointCode": "5.9.6",
+          "pointName": "内关",
+          "pinyin": "Neiguan",
+          "stdCode": "PC6",
+          "location": "在前臂前侧，腕掌侧远端横纹上2寸，掌长肌腱与桡侧腕屈肌腱之间。注：与外关相对。"
+        },
+        {
+          "pointCode": "5.9.7",
+          "pointName": "大陵",
+          "pinyin": "Daling",
+          "stdCode": "PC7",
+          "location": "在腕前侧，腕掌侧远端横纹中，掌长肌腱与桡侧腕屈肌腱之间。"
+        },
+        {
+          "pointCode": "5.9.8",
+          "pointName": "劳宫",
+          "pinyin": "Laogong",
+          "stdCode": "PC8",
+          "location": "在手掌，横平第3掌指关节近端，第2、3掌骨之间偏于第3掌骨。注：握拳中指尖所到处。"
+        },
+        {
+          "pointCode": "5.9.9",
+          "pointName": "中冲",
+          "pinyin": "Zhongchong",
+          "stdCode": "PC9",
+          "location": "在手指，中指末端最高点。另：中指末节桡侧指甲根角侧上方0.1寸。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.10",
+      "chapterName": "手少阳三焦经穴",
+      "meridianName": "手少阳三焦经",
+      "children": [
+        {
+          "pointCode": "5.10.1",
+          "pointName": "关冲",
+          "pinyin": "Guanchong",
+          "stdCode": "TE1",
+          "location": "在手指，第4指末节尺侧，指甲根角侧上方0.1寸。"
+        },
+        {
+          "pointCode": "5.10.2",
+          "pointName": "液门",
+          "pinyin": "Yemen",
+          "stdCode": "TE2",
+          "location": "在手背，第4、5指间，指蹼缘上方赤白肉际凹陷中。"
+        },
+        {
+          "pointCode": "5.10.3",
+          "pointName": "中渚",
+          "pinyin": "Zhongzhu",
+          "stdCode": "TE3",
+          "location": "在手背，第4、5掌骨间，第4掌指关节近端凹陷中。"
+        },
+        {
+          "pointCode": "5.10.4",
+          "pointName": "阳池",
+          "pinyin": "Yangchi",
+          "stdCode": "TE4",
+          "location": "在腕后侧，腕背侧远端横纹上，指伸肌腱尺侧缘凹陷中。"
+        },
+        {
+          "pointCode": "5.10.5",
+          "pointName": "外关",
+          "pinyin": "Waiguan",
+          "stdCode": "TE5",
+          "location": "在前臂后侧，腕背侧远端横纹上2寸，尺桡骨间隙中点。注：与内关相对。"
+        },
+        {
+          "pointCode": "5.10.6",
+          "pointName": "支沟",
+          "pinyin": "Zhigou",
+          "stdCode": "TE6",
+          "location": "在前臂后侧，腕背侧远端横纹上3寸，尺桡骨间隙中点。"
+        },
+        {
+          "pointCode": "5.10.7",
+          "pointName": "会宗",
+          "pinyin": "Huizong",
+          "stdCode": "TE7",
+          "location": "在前臂后侧，腕背侧远端横纹上3寸，尺骨桡侧缘。注：支沟尺侧。"
+        },
+        {
+          "pointCode": "5.10.8",
+          "pointName": "三阳络",
+          "pinyin": "Sanyangluo",
+          "stdCode": "TE8",
+          "location": "在前臂后侧，腕背侧远端横纹上4寸，尺桡骨间隙中点。"
+        },
+        {
+          "pointCode": "5.10.9",
+          "pointName": "四渎",
+          "pinyin": "Sidu",
+          "stdCode": "TE9",
+          "location": "在前臂后侧，尺骨鹰嘴尖下5寸，尺桡骨间隙中点。"
+        },
+        {
+          "pointCode": "5.10.10",
+          "pointName": "天井",
+          "pinyin": "Tianjing",
+          "stdCode": "TE10",
+          "location": "在肘后侧，尺骨鹰嘴尖上1寸凹陷中。注：屈肘90°取穴。"
+        },
+        {
+          "pointCode": "5.10.11",
+          "pointName": "清冷渊",
+          "pinyin": "Qinglingyuan",
+          "stdCode": "TE11",
+          "location": "在臂后侧，尺骨鹰嘴尖上2寸。"
+        },
+        {
+          "pointCode": "5.10.12",
+          "pointName": "消泺",
+          "pinyin": "Xiaoluo",
+          "stdCode": "TE12",
+          "location": "在臂后侧，尺骨鹰嘴尖上5寸。"
+        },
+        {
+          "pointCode": "5.10.13",
+          "pointName": "臑会",
+          "pinyin": "Naohui",
+          "stdCode": "TE13",
+          "location": "在臂后侧，尺骨鹰嘴尖与肩峰连线上，三角肌后缘相交处。"
+        },
+        {
+          "pointCode": "5.10.14",
+          "pointName": "肩髎",
+          "pinyin": "Jianliao",
+          "stdCode": "TE14",
+          "location": "在肩带部，肩峰角与肱骨大结节两骨间凹陷中。注：肩髃后方凹陷。"
+        },
+        {
+          "pointCode": "5.10.15",
+          "pointName": "天髎",
+          "pinyin": "Tianliao",
+          "stdCode": "TE15",
+          "location": "在肩带部，肩胛骨上角骨际凹陷中。"
+        },
+        {
+          "pointCode": "5.10.16",
+          "pointName": "天牖",
+          "pinyin": "Tianyou",
+          "stdCode": "TE16",
+          "location": "在颈前部，横平下颌角，胸锁乳突肌后缘凹陷中。"
+        },
+        {
+          "pointCode": "5.10.17",
+          "pointName": "翳风",
+          "pinyin": "Yifeng",
+          "stdCode": "TE17",
+          "location": "在颈部，耳垂后方，乳突下端前方凹陷中。"
+        },
+        {
+          "pointCode": "5.10.18",
+          "pointName": "瘈脉",
+          "pinyin": "Chimai",
+          "stdCode": "TE18",
+          "location": "在头部，乳突中央，角孙与翳风弧形连线上2/3与下1/3交点。"
+        },
+        {
+          "pointCode": "5.10.19",
+          "pointName": "颅息",
+          "pinyin": "Luxi",
+          "stdCode": "TE19",
+          "location": "在头部，角孙与翳风弧形连线上1/3与下2/3交点。"
+        },
+        {
+          "pointCode": "5.10.20",
+          "pointName": "角孙",
+          "pinyin": "Jiaosun",
+          "stdCode": "TE20",
+          "location": "在头部，耳尖正对发际处。"
+        },
+        {
+          "pointCode": "5.10.21",
+          "pointName": "耳门",
+          "pinyin": "Ermen",
+          "stdCode": "TE21",
+          "location": "在面部，耳屏上切迹与下颌髁突之间凹陷中。注：微张口取穴。"
+        },
+        {
+          "pointCode": "5.10.22",
+          "pointName": "耳和髎",
+          "pinyin": "Erheliao",
+          "stdCode": "TE22",
+          "location": "在头部，鬓发后缘，耳郭根前方，颞浅动脉后缘。"
+        },
+        {
+          "pointCode": "5.10.23",
+          "pointName": "丝竹空",
+          "pinyin": "Sizhukong",
+          "stdCode": "TE23",
+          "location": "在头部，眉梢凹陷中。注：瞳子髎直上。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.11",
+      "chapterName": "足少阳胆经穴",
+      "meridianName": "足少阳胆经",
+      "children": [
+        {
+          "pointCode": "5.11.1",
+          "pointName": "瞳子髎",
+          "pinyin": "Tongziliao",
+          "stdCode": "GB1",
+          "location": "在头部，目外眦外侧0.5寸凹陷中。"
+        },
+        {
+          "pointCode": "5.11.2",
+          "pointName": "听会",
+          "pinyin": "Tinghui",
+          "stdCode": "GB2",
+          "location": "在面部，耳屏间切迹与下颌髁突之间凹陷中。注：微张口，听宫下方。"
+        },
+        {
+          "pointCode": "5.11.3",
+          "pointName": "上关",
+          "pinyin": "Shangguan",
+          "stdCode": "GB3",
+          "location": "在头部，颧弓上缘中央凹陷中。注：下关直上。"
+        },
+        {
+          "pointCode": "5.11.4",
+          "pointName": "颔厌",
+          "pinyin": "Hanyan",
+          "stdCode": "GB4",
+          "location": "在头部，头维至曲鬓弧形连线上1/4与下3/4交点。"
+        },
+        {
+          "pointCode": "5.11.5",
+          "pointName": "悬颅",
+          "pinyin": "Xuanlu",
+          "stdCode": "GB5",
+          "location": "在头部，头维至曲鬓弧形连线中点。"
+        },
+        {
+          "pointCode": "5.11.6",
+          "pointName": "悬厘",
+          "pinyin": "Xuanli",
+          "stdCode": "GB6",
+          "location": "在头部，头维至曲鬓弧形连线上3/4与下1/4交点。"
+        },
+        {
+          "pointCode": "5.11.7",
+          "pointName": "曲鬓",
+          "pinyin": "Qubin",
+          "stdCode": "GB7",
+          "location": "在头部，鬓角发际后缘与耳尖水平线交点。"
+        },
+        {
+          "pointCode": "5.11.8",
+          "pointName": "率谷",
+          "pinyin": "Shuaigu",
+          "stdCode": "GB8",
+          "location": "在头部，耳尖直上入发际1.5寸。注：角孙直上。"
+        },
+        {
+          "pointCode": "5.11.9",
+          "pointName": "天冲",
+          "pinyin": "Tianchong",
+          "stdCode": "GB9",
+          "location": "在头部，耳根后缘直上入发际2寸。注：率谷后0.5寸。"
+        },
+        {
+          "pointCode": "5.11.10",
+          "pointName": "浮白",
+          "pinyin": "Fubai",
+          "stdCode": "GB10",
+          "location": "在头部，天冲至完骨弧形连线上1/3下2/3交点。"
+        },
+        {
+          "pointCode": "5.11.11",
+          "pointName": "头窍阴",
+          "pinyin": "Touqiaoyin",
+          "stdCode": "GB11",
+          "location": "在头部，天冲至完骨弧形连线上2/3下1/3交点。"
+        },
+        {
+          "pointCode": "5.11.12",
+          "pointName": "完骨",
+          "pinyin": "Wangu",
+          "stdCode": "GB12",
+          "location": "在颈部，耳后乳突后下方凹陷中。"
+        },
+        {
+          "pointCode": "5.11.13",
+          "pointName": "本神",
+          "pinyin": "Benshen",
+          "stdCode": "GB13",
+          "location": "在头部，前发际上0.5寸，头正中线旁开3寸。"
+        },
+        {
+          "pointCode": "5.11.14",
+          "pointName": "阳白",
+          "pinyin": "Yangbai",
+          "stdCode": "GB14",
+          "location": "在头部，眉上1寸，瞳孔直上。"
+        },
+        {
+          "pointCode": "5.11.15",
+          "pointName": "头临泣",
+          "pinyin": "Toulinqi",
+          "stdCode": "GB15",
+          "location": "在头部，前发际上0.5寸，瞳孔直上。"
+        },
+        {
+          "pointCode": "5.11.16",
+          "pointName": "目窗",
+          "pinyin": "Muchuang",
+          "stdCode": "GB16",
+          "location": "在头部，前发际上1.5寸，瞳孔直上。注：头临泣直上1寸。"
+        },
+        {
+          "pointCode": "5.11.17",
+          "pointName": "正营",
+          "pinyin": "Zhengying",
+          "stdCode": "GB17",
+          "location": "在头部，前发际上2.5寸，瞳孔直上。"
+        },
+        {
+          "pointCode": "5.11.18",
+          "pointName": "承灵",
+          "pinyin": "Chengling",
+          "stdCode": "GB18",
+          "location": "在头部，前发际上4寸，瞳孔直上。"
+        },
+        {
+          "pointCode": "5.11.19",
+          "pointName": "脑空",
+          "pinyin": "Naokong",
+          "stdCode": "GB19",
+          "location": "在头部，横平枕外隆凸上缘，风池直上。"
+        },
+        {
+          "pointCode": "5.11.20",
+          "pointName": "风池",
+          "pinyin": "Fengchi",
+          "stdCode": "GB20",
+          "location": "在项部，枕骨之下，胸锁乳突肌上端与斜方肌上端之间凹陷中。"
+        },
+        {
+          "pointCode": "5.11.21",
+          "pointName": "肩井",
+          "pinyin": "Jianjing",
+          "stdCode": "GB21",
+          "location": "在颈后部，第7颈椎棘突与肩峰最外侧点连线中点。"
+        },
+        {
+          "pointCode": "5.11.22",
+          "pointName": "渊腋",
+          "pinyin": "Yuanye",
+          "stdCode": "GB22",
+          "location": "在侧胸部，第4肋间隙，腋中线上。"
+        },
+        {
+          "pointCode": "5.11.23",
+          "pointName": "辄筋",
+          "pinyin": "Zhejin",
+          "stdCode": "GB23",
+          "location": "在侧胸部，第4肋间隙，腋中线前1寸。"
+        },
+        {
+          "pointCode": "5.11.24",
+          "pointName": "日月",
+          "pinyin": "Riyue",
+          "stdCode": "GB24",
+          "location": "在前胸部，第7肋间隙，前正中线旁开4寸。注：期门下1肋。"
+        },
+        {
+          "pointCode": "5.11.25",
+          "pointName": "京门",
+          "pinyin": "Jingmen",
+          "stdCode": "GB25",
+          "location": "在侧腹部，第12肋骨游离端下际。"
+        },
+        {
+          "pointCode": "5.11.26",
+          "pointName": "带脉",
+          "pinyin": "Daimai",
+          "stdCode": "GB26",
+          "location": "在侧腹部，第11肋游离端垂线与脐水平线交点。注：章门直下平脐。"
+        },
+        {
+          "pointCode": "5.11.27",
+          "pointName": "五枢",
+          "pinyin": "Wushu",
+          "stdCode": "GB27",
+          "location": "在下腹部，横平脐下3寸，髂前上棘内侧。注：平关元。"
+        },
+        {
+          "pointCode": "5.11.28",
+          "pointName": "维道",
+          "pinyin": "Weidao",
+          "stdCode": "GB28",
+          "location": "在下腹部，髂前上棘内下0.5寸。注：五枢内下0.5寸。"
+        },
+        {
+          "pointCode": "5.11.29",
+          "pointName": "居髎",
+          "pinyin": "Juliao",
+          "stdCode": "GB29",
+          "location": "在臀部，髂前上棘与股骨大转子连线中点。"
+        },
+        {
+          "pointCode": "5.11.30",
+          "pointName": "环跳",
+          "pinyin": "Huantiao",
+          "stdCode": "GB30",
+          "location": "在臀部，股骨大转子最凸点与骶管裂孔连线外1/3与内2/3交点。注：侧卧屈髋屈膝取穴。"
+        },
+        {
+          "pointCode": "5.11.31",
+          "pointName": "风市",
+          "pinyin": "Fengshi",
+          "stdCode": "GB31",
+          "location": "在股外侧，腘横纹上9寸，髂胫束后缘。注：直立垂手中指尖对应处。"
+        },
+        {
+          "pointCode": "5.11.32",
+          "pointName": "中渎",
+          "pinyin": "Zhongdu",
+          "stdCode": "GB32",
+          "location": "在股外侧，腘横纹上7寸，髂胫束后缘。"
+        },
+        {
+          "pointCode": "5.11.33",
+          "pointName": "膝阳关",
+          "pinyin": "Xiyangguan",
+          "stdCode": "GB33",
+          "location": "在膝外侧，股骨外上髁后上缘，股二头肌腱与髂胫束之间凹陷。"
+        },
+        {
+          "pointCode": "5.11.34",
+          "pointName": "阳陵泉",
+          "pinyin": "Yanglingquan",
+          "stdCode": "GB34",
+          "location": "在小腿外侧，腓骨头前下方凹陷中。"
+        },
+        {
+          "pointCode": "5.11.35",
+          "pointName": "阳交",
+          "pinyin": "Yangjiao",
+          "stdCode": "GB35",
+          "location": "在小腿外侧，外踝尖上7寸，腓骨后缘。"
+        },
+        {
+          "pointCode": "5.11.36",
+          "pointName": "外丘",
+          "pinyin": "Waiqiu",
+          "stdCode": "GB36",
+          "location": "在小腿外侧，外踝尖上7寸，腓骨前缘。"
+        },
+        {
+          "pointCode": "5.11.37",
+          "pointName": "光明",
+          "pinyin": "Guangming",
+          "stdCode": "GB37",
+          "location": "在小腿外侧，外踝尖上5寸，腓骨前缘。"
+        },
+        {
+          "pointCode": "5.11.38",
+          "pointName": "阳辅",
+          "pinyin": "Yangfu",
+          "stdCode": "GB38",
+          "location": "在小腿外侧，外踝尖上4寸，腓骨前缘。"
+        },
+        {
+          "pointCode": "5.11.39",
+          "pointName": "悬钟",
+          "pinyin": "Xuanzhong",
+          "stdCode": "GB39",
+          "location": "在小腿外侧，外踝尖上3寸，腓骨前缘。"
+        },
+        {
+          "pointCode": "5.11.40",
+          "pointName": "丘墟",
+          "pinyin": "Qiuxu",
+          "stdCode": "GB40",
+          "location": "在踝前外侧，外踝前下方，趾长伸肌腱外侧凹陷。"
+        },
+        {
+          "pointCode": "5.11.41",
+          "pointName": "足临泣",
+          "pinyin": "Zulinqi",
+          "stdCode": "GB41",
+          "location": "在足背，第4、5跖骨底结合部前方，第5趾长伸肌腱外侧凹陷。"
+        },
+        {
+          "pointCode": "5.11.42",
+          "pointName": "地五会",
+          "pinyin": "Diwuhui",
+          "stdCode": "GB42",
+          "location": "在足背，第4、5跖骨间，第4跖趾关节近端凹陷。"
+        },
+        {
+          "pointCode": "5.11.43",
+          "pointName": "侠溪",
+          "pinyin": "Xiaxi",
+          "stdCode": "GB43",
+          "location": "在足背，第4、5趾间，趾蹼缘后方赤白肉际。"
+        },
+        {
+          "pointCode": "5.11.44",
+          "pointName": "足窍阴",
+          "pinyin": "Zuqiaoyin",
+          "stdCode": "GB44",
+          "location": "在足趾，第4趾末节外侧，趾甲根角侧后方0.1寸。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.12",
+      "chapterName": "足厥阴肝经穴",
+      "meridianName": "足厥阴肝经",
+      "children": [
+        {
+          "pointCode": "5.12.1",
+          "pointName": "大敦",
+          "pinyin": "Dadun",
+          "stdCode": "LR1",
+          "location": "在足趾，大趾末节外侧，趾甲根角侧后方0.1寸。"
+        },
+        {
+          "pointCode": "5.12.2",
+          "pointName": "行间",
+          "pinyin": "Xingjian",
+          "stdCode": "LR2",
+          "location": "在足背，第1、2趾间，趾蹼缘后方赤白肉际处。"
+        },
+        {
+          "pointCode": "5.12.3",
+          "pointName": "太冲",
+          "pinyin": "Taichong",
+          "stdCode": "LR3",
+          "location": "在足背，第1、2跖骨间，跖骨底结合部前方凹陷。"
+        },
+        {
+          "pointCode": "5.12.4",
+          "pointName": "中封",
+          "pinyin": "Zhongfeng",
+          "stdCode": "LR4",
+          "location": "在踝前内侧，足内踝前，胫骨前肌肌腱内侧缘凹陷。注：商丘和解溪中间。"
+        },
+        {
+          "pointCode": "5.12.5",
+          "pointName": "蠡沟",
+          "pinyin": "Ligou",
+          "stdCode": "LR5",
+          "location": "在小腿前内侧，内踝尖上5寸，胫骨内侧面中央。注：横平筑宾。"
+        },
+        {
+          "pointCode": "5.12.6",
+          "pointName": "中都",
+          "pinyin": "Zhongdu",
+          "stdCode": "LR6",
+          "location": "在小腿前内侧，内踝尖上7寸，胫骨内侧面中央。"
+        },
+        {
+          "pointCode": "5.12.7",
+          "pointName": "膝关",
+          "pinyin": "Xiguan",
+          "stdCode": "LR7",
+          "location": "在小腿内侧，胫骨内侧髁下方，阴陵泉后1寸。"
+        },
+        {
+          "pointCode": "5.12.8",
+          "pointName": "曲泉",
+          "pinyin": "Ququan",
+          "stdCode": "LR8",
+          "location": "在膝内侧，腘横纹内侧端，半腱肌肌腱内缘凹陷。注：屈膝取穴。"
+        },
+        {
+          "pointCode": "5.12.9",
+          "pointName": "阴包",
+          "pinyin": "Yinbao",
+          "stdCode": "LR9",
+          "location": "在股内侧，髌底上4寸，股薄肌与缝匠肌之间。"
+        },
+        {
+          "pointCode": "5.12.10",
+          "pointName": "足五里",
+          "pinyin": "Zuwuli",
+          "stdCode": "LR10",
+          "location": "在股内侧，气冲直下3寸，动脉搏动处。"
+        },
+        {
+          "pointCode": "5.12.11",
+          "pointName": "阴廉",
+          "pinyin": "Yinlian",
+          "stdCode": "LR11",
+          "location": "在股内侧，气冲直下2寸。"
+        },
+        {
+          "pointCode": "5.12.12",
+          "pointName": "急脉",
+          "pinyin": "Jimai",
+          "stdCode": "LR12",
+          "location": "在腹股沟，横平耻骨联合上缘，前正中线旁开2.5寸。"
+        },
+        {
+          "pointCode": "5.12.13",
+          "pointName": "章门",
+          "pinyin": "Zhangmen",
+          "stdCode": "LR13",
+          "location": "在侧腹部，第11肋游离端下际。"
+        },
+        {
+          "pointCode": "5.12.14",
+          "pointName": "期门",
+          "pinyin": "Qimen",
+          "stdCode": "LR14",
+          "location": "在前胸部，第6肋间隙，前正中线旁开4寸。注：乳头直下。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.13",
+      "chapterName": "督脉穴",
+      "meridianName": "督脉",
+      "children": [
+        {
+          "pointCode": "5.13.1",
+          "pointName": "长强",
+          "pinyin": "Changqiang",
+          "stdCode": "GV1",
+          "location": "在会阴部，尾骨端与肛门连线中点处。"
+        },
+        {
+          "pointCode": "5.13.2",
+          "pointName": "腰俞",
+          "pinyin": "Yaoshu",
+          "stdCode": "GV2",
+          "location": "在骶部，正对骶管裂孔，后正中线上。注：臀裂上方凹陷。"
+        },
+        {
+          "pointCode": "5.13.3",
+          "pointName": "腰阳关",
+          "pinyin": "Yaoyangguan",
+          "stdCode": "GV3",
+          "location": "在腰部，第4腰椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.4",
+          "pointName": "命门",
+          "pinyin": "Mingmen",
+          "stdCode": "GV4",
+          "location": "在腰部，第2腰椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.5",
+          "pointName": "悬枢",
+          "pinyin": "Xuanshu",
+          "stdCode": "GV5",
+          "location": "在腰部，第1腰椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.6",
+          "pointName": "脊中",
+          "pinyin": "Jizhong",
+          "stdCode": "GV6",
+          "location": "在背部，第11胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.7",
+          "pointName": "中枢",
+          "pinyin": "Zhongshu",
+          "stdCode": "GV7",
+          "location": "在背部，第10胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.8",
+          "pointName": "筋缩",
+          "pinyin": "Jinsuo",
+          "stdCode": "GV8",
+          "location": "在背部，第9胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.9",
+          "pointName": "至阳",
+          "pinyin": "Zhiyang",
+          "stdCode": "GV9",
+          "location": "在背部，第7胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.10",
+          "pointName": "灵台",
+          "pinyin": "Lingtai",
+          "stdCode": "GV10",
+          "location": "在背部，第6胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.11",
+          "pointName": "神道",
+          "pinyin": "Shendao",
+          "stdCode": "GV11",
+          "location": "在背部，第5胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.12",
+          "pointName": "身柱",
+          "pinyin": "Shenzhu",
+          "stdCode": "GV12",
+          "location": "在背部，第3胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.13",
+          "pointName": "陶道",
+          "pinyin": "Taodao",
+          "stdCode": "GV13",
+          "location": "在背部，第1胸椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.14",
+          "pointName": "大椎",
+          "pinyin": "Dazhui",
+          "stdCode": "GV14",
+          "location": "在颈后部，第7颈椎棘突下凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.15",
+          "pointName": "哑门",
+          "pinyin": "Yamen",
+          "stdCode": "GV15",
+          "location": "在颈后部，第2颈椎棘突上际凹陷，后正中线上。注：后发际正中直上0.5寸。"
+        },
+        {
+          "pointCode": "5.13.16",
+          "pointName": "风府",
+          "pinyin": "Fengfu",
+          "stdCode": "GV16",
+          "location": "在颈后部，枕外隆凸直下，两侧斜方肌之间凹陷。"
+        },
+        {
+          "pointCode": "5.13.17",
+          "pointName": "脑户",
+          "pinyin": "Naohu",
+          "stdCode": "GV17",
+          "location": "在头部，枕外隆凸上缘凹陷，后正中线上。"
+        },
+        {
+          "pointCode": "5.13.18",
+          "pointName": "强间",
+          "pinyin": "Qiangjian",
+          "stdCode": "GV18",
+          "location": "在头部，后发际正中直上4寸。"
+        },
+        {
+          "pointCode": "5.13.19",
+          "pointName": "后顶",
+          "pinyin": "Houding",
+          "stdCode": "GV19",
+          "location": "在头部，后发际正中直上5.5寸。注：百会后1.5寸。"
+        },
+        {
+          "pointCode": "5.13.20",
+          "pointName": "百会",
+          "pinyin": "Baihui",
+          "stdCode": "GV20",
+          "location": "在头部，前发际正中直上5寸。注：两耳尖连线中点。"
+        },
+        {
+          "pointCode": "5.13.21",
+          "pointName": "前顶",
+          "pinyin": "Qianding",
+          "stdCode": "GV21",
+          "location": "在头部，前发际正中直上3.5寸。"
+        },
+        {
+          "pointCode": "5.13.22",
+          "pointName": "囟会",
+          "pinyin": "Xinhui",
+          "stdCode": "GV22",
+          "location": "在头部，前发际正中直上2寸。"
+        },
+        {
+          "pointCode": "5.13.23",
+          "pointName": "上星",
+          "pinyin": "Shangxing",
+          "stdCode": "GV23",
+          "location": "在头部，前发际正中直上1寸。"
+        },
+        {
+          "pointCode": "5.13.24",
+          "pointName": "神庭",
+          "pinyin": "Shenting",
+          "stdCode": "GV24",
+          "location": "在头部，前发际正中直上0.5寸。"
+        },
+        {
+          "pointCode": "5.13.25",
+          "pointName": "印堂",
+          "pinyin": "Yintang",
+          "stdCode": "GV24*",
+          "location": "在头部，两眉毛内侧端中间凹陷。注：两攒竹连线中点。"
+        },
+        {
+          "pointCode": "5.13.26",
+          "pointName": "素髎",
+          "pinyin": "Suliao",
+          "stdCode": "GV25",
+          "location": "在面部，鼻尖正中央。"
+        },
+        {
+          "pointCode": "5.13.27",
+          "pointName": "水沟",
+          "pinyin": "Shuigou",
+          "stdCode": "GV26",
+          "location": "在面部，人中沟上1/3与中1/3交点。"
+        },
+        {
+          "pointCode": "5.13.28",
+          "pointName": "兑端",
+          "pinyin": "Duiduan",
+          "stdCode": "GV27",
+          "location": "在面部，上唇结节中点。"
+        },
+        {
+          "pointCode": "5.13.29",
+          "pointName": "龈交",
+          "pinyin": "Yinjiao",
+          "stdCode": "GV28",
+          "location": "在上唇内，上唇系带与上牙龈交点。"
+        }
+      ]
+    },
+    {
+      "chapterCode": "5.14",
+      "chapterName": "任脉穴",
+      "meridianName": "任脉",
+      "children": [
+        {
+          "pointCode": "5.14.1",
+          "pointName": "会阴",
+          "pinyin": "Huiyin",
+          "stdCode": "CV1",
+          "location": "在会阴部，男性阴囊根部与肛门中点；女性大阴唇后联合与肛门中点。"
+        },
+        {
+          "pointCode": "5.14.2",
+          "pointName": "曲骨",
+          "pinyin": "Qugu",
+          "stdCode": "CV2",
+          "location": "在下腹部，耻骨联合上缘，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.3",
+          "pointName": "中极",
+          "pinyin": "Zhongji",
+          "stdCode": "CV3",
+          "location": "在下腹部，脐中下4寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.4",
+          "pointName": "关元",
+          "pinyin": "Guanyuan",
+          "stdCode": "CV4",
+          "location": "在下腹部，脐中下3寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.5",
+          "pointName": "石门",
+          "pinyin": "Shimen",
+          "stdCode": "CV5",
+          "location": "在下腹部，脐中下2寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.6",
+          "pointName": "气海",
+          "pinyin": "Qihai",
+          "stdCode": "CV6",
+          "location": "在下腹部，脐中下1.5寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.7",
+          "pointName": "阴交",
+          "pinyin": "Yinjiao",
+          "stdCode": "CV7",
+          "location": "在下腹部，脐中下1寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.8",
+          "pointName": "神阙",
+          "pinyin": "Shenque",
+          "stdCode": "CV8",
+          "location": "在上腹部，脐中央。"
+        },
+        {
+          "pointCode": "5.14.9",
+          "pointName": "水分",
+          "pinyin": "Shuifen",
+          "stdCode": "CV9",
+          "location": "在上腹部，脐中上1寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.10",
+          "pointName": "下脘",
+          "pinyin": "Xiawan",
+          "stdCode": "CV10",
+          "location": "在上腹部，脐中上2寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.11",
+          "pointName": "建里",
+          "pinyin": "Jianli",
+          "stdCode": "CV11",
+          "location": "在上腹部，脐中上3寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.12",
+          "pointName": "中脘",
+          "pinyin": "Zhongwan",
+          "stdCode": "CV12",
+          "location": "在上腹部，脐中上4寸，前正中线上。注：剑突尖与脐中点。"
+        },
+        {
+          "pointCode": "5.14.13",
+          "pointName": "上脘",
+          "pinyin": "Shangwan",
+          "stdCode": "CV13",
+          "location": "在上腹部，脐中上5寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.14",
+          "pointName": "巨阙",
+          "pinyin": "Juque",
+          "stdCode": "CV14",
+          "location": "在上腹部，脐中上6寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.15",
+          "pointName": "鸠尾",
+          "pinyin": "Jiuwei",
+          "stdCode": "CV15",
+          "location": "在上腹部，剑突尖下1寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.16",
+          "pointName": "中庭",
+          "pinyin": "Zhongting",
+          "stdCode": "CV16",
+          "location": "在前胸部，剑突尖处，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.17",
+          "pointName": "膻中",
+          "pinyin": "Danzhong",
+          "stdCode": "CV17",
+          "location": "在前胸部，横平第4肋间隙，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.18",
+          "pointName": "玉堂",
+          "pinyin": "Yutang",
+          "stdCode": "CV18",
+          "location": "在前胸部，横平第3肋间隙，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.19",
+          "pointName": "紫宫",
+          "pinyin": "Zigong",
+          "stdCode": "CV19",
+          "location": "在前胸部，横平第2肋间隙，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.20",
+          "pointName": "华盖",
+          "pinyin": "Huagai",
+          "stdCode": "CV20",
+          "location": "在前胸部，横平第1肋间隙，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.21",
+          "pointName": "璇玑",
+          "pinyin": "Xuanji",
+          "stdCode": "CV21",
+          "location": "在前胸部，胸骨上窝下1寸，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.22",
+          "pointName": "天突",
+          "pinyin": "Tiantu",
+          "stdCode": "CV22",
+          "location": "在颈前部，胸骨上窝中央，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.23",
+          "pointName": "廉泉",
+          "pinyin": "Lianquan",
+          "stdCode": "CV23",
+          "location": "在颈前部，甲状软骨上缘上方，舌骨上缘凹陷，前正中线上。"
+        },
+        {
+          "pointCode": "5.14.24",
+          "pointName": "承浆",
+          "pinyin": "Chengjiang",
+          "stdCode": "CV24",
+          "location": "在面部，颏唇沟正中凹陷处。"
+        }
+      ]
+    }
+  ]
+}

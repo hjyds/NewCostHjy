@@ -14,6 +14,118 @@ namespace NewCostHjy.Common {
 
         private Random random = new Random();
 
+        public string Read中医穴位信息()
+        {
+            // json文件路径
+            string jsonFilePath = @"D:\work\需求20260224105603_针炙穴位问题\针灸穴位目录.json";
+            string jsonStr = "";
+
+            string baseDir = AppContext.BaseDirectory;
+            string jsonPath = Path.Combine(baseDir, "针灸穴位目录.json");
+
+            try
+            {
+                // 一次性读取文件全部内容为字符串
+                jsonStr = File.ReadAllText(jsonFilePath);
+                //Console.WriteLine("读取到的JSON字符串：");
+                //Console.WriteLine(jsonStr);
+                Fun解析中医穴位信息(jsonStr);
+            } catch (FileNotFoundException)
+            {
+                Console.WriteLine("文件不存在！");
+            } catch (Exception ex)
+            {
+                Console.WriteLine("读取失败：" + ex.Message);
+            }
+            MeridianAcupoint meridianAcupoint = Newtonsoft.Json.JsonConvert.DeserializeObject<MeridianAcupoint>(jsonStr);
+            return jsonStr;
+        }
+
+        public void Fun解析中医穴位信息(string dataIn)
+        {
+            MeridianAcupoint meridianAcupoint = Newtonsoft.Json.JsonConvert.DeserializeObject<MeridianAcupoint>(dataIn);
+            dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(dataIn);
+            dynamic clh = obj.children;
+            string items = Newtonsoft.Json.JsonConvert.SerializeObject(clh);
+            List<MeridianAcupointItem> children = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MeridianAcupointItem>>(items);
+
+            meridianAcupoint.children = children;
+
+
+            List<ChildrenItemTable> childrenItemTables = new List<ChildrenItemTable>();
+            string strOnePt = "";
+            ChildrenItemTable itemOne = new ChildrenItemTable();
+            itemOne.Code = meridianAcupoint.chapterCode;
+            itemOne.Name = meridianAcupoint.chapterName;
+            childrenItemTables.Add(itemOne);
+
+            foreach (MeridianAcupointItem itemJ in meridianAcupoint.children)
+            {
+                itemOne = new ChildrenItemTable();
+                itemOne.PCode = meridianAcupoint.chapterCode;
+                itemOne.Code = itemJ.chapterCode;
+                itemOne.Name = itemJ.chapterName;
+                itemOne.MeridianName = itemJ.meridianName;
+                childrenItemTables.Add(itemOne);
+
+                foreach (ChildrenItem itemPt in itemJ.children)
+                {
+                    strOnePt = Newtonsoft.Json.JsonConvert.SerializeObject(itemPt);
+                    itemOne = Newtonsoft.Json.JsonConvert.DeserializeObject<ChildrenItemTable>(strOnePt);
+
+                    itemOne.PCode = itemJ.chapterCode;
+                    itemOne.Code = itemPt.pointCode;
+                    itemOne.Name = itemPt.pointName;
+
+                    childrenItemTables.Add(itemOne);
+                }
+
+
+            }
+
+            int cont = childrenItemTables.Count;
+
+            ZlhisInterfaceDAL zlhisInterfaceDAL = new ZlhisInterfaceDAL();
+            ZLHISLogInfoModel logInfoMdl = new ZLHISLogInfoModel();
+
+            cont = 1;//是否要记录日志表，1-表示要记录
+
+            if (cont > 0)
+            {
+                foreach (var item in childrenItemTables)
+                {
+                    logInfoMdl = new ZLHISLogInfoModel();
+                    logInfoMdl.SessionId = 12311;
+                    logInfoMdl.Server = item.PCode;
+                    logInfoMdl.ModuleName = item.Code;
+                    logInfoMdl.ProcessName = item.Name;
+                    logInfoMdl.CallName = item.stdCode;
+                    logInfoMdl.CategoryName = item.pinyin;
+                    logInfoMdl.Station = zlhisInterfaceDAL.zlSpellCode(item.Name);
+                    logInfoMdl.LogInfo = item.location;
+                    logInfoMdl.UserName = GetPartName(item.location);//穴位部位
+                    zlhisInterfaceDAL.ZLhisLogInsert(logInfoMdl);
+                }
+            }
+
+            cont = 1;
+            
+            cont = childrenItemTables.Count;
+        }
+
+        private string GetPartName(string strIn)
+        {
+            string strOut = "";
+            if (!string.IsNullOrWhiteSpace(strIn))
+            {
+                string[] arr = strIn.Split('。');
+                string pts = arr[0];
+                string[] arrTemp = pts.Split('，');
+                strOut = arrTemp[0].Substring(1);
+            }
+            return strOut;
+        }
+
         /// <summary>
         /// 读文件示例
         /// </summary>
