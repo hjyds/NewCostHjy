@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -772,6 +773,42 @@ namespace NewCostHjy.BLL
             }
             outData.data = lstData;
             outData.head = new MA_head_out() 
+            {
+                id = Guid.NewGuid().ToString(),
+                target_id = "hjy_mytesttid",
+                code = 1,
+                timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                count = 0,
+                msg = ""
+            };
+            return outData;
+        }
+
+        public M_DRUG_8003_Out M_DRUG_8003_Fun(string dynamic)
+        {
+            M_DRUG_8003_In dataIn = JsonConvert.DeserializeObject<M_DRUG_8003_In>(dynamic);
+
+            M_DRUG_8003_Out outData = new M_DRUG_8003_Out();
+            List<M_DRUG_8003_Out_dataItem> lstData = new List<M_DRUG_8003_Out_dataItem>();
+
+            M_DRUG_8003_In_Body bodyIn = dataIn.body;
+
+            List<string> arrs = bodyIn.drug_code_list;
+            int count = 0;
+            foreach (string item in arrs)
+            {
+                count++;
+                M_DRUG_8003_Out_dataItem one = new M_DRUG_8003_Out_dataItem();
+                one.drug_code = item;
+                one.drug_name = "测试药品" + item;
+                one.price = count + 1.88;
+                one.store_number = count + 100;
+                one.lock_store_number = count + 100;
+                lstData.Add(one);
+            }
+
+            outData.data = lstData;
+            outData.head = new MA_head_out()
             {
                 id = Guid.NewGuid().ToString(),
                 target_id = "hjy_mytesttid",

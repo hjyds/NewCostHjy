@@ -545,7 +545,7 @@ namespace NewCostHjy.Controllers
         }
 
         /// <summary>
-        /// HIP 消息服务模拟接口
+        /// HIP 消息服务模拟接口   临床医共体对接配置信息
         /// </summary>
         /// <param name="parIn">HIP 消息服务入参</param>
         /// <returns>固定返回结果，target_id 取自入参 head.id</returns>
@@ -656,9 +656,12 @@ namespace NewCostHjy.Controllers
                 M_PACS_2002_In inpar = new M_PACS_2002_In();
                 inpar = Newtonsoft.Json.JsonConvert.DeserializeObject<M_PACS_2002_In>(strInfo);
                 strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(inpar);
+            } else if ("M_DRUG_8003" == serviceCode)
+            {
+                //获取库存和单价服务示例
+                dataTmp = zlhisInterfaceBLL.M_DRUG_8003_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
             }
             zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", $"_{appCode}_{targetAppCode}_{serviceCode}_");
-
 
             return Json(dataTmp);
         }

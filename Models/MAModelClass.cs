@@ -685,5 +685,112 @@ namespace NewCostHjy.Models
         public string msg { get; set; }
     }
 
+    public class M_DRUG_8003_In
+    {
+        public M_DRUG_8003_In_Body body { get; set; }
+    }
+
+    public class M_DRUG_8003_In_Body    
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string org_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string dept_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string user_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string drug_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> drug_code_list { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string room_code { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string keyword { get; set; }
+    }
+
+
+    /// <summary>
+    /// 服务M_DRUG_8003出参
+    /// </summary>
+    public class M_DRUG_8003_Out
+    {
+        public MA_head_out head { get; set; }
+
+        public List<M_DRUG_8003_Out_dataItem> data { get; set; }
+    }
+
+    public class M_DRUG_8003_Out_dataItem
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string org_code { get; set; }
+        /// <summary>
+        /// 中鑫卫生院
+        /// </summary>
+        public string org_name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string dept_code { get; set; }
+        /// <summary>
+        /// 中药房
+        /// </summary>
+        public string dept_name { get; set; }
+        /// <summary>
+        /// 药品编码
+        /// </summary>
+        public string drug_code { get; set; }
+        /// <summary>
+        /// 白花蛇舌草(*)
+        /// </summary>
+        public string drug_name { get; set; }
+        /// <summary>
+        /// 库存数量
+        /// </summary>
+        public decimal? store_number { get; set; }
+        /// <summary>
+        /// 占用数量
+        /// </summary>
+        public decimal? lock_store_number { get; set; }
+        /// <summary>
+        /// 价格 平均售价
+        /// </summary>
+        public double price { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string spec { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string unit { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string manufacturer { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int type { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string national_insurance_code { get; set; }
+    }
 
 }
