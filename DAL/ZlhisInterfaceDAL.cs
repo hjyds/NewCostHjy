@@ -411,6 +411,30 @@ namespace NewCostHjy.DAL
             DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
             return data;
         }
+
+        /// <summary>
+        /// SPD卫材项目信息表数据查询（SPD项目）通过项目ID查询
+        /// </summary>
+        /// <param name="stuffid">卫材规格ID</param>
+        /// <returns></returns>
+        public DataTable SPDItemsById(string stuffid)
+        {
+            string sql = @"Select 'hjy_barcode_' || a.Id As Eisai_Barcode, 9876 As Eisai_Item_Store_Qunt, 51 As Eisai_Item_Store_Id,
+                        6.77 As Eisai_Item_Sales_Price, 6.77 Eisai_Item_Cost_Price, a.Id Eisai_Item_Id, a.名称 As Eisai_Item_Name,
+                        a.规格 As Eisai_Item_Spec, a.产地 As Eisai_Item_Dprentp_Name
+                    From 收费项目目录 A,材料特性 b
+                    Where a.id=b.材料id and nvl(b.备货卫材流程,0)=0 and a.类别 = '4' And a.产地 Is Not Null And a.规格 Is Not Null And Rownum < 7
+                    And a.id=:stuffid
+                    order by a.id ";
+
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] parameters = {                
+                new OracleParameter(":stuffid",OracleDbType.Varchar2,stuffid,ParameterDirection.Input)
+            };
+            DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
+            return data;
+        }
+
         public DataTable GetOrderFeeInfo(string nos)
         {
 

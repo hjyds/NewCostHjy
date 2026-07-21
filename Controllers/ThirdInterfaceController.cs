@@ -97,6 +97,7 @@ namespace NewCostHjy.Controllers
             string strRqList = "";
             string strBizno = "";
             string iptCode = "";
+            List<Req_infoItem> listrqs = new List<Req_infoItem>();
             if (parIn != null)
             {
                 if (parIn.input != null)
@@ -105,7 +106,7 @@ namespace NewCostHjy.Controllers
                     {
                         strBizno = parIn.input.head.bizno;
 
-                        List<Req_infoItem> listrqs = parIn.input.req_info;
+                        listrqs = parIn.input.req_info;
 
                         if (listrqs != null && listrqs.Count > 0)
                         {
@@ -154,16 +155,28 @@ namespace NewCostHjy.Controllers
                 eisai_Item_ListItems = zlhisInterfaceBLL.SPDItems();
             }
 
-
+            Eisai_item_listItem eisai_Item_ListItem = new Eisai_item_listItem();
             if (iptCode.Length >= 20)
             {
-                Eisai_item_listItem eisai_Item_ListItem = eisai_Item_ListItems[0];
+                eisai_Item_ListItem = eisai_Item_ListItems[0];
                 eisai_Item_ListItems = new List<Eisai_item_listItem>();
                 eisai_Item_ListItems.Add(eisai_Item_ListItem);
             }
 
             //eisai_Item_ListItems[0].eisai_item_spec= "Sy™Sy™Sy™Sy™Sy™Sy™";
             //eisai_Item_ListItems[0].eisai_item_spec = "Q-Syte™分隔膜无针密闭式输液接头";
+
+            if (listrqs != null && listrqs.Count == 1)
+            {
+                if (!string.IsNullOrWhiteSpace(listrqs[0].eisai_item_id) && !string.IsNullOrWhiteSpace(listrqs[0].eisai_item_store_id))
+                {
+                    eisai_Item_ListItems = zlhisInterfaceBLL.SPDItemsById(listrqs[0].eisai_item_id);
+                    eisai_Item_ListItem = eisai_Item_ListItems[0];
+                    eisai_Item_ListItems = new List<Eisai_item_listItem>();
+                    eisai_Item_ListItem.eisai_item_spec = "HPF-5Fr-2T-4-H 30cm";
+                    eisai_Item_ListItems.Add(eisai_Item_ListItem);
+                }
+            }
 
             List<Eisai_item_listItem> outData = new List<Eisai_item_listItem>();
             outData = eisai_Item_ListItems;

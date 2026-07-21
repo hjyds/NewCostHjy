@@ -129,6 +129,18 @@ namespace NewCostHjy.BLL
             return lstPar;
         }
 
+        /// <summary>
+        /// SPD项目列表获取(SPD项目列表)
+        /// </summary>
+        /// <returns></returns>
+        public List<Eisai_item_listItem> SPDItemsById(string stuffid)
+        {
+            DataTable dtTmp = zlhisInterfaceDAL.SPDItemsById(stuffid);
+            string strTemp = JsonConvert.SerializeObject(dtTmp);
+            List<Eisai_item_listItem> lstPar = JsonConvert.DeserializeObject<List<Eisai_item_listItem>>(strTemp);
+            return lstPar;
+        }
+
         public List<OrderNewFeeInfo> GetOrderFeeInfo(List<OrderBillNoIn> orderBillNoIns) {
             List<OrderNewFeeInfo> orderNewFeeInfos = new List<OrderNewFeeInfo>();
 
