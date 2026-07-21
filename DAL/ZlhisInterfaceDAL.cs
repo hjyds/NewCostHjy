@@ -1305,5 +1305,25 @@ accomplishStatus
             
             return insertedCount;
         }
+
+
+        /// <summary>
+        /// 查询日志信息表，获取指定日志ID的数据信息
+        /// </summary>
+        /// <param name="logId"></param>
+        /// <returns></returns>
+        public string GetUserDataByLogInfo(int logId)
+        {
+            string sql = @"select a.id,a.log_info_ex 数据信息 from zlloginfo a where a.id=:logId";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] parameters = {
+                new OracleParameter(":logId",OracleDbType.Int64,logId,ParameterDirection.Input)
+            };
+            DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
+            if (data.Rows.Count > 0) { 
+                return data.Rows[0]["数据信息"].ToString();
+            }
+            return "";
+        }
     }
 }

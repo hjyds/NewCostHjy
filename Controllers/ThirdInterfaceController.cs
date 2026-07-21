@@ -673,6 +673,9 @@ namespace NewCostHjy.Controllers
             {
                 //获取库存和单价服务示例
                 dataTmp = zlhisInterfaceBLL.M_DRUG_8003_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
+
+                //dataTmp = zlhisInterfaceBLL.GetUserDataByLogInfo(2538);
+
             }
             zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", $"_{appCode}_{targetAppCode}_{serviceCode}_");
 

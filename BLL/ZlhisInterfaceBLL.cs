@@ -831,5 +831,16 @@ namespace NewCostHjy.BLL
             };
             return outData;
         }
+
+        /// <summary>
+        /// 根据日志ID获取数据信息，可能是不同接口的示例数据
+        /// </summary>
+        /// <param name="logId"></param>
+        /// <returns></returns>
+        public dynamic GetUserDataByLogInfo(int logId)
+        {
+            string jsonStr = zlhisInterfaceDAL.GetUserDataByLogInfo(logId);
+            return JsonConvert.DeserializeObject<dynamic>(jsonStr);
+        }
     }
 }
