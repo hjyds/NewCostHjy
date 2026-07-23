@@ -658,11 +658,17 @@ namespace NewCostHjy.Controllers
                 dataTmp = zlhisInterfaceBLL.M_DRUG_4002_Fun(Newtonsoft.Json.JsonConvert.SerializeObject(parIn));             
             }
 
-
+            /////////////////////
             if ("M_DRUG_4002" == serviceCode)
             {
                 M_DRUG_4002_In inpar = new M_DRUG_4002_In();
                 inpar = Newtonsoft.Json.JsonConvert.DeserializeObject<M_DRUG_4002_In>(strInfo);
+                strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(inpar);
+            } else if ("M_DRUG_5002" == serviceCode)
+            {
+                //慢病处方上传入参信息
+                M_DRUG_5002_In inpar = new M_DRUG_5002_In();
+                inpar = Newtonsoft.Json.JsonConvert.DeserializeObject<M_DRUG_5002_In>(strInfo);
                 strInfo = Newtonsoft.Json.JsonConvert.SerializeObject(inpar);
             } else if ("M_PACS_2002" == serviceCode)
             {
