@@ -79,6 +79,7 @@ namespace NewCostHjy.App_Start {
                         || apiName.IndexOf("INFORMEDCONSENT/") > -1
                         || apiName.IndexOf("/API/ZLHISINTERFACE/CHECKNEWBILL") > -1
                         || apiName.IndexOf("/API/INTERFACEPROCESS/") > -1
+                        || apiName.IndexOf("GETREMOTECONSULTATIONMANAGEURL") > -1
 
                         ) {
                         //这些接口原格式返回
