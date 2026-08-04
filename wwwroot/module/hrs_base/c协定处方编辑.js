@@ -61,7 +61,7 @@ function SetTabTo免煎() {
     let data = $("[data-id='com_m9ex15zms58']")[0]?.firstElementChild?.data
     if (data) {
         //对应资源  形态 字段，
-        if (data["019fb330-8fd7-7d93-a818-74a75b14ef12"] == 2) {
+        if (data["019fb330-8fd7-7d93-a818-74a75b14ef12"] == 3) {
             const tabs = document.querySelectorAll('.nav-tabs .nav-link');
             for (let tab of tabs) {
                 if (tab.textContent.trim() === '免煎剂') {
@@ -128,16 +128,34 @@ function IncStr(strVal) {
 function Get缺省编码() {
     let urlPar = new URLSearchParams(location.search);
     let tempId = parseInt(urlPar.get("citem_id") || 0);
-    if (tempId > 0) return tempId
+    if (tempId > 0) return
 
     //获取缺省编码
     let lng分类id = parseInt(urlPar.get("ctype_id") || 0);
+ 
+    let params = {
+        "resTypeId": "a980604b-7e9f-49c4-96d9-4ae16fb71991",
+        "viewId": "fbbf2b4d-785e-43d9-8920-940801d3bba1",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "019fcb7f-78ff-7103-a65a-5e0e8a4b46e7",
+                "compare": "=",
+                "val": lng分类id
+            }
+        ],
+        "skip": 0,
+        "take": 1
+    }
 
-    let tempVal = GetSimpleNodeVal(lng分类id,
-        "d9a8b34b-445f-47e5-89f9-90663a49d92f",
-        "f2ea9379-af8c-4f91-85a7-ca48bdc0a4ca",
-        "7b32f2e2-fc3a-4d57-9823-4e893d7d9437",
-        "0f6baa1f-2e02-431d-a474-964a57f5b4c3");
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+
+    const firstItem = result.Data[0];
+    let tempVal = firstItem["019fcb7f-78ff-7fdd-a0db-a56979d39226"];
 
     $("#019fb5a2-5930-7205-a616-6519fce89c8e").val(IncStr(tempVal));//编码 
 
@@ -278,12 +296,12 @@ window.GetEditDataToSave = function () {
     let lst药品 = [];
     let key诊疗id = "", key规格id = "";//因为是两个表格，所以不一样
     if (d页卡 == "饮片") {
-        parData.配方类型 = "1";
+        parData.配方类型 = "2";
         d药品 = $("[data-id='com_lrocdwcdp']")[0]?.firstElementChild?.data;
         key诊疗id = "f9be283d-6220-4f4b-88a0-081771615875_019fb2b7-949f-704b-a09d-332b19467cc6";
         key规格id = "019fb2bb-33d7-74e2-8a4f-f0ab9de95f7c";
     } else {
-        parData.配方类型 = "2";
+        parData.配方类型 = "3";
         d药品 = $("[data-id='com_tshm1japmb']")[0]?.firstElementChild?.data;
         key诊疗id = "f7e6f51d-8379-4fb4-841d-b338ffc6b2ed_019fb2b9-0232-7bc2-b4ad-0774f6ba4d62";
         key规格id = "019fb2bb-33d7-7b8b-a302-402fc91aa6ae";
