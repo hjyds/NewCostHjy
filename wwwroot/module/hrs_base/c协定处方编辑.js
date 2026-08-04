@@ -13,7 +13,15 @@
  *
  */
 
-
+const mapGuid = {
+    _名称: "0a42e1c7-07b6-4b18-ae76-60fedbb4b1e8",
+    _编码: "2c638d4a-e078-47cb-bfee-4b764f7b3c9f",
+    _简码: "2421d2d6-e87c-4f0d-8a30-baffdd6ad799",
+    _简码五笔: "d2ef7bf5-a070-4719-bf94-50177ce9a89a",
+    _别名: "5e17e549-558f-4078-9108-40b006ccd0ec",
+    _别名简码: "796b73ef-3b86-4b67-a556-e74b0fc56038",
+    _别名简码五笔: "75aa43e4-59bd-4b5b-aca9-cd16a6941051"
+}
 
 
 /**
@@ -29,9 +37,177 @@ page.onComponentLoaded = (pageContent) => {
  * @param {PageContent} pageContent
 */
 page.onLoaded = (pageContent) => {
+    $("#" + mapGuid._名称).on("change", function () {
+        //项目名称
+        $("#" + mapGuid._简码).val(GetPyCode($(this).val()));
+        $("#" + mapGuid._简码五笔).val(GetWbCode($(this).val()));
+    });
+
+    $("#" + mapGuid._别名).on("change", function () {
+        //项目别名
+        $("#" + mapGuid._别名简码).val(GetPyCode($(this).val()));
+        $("#" + mapGuid._别名简码五笔).val(GetWbCode($(this).val()));
+    });
+
+    Get缺省编码();
+    SetTabTo免煎(); 
+}
+
+/**
+ * 将面页定位到免煎剂
+ *  
+ */
+function SetTabTo免煎() {
+    let data = $("[data-id='com_m9ex15zms58']")[0]?.firstElementChild?.data
+    if (data) {
+        //对应资源  形态 字段，
+        if (data["019fb330-8fd7-7d93-a818-74a75b14ef12"] == 2) {
+            const tabs = document.querySelectorAll('.nav-tabs .nav-link');
+            for (let tab of tabs) {
+                if (tab.textContent.trim() === '免煎剂') {
+                    tab.click();
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 字符串自动加1
+ * 数字按十进制进位，字母A-Z按26进制进位
+ * @param {string} strVal 原始字符串
+ * @returns {string} 加1后字符串
+ */
+function IncStr(strVal) {
+    let intAdd = 0;
+    let intUp = 0;
+    let strValue = "";
+    let strValueOne = "";
+
+    // 统一转大写
+    strVal = strVal.toUpperCase();
+
+    for (let i = strVal.length; i >= 1; i--) {
+        intAdd = i === strVal.length ? 1 : 0;
+        strValueOne = strVal.substring(i - 1, i);
+
+        if (!isNaN(Number(strValueOne))) {
+            // 数字位
+            if (Number(strValueOne) + intAdd + intUp < 10) {
+                strValue = String.fromCharCode(strValueOne.charCodeAt(0) + intAdd + intUp) + strValue;
+                intUp = 0;
+            } else {
+                strValue = "0" + strValue;
+                intUp = 1;
+            }
+        } else {
+            // 字母位 A-Z
+            if (strValueOne.charCodeAt(0) + intAdd + intUp <= "Z".charCodeAt(0)) {
+                strValue = String.fromCharCode(strValueOne.charCodeAt(0) + intAdd + intUp) + strValue;
+                intUp = 0;
+            } else {
+                strValue = "A" + strValue;
+                intUp = 1;
+            }
+        }
+    }
+
+    // 最高位仍有进位
+    if (intUp === 1) {
+        strValue = !isNaN(Number(strValueOne)) ? "1" + strValue : "A" + strValue;
+    }
+
+    return strValue;
+}
+
+/**
+ * 如果是新增状态，获取缺省编码
+ * @returns
+ */
+function Get缺省编码() {
+    let urlPar = new URLSearchParams(location.search);
+    let tempId = parseInt(urlPar.get("citem_id") || 0);
+    if (tempId > 0) return tempId
+
+    //获取缺省编码
+    let lng分类id = parseInt(urlPar.get("ctype_id") || 0);
+
+    let tempVal = GetSimpleNodeVal(lng分类id,
+        "d9a8b34b-445f-47e5-89f9-90663a49d92f",
+        "f2ea9379-af8c-4f91-85a7-ca48bdc0a4ca",
+        "7b32f2e2-fc3a-4d57-9823-4e893d7d9437",
+        "0f6baa1f-2e02-431d-a474-964a57f5b4c3");
+
+    $("#019fb5a2-5930-7205-a616-6519fce89c8e").val(IncStr(tempVal));//编码 
 
 }
 
+//拼音简码
+window.GetPyCode = function (str) {
+    return GetSimpleNodeVal(str, "bebd4263-bfd5-4a5e-a204-16aee4c7e238", "244c7616-07c2-43c6-9390-523a764a17de", "50f1915c-86a3-4509-9f7b-93c0d714b422", "1a4a428b-693b-4490-b508-34281bdd019f");
+}
+
+//五笔简码
+window.GetWbCode = function (str) {
+    return GetSimpleNodeVal(str, "bafe79e3-fff8-4468-97dc-ba708b45b798", "e13d89bc-f50c-4973-ae25-321bea7d5de0", "bca2f71a-3899-4386-be31-36607ce93488", "8be505d7-e4db-4e39-b21b-1fdc6e67f63f");
+}
+
+/**
+ * 根据资源ID、视图ID、条件查询并获取指定字段的值
+ * @param {any} conditionValue - 条件匹配值
+ * @param {number|string} resTypeId - 资源ID
+ * @param {number|string} viewId - 视图ID
+ * @param {number|string} conditionId - 条件字段ID
+ * @param {number|string} targetId - 要取值的字段ID，当传值为1时，返回对象数组
+ * @returns {any|null} 返回目标字段值，查询失败返回 null
+ */
+function GetSimpleNodeVal(conditionValue, resTypeId, viewId, conditionId, targetId) {
+    try {
+        // 1. 构造请求参数
+        let params = {
+            resTypeId: resTypeId,
+            viewId: viewId,
+            matching: [
+                {
+                    relId: conditionId,
+                    compare: "=",
+                    val: conditionValue
+                }
+            ]
+        };
+        if ("" == conditionId) {
+            params.matching = [];
+        }
+        // 2. 调用后台接口（HR系统通用请求）
+        const result = HrsServer.Post(
+            "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+            JSON.stringify(params)
+        );
+
+        // 3. 校验接口返回数据
+        if (!result || !result.Data || !Array.isArray(result.Data) || result.Data.length === 0) {
+            console.warn("GetSimpleNodeVal：未查询到匹配的数据");
+            return null;
+        }
+        if (targetId == 1) {
+            return result.Data;
+        }
+        // 4. 取第一条数据并返回目标字段值
+        const firstItem = result.Data[0];
+        return firstItem[targetId];
+
+    } catch (error) {
+        // 捕获异常，避免页面崩溃
+        console.error("GetSimpleNodeVal 执行异常：", error);
+        return null;
+    }
+}
+
+/**
+ * 获取保存前的参数值
+ * @returns
+ */
 window.GetEditDataToSave = function () {
     let parData = {
         "功能": 1,                 // Number: 1-新增, 2-修改, 3-删除
@@ -50,14 +226,13 @@ window.GetEditDataToSave = function () {
         "用法id": 2001,           // Number
         "疗程": "7",             // String 字符型，纯数字
         "参考目录id": null,          // Number
-        "配方组成": "[{\"药名id\":101,\"药品id\":10001,\"药品名称\":\"黄芪\",\"单量\":15,\"单量单位\":\"g\",\"脚注\":\"\"}]", // String
+        "配方组成": "", // String 特殊格式：以"|"分隔的配方组成，每条记录按"药名ID^规格ID^单味用量^煎服脚注"组织
         "站点": "",            // String
         "配方类型": "1",          // String
         "是否保密": 0,            // Number
         "是否修正": 0,            // Number
         "药房": "3001",           // String 字符型，纯数字
-        "人员id": 90001,          // Number
-
+        "人员id": 90001,          // Number --为空时为公开配方 非空时为个人私有配方
         "UserName": "张三",        // String
         "AccountName": "zhangsan", // String
         "staff_id": 90001         // Number
@@ -101,23 +276,23 @@ window.GetEditDataToSave = function () {
 
     let d药品 = null;
     let lst药品 = [];
+    let key诊疗id = "", key规格id = "";//因为是两个表格，所以不一样
     if (d页卡 == "饮片") {
         parData.配方类型 = "1";
         d药品 = $("[data-id='com_lrocdwcdp']")[0]?.firstElementChild?.data;
+        key诊疗id = "f9be283d-6220-4f4b-88a0-081771615875_019fb2b7-949f-704b-a09d-332b19467cc6";
+        key规格id = "019fb2bb-33d7-74e2-8a4f-f0ab9de95f7c";
     } else {
         parData.配方类型 = "2";
         d药品 = $("[data-id='com_tshm1japmb']")[0]?.firstElementChild?.data;
+        key诊疗id = "f7e6f51d-8379-4fb4-841d-b338ffc6b2ed_019fb2b9-0232-7bc2-b4ad-0774f6ba4d62";
+        key规格id = "019fb2bb-33d7-7b8b-a302-402fc91aa6ae";
     }
 
     d药品.forEach(function (item) {
-        //药品ID的处理
-        let cid = parseInt(item["f9be283d-6220-4f4b-88a0-081771615875_019fb2b7-949f-704b-a09d-332b19467cc6"] || 0);
-        if (cid == 0) {
-            cid = parseInt(item["f7e6f51d-8379-4fb4-841d-b338ffc6b2ed_019fb2b9-0232-7bc2-b4ad-0774f6ba4d62"] || 0);
-        }
         lst药品.push({
-            药名ID: cid,
-            规格ID: parseInt(item["019fb2bb-33d7-74e2-8a4f-f0ab9de95f7c"] || 0),
+            药名ID: parseInt(item[key诊疗id] || 0),
+            规格ID: parseInt(item[key规格id] || 0),
             单次用量: parseFloat(item["019fb218-b247-7ee0-9bf8-d5a8bdbdf3a8"] || 0),
             医生嘱托: item["019fb218-b247-7eeb-b8a8-0049819bad0c"] || ""
         })
@@ -140,6 +315,9 @@ window.GetEditDataToSave = function () {
     return parData;
 }
 
+/**
+ * 配方组成数据结构转换
+ */
 function buildRecipeComposition(recipeList) {
     // 基础参数校验：非数组/空数组直接返回null
     if (!Array.isArray(recipeList) || recipeList.length === 0) return null;
@@ -170,5 +348,3 @@ function buildRecipeComposition(recipeList) {
     // 无合法药品返回null，有则用|拼接
     return parts.length > 0 ? parts.join("|") : null;
 }
-
-
