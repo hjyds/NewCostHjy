@@ -146,5 +146,32 @@ namespace NewCostHjy.Controllers.WebPage {
             ViewBag.BaseData = parDic;
             return View();
         }
+
+        /// <summary>
+        /// DOCKMICPK 参数展示页面（通用页面有点模拟HRS页面的样子）
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult dockmicpk()
+        {
+            Dictionary<string, string> parDic = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var item in Request.Query)
+            {
+                parDic[item.Key] = item.Value.ToString();
+            }
+
+            if (Request.HasFormContentType)
+            {
+                foreach (var item in Request.Form)
+                {
+                    parDic[item.Key] = item.Value.ToString();
+                }
+            }
+             
+            parDic["page_note"] = "费用管控清单";
+
+            ViewBag.BaseData = parDic;
+            return View();
+        }
     }
 }

@@ -150,6 +150,12 @@ namespace NewCostHjy {
                     context.Response.Redirect($"/PatientVte/micpk{query}");
                     return;
                 }
+                if (context.Request.Path.StartsWithSegments("/MedicalCore/FeeOrders"))
+                {
+                    var query = context.Request.QueryString;
+                    context.Response.Redirect($"/PatientVte/dockmicpk{query}");
+                    return;
+                }
                 await next();
             });
 
