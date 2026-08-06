@@ -112,7 +112,7 @@ namespace NewCostHjy.Controllers.WebPage {
         }
 
         /// <summary>
-        /// MICPK 参数展示页面（订阅医保审核结果通知消息）
+        /// MICPK 参数展示页面（通用页面有点模拟HRS页面的样子）
         /// </summary>
         /// <returns></returns>
         public IActionResult micpk()
@@ -130,6 +130,17 @@ namespace NewCostHjy.Controllers.WebPage {
                 {
                     parDic[item.Key] = item.Value.ToString();
                 }
+            }
+            string pageid = parDic.ContainsKey("pageid") ? parDic["pageid"] : "";
+
+            if (pageid == "a19ed4d2-7fef-4744-88bd-4e0cbb08ce50")
+            {
+                //查看本人医保审核申请弹出页面
+                parDic["page_note"] = "查看本人医保审核申请弹出页面";
+            } else if (pageid == "efb744e4-9032-43b6-8990-f95d8b9f6e58")
+            {
+                //订阅医保审核结果通知消息弹出页面
+                parDic["page_note"] = "订阅医保审核结果通知消息弹出页面";
             }
 
             ViewBag.BaseData = parDic;
