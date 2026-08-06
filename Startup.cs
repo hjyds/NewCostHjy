@@ -144,6 +144,12 @@ namespace NewCostHjy {
                     context.Response.Redirect($"/HrsPage/ClinicalStaffQuery{query}");
                     return;
                 }
+                if (context.Request.Path.StartsWithSegments("/micpk/pageViewById"))
+                {
+                    var query = context.Request.QueryString;
+                    context.Response.Redirect($"/PatientVte/micpk{query}");
+                    return;
+                }
                 await next();
             });
 

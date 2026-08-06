@@ -25,7 +25,7 @@ namespace NewCostHjy.Controllers
         public IActionResult ExecutDischargeExamination([FromBody] MircInPatientInfo parIn)
         {
             string id = id = Guid.NewGuid().ToString();
-            string url= "http://192.168.56.1:5888/module/patientvte/mirc_out.html?id=" + id + "&calltype=bybtn";
+            string url= "http://192.168.56.1:5888/module/patientvte/mirc_out.html?id=" + id + "&calltype=bybtn&CallOpportunity=" + parIn.CallOpportunity;
             // 构建返回结果
             var result = new {
                 CheckResulUrl = url,

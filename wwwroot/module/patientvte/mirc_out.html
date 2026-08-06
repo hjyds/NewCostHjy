@@ -11,10 +11,12 @@
             box-sizing: border-box;
             font-family: "Microsoft Yahei", sans-serif;
         }
+
         body {
             background-color: #f0f2f5;
             padding: 20px;
         }
+
         .container {
             width: 1200px;
             margin: 0 auto;
@@ -23,6 +25,7 @@
             overflow: hidden;
             box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
+
         .header {
             background-color: #3671d9;
             color: white;
@@ -31,13 +34,16 @@
             align-items: center;
             gap: 8px;
         }
+
         .header-icon {
             font-size: 18px;
         }
+
         .header-title {
             font-size: 16px;
             font-weight: 500;
         }
+
         .toolbar {
             background-color: #fff3f3;
             padding: 10px 16px;
@@ -46,12 +52,15 @@
             align-items: center;
             font-size: 14px;
         }
+
         .toolbar-left span {
             margin-right: 16px;
         }
+
         .toolbar-left .red {
             color: #f5222d;
         }
+
         .toolbar-right .btn-tag {
             padding: 4px 12px;
             border: 1px solid #ccc;
@@ -60,11 +69,13 @@
             margin-left: 8px;
             cursor: pointer;
         }
-        .toolbar-right .btn-tag.orange {
-            background-color: #fff2e0;
-            border-color: #ff9800;
-            color: #ff9800;
-        }
+
+            .toolbar-right .btn-tag.orange {
+                background-color: #fff2e0;
+                border-color: #ff9800;
+                color: #ff9800;
+            }
+
         .toolbar-right .icon-btn {
             margin-left: 8px;
             width: 24px;
@@ -75,24 +86,29 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .table-container {
             padding: 16px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
         }
-        table th, table td {
-            padding: 12px 8px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        table th {
-            background-color: #fafafa;
-            font-weight: 500;
-            color: #666;
-        }
+
+            table th, table td {
+                padding: 12px 8px;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+            }
+
+            table th {
+                background-color: #fafafa;
+                font-weight: 500;
+                color: #666;
+            }
+
         .tag {
             display: inline-block;
             padding: 2px 8px;
@@ -100,59 +116,71 @@
             color: white;
             font-size: 12px;
         }
+
         .tag-control {
             background-color: #9254de;
         }
+
         .tag-insurance {
             background-color: #3671d9;
         }
+
         .tag-tip {
             background-color: #e6f7ff;
             color: #3671d9;
             border: 1px solid #91d5ff;
         }
+
         .tag-green {
             background-color: #f6ffed;
             color: #52c41a;
             border: 1px solid #b7eb8f;
         }
+
         .red-text {
             color: #f5222d;
         }
+
         .radio-group label {
             display: block;
             margin: 4px 0;
             cursor: pointer;
         }
+
         .reason-area {
             margin: 16px;
         }
-        .reason-area textarea {
-            width: 100%;
-            height: 60px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 14px;
-            background-color: #f5f5f5;
-        }
+
+            .reason-area textarea {
+                width: 100%;
+                height: 60px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 8px;
+                font-size: 14px;
+                background-color: #f5f5f5;
+            }
+
         .quick-buttons {
             padding: 0 16px 16px;
             display: flex;
             gap: 12px;
         }
-        .quick-buttons button {
-            padding: 4px 12px;
-            border: 1px solid #3671d9;
-            background: white;
-            color: #3671d9;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .quick-buttons button.blue {
-            background-color: #3671d9;
-            color: white;
-        }
+
+            .quick-buttons button {
+                padding: 4px 12px;
+                border: 1px solid #3671d9;
+                background: white;
+                color: #3671d9;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                .quick-buttons button.blue {
+                    background-color: #3671d9;
+                    color: white;
+                }
+
         .action-buttons {
             padding: 16px;
             text-align: right;
@@ -160,22 +188,168 @@
             justify-content: flex-end;
             gap: 16px;
         }
-        .action-buttons button {
-            padding: 8px 24px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .action-buttons .btn-blue {
-            background-color: #3671d9;
-            color: white;
-        }
-        .action-buttons .btn-red {
-            background-color: #f5222d;
-            color: white;
-        }
+
+            .action-buttons button {
+                padding: 8px 24px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            .action-buttons .btn-blue {
+                background-color: #3671d9;
+                color: white;
+            }
+
+            .action-buttons .btn-red {
+                background-color: #f5222d;
+                color: white;
+            }
     </style>
+    <script>
+        function saveData(type) {
+            //AIO集成
+            //临床提供，不要动
+            let dataObj = null;
+
+            let dataA = { "system": "zlhimcs", "action": "关闭窗体", "data": null };
+
+            let dataB = {
+                "system": "zlhimcs", "action": "保存结果", "data": {
+                    "PatientId": 1,
+                    "HomepageId": 1,
+                    "PatientSource": "门诊"
+                }
+            };
+            let opt = getUrlParam("CallOpportunity");
+            console.log("CallOpportunity=" + opt);
+
+            let lstData = [
+                {
+                    "MedicalInsuranceCode": "XA03AXX007X003020178278",
+                    "PId": "78837",
+                    "PatientName": "钟***",
+                    "PvId": "2",
+                    "PatientSource": "2",
+                    "FeeId": "19193",
+                    "FeeName": "西甲硅油乳剂",
+                    "AdviceId": "2921749",
+                    "DiacrisistItemId": "144508",
+                    "ExecNumber": 0,
+                    "RuleId": "C9B6F85043104C0381420F4634716586",
+                    "MircRecId": "43d881a1-d92f-4eeb-8ee2-1aac2907149c",
+                    "FeeOccurTime": "2026-07-30 11:00:00",
+                    "RuleType": 3,
+                    "RuleReason": "",
+                    "PromptContent": "胃肠镜检查和腹部影像学检查",
+                    "RuleResult": 2,
+                    "UseResult": 0,
+                    "UniqueId": "315201890",
+                    "PromptOptions": null,
+                    "BillUserId": "142",
+                    "PatiInsurance": "0",
+                    "BabyNumber": 0,
+                    "OrderStartExecutionTime": null,
+                    "CalcResult": -1,
+                    "AuditType": 2,
+                    "AuditPersonId": 142,
+                    "AuditPerson": "管理员",
+                    "AuditReason": "根据最新临床指南推荐，使用该药物。",
+                    "AuditTime": "2026-07-30 10:22:41",
+                    "Source": "local",
+                    "OrderAmount": 24.17,
+                    "RuleSource": "25版国药目录",
+                    "RuleName": null,
+                    "NeedCallBack": false,
+                    "DeptSite": "0",
+                    "WarnType": "1",
+                    "DetectionReasons": [
+                        {
+                            "RuleId": "C9B6F85043104C0381420F4634716586",
+                            "RuleSource": "25版国药目录",
+                            "ControlMethod": "D0ADFED8EC1B4660AFB928DA9547B290",
+                            "ControlPremise": "违反时管控",
+                            "ControlMode": "报销提示",
+                            "GroupName": "胃肠镜检查和腹部影像学检查",
+                            "Reason": "要求：胃肠镜检查和腹部影像学检查，检出原因：胃肠镜检查和腹部影像学检查",
+                            "ParameterSummary": null,
+                            "IsTriggered": true
+                        }
+                    ],
+                    "ActionMarks": []
+                }
+            ]
+            if ("出院检查" != opt) {
+                dataB.data = lstData;
+            }
+            if (type == 2) {
+                //继续OK
+                dataObj = dataB;
+            } else {
+                //修改
+                dataObj = dataA;
+            }
+
+            AioSendDataToVb(dataObj);
+
+            //CEF集成
+            //临床提供，不要动
+            if (typeof CEFAPI != "undefined") {
+                // dataObj.Opportunity = "ZLhisCallSave_ByCef";
+                CEFAPI.trigger(JSON.stringify(dataObj), "");
+            }
+        }
+
+
+        /**声明接收vb程序发来的消息
+         * 临床提供，不要动
+         * */
+        function RegAioFun() {
+            if (window.aioExtend) {
+                window.aioExtend.onPostMessage = (data) => {
+                    let msg = JSON.parse(data);
+                    if (msg.action == "关闭窗体") {
+                        //关闭窗体
+                        window.close();
+                    } else if (msg.action == "保存结果") {
+                        //保存结果
+                        console.log("保存结果", msg.data);
+                    }
+                }
+            }
+        }
+
+        /**注册方法 */
+        RegAioFun();
+
+        /**
+         * * 临床提供，不要动
+         * Aio网页向Vb程序发送消息
+         * VB程序收到后是JSON对象的字符串，传递的内容在  JSON("content") 中
+         * @param {any} dataIn 可以是json对象，也可以是字符串
+         */
+        function AioSendDataToVb(dataIn) {
+            let command = {
+                MsgType: "aio",
+                Action: "postmessage",
+                Pars: dataIn
+            }
+            try {
+                window.aioExtend(command);
+            } catch (err) {
+                return;
+            }
+        }
+
+        // 获取url中的参数
+        function getUrlParam(paramName) {
+            const urlSearch = new URLSearchParams(location.search);
+            return urlSearch.get(paramName);
+        }
+
+
+    </script>
 </head>
 <body>
     <div class="container">
@@ -263,8 +437,8 @@
 
         <!-- 操作按钮 -->
         <div class="action-buttons">
-            <button class="btn-blue">遵从(返回修改)</button>
-            <button class="btn-red">不遵从(继续执行)</button>
+            <button class="btn-blue" onclick="saveData(1)">遵从(返回修改)</button>
+            <button class="btn-red"  onclick="saveData(2)">不遵从(继续执行)</button>
         </div>
     </div>
 </body>

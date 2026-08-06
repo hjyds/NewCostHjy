@@ -110,5 +110,30 @@ namespace NewCostHjy.Controllers.WebPage {
             ViewBag.BaseData = parDic;
             return View();
         }
+
+        /// <summary>
+        /// MICPK 参数展示页面（订阅医保审核结果通知消息）
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult micpk()
+        {
+            Dictionary<string, string> parDic = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var item in Request.Query)
+            {
+                parDic[item.Key] = item.Value.ToString();
+            }
+
+            if (Request.HasFormContentType)
+            {
+                foreach (var item in Request.Form)
+                {
+                    parDic[item.Key] = item.Value.ToString();
+                }
+            }
+
+            ViewBag.BaseData = parDic;
+            return View();
+        }
     }
 }
