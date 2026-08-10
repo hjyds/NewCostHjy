@@ -361,3 +361,71 @@ function SetParam() {
         theParts.时间类型.value = localStorage.getItem('时间类型');
     }
 }
+
+function get查找(keyword) {
+    var data = HrsServer.Get("/api/DirectoryTree/GetCircleTreeViewAndData");
+    var lstRes = data.Data.Data;
+    const result = lstRes.filter(item => item.detail_name.includes(keyword));
+
+    let res = result.map(item => {
+        return {
+            id: item.resource_detail_id,
+            "名称": item.detail_name
+        }
+    })
+    console.log(res);
+}
+
+/**
+ * 查找视图
+ * @param {any} strRName    资源名称
+ * @param {any} strVName    视图名称
+ */
+function get查找视图(strRName, strVName) {
+    var data = HrsServer.Get("/api/DirectoryTree/GetCircleTreeViewAndData");
+    var lstRes = data.Data.Data;
+    var result = lstRes;
+    if (strRName) {
+        result = lstRes.filter(item => item.detail_name.includes(strRName));
+    }
+    if (result.length > 0) {
+        result.map(item => {
+            let res_id = item.resource_detail_id;
+            let vlst = GetAllViewByResId(res_id);
+
+            let vOutlst = vlst.filter(t => t.detail_name.includes(strVName));
+
+            if (vOutlst.length > 0) {
+                console.log({
+                    id: item.resource_detail_id,
+                    "名称": item.detail_name
+                });
+            }
+
+        })
+    }
+}
+
+function GetAllViewByResId(res_id) {
+
+    var params = {
+        "resTypeId": "c8dc4683-4733-965b-1a34-c0851c336843",
+        "viewId": "f2520851-9884-4386-a073-12e83f0959d3",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "dfa5a35e-e439-021e-b067-a810969ad86b",
+                "compare": "=",
+                "val": res_id
+            }
+        ]
+    }
+
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+    debugger
+    return result.Data;
+}

@@ -23,5 +23,19 @@ namespace NewCostHjy.Controllers
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// 撤消申请
+        /// </summary>
+        /// <param name="parIn"></param>
+        /// <returns></returns>
+        [HttpPost("Cancel")]
+        public IActionResult Cancel([FromBody] MedicalReviewCancelRequest parIn)
+        {
+            // Implementation for canceling medical review
+            return Ok(1);
+        }
+
+
     }
 }
