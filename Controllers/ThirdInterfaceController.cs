@@ -325,6 +325,39 @@ namespace NewCostHjy.Controllers
         }
 
         /// <summary>
+        /// 医嘱标项目值域获取，导航台医生站使用
+        /// </summary>
+        /// <param name="parIn"></param>
+        /// <returns></returns>
+        [HttpPost("GetAdviceTagDataEx")]
+        public IActionResult GetAdviceTagDataEx([FromBody] dynamic parIn)
+        {
+            var dataTmp = new
+            {
+                output = new
+                {
+                    code = 1,
+                    message = "成功",
+                    category_list = new[]
+                    {
+                        new { ID = "140104", IsDefault = 0, Name = "门诊慢病" },
+                        new { ID = "140201", IsDefault = 0, Name = "门诊特病" },
+                        new { ID = "1403", IsDefault = 0, Name = "职工两病门诊" },
+                        new { ID = "140212", IsDefault = 1, Name = "胡俊勇测试" },
+                        new { ID = "11", IsDefault = 0, Name = "普通门诊" }
+                    },
+                    disease_list = new[]
+                    {
+                        new { ID = "110212", IsDefault = 1, Name = "勇测试" },
+                        new { ID = "123456", IsDefault = 0, Name = "糖尿病" }
+                    }
+                }
+            };
+
+            return Json(dataTmp);
+        }
+
+        /// <summary>
         /// 药师处方审查，审查结果查询，住院医生发送医嘱时调用
         /// </summary>
         /// <param name="pid"></param>
@@ -565,6 +598,7 @@ namespace NewCostHjy.Controllers
         [HttpPost("HIPMessageServer")]
         public IActionResult HIPMessageServer([FromBody] dynamic parIn)
         {
+            #region 取参数头相关信息 
             string targetId = string.Empty;
             try
             {
@@ -600,6 +634,7 @@ namespace NewCostHjy.Controllers
             {
                 serviceCode = string.Empty;
             }
+            #endregion
 
             string strWebUrl = "/PatientVte/medasso"
                 + "?app_code=" + Uri.EscapeDataString(appCode)
@@ -682,6 +717,16 @@ namespace NewCostHjy.Controllers
 
                 //dataTmp = zlhisInterfaceBLL.GetUserDataByLogInfo(2538);
 
+            } else if ("R_EHR_0012" == serviceCode)
+            {
+                strWebUrl = strWebUrl + "&page_note=居民健康档案";
+                string paticd = (string)parIn.body.pt_idcard;
+                strWebUrl += "&pt_idcard=" + Uri.EscapeDataString(paticd);
+                dataTmp = new
+                {
+                    head = rhead,
+                    data = strWebUrl
+                };
             }
             zlhisInterfaceDAL.ZLhisLogInsert(1, id, "", strInfo, 1, "HIPMessageServer", "HIPMessageServer", $"_{appCode}_{targetAppCode}_{serviceCode}_");
 

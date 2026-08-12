@@ -423,9 +423,7 @@ namespace NewCostHjy.DAL
                         6.77 As Eisai_Item_Sales_Price, 6.77 Eisai_Item_Cost_Price, a.Id Eisai_Item_Id, a.名称 As Eisai_Item_Name,
                         a.规格 As Eisai_Item_Spec, a.产地 As Eisai_Item_Dprentp_Name
                     From 收费项目目录 A,材料特性 b
-                    Where a.id=b.材料id and nvl(b.备货卫材流程,0)=0 and a.类别 = '4' And a.产地 Is Not Null And a.规格 Is Not Null And Rownum < 7
-                    And a.id=:stuffid
-                    order by a.id ";
+                    Where a.id=b.材料id And a.id=:stuffid";
 
             OracleDataAccess oracleData = new OracleDataAccess();
             OracleParameter[] parameters = {                
