@@ -490,6 +490,31 @@ function fun操作类型切换(oper) {
         $("[data-owner-id='" + mapGuid._执行分类 + "'] .record-label").text("执行分类");
 
     }
+    if (type == "E") {
+        fun设置控件可见性(mapGuid._执行分类, false);
+        fun设置控件可编辑(_界面控件._执行频率, false);
+        if (oper == "0" || oper == "5") {//0-普通;5-特殊治疗
+            fun设置控件可见性(mapGuid._单独应用, true);
+            fun设置控件可编辑(_界面控件._执行频率, true);
+        } else if (oper == "1") {//1-过敏试验
+            fun设置控件可见性(mapGuid._单独应用, true);
+            _界面控件._执行频率.val("1");            
+            fun设置控件可编辑(_界面控件._执行频率, false);
+        } else if (oper == "2" || oper == "3" || oper == "4" || oper == "6" || oper == "9") {//2-给药方法(西药);3-中药煎法;4-中药用(服)法;6-标本采集;9-输血采集
+            fun设置控件可见性(mapGuid._单独应用, false);
+            _界面控件._执行频率.val("0");
+            fun设置控件可编辑(_界面控件._执行频率, false);
+            fun设置控件可见性(mapGuid._执行分类, true);
+        } else if (oper == "7") {//7-配血方法
+            fun设置控件可见性(mapGuid._单独应用, false);
+        } else if (oper == "8") {//8-输血途径
+            fun设置控件可见性(mapGuid._单独应用, true);
+        } else if (oper == "10" || oper == "11") {//10-血栓评分表;11-出血评分表
+            fun设置控件可见性(mapGuid._单独应用, false);
+        } else if (oper == "12") {//12-量表评估
+            fun设置控件可见性(mapGuid._单独应用, false);
+        }
+    } 
 }
 
 function fun界面页卡切换(tab) {
@@ -754,7 +779,7 @@ function fun编辑项目检查检验(bln检验) {
     fun设置视图区域可见性(mapGuid._视图区域._其它相关, false);
 
     fun设置控件可见性(mapGuid._诊疗频率, false);
-    fun设置控件可见性(mapGuid._单独应用, !bln检验);
+    fun设置控件可见性(mapGuid._单独应用, bln检验);
 
     fun设置控件可见性(mapGuid._按规则计费, !bln检验);
     fun设置控件可见性(mapGuid._床旁术中, !bln检验);
