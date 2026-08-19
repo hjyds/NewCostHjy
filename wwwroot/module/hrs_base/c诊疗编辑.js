@@ -680,7 +680,7 @@ window.GetCitemSaveJsonPar = function () {
             parData.给药大类 = _界面控件._给药大类.val();
         }
         parData.执行分类 = parseInt(_界面控件._执行分类.val() || 0);
-        parData.执行标记 = parseInt(_界面控件._执行分类._界面控件._输液类型 || 0);
+        parData.执行标记 = parseInt(_界面控件._输液类型.val() || 0);
         parData.计算方式 = parseInt(_界面控件._计算方式.val() || 0);
         parData.计算系数 = parseInt(_界面控件._计算方式.val() == "2" ? _界面控件._计算系数.val() || 0 : 0);
         parData.计算规则 = parseInt(_界面控件._计算规则.val() || 0);
@@ -1187,7 +1187,7 @@ window.fun检查部位区域连动参数 = function () {
     return [oper, isrule, itemid];
 }
 
-window.fun获取选择的检查部位 = function (data) {
+window.fun获取选择的检查部位 = function (data) { 
     debugger
     // 字段映射
     const keyMap = {
