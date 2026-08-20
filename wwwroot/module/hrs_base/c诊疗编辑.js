@@ -498,7 +498,7 @@ function fun操作类型切换(oper) {
             fun设置控件可编辑(_界面控件._执行频率, true);
         } else if (oper == "1") {//1-过敏试验
             fun设置控件可见性(mapGuid._单独应用, true);
-            _界面控件._执行频率.val("1");            
+            _界面控件._执行频率.val("1");
             fun设置控件可编辑(_界面控件._执行频率, false);
         } else if (oper == "2" || oper == "3" || oper == "4" || oper == "6" || oper == "9") {//2-给药方法(西药);3-中药煎法;4-中药用(服)法;6-标本采集;9-输血采集
             fun设置控件可见性(mapGuid._单独应用, false);
@@ -514,7 +514,7 @@ function fun操作类型切换(oper) {
         } else if (oper == "12") {//12-量表评估
             fun设置控件可见性(mapGuid._单独应用, false);
         }
-    } 
+    }
 }
 
 function fun界面页卡切换(tab) {
@@ -542,8 +542,7 @@ function fun界面页卡切换(tab) {
     }
 }
 
-window.GetCitemSaveJsonPar = function () {
-    debugger
+window.GetCitemSaveJsonPar = function () {    
     var parData = {}, temp = null, objItem = null;
     let urlPar = new URLSearchParams(location.search);
     let editsta = urlPar.get("editsta");
@@ -582,7 +581,7 @@ window.GetCitemSaveJsonPar = function () {
     } else if (temp.includes(1)) {
         parData.服务对象 = 1;
     }
-
+    parData.service_object_code = temp;
     parData.站点 = _界面控件._站点.val();
 
     parData.参考项目id = parseInt(_界面控件._参考项目.val() || 0);
@@ -960,8 +959,7 @@ page.onLoaded = (pageContent) => {
     let editsta = parseInt(urlPar.get("editsta") || 0);//编辑状态 1-新增，2-修改，3-复制新增
     _界面控件._参数._诊疗项目id = item_id;
     _界面控件._参数._分类id = class_id;
-    _界面控件._参数._编辑状态 = editsta;
-    debugger
+    _界面控件._参数._编辑状态 = editsta;    
     fun控件对象映射();
 
     $("#" + mapGuid._诊疗类别).on("change", function () {
@@ -975,9 +973,7 @@ page.onLoaded = (pageContent) => {
         fun执行频率切换();
     });
 
-    $("#" + mapGuid._名称).on("change", function () {
-        debugger
-        //项目名称
+    $("#" + mapGuid._名称).on("change", function () {                //项目名称
         $("#" + mapGuid._简码).val(GetPyCode($(this).val()));
         $("#" + mapGuid._简码五笔).val(GetWbCode($(this).val()));
     });
@@ -1187,8 +1183,7 @@ window.fun检查部位区域连动参数 = function () {
     return [oper, isrule, itemid];
 }
 
-window.fun获取选择的检查部位 = function (data) { 
-    debugger
+window.fun获取选择的检查部位 = function (data) {    
     // 字段映射
     const keyMap = {
         "b2473c6f-5c45-42b1-bdb3-4afa15c44103": "_部位",
@@ -1223,4 +1218,185 @@ window.fun获取选择的检查部位 = function (data) {
         });
 
     return result;
+}
+
+function funhrsBaseParam() { 
+    let _input = {
+        "resTypeId": "d52ad143-b5e9-4a99-8f62-0774b8e067c2",
+        "viewId": "c4dc7a5c-b609-47b6-85ad-379fbba2f7b3",
+        "row": 0,
+        "source": "资源类型",
+        "matching": []
+    };
+    let _output = HrsServer.Post("/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId", JSON.stringify(_input));
+    let paramsData = _output.Data[0]["019fcaa6-e01e-7a00-93ca-0e7e765d180f"]; //参数值
+    let params = JSON.parse(paramsData);
+    let hrsBaseParam = params.HrsBase;
+    if (hrsBaseParam.isStart == "0") {
+        //未启用接口直接退出
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    }
+    if (hrsBaseParam.apiUrl == "") {
+        alert("医共体平台接口地址未设置，不能同步！");
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    }
+    if (hrsBaseParam.appId == "") {
+        alert("医共体平台接口地址未设置，不能同步！");
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    }
+    if (hrsBaseParam.secretKey == "") {
+        alert("医共体平台密钥未设置，不能同步！");
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    }
+    if (hrsBaseParam.platformPublicKey == "") {
+        alert("医共体平台公钥未设置，不能同步！");
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    }
+    if (hrsBaseParam.clientSM2PublicKey == "") {
+        alert("医共体客户端公钥未设置，不能同步！");
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    }
+    if (hrsBaseParam.clientSM2PrivateKey == "") {
+        alert("医共体客户端私钥未设置，不能同步！");
+        hrsBaseParam = null;
+        return hrsBaseParam;
+    } 
+    return hrsBaseParam;
+}
+function get分类编码(id) {
+    const input = {
+        "resTypeId": "8f56e389-3cf0-4184-98b0-ed0fae32da8a",
+        "viewId": "cc5d6b9e-1f94-4a1a-8ef6-8c16be6e3ea9",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "78b74010-a072-49a0-86b0-7e57dc319ecf",
+                "compare": "=",
+                "val": id
+            }
+        ]
+    }
+    const ret = HrsServer.Post("/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId", JSON.stringify(input));
+    const codeval = ret.Data[0];//["b93e2041-5f03-42ca-9fa5-84d05ef3d088"]; //参数值
+    return codeval;
+}
+
+window.GetSyncData = function (proPar) {
+    //获取医共体平台接口参数仅是参数组织，只有保存成功后才会真正调用医共体平台接口    
+    const paramsData = funhrsBaseParam();
+    if (paramsData == null) return
+
+    let temp = JSON.parse(proPar.Json_In);
+    let serviceCode = "X_MD_0022";
+    if (temp.功能 == 2) serviceCode = "X_MD_0023";
+
+    let bData = temp;
+    debugger
+    let user_account_extend = {
+        "账号": "ZLHIS",
+        "user_id": "142",
+        "编号": "0000",
+        "登录人员姓名": "管理员",
+        "医院医保编码": "H50011600003",
+        "医院名称": "中联医院信息系统（正式）",
+        "登录人员医保编码": "GJYS0000000142",
+        "人员管理国家医师编码列名": "国家医保编码",
+        "zlhis_mid": "042F51BC7877EFAD254DBF2FEF7884B38131537921098C9AFEAFC1EA00550F0471B46681A8D6D841B5564FDCE3ACBBCC2AD6983248EB5280A50C3F783CF93F6B66AECC1CB00EE010B4F53D28E17BC6B13864E92A6B6F5A168E8678A7890F9B775F0B74C26D0232E226D32A42"
+    }
+    let userInfo = JSON.parse(sessionStorage.UserLoginInfo);
+    userInfo = userInfo.account_extend;
+    const codeval = get分类编码(temp.分类id);
+    bData = {
+        "item_code": temp.编码,// "ITEM_20260001",
+        "item_name": temp.名称,// "血常规检查",
+        "category_code": codeval["b93e2041-5f03-42ca-9fa5-84d05ef3d088"],//"20",
+        "category_name": codeval["e15f6ab0-3300-45fb-9d58-699ee8ecfeb9"],// "检查",
+        "org_code": userInfo?.医院医保编码 || "",// "H510107001",
+        "org_name": userInfo?.医院名称 || "",//"成都市武侯区人民医院",
+        "item_type_code": temp.诊疗类别,// "C",
+        //"item_type_name": "检验",
+        "item_alias": temp.别名,// "血常规，全血细胞计数",
+        "py_code": temp.简码,// "XCGJC",
+        "wb_code": temp.简码五笔,//"XCGJC",
+        "item_unit": temp.计算单位,//"次",
+        "calc_mode_code": temp.计算方式,// "1",
+        //"calc_mode_name": "计量执行",
+        "frequency_code": temp.执行频率,// "0",
+        //"frequency_name": "可选频率",
+        //"gender_code": "0",
+        //"gender_name": "不限",
+        "operate_type_code": temp.操作类型,// "01",
+        "operate_type_name": temp.操作类型,// "临检",
+        "exec_dept_code": temp.执行科室,//"1",
+        //"exec_dept_name": "所在科室",
+        "price_prop_code": temp.执行标记,// "0",
+        //"price_prop_name": "正常计价",
+        "service_object_code": temp.service_object_code,
+        //"service_object_name": "门诊，住院",
+        "applicable_scope_code": "1,2,3,4,5,6,7,8,9,10",
+        //"applicable_scope_name": "综合医院，专科医院，妇幼保健院，乡镇卫生院，社区服务中心，社区服务站，村卫生室，卫健委，医共体，城市医疗集团",
+        // "applicable_org_code": "",
+        // "applicable_org_name": "",
+        // "prescription_rank_code": "0",
+        // "prescription_rank_name": "不限",
+        // "description": "全血细胞计数，包括白细胞、红细胞、血小板等",
+        "state": 1,
+        "sort_no": null
+    };
+
+    //组织自定义后台服务的入参
+    let input = {
+        "url": paramsData.apiUrl,
+        "appId": paramsData.appId,
+        "appSecret": paramsData.secretKey,
+        "platformPublicKey": paramsData.platformPublicKey,
+        "clientSM2PublicKey": paramsData.clientSM2PublicKey,
+        "clientSM2PrivateKey": paramsData.clientSM2PrivateKey,
+        "serviceCode": serviceCode,
+        "data": bData
+    }
+    return input;
+}
+
+function fun医共体数据同步代码调用(proPar) {
+    //医共体平台API服务参数
+    var datapar = {
+        "inargs": {
+            "url": "http://192.168.31.226:13100/instance/publish/rmip/HIPMessageServer",
+            "appId": "b7da2a1d-72d8-4da7-9825-787f9b204d18",
+            "appSecret": "YHHzhrSH+QAzBEDmTRqzoP2SZeWZmisMeP9GX4ahfrnojOKezTTq4P/nN5bvifbv",
+            "platformPublicKey": "Juusv9Teje5Ph7zNZtH9QcZe+DVNamk0mP1xskdd07vowiGygVrnYdETaK6Q+RK7n9Jck61DlGngqJbzrT/5Mw==",
+            "clientSM2PublicKey": "vMGOYoAAzmpJYN9GE4M3Fb5PBFpUjvac+hh6MilzV+ht6dP67HUGaPL2wC8qZvtOZAVYg5HAZcWyWxeqwfm9Hg==",
+            "clientSM2PrivateKey": "7jmqyeW3NlIBQrlooQETwvJs7ihFta9z59dzbtnUcbE=",
+            "serviceCode": "X_MD_0067",
+            "data": {
+                "code": "0607",
+                "name": "胡俊勇测试加ZZ",
+                "parent_code": "06",
+                "parent_name": "",
+                "py_code": "HJYCSJZZ",
+                "state": "1"
+            }
+        },
+        "hcsid": "e6c2a658-aadf-4c38-933f-51055167efc3",
+        "circleid": "ee467177-2400-4e1b-b29f-52a6e4793659",
+        "内部服务": "c1cf2b83-c8f6-4be5-b4e5-c73edca0789e"
+    }
+    debugger
+
+    let url = `/res/HCS/Execute`
+    let strPar = JSON.stringify(datapar)
+    //用JS代码方式调用API服务
+    var ret1 = HrsServer.Post(url, strPar)
+
+    var ret2 = HrsServer.Post(url, strPar)
+
+    var ret3 = HrsServer.Post(url, strPar)
 }
