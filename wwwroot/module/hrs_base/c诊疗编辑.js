@@ -12,7 +12,7 @@
  *     3.page.onLoaded 在所有组件加载和页面内容载入完成后触发
  *
  */
-
+ 
 window._界面控件 = {
     _参数: {
         _诊疗项目id: null,
@@ -616,7 +616,7 @@ window.GetCitemSaveJsonPar = function () {
         if (parData.操作类型 == "病理") {
             parData.执行分类 = parseInt(_界面控件._号别名称.val() || 0);
         }
-
+        parData.标本部位 = _界面控件._检验标本.val();
         temp = $("[data-id='com_i12efkffikm']")[0]?.firstElementChild?.data;
         if (temp) {
             //检查项目的部位列表
@@ -1200,7 +1200,7 @@ window.fun获取选择的检查部位 = function (data) {
         .map(item => {
             const newItem = {};
             Object.keys(keyMap).forEach(oldKey => {
-                newItem[keyMap[oldKey]] = item[oldKey];
+                newItem[keyMap[oldKey]] = item[oldKey] || "";
             });
             return newItem;
         })
@@ -1298,7 +1298,6 @@ window.GetSyncData = function (proPar) {
     if (temp.功能 == 2) serviceCode = "X_MD_0023";
 
     let bData = temp;
-    debugger
     let user_account_extend = {
         "账号": "ZLHIS",
         "user_id": "142",
@@ -1314,6 +1313,7 @@ window.GetSyncData = function (proPar) {
     userInfo = userInfo.account_extend;
     const codeval = get分类编码(temp.分类id);
     bData = {
+        "item_his_id": temp.记录id,
         "item_code": temp.编码,// "ITEM_20260001",
         "item_name": temp.名称,// "血常规检查",
         "category_code": codeval["b93e2041-5f03-42ca-9fa5-84d05ef3d088"],//"20",
@@ -1364,39 +1364,170 @@ window.GetSyncData = function (proPar) {
     }
     return input;
 }
+ 
+window.funPACS_X_MD_0038 = function (par_in) {
+    //医共体平台，基础数据同步，检查项目部位方法关系发布服务
+    if (par_in.syncOK != 1) return
+    if (!par_in.syncData) return
+    let itemInfo = JSON.parse(par_in.proPar.Json_In);
+    
+    let str诊疗类别 = itemInfo.诊疗类别;
+    if (str诊疗类别 != "D") return
 
-function fun医共体数据同步代码调用(proPar) {
-    //医共体平台API服务参数
+    let objDataItem = {
+        item_code: itemInfo.编码, item_name: itemInfo.名称,
+        study_type_code: itemInfo.操作类型, study_type_name: itemInfo.操作类型,
+        state: 0
+    };
+
+    let lng记录id = itemInfo.记录id;
+    let lng按规则计费 = itemInfo.按规则计费;
+    itemInfo.诊疗项目ID = lng记录id;
+
+    let selParts = fun获取当前项目设置的部位(itemInfo);
+    let baseParts = fun获取部位基础数据(itemInfo);
+
+    let syncParts = fun获取同步的部位数据(selParts, baseParts);
+
+    objDataItem.item_parts = syncParts;
+
+    let syncData = par_in.syncData;    
+    syncData.serviceCode = "X_MD_0038";
+    syncData.data = objDataItem;
+
+    fun医共体基础数据服务(syncData);    
+}
+
+function fun医共体基础数据服务(data) {
+    //医共体平台API服务基础数据同步执行
     var datapar = {
-        "inargs": {
-            "url": "http://192.168.31.226:13100/instance/publish/rmip/HIPMessageServer",
-            "appId": "b7da2a1d-72d8-4da7-9825-787f9b204d18",
-            "appSecret": "YHHzhrSH+QAzBEDmTRqzoP2SZeWZmisMeP9GX4ahfrnojOKezTTq4P/nN5bvifbv",
-            "platformPublicKey": "Juusv9Teje5Ph7zNZtH9QcZe+DVNamk0mP1xskdd07vowiGygVrnYdETaK6Q+RK7n9Jck61DlGngqJbzrT/5Mw==",
-            "clientSM2PublicKey": "vMGOYoAAzmpJYN9GE4M3Fb5PBFpUjvac+hh6MilzV+ht6dP67HUGaPL2wC8qZvtOZAVYg5HAZcWyWxeqwfm9Hg==",
-            "clientSM2PrivateKey": "7jmqyeW3NlIBQrlooQETwvJs7ihFta9z59dzbtnUcbE=",
-            "serviceCode": "X_MD_0067",
-            "data": {
-                "code": "0607",
-                "name": "胡俊勇测试加ZZ",
-                "parent_code": "06",
-                "parent_name": "",
-                "py_code": "HJYCSJZZ",
-                "state": "1"
-            }
-        },
+        "inargs": data,
         "hcsid": "e6c2a658-aadf-4c38-933f-51055167efc3",
         "circleid": "ee467177-2400-4e1b-b29f-52a6e4793659",
         "内部服务": "c1cf2b83-c8f6-4be5-b4e5-c73edca0789e"
     }
-    debugger
-
     let url = `/res/HCS/Execute`
     let strPar = JSON.stringify(datapar)
     //用JS代码方式调用API服务
     var ret1 = HrsServer.Post(url, strPar)
+}
+function fun获取当前项目设置的部位(outData入参) { 
+    let params = {
+        "resTypeId": "c854b215-23ac-46fb-9110-330f713c9400",
+        "viewId": "e459b32a-b09a-4a49-94d7-1129ae5d219d",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "ef65c48b-495c-4f25-8bda-43d72967ee14",
+                "compare": "=",
+                "val": outData入参.操作类型
+            },
+            {
+                "relId": "db4955c4-9c2f-4d1f-a8a0-f2bf75f5c934",
+                "compare": "=",
+                "val": outData入参.按规则计费
+            },
+            {
+                "relId": "29e924a6-5292-4ff7-95f7-710c4949eb6a",
+                "compare": "=",
+                "val": outData入参.诊疗项目ID
+            }
+        ]
+    }
+     
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );    
+    let lstData = result.Data;
+    return lstData;
+}
 
-    var ret2 = HrsServer.Post(url, strPar)
+function fun获取部位基础数据(outData入参) {
+    //检查项目
+    var params = {
+        "resTypeId": "fee813e7-2cae-42b9-b6a0-cb3a5fed12b0",
+        "viewId": "2da7db4b-bfa8-4fec-874d-476d80687c3b",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "f4d07424-d8dc-4449-9beb-214bb85c42d7",
+                "compare": "=",
+                "val": outData入参.操作类型
+            },
+            {
+                "relId": "35bd7f8f-b51b-45da-a531-9c1eb6925c97",
+                "compare": "=",
+                "val": outData入参.按规则计费
+            }
+        ]
+    }
 
-    var ret3 = HrsServer.Post(url, strPar)
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );    
+    var lstData = result.Data;
+
+    const keynameMap = [
+        { id: "分组", name: "a3c5e6ae-a793-4d68-9334-84a041be400c" },
+        { id: "部位", name: "182e7750-7d4f-487c-a9f9-81031b466443" },
+        { id: "方法", name: "564764bd-f7ed-4480-947b-3604903aa09c" },
+        { id: "编码", name: "638d4b37-f1c2-4cca-aac3-8ecf7747baa2" },
+        { id: "备注", name: "d988d6e0-e3cf-4869-8f8d-f5bed8a95e25" }
+    ];
+
+    const newData = lstData.map(row => {
+        const obj = {};
+        keynameMap.forEach(({ id, name }) => {
+            let value = row[name];
+
+            if (id === "方法" && typeof value === "string" && value.trim()) {
+                try {
+                    value = JSON.parse(value);
+                } catch (e) {
+                    console.error("方法 字段 JSON 解析失败：", value);
+                }
+            }
+            obj[id] = value;
+        });
+        return obj;
+    });
+    return newData;
+}
+
+function fun获取同步的部位数据(selParts, baseParts) {
+    //相关结点转换主要针对检查类诊疗项目
+    // 1、取出所有选中的部位名称集合
+    const selectNames = selParts.map(item => item.detail_name);
+
+    // 2、过滤baseParts，只保留匹配【部位】等于detail_name的数据
+    const filterBaseList = baseParts.filter(baseItem => {
+        return selectNames.includes(baseItem.部位);
+    });
+
+    // 3、循环映射转换成目标输出结构 outLst
+    const outLst = filterBaseList.map(baseItem => {
+        // 转换方法数组
+        const part_method = baseItem.方法.map(mth => {
+            return {
+                superior_code: mth.上级方法,
+                method_code: mth.方法名称,
+                method_name: mth.方法名称,
+                mutex_method: mth.共选 == 1 ? 0 : 1,
+                use_contrast_medium: mth.是否造影
+            };
+        });
+
+        return {
+            part_code: baseItem.编码,
+            part_name: baseItem.部位,
+            part_group: baseItem.分组,
+            part_method: part_method
+        };
+    });
+
+    return outLst;
 }
