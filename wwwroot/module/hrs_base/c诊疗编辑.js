@@ -12,7 +12,7 @@
  *     3.page.onLoaded 在所有组件加载和页面内容载入完成后触发
  *
  */
- 
+
 window._界面控件 = {
     _参数: {
         _诊疗项目id: null,
@@ -542,7 +542,7 @@ function fun界面页卡切换(tab) {
     }
 }
 
-window.GetCitemSaveJsonPar = function () {    
+window.GetCitemSaveJsonPar = function () {
     var parData = {}, temp = null, objItem = null;
     let urlPar = new URLSearchParams(location.search);
     let editsta = urlPar.get("editsta");
@@ -589,6 +589,10 @@ window.GetCitemSaveJsonPar = function () {
 
     parData.使用科室 = _界面控件._使用科室.val();
     parData.启用时间 = _界面控件._启用时间.val();
+
+    if (parData.启用时间) {
+        parData.启用时间 = HrsDate.FormatDate(parData.启用时间, "yyyy-mm-dd hh:mm:ss");
+    }
 
     parData.执行安排 = parseInt(_界面控件._执行安排.val() || 0);
     parData.单独应用 = parseInt(_界面控件._单独应用.val() || 0);
@@ -959,7 +963,7 @@ page.onLoaded = (pageContent) => {
     let editsta = parseInt(urlPar.get("editsta") || 0);//编辑状态 1-新增，2-修改，3-复制新增
     _界面控件._参数._诊疗项目id = item_id;
     _界面控件._参数._分类id = class_id;
-    _界面控件._参数._编辑状态 = editsta;    
+    _界面控件._参数._编辑状态 = editsta;
     fun控件对象映射();
 
     $("#" + mapGuid._诊疗类别).on("change", function () {
@@ -1183,7 +1187,7 @@ window.fun检查部位区域连动参数 = function () {
     return [oper, isrule, itemid];
 }
 
-window.fun获取选择的检查部位 = function (data) {    
+window.fun获取选择的检查部位 = function (data) {
     // 字段映射
     const keyMap = {
         "b2473c6f-5c45-42b1-bdb3-4afa15c44103": "_部位",
@@ -1220,7 +1224,7 @@ window.fun获取选择的检查部位 = function (data) {
     return result;
 }
 
-function funhrsBaseParam() { 
+function funhrsBaseParam() {
     let _input = {
         "resTypeId": "d52ad143-b5e9-4a99-8f62-0774b8e067c2",
         "viewId": "c4dc7a5c-b609-47b6-85ad-379fbba2f7b3",
@@ -1266,7 +1270,7 @@ function funhrsBaseParam() {
         alert("医共体客户端私钥未设置，不能同步！");
         hrsBaseParam = null;
         return hrsBaseParam;
-    } 
+    }
     return hrsBaseParam;
 }
 function get分类编码(id) {
@@ -1344,9 +1348,12 @@ window.GetSyncData = function (proPar) {
         //"applicable_scope_name": "综合医院，专科医院，妇幼保健院，乡镇卫生院，社区服务中心，社区服务站，村卫生室，卫健委，医共体，城市医疗集团",
         // "applicable_org_code": "",
         // "applicable_org_name": "",
-        // "prescription_rank_code": "0",
+        "prescription_rank_code": "0",
         // "prescription_rank_name": "不限",
         // "description": "全血细胞计数，包括白细胞、红细胞、血小板等",
+        "is_single": temp.单独应用,
+        "is_group": temp.组合项目,
+        "price_prop_code": "0",
         "state": 1,
         "sort_no": null
     };
@@ -1364,13 +1371,13 @@ window.GetSyncData = function (proPar) {
     }
     return input;
 }
- 
+
 window.funPACS_X_MD_0038 = function (par_in) {
     //医共体平台，基础数据同步，检查项目部位方法关系发布服务
     if (par_in.syncOK != 1) return
     if (!par_in.syncData) return
     let itemInfo = JSON.parse(par_in.proPar.Json_In);
-    
+
     let str诊疗类别 = itemInfo.诊疗类别;
     if (str诊疗类别 != "D") return
 
@@ -1389,13 +1396,13 @@ window.funPACS_X_MD_0038 = function (par_in) {
 
     let syncParts = fun获取同步的部位数据(selParts, baseParts);
 
-    objDataItem.item_parts = syncParts;
+    objDataItem.item_part = syncParts;
 
-    let syncData = par_in.syncData;    
+    let syncData = par_in.syncData;
     syncData.serviceCode = "X_MD_0038";
     syncData.data = objDataItem;
 
-    fun医共体基础数据服务(syncData);    
+    fun医共体基础数据服务(syncData);
 }
 
 function fun医共体基础数据服务(data) {
@@ -1411,7 +1418,7 @@ function fun医共体基础数据服务(data) {
     //用JS代码方式调用API服务
     var ret1 = HrsServer.Post(url, strPar)
 }
-function fun获取当前项目设置的部位(outData入参) { 
+function fun获取当前项目设置的部位(outData入参) {
     let params = {
         "resTypeId": "c854b215-23ac-46fb-9110-330f713c9400",
         "viewId": "e459b32a-b09a-4a49-94d7-1129ae5d219d",
@@ -1435,11 +1442,11 @@ function fun获取当前项目设置的部位(outData入参) {
             }
         ]
     }
-     
+
     const result = HrsServer.Post(
         "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
         JSON.stringify(params)
-    );    
+    );
     let lstData = result.Data;
     return lstData;
 }
@@ -1468,7 +1475,7 @@ function fun获取部位基础数据(outData入参) {
     const result = HrsServer.Post(
         "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
         JSON.stringify(params)
-    );    
+    );
     var lstData = result.Data;
 
     const keynameMap = [
