@@ -591,7 +591,7 @@ window.GetCitemSaveJsonPar = function () {
     parData.启用时间 = _界面控件._启用时间.val();
 
     if (parData.启用时间) {
-        parData.启用时间 = HrsDate.FormatDate(parData.启用时间, "yyyy-mm-dd hh:mm:ss");
+        parData.启用时间 = HrsDate.FormatDate(parData.启用时间, "yyyy-MM-dd HH:mm:ss");
     }
 
     parData.执行安排 = parseInt(_界面控件._执行安排.val() || 0);
@@ -1122,7 +1122,7 @@ function fun生成皮试结果(data) {
                 // 1. 三个节点的值都不能为空
                 const text = item[mapGuid._皮试文字] || '';
                 const mark = item[mapGuid._皮试标注] || '';
-                const allergy = item[mapGuid._皮试过敏] || '';
+                const allergy = item[mapGuid._皮试过敏] || '0';
 
                 if (!text.trim() || !mark.trim() || !allergy.trim()) {
                     return false;
