@@ -83,7 +83,7 @@ function fun控件对象映射() {
     _界面控件._计算系数 = $("#" + mapGuid._计算系数);
     _界面控件._评估方式 = $("#" + mapGuid._评估方式);
     _界面控件._输液类型 = $("#" + mapGuid._输液类型);
-    _界面控件._医共体适用范围 = $("#" + mapGuid._医共体适用范围);    
+    _界面控件._医共体适用范围 = $("#" + mapGuid._医共体适用范围);
 
     _界面控件._适用性别.val(0);
     _界面控件._诊疗类别.val("C");//默认检验   
@@ -198,7 +198,7 @@ const mapGuid = {
     _给药大类选项: "6f1d77b6-a562-4a6e-874b-045f41dfba3d",
     _输血途径执行分类: "7ecd2e1b-d7af-4f6f-9b62-0c70be7ce8f2",
     _采血管选项: "e3a95f51-bcad-4426-95d3-7336c45179e9",
-    _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",    
+    _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",
 
     _视图区域: {
         _指定开单执行科室: "com_i8wtppmisw",
@@ -574,7 +574,8 @@ window.GetCitemSaveJsonPar = function () {
     parData.别名简码 = _界面控件._别名简码.val();
     parData.别名简码五笔 = _界面控件._别名简码五笔.val();
     parData.适用性别 = parseInt(_界面控件._适用性别.val() || 0);
-    parData.医共体适用范围 = _界面控件._医共体适用范围.val();
+    parData.医共体适用范围 = _界面控件._医共体适用范围.val(); 
+
     temp = _界面控件._服务对象.val();
     parData.适用体检 = 0;
     if (temp.includes(3)) {
@@ -1341,7 +1342,7 @@ window.GetSyncData = function (proPar) {
         //"calc_mode_name": "计量执行",
         "frequency_code": temp.执行频率,// "0",
         //"frequency_name": "可选频率",
-        //"gender_code": "0",
+        "gender_code": (parData.适用性别 == 0 ? "1,2" : parData.适用性别 + ""),
         //"gender_name": "不限",
         "operate_type_code": temp.操作类型,// "01",
         "operate_type_name": temp.操作类型,// "临检",
@@ -1358,8 +1359,8 @@ window.GetSyncData = function (proPar) {
         "prescription_rank_code": "0",
         // "prescription_rank_name": "不限",
         // "description": "全血细胞计数，包括白细胞、红细胞、血小板等",
-        "is_single": temp.单独应用,
-        "is_group": temp.组合项目,
+        "is_single": temp.单独应用 || 0,
+        "is_group": temp.组合项目 || 0,
         "price_prop_code": "0",
         "state": 1,
         "sort_no": null
