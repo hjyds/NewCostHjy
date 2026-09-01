@@ -83,6 +83,7 @@ function fun控件对象映射() {
     _界面控件._计算系数 = $("#" + mapGuid._计算系数);
     _界面控件._评估方式 = $("#" + mapGuid._评估方式);
     _界面控件._输液类型 = $("#" + mapGuid._输液类型);
+    _界面控件._医共体适用范围 = $("#" + mapGuid._医共体适用范围);    
 
     _界面控件._适用性别.val(0);
     _界面控件._诊疗类别.val("C");//默认检验   
@@ -169,6 +170,7 @@ const mapGuid = {
     _执行安排: "86f80c6d-5383-4b4b-8d0a-4ab6b767e19f",
     _单独应用: "54e90833-ab1d-4975-9b23-04326dc1c88e",
     _标本部位: "963031a0-d203-43a1-bc0d-97d0c30afbd6",
+    _医共体适用范围: "01a05c35-6af5-7864-a3b4-e273af75dfb6",
 
     _页卡: "a1ae4553-3636-4255-a371-711b196832c1",
     _t项目属性: 0, _t执行科室: 1, _t检查部位: 2, _t皮试结果: 3, _t频率设置: 4, _t项目组合: 5, _t附加属性: 6,
@@ -196,7 +198,7 @@ const mapGuid = {
     _给药大类选项: "6f1d77b6-a562-4a6e-874b-045f41dfba3d",
     _输血途径执行分类: "7ecd2e1b-d7af-4f6f-9b62-0c70be7ce8f2",
     _采血管选项: "e3a95f51-bcad-4426-95d3-7336c45179e9",
-    _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",
+    _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",    
 
     _视图区域: {
         _指定开单执行科室: "com_i8wtppmisw",
@@ -557,6 +559,11 @@ window.GetCitemSaveJsonPar = function () {
     parData.UserName = userInfo.account_extend.UserName;
     parData.AccountName = userInfo.account_extend.AccountName;
     parData.staff_id = userInfo.staff_id;
+    if (userInfo.account_extend.user_id) {
+        parData.UserName = userInfo.account_extend.账号;
+        parData.AccountName = userInfo.account_extend.登录人员姓名;
+        parData.操作员id = Number(userInfo.account_extend.user_id);
+    }
     parData.分类id = parseInt(_界面控件._项目分类.val() || 0);
     parData.诊疗类别 = _界面控件._诊疗类别.val();
     parData.名称 = _界面控件._名称.val();
@@ -567,7 +574,7 @@ window.GetCitemSaveJsonPar = function () {
     parData.别名简码 = _界面控件._别名简码.val();
     parData.别名简码五笔 = _界面控件._别名简码五笔.val();
     parData.适用性别 = parseInt(_界面控件._适用性别.val() || 0);
-
+    parData.医共体适用范围 = _界面控件._医共体适用范围.val();
     temp = _界面控件._服务对象.val();
     parData.适用体检 = 0;
     if (temp.includes(3)) {
@@ -1344,7 +1351,7 @@ window.GetSyncData = function (proPar) {
         //"price_prop_name": "正常计价",
         "service_object_code": temp.service_object_code,
         //"service_object_name": "门诊，住院",
-        "applicable_scope_code": "1,2,3,4,5,6,7,8,9,10",
+        "applicable_scope_code": temp.医共体适用范围,
         //"applicable_scope_name": "综合医院，专科医院，妇幼保健院，乡镇卫生院，社区服务中心，社区服务站，村卫生室，卫健委，医共体，城市医疗集团",
         // "applicable_org_code": "",
         // "applicable_org_name": "",
