@@ -553,6 +553,8 @@ window.GetCitemSaveJsonPar = function () {
         parData.功能 = Number(editsta);
         if (2 == parData.功能) {
             parData.记录id = Number(urlPar.get("item_id"));
+        } else {
+            parData.记录id = getNextCitemId();
         }
     }
     let userInfo = JSON.parse(sessionStorage.UserLoginInfo);
@@ -574,8 +576,10 @@ window.GetCitemSaveJsonPar = function () {
     parData.别名简码 = _界面控件._别名简码.val();
     parData.别名简码五笔 = _界面控件._别名简码五笔.val();
     parData.适用性别 = parseInt(_界面控件._适用性别.val() || 0);
-    parData.医共体适用范围 = _界面控件._医共体适用范围.val(); 
-
+    parData.医共体适用范围 = _界面控件._医共体适用范围.val();
+    if (!parData.医共体适用范围) {
+        parData.医共体适用范围 = "4";//4-表示乡镇卫生院; 
+    }
     temp = _界面控件._服务对象.val();
     parData.适用体检 = 0;
     if (temp.includes(3)) {
@@ -1342,7 +1346,7 @@ window.GetSyncData = function (proPar) {
         //"calc_mode_name": "计量执行",
         "frequency_code": temp.执行频率,// "0",
         //"frequency_name": "可选频率",
-        "gender_code": (parData.适用性别 == 0 ? "1,2" : parData.适用性别 + ""),
+        "gender_code": (temp.适用性别 == 0 ? "1,2" : temp.适用性别 + ""),
         //"gender_name": "不限",
         "operate_type_code": temp.操作类型,// "01",
         "operate_type_name": temp.操作类型,// "临检",
@@ -1378,6 +1382,36 @@ window.GetSyncData = function (proPar) {
         "data": bData
     }
     return input;
+}
+function getNextCitemId() {
+    const seqin = {
+        "resTypeId": "eeb36652-7bab-4225-be8e-c1ba40a0432b",
+        "viewId": "fe7b7ee4-380c-49a9-bae5-f0c45f8ffae8",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "76ff202d-5d95-432a-8d9f-b16a5c8151d4",
+                "compare": "=",
+                "val": "诊疗项目目录"
+            },
+            {
+                "relId": "891549fc-4b8e-4e95-9470-5f89f0e95ef1",
+                "compare": "=",
+                "val": "ID"
+            },
+            {
+                "relId": "de0ffddc-1cf3-48d3-9b3a-04d67a4ab61f",
+                "compare": "=",
+                "val": "1"
+            }
+        ]
+    }
+    const ret = HrsServer.Post("/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId", JSON.stringify(seqin));
+    let seqval = ret.Data[0]["51414c3b-2944-45dc-94b3-d764edde3748"];
+    seqval = JSON.parse(seqval);
+    let newId = seqval.output.next_id;
+    return parseInt(newId);
 }
 
 window.funPACS_X_MD_0038 = function (par_in) {
