@@ -621,6 +621,7 @@ window.GetCitemSaveJsonPar = function () {
         parData.组合项目 = 1;
         parData.计算方式 = 3;
     } else if (parData.诊疗类别 == "D") {
+        parData.单独应用 = 1;
         parData.手术操作ids = _界面控件._手术标准编码.val();
         parData.按规则计费 = parseInt(_界面控件._按规则计费.val() || 0);
         if (parData.服务对象 == 2 || parData.服务对象 == 3) {
@@ -638,7 +639,7 @@ window.GetCitemSaveJsonPar = function () {
             //检查项目的部位列表
             parData.检查部位列表 = fun获取选择的检查部位(temp);
             if (parData.检查部位列表.length > 0) {
-                parData.标本部位 = parData.检查部位列表.map(v => v._部位).filter(Boolean).join(',').slice(0, 60);
+                parData.标本部位 = parData.检查部位列表.map(v => v._部位).filter(Boolean).join(',').slice(0, 30);
             }
         }
 
