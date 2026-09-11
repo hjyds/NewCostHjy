@@ -174,6 +174,7 @@ namespace NewCostHjy.Controllers
                     eisai_Item_ListItem = eisai_Item_ListItems[0];
                     eisai_Item_ListItems = new List<Eisai_item_listItem>();
                     eisai_Item_ListItem.eisai_item_spec = "HPF-5Fr-2T-4-H 30cm";
+                    eisai_Item_ListItem.eisai_item_store_id = listrqs[0].eisai_item_store_id;//库房和要传进来的保持一致
                     eisai_Item_ListItems.Add(eisai_Item_ListItem);
                 }
             }
@@ -280,7 +281,7 @@ namespace NewCostHjy.Controllers
         [HttpPost("UploadPrescription")]
         public IActionResult UploadPrescription([FromBody] EPrescriptionInfo parIn)
         {
-            dynamic tmpObj = new { result = 1, errmsg = "" };
+            dynamic tmpObj = new { Result = 1, ErrMsg = "" };
             return Json(tmpObj);
         }
 

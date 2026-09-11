@@ -31,6 +31,7 @@ window._界面控件 = {
 function fun控件对象映射() {
     _界面控件._编码选项 = GetSimpleNodeVal("", "c506961a-4b99-42c7-9f9d-ca37bd7e74d3", "c8214828-726b-48b9-8a13-b8dc274cd205", "", 1);
     _界面控件._编码选项 = _界面控件._编码选项[0];
+    _界面控件._编码选项[mapGuid._中医治疗执行分类] = '0|0-中医普通,1|1-指定用法';
     _界面控件._操作类型 = $("#" + mapGuid._操作类型);
     _界面控件._诊疗类别 = $("#" + mapGuid._诊疗类别);
     _界面控件._操作类型标签 = $("[data-owner-id='" + mapGuid._操作类型 + "'] .record-label")
@@ -173,7 +174,7 @@ const mapGuid = {
     _医共体适用范围: "01a05c35-6af5-7864-a3b4-e273af75dfb6",
 
     _页卡: "a1ae4553-3636-4255-a371-711b196832c1",
-    _t项目属性: 0, _t执行科室: 1, _t检查部位: 2, _t皮试结果: 3, _t频率设置: 4, _t项目组合: 5, _t附加属性: 6,
+    _t项目属性: 0, _t执行科室: 1, _t检查部位: 2, _t皮试结果: 3, _t频率设置: 4, _t项目组合: 5, _t附加属性: 6, _t经络穴位: 7,
     _手术操作类型: "2ff9ab26-b488-452d-a0b1-4988b1613758",
     _治疗操作类型: "5629f974-765a-44fa-b26d-cfe799cc4fb8",
     _其他操作类型: "398278f4-361d-4151-a746-bfbb81e6d78c",
@@ -196,6 +197,8 @@ const mapGuid = {
     _病理类别选项: "8edef8d7-5748-4aa1-a287-608eda941dc0",
     _诊疗频率选项: "ad532426-9c04-4f99-b354-9513a35c3dba",
     _给药大类选项: "6f1d77b6-a562-4a6e-874b-045f41dfba3d",
+    _中医类型选项: "01a083a1-5a02-7a73-b2c1-fc9f0bd64fda",
+    _中医治疗执行分类: "f1674052-c9a1-4d2f-a351-9704f8a9aeb7",
     _输血途径执行分类: "7ecd2e1b-d7af-4f6f-9b62-0c70be7ce8f2",
     _采血管选项: "e3a95f51-bcad-4426-95d3-7336c45179e9",
     _量表学科选项: "ce0efebc-02f1-4132-88d7-b8b884c313b2",
@@ -251,6 +254,10 @@ function fun修改项目数据加载() {
             if (parseInt(obj[mapGuid._数据.d执行分类] || 0) == 5) {
                 _界面控件._其它源液.val(1);
             }
+        }
+        if (type == "E" && oper == "13") {
+            fun初始加载经络穴位();
+            _界面控件._给药大类.val(obj[mapGuid._中医类型选项]);
         }
     }
 }
@@ -349,7 +356,7 @@ function fun计算方式切换() {
 function fun操作类型切换(oper) {
     let type = _界面控件._诊疗类别.val();
     fun加载编码项目(_界面控件._计算方式, mapGuid._计算方式选项);
-
+    fun显示页卡(mapGuid._t经络穴位, true);
     if (type == "D" && oper == "病理") {
         fun设置控件可见性(mapGuid._号别名称, true);
         $("[data-owner-id='" + mapGuid._号别名称 + "'] .record-label").text("号别名称");
@@ -447,6 +454,8 @@ function fun操作类型切换(oper) {
         fun设置控件可见性(mapGuid._其它量表学科, true);
         fun设置控件可见性(mapGuid._评估方式, true);
         fun设置控件可见性(mapGuid._计算系数, true);
+    } else if (type == "E" && oper == "13") {
+        fun显示页卡(mapGuid._t经络穴位);
     }
 
     if (type == "E" && (oper == "2" || oper == "3" || oper == "4")) {
@@ -492,12 +501,26 @@ function fun操作类型切换(oper) {
         $("[data-owner-id='" + mapGuid._执行分类 + "'] .record-label").text("执行分类");
 
     }
+
     if (type == "E") {
         fun设置控件可见性(mapGuid._执行分类, false);
         fun设置控件可编辑(_界面控件._执行频率, false);
-        if (oper == "0" || oper == "5") {//0-普通;5-特殊治疗
+        if (oper == "0" || oper == "5" || oper == "13") {//0-普通;5-特殊治疗;13-中医治疗
             fun设置控件可见性(mapGuid._单独应用, true);
             fun设置控件可编辑(_界面控件._执行频率, true);
+
+            if (oper == "13") {
+                fun设置控件可见性(mapGuid._给药大类, true);
+                $("[data-owner-id='" + mapGuid._给药大类 + "'] .record-label").text("中医类型");                 
+                //选择时先获取一次
+                if (!_界面控件._编码选项[mapGuid._中医类型选项]) {
+                    _界面控件._编码选项[mapGuid._中医类型选项] = fun获取中医外治类型选串();
+                }
+                fun加载编码项目(_界面控件._给药大类, mapGuid._中医类型选项);
+                fun设置控件可见性(mapGuid._执行分类, true);
+                fun加载编码项目(_界面控件._执行分类, mapGuid._中医治疗执行分类);
+                $("[data-owner-id='" + mapGuid._执行分类 + "'] .record-label").text("执行分类");
+            }
         } else if (oper == "1") {//1-过敏试验
             fun设置控件可见性(mapGuid._单独应用, true);
             _界面控件._执行频率.val("1");
@@ -555,6 +578,7 @@ window.GetCitemSaveJsonPar = function () {
             parData.记录id = Number(urlPar.get("item_id"));
         } else {
             parData.记录id = getNextCitemId();
+            parData.功能 = 1;//如果是复制新增，功能仍然是1
         }
     }
     let userInfo = JSON.parse(sessionStorage.UserLoginInfo);
@@ -701,7 +725,11 @@ window.GetCitemSaveJsonPar = function () {
         parData.计算系数 = parseInt(_界面控件._计算方式.val() == "2" ? _界面控件._计算系数.val() || 0 : 0);
         parData.计算规则 = parseInt(_界面控件._计算规则.val() || 0);
     }
-
+    if (parData.诊疗类别 == "E" && parData.操作类型 == "13") {
+        parData.中医类型 = _界面控件._给药大类.val();//中医类型
+        parData.经络穴位 = fun获取保存经络穴位(parData);
+        parData.执行分类 = parseInt(_界面控件._执行分类.val() || 0);
+    }
     parData.项目频率 = "";
     if (parData.执行频率 == 0 && parData.诊疗类别 != "C") {
         const el = $(`[data-id="${mapGuid._视图区域._可选频率}"]`)[0];
@@ -815,11 +843,11 @@ window.fun诊疗类别切换 = function (type) {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
         fun显示页卡(mapGuid._t检查部位);
-        fun显示页卡(mapGuid._t项目组合);
+        fun显示页卡(mapGuid._t项目组合); 
     } else if (type == "E") {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
-        fun显示页卡(mapGuid._t项目组合);
+        fun显示页卡(mapGuid._t项目组合);        
     } else if (type == "M" || type == "Z") {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
@@ -1580,4 +1608,180 @@ function fun获取同步的部位数据(selParts, baseParts) {
     });
 
     return outLst;
+}
+
+function fun获取中医外治类型选串() {
+    let params = { "resTypeId": "af92b829-026d-4705-a8cf-53ced1313044", "viewId": "bbad831e-666a-4339-844c-17cccea17625", "row": 0, "source": "资源类型", "matching": [] }
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+    var lstData = result.Data;
+    let nodeKey = "01a0804b-0ea6-7baf-ade3-4b39cea749ce";
+    let nodeCode = "01a0804b-0ea6-7276-9e93-66361b946f6c";
+    const strOut = lstData.map(item => item[nodeKey] + "|" + item[nodeCode] + "-" + item[nodeKey]).join(',');
+    return strOut;
+}
+
+window.fun经络穴位区域连动参数 = function () {
+    var str类型 = _界面控件._给药大类.val();
+    var params = {
+        "resTypeId": "d02fe9bd-a20e-475e-b642-45bcb518fd86", "viewId": "adfbc2e5-27d1-4b30-b707-925dfa73e71e", "row": 0, "source": "资源类型", "matching": [{
+            "relId": "01a08050-924c-7e26-a93b-ab17a8f84b01", "compare": "=",
+            "val": str类型
+        }]
+    }
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+    var lstData = result.Data;
+
+    const outLst = lstData.map(baseItem => {
+        let 穴位 = JSON.parse(baseItem["01a08050-924e-73a4-b2ac-f695e3351162"]);   
+        baseItem.穴位 = 穴位;
+        const part_method = 穴位.map(mth => {
+            return {
+                "序号": 0,
+                "上级方法": "",
+                "方法名称": mth.name,
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            };
+        });
+        return {
+            分组: baseItem["01a08050-924e-73cc-be66-fe237608d78c"],
+            部位: baseItem["01a08050-924e-7fcd-aa13-60319ee8af65"],
+            备注: baseItem["01a08050-924f-77fc-b0b9-214029a2ab26"],
+            方法: part_method
+        };
+    });
+
+    //弹出选择器界面的参数构建
+    var outData = { listAll: [], listSel: [] }
+    outData.listAll = [{
+        "分组": "01-头部",
+        "部位": "颅脑",
+        "方法": [
+            {
+                "序号": 2,
+                "上级方法": "",
+                "方法名称": "切线位",
+                "共选": 1,
+                "是否造影": 0,
+                "是否勾选": 0
+            }
+        ],
+        "备注": null
+    }];
+
+    outData.listAll = outLst;
+    outData.lstData = lstData;
+
+    outData.listSel = [{
+        "方法": "切线位",
+        "上级方法": null,
+        "部位": "头颅"
+    }];
+
+    let selTemp = $('div[data-id="com_ccf8i8npep"]')[0].firstElementChild.data;
+
+    var selTempCvt = [];
+
+    selTemp.map(item => {
+        let strSel = item["01a0812f-ecd5-7499-9948-8c241426fab2"];
+        if (strSel) {
+            strSel.split(',').map(sel => {
+                selTempCvt.push(
+                    {
+                        "方法": sel,
+                        "上级方法": null,
+                        "部位": item["01a0812f-ecd4-7bd8-90b8-3bf0fa9f59c2"]
+                    }
+                );
+            });
+        }
+    });
+    outData.listSel = selTempCvt;
+    return outData;
+}
+
+window.fun刷新经络穴位缓存 = function (dataAll, selData) {
+
+    //选择后加载到界面
+    debugger;
+    var lstData = dataAll.lstData;
+    var dataModel = 
+        {
+            "resource_detail_id": "大肠经",//生成GUID，经络
+            "resource_view_id": "ec275425-4ced-43cf-af69-352542137d2b",
+            "resource_type_id": "c6de15cc-7dcf-4e47-ac3e-20db0366c882",
+            "resource_source_type": "bde66990-68c9-4674-80ba-7605e46aa239",
+            "detail_name": "大肠经",
+            "is_edit": true,
+            "01a0812f-eccb-759e-946c-0d5b8bd91823": "背部",//分组
+            "01a0812f-ecd4-7bd8-90b8-3bf0fa9f59c2": "大肠经",//经络
+            "01a0812f-ecd5-7499-9948-8c241426fab2": "关元",//已选穴位
+            "01a0812f-ecd4-7e40-899f-6e338dc442cf": "[{\"name\":\"百合\",\"id\":\"f74d0bee-9cee-4c31-9dff-89d9ab865600\"},{\"name\":\"关元\",\"id\":\"d86d2614-1dcd-4a54-8339-6870ecf92fe8\"},{\"name\":\"少冲\",\"id\":\"be42de7c-fe0e-4f68-9473-91405019baab\"},{\"name\":\"大阳\",\"id\":\"c78329b8-244e-4601-9f00-284bfb3c1d13\"}]",
+            "01a08131-76ed-7ef3-8c4a-6effdb03c402": "测试数据89",//备注
+            "01a0812f-ecc7-7497-b30a-27ee6317df09": "针灸"//类型
+        }
+    var strModel = JSON.stringify(dataModel);
+    var dataModels = [];
+
+    selData.map(item => {
+        let oneModel = JSON.parse(strModel)
+        oneModel.resource_detail_id = item["部位"];
+        oneModel.detail_name = oneModel.resource_detail_id;
+        oneModel["01a0812f-eccb-759e-946c-0d5b8bd91823"] = item["分组"];
+        oneModel["01a0812f-ecd4-7bd8-90b8-3bf0fa9f59c2"] = item["部位"];
+        oneModel["01a08131-76ed-7ef3-8c4a-6effdb03c402"] = item["备注"];
+        oneModel["01a0812f-ecd5-7499-9948-8c241426fab2"] = item["已选方法"].filter(mth => mth.方法 != "on").map(mth => mth.方法).join(',');        
+        oneModel["01a0812f-ecd4-7e40-899f-6e338dc442cf"] = lstData.filter(baseItem => baseItem["01a08050-924e-7fcd-aa13-60319ee8af65"] == oneModel.resource_detail_id)[0]["01a08050-924e-73a4-b2ac-f695e3351162"];
+        dataModels.push(oneModel);
+    });     
+
+    $('div[data-id="com_ccf8i8npep"]')[0].firstElementChild.data = dataModels;
+}
+
+function fun初始加载经络穴位() {
+    //修改项目时才加载
+    var params = {
+        "resTypeId": "c6de15cc-7dcf-4e47-ac3e-20db0366c882", "viewId": "ec275425-4ced-43cf-af69-352542137d2b", "row": 0, "source": "资源类型", "matching": [{
+            "relId": "01a0812f-ecd5-7db4-83fe-667e86ca2bf6", "compare": "=",
+            "val": _界面控件._参数._诊疗项目id
+        }]
+    }
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+    var lstData = result.Data;
+    $('div[data-id="com_ccf8i8npep"]')[0].firstElementChild.data = result.Data;
+}
+
+function fun获取保存经络穴位(objItem) {     
+    //保存数据时获中医治疗类的穴位信息
+    debugger
+    var outData = {}
+    outData.功能 = 1;
+    outData.项目ID = objItem.记录id;
+    outData.类型 = objItem.中医类型;
+    outData.经络列表 = [];
+    let selTemp = $('div[data-id="com_ccf8i8npep"]')[0].firstElementChild.data;
+
+    selTemp.map(item => {
+        let strSel = item["01a0812f-ecd5-7499-9948-8c241426fab2"];
+        let one经络 = {}
+        one经络.经络名称 = item["01a0812f-ecd4-7bd8-90b8-3bf0fa9f59c2"];
+        one经络.默认穴位列表 = [];
+        if (strSel) {
+            strSel.split(',').map(sel => {
+                one经络.默认穴位列表.push({"穴位名称": sel}); 
+            });
+        }
+        outData.经络列表.push(one经络);
+    });
+    return outData;
 }
