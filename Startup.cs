@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NewCostHjy.App_Start;
-using NewCostHjy.BLL;
 using NewCostHjy.Common;
 using NewCostHjy.Models;
 using Newtonsoft.Json.Serialization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace NewCostHjy {
@@ -148,6 +149,15 @@ namespace NewCostHjy {
                 {
                     var query = context.Request.QueryString;
                     context.Response.Redirect($"/PatientVte/micpk{query}");
+                    return;
+                }
+                if (context.Request.Path.StartsWithSegments("/EmrViewWeb/index"))
+                {                    
+                    var dict = context.Request.Query.ToDictionary(kv => kv.Key, kv => kv.Value.ToString());
+                    dict["from"] = "EmrViewWeb";//添加一额外参数
+                    dict["hjy_ex"] = "电子病案查阅测试页面";
+                    var query = QueryString.Create(dict); // 会用新值替换旧值
+                    context.Response.Redirect($"/PatientVte/testpage{query}");
                     return;
                 }
                 if (context.Request.Path.StartsWithSegments("/MedicalCore/FeeOrders"))

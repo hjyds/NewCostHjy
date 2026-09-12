@@ -173,5 +173,29 @@ namespace NewCostHjy.Controllers.WebPage {
             ViewBag.BaseData = parDic;
             return View();
         }
+         
+        /// <summary>
+        /// 通用测试面页
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult testpage()
+        {
+            Dictionary<string, string> parDic = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var item in Request.Query)
+            {
+                parDic[item.Key] = item.Value.ToString();
+            }
+
+            if (Request.HasFormContentType)
+            {
+                foreach (var item in Request.Form)
+                {
+                    parDic[item.Key] = item.Value.ToString();
+                }
+            }        
+            ViewBag.BaseData = parDic;
+            return View();
+        }
     }
 }
