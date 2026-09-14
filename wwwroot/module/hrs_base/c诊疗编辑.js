@@ -779,6 +779,7 @@ window.GetCitemSaveJsonPar = function () {
         parData.定向执行 = _界面控件._参数._项目数据[mapGuid._定向执行科室];
     }
 
+    parData.附加属性 = fun获取诊疗附加属性保存数据();
 
     parData = { "Json_In": JSON.stringify(parData) }
     return parData;
@@ -843,11 +844,11 @@ window.fun诊疗类别切换 = function (type) {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
         fun显示页卡(mapGuid._t检查部位);
-        fun显示页卡(mapGuid._t项目组合); 
+        //fun显示页卡(mapGuid._t项目组合); 
     } else if (type == "E") {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
-        fun显示页卡(mapGuid._t项目组合);        
+        //fun显示页卡(mapGuid._t项目组合);        
     } else if (type == "M" || type == "Z") {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
@@ -855,6 +856,11 @@ window.fun诊疗类别切换 = function (type) {
     } else {
         fun显示页卡(mapGuid._t项目属性);
         fun显示页卡(mapGuid._t执行科室);
+    }
+
+    let blnHaveData = fun获取诊疗附加属性列表(type, _界面控件._参数._分类id, _界面控件._参数._诊疗项目id);
+    if (blnHaveData) {
+        fun显示页卡(mapGuid._t附加属性);
     }
 
     fun初始执行频率(type);
@@ -1784,4 +1790,67 @@ function fun获取保存经络穴位(objItem) {
         outData.经络列表.push(one经络);
     });
     return outData;
+}
+
+function fun获取诊疗附加属性列表(ctype, classid, citemid) {
+    let params = {
+        "resTypeId": "c0eee0e4-8a0b-4d3e-9b60-df2a42998cb9",
+        "viewId": "01a09ec8-197c-73a8-9642-07f91749f16b",
+        "row": 0,
+        "source": "资源类型",
+        "matching": [
+            {
+                "relId": "01a09ec8-1601-7d47-b394-58f2abe35ed8",
+                "compare": "=",
+                "val": classid //分类ID
+            },
+            {
+                "relId": "01a09ec8-1602-7050-a5e2-c977e39e1999",
+                "compare": "=",
+                "val": citemid //项目ID
+            },
+            {
+                "relId": "01a09ec8-1602-7e4b-9b47-4a1f464ff9cf",
+                "compare": "=",
+                "val": ctype //诊疗类别
+            }
+        ]
+    }
+    const result = HrsServer.Post(
+        "/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId",
+        JSON.stringify(params)
+    );
+    $('div[data-id="com_r544l8hrr8"]')[0].firstElementChild.data = result.Data;
+    if (result.Data.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function fun获取诊疗附加属性保存数据() {
+    let lstData = $('div[data-id="com_r544l8hrr8"]')[0].firstElementChild.data;
+    let outData = [];
+    lstData.map(item => {
+        if (item["01a09ec8-15fe-7a10-af75-0d09f17dcc39"] > 0) {
+            outData.push({
+                属性id: item["01a09ec8-15fe-7a10-af75-0d09f17dcc39"],
+                属性名: item["01a09ec8-1600-753f-b06a-f29a0f1ed826"],
+                显示值: item["01a09ec8-1601-708e-9f41-f8b9c2447177_Name"],
+            })
+        }
+    });
+    return outData;
+}
+
+window.CheckBeforeSave = function () {
+    var parData = {}
+    parData.诊疗类别 = _界面控件._诊疗类别.val();
+    if (parData.诊疗类别 == "C") {
+        parData.标本部位 = _界面控件._检验标本.val(); 
+        if (!parData.标本部位 || parData.标本部位 == "") {
+            layer.msg("检验项目必须设置默认标本部位!");
+            return;
+        }
+    }
+    return { "OK": 1 };
 }
