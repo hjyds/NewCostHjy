@@ -2032,4 +2032,43 @@ namespace NewCostHjy.Models {
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MDUnclearedPat
+    {
+        //// {"PatId":"205412","PatOrigin":"02","PatOriginId":"1","pati_id":205457,"pati_source":2,"his_visit_id":1}
+
+        ////入////////////////////////////////////////////////////
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatOrigin { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PatOriginId { get; set; }
+
+
+        ///////出//////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public long pati_id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long pati_source { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long his_visit_id { get; set; }
+    }
+
+
 }

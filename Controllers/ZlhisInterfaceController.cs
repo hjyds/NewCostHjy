@@ -62,6 +62,7 @@ namespace NewCostHjy.Controllers {
             return Json(resultOut);
         }
 
+
         /// <summary>
         /// 退费申请的时候能用到
         /// </summary>
@@ -86,6 +87,20 @@ namespace NewCostHjy.Controllers {
             List<NewBillOut> newBills = new List<NewBillOut>();
             newBills.Add(new NewBillOut());
             return Json(newBills);
+        }
+
+
+        /// <summary>
+        /// 新费用系统服务(获取新费用系统中欠费的病人)
+        /// </summary>
+        /// <param name="parIn"></param>
+        /// <returns></returns>
+        [HttpPost("GetUnclearedPatiInfo")]
+        public IActionResult GetUnclearedPatiInfo([FromBody] List<MDUnclearedPat> parIn)
+        { 
+            zlhisInterfaceBLL.NewCostApiLog("GetUnclearedPatiInfo", Newtonsoft.Json.JsonConvert.SerializeObject(parIn));
+            List<MDUnclearedPat> outData = new List<MDUnclearedPat>();
+            return Json(outData);
         }
 
         /// <summary>
