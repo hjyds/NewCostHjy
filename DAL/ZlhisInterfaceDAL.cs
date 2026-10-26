@@ -4,6 +4,7 @@ using OnePaperModel;
 using Oracle.ManagedDataAccess.Client; 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data; 
 using ZLSoft.Base.Tracing;
 using static NewCostHjy.Common.Const;
@@ -992,7 +993,19 @@ accomplishStatus
         public dynamic GetDataTable生僻字相关()
         {
             string constr = HjyDataBaseConnStr.ZLHIS336;
+            //if (0 == 1)
+            //{
+            //    string sqlText = "select sysdate 当前时间 from dual";
+            //    constr = HjyDataBaseConnStr.WEBEMR336;
+            //    OracleDataAccess tempCon = new OracleDataAccess(constr);
+            //    DataTable dtTemp = tempCon.ExecuteDataTable(sqlText, CommandType.Text, null);
+            //    constr = HjyDataBaseConnStr.DOCZLHIP;
+            //    tempCon = new OracleDataAccess(constr);
+            //    dtTemp = tempCon.ExecuteDataTable(sqlText, CommandType.Text, null);
+            //}
+            constr = HjyDataBaseConnStr.ZLHIS336;
             OracleDataAccess oracleData = new OracleDataAccess(constr);
+
             string sql = @"select * from 生僻字对照目录";
             DataTable dt生僻字对照目录 = oracleData.ExecuteDataTable(sql, CommandType.Text, null);
             sql = @"select * from 基础数据生僻字对照";

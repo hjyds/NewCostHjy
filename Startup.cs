@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NewCostHjy.App_Start;
 using NewCostHjy.Common;
@@ -13,22 +14,26 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace NewCostHjy {
-    public class Startup {
-         
-        public Startup(IConfiguration configuration, IWebHostEnvironment env) {
- 
+namespace NewCostHjy
+{
+    public class Startup
+    {
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        {
+
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
 
             bool blnPDFTest = false;
             string strTmp = Configuration.GetSection("PDFUsed").Value;
-            if(strTmp=="1") blnPDFTest = true;
+            if (strTmp == "1") blnPDFTest = true;
             #region PDF相关配置
             if (blnPDFTest)
             {
@@ -42,9 +47,11 @@ namespace NewCostHjy {
             #endregion
 
 
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc(
-                    "v1", new OpenApiInfo {
+                    "v1", new OpenApiInfo
+                    {
                         Title = "hjy文档",
                         Version = "v1",
                         Description = "hjy说明",
@@ -62,9 +69,10 @@ namespace NewCostHjy {
                 c.IncludeXmlComments(xmlPath, true);
             });
 
-             
 
-            services.AddControllersWithViews().AddNewtonsoftJson(options => {
+
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            {
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 //设置约定首字母小写的json
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
@@ -72,16 +80,20 @@ namespace NewCostHjy {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             //日志过滤器
-            services.AddMvc(options => {
+            services.AddMvc(options =>
+            {
                 options.Filters.Add(new ActionFilter());
             }).AddNewtonsoftJson(
-                option => {
+                option =>
+                {
                     option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                });             
+                });
 
             //1、创建一个跨域资源的许可
-            services.AddCors(options => {
-                options.AddPolicy("CustomCorsPolicy", policy => {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CustomCorsPolicy", policy =>
+                {
                     // 设置允许跨域的源，多个源用逗号隔开
                     policy.WithOrigins()
                     .AllowAnyHeader()
@@ -90,11 +102,12 @@ namespace NewCostHjy {
                 });
             });
 
-            services.AddControllersWithViews(); 
+            services.AddControllersWithViews();
         }
-         
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
 
             SiteConfigMain.TestConnStr = Configuration.GetSection("ZLHISCONN").Value;
 
@@ -108,14 +121,17 @@ namespace NewCostHjy {
 
             #region Swagger
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiHelp V1");
             });
             #endregion
 
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            } else {
+            } else
+            {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -152,7 +168,7 @@ namespace NewCostHjy {
                     return;
                 }
                 if (context.Request.Path.StartsWithSegments("/EmrViewWeb/index"))
-                {                    
+                {
                     var dict = context.Request.Query.ToDictionary(kv => kv.Key, kv => kv.Value.ToString());
                     dict["from"] = "EmrViewWeb";//添加一额外参数
                     dict["hjy_ex"] = "电子病案查阅测试页面";
@@ -174,11 +190,13 @@ namespace NewCostHjy {
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            }); 
+            });
         }
+
     }
 }

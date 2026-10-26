@@ -452,7 +452,7 @@ namespace NewCostHjy.Controllers
         /// <summary>
         /// 医嘱保事前事中通用测试服务
         /// </summary>
-        /// <param name="par"></param>
+        /// <param name="parIn"></param>
         /// <returns></returns>
         [HttpPost("SvrInsureProcess")]
         public IActionResult SvrInsureProcess([FromBody] dynamic parIn)
@@ -520,7 +520,7 @@ namespace NewCostHjy.Controllers
         /// <summary>
         /// 知识库规则服务测试服务 a.服务名称 in ('提交主体信息','提交问诊信息')
         /// </summary>
-        /// <param name="par"></param>
+        /// <param name="parIn"></param>
         /// <returns></returns>
         [HttpPost("SvrCISRuleAsk")]
         public IActionResult SvrCISRuleAsk([FromBody] dynamic parIn)

@@ -2808,7 +2808,7 @@ namespace NewCostHjy.Common {
             /// <summary>
             /// 33.6对应的ZLHIS数据库
             /// </summary>
-            public const string ZLHIS336 = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.33.6)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORC2COST2)));User Id=ZLHIS;Password=.155F9E2612;Pooling =true;Connection Lifetime=0;Max Pool Size=10;Min Pool Size=1;Incr Pool Size=1";
+            public const string ZLHIS336 = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.19.115)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORC2COST2)));User Id=ZLHIS;Password=.155F9E2612;Pooling =true;Connection Lifetime=0;Max Pool Size=10;Min Pool Size=1;Incr Pool Size=1";
 
             /// <summary>
             /// 本机数据库HJY测试用
