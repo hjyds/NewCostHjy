@@ -2,6 +2,7 @@
 using NewCostHjy.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NewCostHjy.Models;
 
 namespace NewCostHjy.Controllers
 {
@@ -16,15 +17,20 @@ namespace NewCostHjy.Controllers
     {
 
         [HttpPost]
-        public IActionResult GetUserInfo([FromBody] dynamic parIn)
+        public IActionResult GetUserInfo([FromBody] BaseCostAudKeyIn parIn)
         {
-            string url = "http://192.168.33.44:8146/api/ZlhisBase/GetUserInfo";
-            string dataJson = @"{""UserName"":""zlhis"",""PassWord"":""ZLSV2:EEDFEB7DE7A8D43F4C25BC316A22F8B6""}";//Newtonsoft.Json.JsonConvert.SerializeObject();
-            string result = NewCostHjy.Common.HttpRequest.RequestDataSync(url, dataJson, AuthType.None);
-            JObject jObResult = JsonConvert.DeserializeObject<JObject>(result);
-            string AudKey = (string)jObResult["Data"]["AudKey"];
-            dynamic outData = new { AudKey };
-            return Json(jObResult["Data"]);
+            if (0 == 1)
+            {
+                string url = "http://192.168.19.71:8141/api/ZlhisBase/GetUserInfo";
+                string dataJson = @"{""UserName"":""zlhis"",""PassWord"":""ZLSV2:EEDFEB7DE7A8D43F4C25BC316A22F8B6""}";//Newtonsoft.Json.JsonConvert.SerializeObject();
+                string result = NewCostHjy.Common.HttpRequest.RequestDataSync(url, dataJson, AuthType.None);
+                JObject jObResult = JsonConvert.DeserializeObject<JObject>(result);
+                string AudKey = (string)jObResult["Data"]["AudKey"];
+                dynamic outData = new { AudKey };
+            }
+            BaseCostAudKey audKey = new BaseCostAudKey();
+            audKey.AudKey = "hjyAudKey";
+            return Json(audKey);
         }
     }
 }

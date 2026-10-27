@@ -1336,5 +1336,27 @@ accomplishStatus
             }
             return "";
         }
+
+        /// <summary>
+        /// 生育类别相关判断，需求号:20261015162037
+        /// </summary>
+        /// <param name="id">收费细目ID</param>
+        /// <returns></returns>
+        public bool Is生育类别包(int id)
+        {
+            string sql = @"select 1 from 收费项目目录 a where a.id=:id and a.省级医保名称='生育'";
+            OracleDataAccess oracleData = new OracleDataAccess();
+            OracleParameter[] parameters = {
+                new OracleParameter(":id",OracleDbType.Int64,id,ParameterDirection.Input)
+            };
+            DataTable data = oracleData.ExecuteDataTable(sql, CommandType.Text, parameters);
+            if (data.Rows.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }
