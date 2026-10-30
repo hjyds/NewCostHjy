@@ -223,6 +223,11 @@ function fun修改项目数据加载() {
         _界面控件._参数._项目数据 = GetSimpleNodeVal(_界面控件._参数._诊疗项目id, "c1f32ce8-42f1-4519-a6f6-95332ea75516", "8d3a7de9-100a-4dc5-a7a0-b3a9680baf31", "1679487d-8564-45cc-a221-6f2461e19719", 1);
         _界面控件._参数._项目数据 = _界面控件._参数._项目数据[0];
 
+        //手术类型的执行频率强制修改为一次性
+        if (_界面控件._参数._项目数据["19ee0d31-e1a6-444d-afd6-2e86cad96092"] == "F") {
+            _界面控件._参数._项目数据["6b83fe8f-8d9c-435e-9b5e-ff0ba6e24eb4"] = 1;
+        }
+
         const obj = _界面控件._参数._项目数据;
 
         fun诊疗类别切换(obj[mapGuid._诊疗类别]);
@@ -780,6 +785,7 @@ window.GetCitemSaveJsonPar = function () {
     }
 
     parData.附加属性 = fun获取诊疗附加属性保存数据();
+    parData.诊疗标签 = $("#01a18bba-0f32-7910-964f-1e42afeb5466").val();
 
     parData = { "Json_In": JSON.stringify(parData) }
     return parData;
@@ -1363,6 +1369,30 @@ window.GetSyncData = function (proPar) {
     let userInfo = JSON.parse(sessionStorage.UserLoginInfo);
     userInfo = userInfo.account_extend;
     const codeval = get分类编码(temp.分类id);
+
+    let name = "";
+    let typeCode = temp.操作类型;
+    let codes = "";
+    if (temp.诊疗类别 == "C") {
+        codes = _界面控件._编码选项[mapGuid._检验操作类型];
+        typeCode = getCodeByName(temp.操作类型, codes);
+        name = temp.操作类型;
+    }
+    if (temp.诊疗类别 == "D") {
+        codes = _界面控件._编码选项[mapGuid._检查操作类型];
+        typeCode = getCodeByName(temp.操作类型, codes);
+        name = temp.操作类型;
+    }
+    if (temp.诊疗类别 == "F") {
+        codes = _界面控件._编码选项[mapGuid._手术操作类型];
+        typeCode = getCodeByName(temp.操作类型, codes);
+        name = temp.操作类型;
+    }
+    if (temp.诊疗类别 == "G") {
+        codes = _界面控件._编码选项[mapGuid._麻醉操作类型];
+        typeCode = getCodeByName(temp.操作类型, codes);
+        name = temp.操作类型;
+    }
     bData = {
         "item_his_id": temp.记录id,
         "item_code": temp.编码,// "ITEM_20260001",
@@ -1383,8 +1413,8 @@ window.GetSyncData = function (proPar) {
         //"frequency_name": "可选频率",
         "gender_code": (temp.适用性别 == 0 ? "1,2" : temp.适用性别 + ""),
         //"gender_name": "不限",
-        "operate_type_code": temp.操作类型,// "01",
-        "operate_type_name": temp.操作类型,// "临检",
+        "operate_type_code": typeCode,// "01",
+        "operate_type_name": name,// "临检",temp.操作类型
         "exec_dept_code": temp.执行科室,//"1",
         //"exec_dept_name": "所在科室",
         "price_prop_code": temp.执行标记,// "0",
@@ -1401,6 +1431,7 @@ window.GetSyncData = function (proPar) {
         "is_single": temp.单独应用 || 0,
         "is_group": temp.组合项目 || 0,
         "price_prop_code": "0",
+        "start_use_time": temp.启用时间,
         "state": 1,
         "sort_no": ""
     };

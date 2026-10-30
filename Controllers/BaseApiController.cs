@@ -32,6 +32,13 @@ namespace NewCostHjy.Controllers {
             return Json(parIn);
         }
 
+        //Public gstrDrugComponent        As String      '合理用药监测 获取药品成分
+        //gstrDrugComponent = "http://192.168.19.122:8099/api/BaseApi/DrugComponentByCode"
+        //[{"DRUGID":"1019","DrugBaseCode":"86900002000018"}]
+
+        //Public gstrDrugBigClass         As String      '合理用药监测 匹配药品大类
+        //gstrDrugBigClass = "http://192.168.19.122:8099/api/BaseApi/DrugBigClassByCode"
+
         /// <summary>
         /// ZLHIS通用数据规则检查API服务接口
         /// </summary>
