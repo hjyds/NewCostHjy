@@ -226,3 +226,163 @@ if (!r.valid) {
     //     '管理职务':     '科员'
     // })); // true
 }
+
+
+
+let curData = 组件资源.资源变量.当前行明细;
+debugger
+let keyId = curData["01a18bc0-58be-70ab-832d-5312fc39e113"];
+if (0 == curData.save_sign) {
+    keyId = HrsExt.Guid;
+}
+let editData = {
+    "save_sign": curData.save_sign,
+    "01a1a162-937f-7270-8dc5-8aa926b21cbd": curData["01a18bc0-58c9-73cb-bf67-33935066968f"],//编码
+    "01a1a162-937f-72b1-ab70-5bdd174468d3": keyId,// "1AAAAAAAAAAAAAAAAA",//ID
+    "01a1a162-9380-704d-92c7-6c4acaf72208": curData["01a18bc0-58c9-7596-9241-6ccb2b99c633"],// "名称",
+    "01a1a162-9380-7200-8022-9d38aeb9508a": curData["01a18bc0-58c9-7c53-a99b-c13a4f739a67"],// "简码",
+    "01a1a162-9380-724d-ab7b-20784c760fa0": curData["01a18bc0-58ca-7998-9376-fa111403c0b3"],// "说明",
+    "resource_view_id": "01a1a162-9626-76f8-b3ce-3156418942cc",
+    "resource_type_id": "01a1a162-937f-7ea6-b2e9-9c076a0b125c",
+    "resource_detail_id": "a1a1a184-0415-7170-a79d-ffed42d3a0c4",
+    "source": "资源类型"
+}
+if (1 == curData.save_sign) {
+    editData.resource_detail_id = keyId;
+    editData.is_edit = true;
+}
+return editData;
+
+
+
+
+/**在当前脚本中需要遵循以下调用规范
+ *
+ * 关于对象的访问说明：
+ *     1.脚本中可使用page对象进行页面元素访问；
+ *     2.脚本中使用“ _组件名称 ” 前缀可直接操作指定组件的属性或方法，如 _列表1.Name;
+ *     3.如需要根据视图的展现名称访问组件，可使用page.pageContent.GetComponents方法查询组件；
+ *     4.page.pageContent.ComponentList包含了界面组件的所有实例对象
+ * 关于事件的说明：
+ *     1.page提供了onComponentLoaded事件和onLoaded事件供自定义扩展使用；
+ *     2.page.onComponentLoaded 在页面内所有组件完成初始化后触发
+ *     3.page.onLoaded 在所有组件加载和页面内容载入完成后触发
+ *
+ */
+
+
+
+
+/**
+ * 组件加载完成事件处理
+ * @param {PageContent} pageContent
+*/
+page.onComponentLoaded = (pageContent) => {
+
+}
+
+/**
+ * 页面载入完成事件处理
+ * @param {PageContent} pageContent
+*/
+page.onLoaded = (pageContent) => {
+
+    /* ============ 一、可调参数 ============ */
+    var FIELD_MAX_CODE = "b4fb14d9-7b59-4d4b-941c-4d62f826a4d3"; // 视图里的“人员编码最大值”字段
+    var CODE_LENGTH = 0;   // 编码定长，对应 VB 的 intLength；0 = 自动取最大值长度（对应 lngLengh）
+    var INIT_LENGTH = 6;   // 表中无数据时的初始编码长度
+
+    /* ============ 二、工具函数（ES5，兼容旧引擎） ============ */
+    function _trim(s) {
+        if (s === null || s === undefined) return "";
+        return String(s).replace(/^[\s\u00A0]+|[\s\u00A0]+$/g, "");
+    }
+    function _repeat(ch, n) {
+        var r = "";
+        for (var i = 0; i < n; i++) r += ch;
+        return r;
+    }
+    function _padZero(s, len) {
+        s = String(s);
+        while (s.length < len) s = "0" + s;
+        return s;
+    }
+    // 字符串整数 +1（不用 Number，避免长编码丢精度，对应 VB 的 Val(varTemp) + 1）
+    function _addOne(strNum) {
+        var arr = strNum.split(""), i = arr.length - 1, carry = 1;
+        while (i >= 0 && carry > 0) {
+            var d = parseInt(arr[i], 10) + carry;
+            arr[i] = String(d % 10);
+            carry = d >= 10 ? 1 : 0;
+            i--;
+        }
+        if (carry > 0) arr.unshift("1");
+        return arr.join("");
+    }
+
+    /* ============ 三、核心：对应 VB 的 GetMax ============ */
+    function GetMaxCode(curMax, intLength) {
+        var SPECIAL = "`~!@#$%^&*()_+-={}|[]\\:\";'<>?./";  // 与 VB InStr 集合完全一致
+        var varTemp = _trim(curMax);
+        var lastChar, result, head, tail, c, blnInc, i;
+
+        // 无数据 → Format(1, String(intLength,"0"))
+        if (varTemp === "") {
+            return _padZero("1", Math.max(intLength || 0, 1));
+        }
+
+        var lngLength = Math.max(varTemp.length, intLength || 0); // 对应 lngLengh
+
+        // ① 纯数字：+1 后左补 0
+        if (/^\d+$/.test(varTemp)) {
+            return _padZero(_addOne(varTemp), lngLength);
+        }
+
+        lastChar = varTemp.charAt(varTemp.length - 1);
+
+        // ② 末位是 Z/z 或特殊字符：向前找第一个可进位位
+        if (lastChar === "Z" || lastChar === "z" || SPECIAL.indexOf(lastChar) >= 0) {
+            blnInc = false;
+            for (i = lngLength - 1; i >= 1; i--) {
+                c = varTemp.charAt(i - 1);          // VB: Mid(varTemp, i, 1)
+                if (c === "") c = "0";              // 防御：实际长度不足时按 0 处理
+                if (c !== "z" && c !== "Z") {
+                    head = varTemp.substring(0, i - 1);      // VB: Mid(varTemp, 1, i-1)
+                    tail = _repeat("0", lngLength - i);      // VB: String(lngLengh - i, "0")
+                    result = head + (c === "9" ? "A" : String.fromCharCode(c.charCodeAt(0) + 1)) + tail;
+                    blnInc = true;
+                    break;
+                }
+            }
+            if (!blnInc) result = "1" + _repeat("0", lngLength);  // 进位满，扩展一位
+        }
+        // ③ 末位是 9 → A；其他字符 → 字符码 +1
+        else if (lastChar === "9") {
+            result = varTemp.substring(0, varTemp.length - 1) + "A";
+        } else {
+            result = varTemp.substring(0, varTemp.length - 1) + String.fromCharCode(lastChar.charCodeAt(0) + 1);
+        }
+        return _trim(result);
+    }
+
+    /* ============ 四、取最大值并生成下一个编码 ============ */
+    var input = {
+        "resTypeId": "d0e8096b-37f7-48ba-8640-a8daae86427d", // SQL视图_查询人员表编码最大
+        "viewId": "9235d188-1511-40f5-b43c-0aa32d0b7749",    // 视图-人员新增
+        "row": 0,
+        "source": "资源类型",
+        "matching": []
+    };
+
+    var ret = HrsServer.Post("/api/FormalResourceDetailRel/GetResourceDetailRelByResTypeIdAndViewId", JSON.stringify(input));
+
+    var curMax = "";
+    if (ret && ret.Data && ret.Data.length > 0 && ret.Data[0]) {
+        var v = ret.Data[0][FIELD_MAX_CODE];
+        curMax = (v === null || v === undefined) ? "" : String(v);
+    }
+    let dataCode = GetMaxCode(curMax, CODE_LENGTH || INIT_LENGTH);
+    $("#01a14799-6767-7741-9588-0e854b06f4a4").val(dataCode);
+
+
+}
