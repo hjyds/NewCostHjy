@@ -3,7 +3,7 @@
  * https://cq.cfkfz.com:28008/#/user/login?redirect=%2F    尘肺网站主页  帐号密码  longzhuyi  789lzY123@
  * http://localhost:5888/FeedBackBill/FaceToFaceFollowUp   面对面随访 上传家庭医生签约文件 需要传图片相关的网页(电话随访也可以用这地址)
  * 
- * 
+ * 家庭医生签约 模块：https://cq.cfkfz.com:28008/#/siteManage/organizeManage/familyDoctor
  * 
  */
 

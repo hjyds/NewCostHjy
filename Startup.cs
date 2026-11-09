@@ -176,6 +176,15 @@ namespace NewCostHjy
                     context.Response.Redirect($"/PatientVte/testpage{query}");
                     return;
                 }
+                if (context.Request.Path.StartsWithSegments("/PageEditor/index"))
+                {
+                    var dict = context.Request.Query.ToDictionary(kv => kv.Key, kv => kv.Value.ToString());
+                    dict["from"] = "/PageEditor/index";//添加一额外参数
+                    dict["hjy_ex"] = "打开Web版门急诊诊疗信息页相关功能页面";
+                    var query = QueryString.Create(dict); // 会用新值替换旧值
+                    context.Response.Redirect($"/PatientVte/micpk{query}");
+                    return;
+                }
                 if (context.Request.Path.StartsWithSegments("/MedicalCore/FeeOrders"))
                 {
                     var query = context.Request.QueryString;
